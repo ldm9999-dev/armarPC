@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Juego para armar una PC básica y una PC gamer, con calculadora de fuente de alimentación.">
+<style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
+<title>Armá tu PC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: pestañas arriba; en cada una, gabinete grande a la izquierda y columna de tablero, bandeja, consumo y ficha a la derecha. En celular: tablero, gabinete, bandeja, consumo, ficha. */
+:root {
+  --bg: #e9edf1;
+  --surface: #ffffff;
+  --ink: #18202a;
+  --muted: #5a6675;
+  --line: #cdd4dc;
+  --accent: #d9821b;
+  --accent-soft: rgba(217,130,27,.18);
+  --ok: #2b8a57;
+  --ok-soft: rgba(43,138,87,.2);
+  --err: #c2412d;
+  --case: #232a33;
+  --case-edge: #46505d;
+  --slot: #8996a6;
+  --pcb: #2c6a4e;
+  --pcb-line: #79b597;
+  --metal: #bcc4cd;
+  --metal-dark: #5f6a77;
+  --chip: #1a1f25;
+  --gold: #d2a637;
+  --fan: #343c46;
+  --blade: #59636f;
+  --label: #18202a;
+  --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151a; --surface: #1a2028; --ink: #e5e9ee; --muted: #98a3b0; --line: #2c3440;
+    --accent: #f0a23a; --accent-soft: rgba(240,162,58,.2); --ok: #4cb87d; --ok-soft: rgba(76,184,125,.22); --err: #ec6a55;
+    --case: #0a0d11; --case-edge: #38414c; --slot: #75818f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151a; --surface: #1a2028; --ink: #e5e9ee; --muted: #98a3b0; --line: #2c3440;
+  --accent: #f0a23a; --accent-soft: rgba(240,162,58,.2); --ok: #4cb87d; --ok-soft: rgba(76,184,125,.22); --err: #ec6a55;
+  --case: #0a0d11; --case-edge: #38414c; --slot: #75818f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); }
+body {
+  font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 18px; }
+header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+header p { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
+
+/* pestañas */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab {
+  font: 600 15px var(--font-display); letter-spacing: .02em; color: var(--muted);
+  background: transparent; border: 0; border-bottom: 3px solid transparent;
+  padding: 10px 16px 9px; cursor: pointer; white-space: nowrap;
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab small { font: 500 11px var(--font-mono); color: var(--muted); margin-left: 6px; letter-spacing: .04em; }
+.tabpanel { display: grid; gap: 20px; }
+.tabpanel[hidden] { display: none; }
+
+.app {
+  display: grid; gap: 20px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 330px);
+  grid-template-areas: "case hud" "case tray" "case info";
+  align-items: start;
+}
+.app.has-power { grid-template-areas: "case hud" "case tray" "case power" "case info"; }
+.hud { grid-area: hud; } .tray-box { grid-area: tray; } .info { grid-area: info; } .case-col { grid-area: case; } .power { grid-area: power; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+
+/* tablero */
+.hud { display: grid; gap: 12px; }
+.stats { display: flex; gap: 18px; flex-wrap: wrap; }
+.stat strong { display: block; font-family: var(--font-display); font-size: 24px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+button.btn {
+  font: 500 14px var(--font-body); color: var(--ink); background: transparent;
+  border: 1px solid var(--line); border-radius: 6px; padding: 7px 12px; cursor: pointer;
+}
+button.btn:hover { border-color: var(--muted); }
+button.btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.status { min-height: 3em; font-size: 14px; padding: 8px 10px; border-radius: 6px; background: var(--bg); }
+.status.ok { color: var(--ok); } .status.err { color: var(--err); }
+
+/* bandeja */
+.tray { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; margin-top: 10px; }
+.part {
+  position: relative; display: grid; justify-items: center; align-content: start; gap: 4px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px 6px; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  font: 500 12.5px/1.2 var(--font-body); color: var(--ink); text-align: center;
+}
+.part:hover { border-color: var(--muted); }
+.part.selected { border-color: var(--accent); background: var(--accent-soft); }
+.part.used, .part.off { opacity: .35; cursor: default; }
+.part.used::after { content: "✓"; position: absolute; top: 4px; right: 7px; color: var(--ok); font-weight: 700; }
+.part .qty {
+  position: absolute; top: 4px; left: 5px; font: 500 11px var(--font-mono); color: var(--surface);
+  background: var(--accent); border-radius: 9px; padding: 0 6px; line-height: 17px; font-variant-numeric: tabular-nums;
+}
+.part.used .qty { display: none; }
+.thumb { width: 72px; height: 50px; }
+.thumb svg { width: 100%; height: 100%; display: block; }
+
+/* gabinete */
+.case-col { display: grid; gap: 8px; justify-items: center; }
+.case {
+  position: relative; width: 100%; max-width: 540px; aspect-ratio: 4 / 5;
+  background: var(--case); border: 10px solid var(--case-edge); border-radius: 14px;
+  box-shadow: inset 0 0 40px rgba(0,0,0,.5);
+  overflow: hidden; touch-action: manipulation;
+}
+.deco { position: absolute; pointer-events: none; }
+.front { right: 0; top: 0; bottom: 0; width: 6%; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.09)); border-left: 1px solid var(--case-edge); }
+.front i { position: absolute; left: 15%; width: 70%; aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--case-edge); }
+.led { position: absolute; left: 35%; top: 2%; width: 30%; aspect-ratio: 1; border-radius: 50%; background: #3a2a2a; }
+.powered .led { background: #47e08a; box-shadow: 0 0 10px #47e08a; }
+.io { left: 1.5%; top: 9%; width: 4%; height: 22%; border: 1px dashed var(--case-edge); }
+.brackets { left: 1.5%; top: 40%; width: 4%; height: 22%; background: repeating-linear-gradient(180deg, var(--case-edge) 0 2px, transparent 2px 9px); opacity: .7; }
+.shroud { left: 0; right: 6%; top: 72%; height: 1px; background: var(--case-edge); }
+.screw { width: 1.6%; aspect-ratio: 1; border-radius: 50%; background: var(--case-edge); }
+.glass { inset: 0; z-index: 6; background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.07) 38%, rgba(255,255,255,0) 46%, rgba(255,255,255,0) 60%, rgba(255,255,255,.05) 66%, rgba(255,255,255,0) 72%); }
+.case.rgb.powered { animation: rgb 4s linear infinite; }
+@keyframes rgb {
+  0% { box-shadow: inset 0 0 40px rgba(0,0,0,.5), 0 0 22px rgba(255,60,120,.55); }
+  33% { box-shadow: inset 0 0 40px rgba(0,0,0,.5), 0 0 22px rgba(60,160,255,.55); }
+  66% { box-shadow: inset 0 0 40px rgba(0,0,0,.5), 0 0 22px rgba(80,230,140,.55); }
+  100% { box-shadow: inset 0 0 40px rgba(0,0,0,.5), 0 0 22px rgba(255,60,120,.55); }
+}
+
+.slot {
+  position: absolute; border: 1.5px dashed var(--slot); border-radius: 4px;
+  background: transparent; padding: 0; cursor: pointer;
+  display: grid; place-items: center; color: var(--slot);
+  font: 500 11px var(--font-mono); letter-spacing: .04em; text-transform: uppercase;
+}
+.slot .tag { opacity: 0; transition: opacity .2s; padding: 2px; text-align: center; pointer-events: none; line-height: 1; }
+.help .slot:not(.filled) .tag { opacity: 1; }
+.slot.hover { border-style: solid; border-color: var(--accent); background: var(--accent-soft); }
+.slot.filled { border-color: transparent; cursor: default; }
+.slot.flash { border-color: var(--err); border-style: solid; }
+.slot svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
+.slot.filled svg { animation: pop .28s ease-out; }
+@keyframes pop { from { transform: scale(1.12); opacity: .4; } to { transform: scale(1); opacity: 1; } }
+.case-note { font-size: 12.5px; color: var(--muted); text-align: center; max-width: 540px; margin: 0; }
+
+/* fantasma de arrastre */
+.ghost { position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none; opacity: .88; filter: drop-shadow(0 8px 14px rgba(0,0,0,.4)); }
+.ghost svg { width: 100%; height: 100%; display: block; }
+
+/* ficha */
+.info h2, .calc h2 { font-family: var(--font-display); font-weight: 600; font-size: 20px; margin: 4px 0 6px; text-wrap: balance; }
+.info p { margin: 0 0 8px; }
+.spec { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.win { border-color: var(--ok); }
+
+/* consumo */
+.ptable { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.ptable td { padding: 3px 0; border-bottom: 1px solid var(--line); }
+.ptable td:not(:first-child) { text-align: right; font-family: var(--font-mono); font-size: 12.5px; padding-left: 8px; white-space: nowrap; }
+.ptable .empty td { color: var(--muted); text-align: left; font-family: var(--font-body); }
+.psum { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; margin-top: 10px; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.psum dt { color: var(--muted); } .psum dd { margin: 0; text-align: right; font-family: var(--font-mono); }
+.psum .big { font: 700 18px var(--font-display); color: var(--ink); }
+.psum dd.bad { color: var(--err); } .psum dd.good { color: var(--ok); }
+
+/* calculadora */
+.calc { display: grid; gap: 14px; }
+.calc > p { margin: 0; color: var(--muted); max-width: 70ch; }
+.calc-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px 16px; }
+.field { display: grid; gap: 4px; min-width: 0; }
+.field label { font-size: 13px; font-weight: 500; }
+.field .unit { font: 500 11px var(--font-mono); color: var(--muted); }
+.field select {
+  font: 14px var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 7px 8px; width: 100%;
+}
+.field.wide { grid-column: 1 / -1; }
+.stepper { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; width: max-content; background: var(--bg); }
+.stepper button { width: 36px; border: 0; background: transparent; color: var(--ink); font: 600 18px var(--font-body); cursor: pointer; }
+.stepper button:hover { background: var(--accent-soft); }
+.stepper input {
+  width: 48px; border: 0; border-inline: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  text-align: center; font: 600 16px var(--font-mono); padding: 6px 0; -moz-appearance: textfield;
+}
+.stepper input::-webkit-inner-spin-button, .stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.result { background: var(--bg); border-radius: 10px; padding: 14px 16px; display: grid; gap: 10px; }
+.result .rec { font: 700 clamp(34px, 6vw, 46px)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.result .rec small { font-size: .45em; color: var(--muted); font-weight: 600; margin-left: 4px; }
+.meter { position: relative; height: 12px; background: var(--line); border-radius: 6px; }
+.meter .zone { position: absolute; top: 0; bottom: 0; left: 50%; width: 30%; background: var(--ok-soft); border-inline: 1px solid var(--ok); }
+.meter .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 6px 0 0 6px; transition: width .25s; }
+.meter-scale { display: flex; justify-content: space-between; font: 500 11px var(--font-mono); color: var(--muted); }
+.result .note { font-size: 13.5px; margin: 0; }
+.result .note.bad { color: var(--err); }
+
+@media (max-width: 820px) {
+  .app, .app.has-power { grid-template-columns: minmax(0, 1fr); grid-template-areas: "hud" "case" "tray" "info"; gap: 14px; }
+  .app.has-power { grid-template-areas: "hud" "case" "tray" "power" "info"; }
+  .case { max-width: min(540px, max(260px, calc((100svh - 300px) * .8))); border-width: 7px; }
+  .stat strong { font-size: 20px; }
+  .tray { grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 6px; }
+  .part { padding: 6px 4px; font-size: 11.5px; }
+  .thumb { width: 54px; height: 38px; }
+  .slot { font-size: 9px; }
+  .panel { padding: 12px; }
+  .calc-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 420px) {
+  body { padding-block: 12px 28px; }
+  header p { font-size: 14px; }
+  .tray { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .slot { font-size: 7.5px; letter-spacing: 0; }
+  .tab { padding-inline: 12px; }
+}
+
+/* colores de piezas */
+.f-pcb { fill: var(--pcb); } .s-trace { stroke: var(--pcb-line); fill: none; opacity: .55; }
+.f-metal { fill: var(--metal); } .f-metal-dark { fill: var(--metal-dark); } .f-chip { fill: var(--chip); }
+.f-gold { fill: var(--gold); } .f-fan { fill: var(--fan); } .f-blade { fill: var(--blade); }
+.f-ring { fill: var(--chip); stroke: var(--metal-dark); stroke-width: 1.5; }
+.f-socket { fill: var(--chip); stroke: var(--metal); stroke-width: 1.2; }
+.f-accent { fill: var(--accent); }
+.s-accent { fill: none; stroke: var(--accent); }
+.s-pcb { fill: none; stroke: var(--pcb-line); stroke-width: 2; opacity: .8; }
+.f-fin { stroke: var(--metal-dark); stroke-width: 1; opacity: .7; }
+.t-label { fill: var(--label); font-family: var(--font-mono); font-weight: 500; }
+.t-light { fill: #e9edf1; font-family: var(--font-mono); font-weight: 500; }
+.rotor { transform-box: fill-box; transform-origin: center; }
+.powered .rotor { animation: spin .6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .slot.filled svg, .powered .rotor, .case.rgb.powered { animation: none; }
+  .bar span, .meter .fill { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Armá tu PC</h1>
+    <p>Arrastrá cada componente desde la bandeja hasta su lugar dentro del gabinete, o tocá una pieza y después el lugar donde va. Ojo con el orden: algunas piezas necesitan que otras ya estén colocadas.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Modo de juego">
+    <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
+  </nav>
+
+  <section class="tabpanel" role="tabpanel" id="panel-basica" aria-labelledby="tab-basica"></section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-gamer" aria-labelledby="tab-gamer" hidden>
+    <div id="game-gamer"></div>
+
+    <section class="calc panel" aria-labelledby="calc-title">
+      <span class="label">Calculadora de fuente</span>
+      <h2 id="calc-title">¿Qué fuente necesita mi PC?</h2>
+      <p>Cambiá la cantidad de placas de video, memorias y discos para ver cuánta potencia consume la PC y qué fuente le corresponde. Se suma un 30 % de margen para que la fuente no trabaje al límite. Arranca con los valores de la PC gamer del juego.</p>
+      <div class="calc-grid">
+        <div class="fields">
+          <div class="field">
+            <label for="c-cpu">Procesador</label>
+            <select id="c-cpu">
+              <option value="65">Gama media · 65 W</option>
+              <option value="125">Gama alta · 125 W</option>
+              <option value="170" selected>Tope de gama · 170 W</option>
+              <option value="253">Tope de gama con turbo · 253 W</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="c-gpuw">Modelo de placa de video</label>
+            <select id="c-gpuw">
+              <option value="115">Entrada (tipo RTX 4060) · 115 W</option>
+              <option value="200">Media (tipo RTX 4070) · 200 W</option>
+              <option value="250" selected>Media-alta · 250 W</option>
+              <option value="320">Alta (tipo RTX 4080) · 320 W</option>
+              <option value="450">Tope (tipo RTX 4090) · 450 W</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="c-gpu">Placas de video</label>
+            <div class="stepper"><button type="button" data-for="c-gpu" data-d="-1" aria-label="Quitar una placa de video">−</button><input id="c-gpu" type="number" inputmode="numeric" min="0" max="4" value="3"><button type="button" data-for="c-gpu" data-d="1" aria-label="Agregar una placa de video">+</button></div>
+          </div>
+          <div class="field">
+            <label for="c-ram">Memorias RAM</label>
+            <div class="stepper"><button type="button" data-for="c-ram" data-d="-1" aria-label="Quitar una memoria">−</button><input id="c-ram" type="number" inputmode="numeric" min="1" max="8" value="4"><button type="button" data-for="c-ram" data-d="1" aria-label="Agregar una memoria">+</button></div>
+            <span class="unit">5 W cada una</span>
+          </div>
+          <div class="field">
+            <label for="c-m2">Discos SSD M.2</label>
+            <div class="stepper"><button type="button" data-for="c-m2" data-d="-1" aria-label="Quitar un disco M.2">−</button><input id="c-m2" type="number" inputmode="numeric" min="0" max="4" value="2"><button type="button" data-for="c-m2" data-d="1" aria-label="Agregar un disco M.2">+</button></div>
+            <span class="unit">7 W cada uno</span>
+          </div>
+          <div class="field">
+            <label for="c-ssd">Discos SSD SATA</label>
+            <div class="stepper"><button type="button" data-for="c-ssd" data-d="-1" aria-label="Quitar un SSD SATA">−</button><input id="c-ssd" type="number" inputmode="numeric" min="0" max="6" value="2"><button type="button" data-for="c-ssd" data-d="1" aria-label="Agregar un SSD SATA">+</button></div>
+            <span class="unit">5 W cada uno</span>
+          </div>
+          <div class="field">
+            <label for="c-hdd">Discos rígidos (HDD)</label>
+            <div class="stepper"><button type="button" data-for="c-hdd" data-d="-1" aria-label="Quitar un disco rígido">−</button><input id="c-hdd" type="number" inputmode="numeric" min="0" max="8" value="4"><button type="button" data-for="c-hdd" data-d="1" aria-label="Agregar un disco rígido">+</button></div>
+            <span class="unit">9 W cada uno</span>
+          </div>
+          <div class="field">
+            <label for="c-fan">Ventiladores sueltos</label>
+            <div class="stepper"><button type="button" data-for="c-fan" data-d="-1" aria-label="Quitar un ventilador">−</button><input id="c-fan" type="number" inputmode="numeric" min="0" max="12" value="3"><button type="button" data-for="c-fan" data-d="1" aria-label="Agregar un ventilador">+</button></div>
+            <span class="unit">3 W cada uno</span>
+          </div>
+          <div class="field wide">
+            <label for="c-cool">Refrigeración del procesador</label>
+            <select id="c-cool">
+              <option value="14" selected>Líquida: bomba + radiador de 360 mm · 14 W</option>
+              <option value="5">Por aire: disipador con ventilador · 5 W</option>
+            </select>
+            <span class="unit">La placa madre suma 60 W fijos.</span>
+          </div>
+        </div>
+
+        <div class="result" aria-live="polite">
+          <span class="label">Fuente recomendada</span>
+          <div class="rec" id="c-rec">—</div>
+          <dl class="psum" style="margin-top:0">
+            <dt>Consumo estimado</dt><dd id="c-total">—</dd>
+            <dt>Con 30 % de margen</dt><dd id="c-need">—</dd>
+          </dl>
+          <div>
+            <div class="meter" aria-hidden="true"><div class="fill" id="c-fill"></div><div class="zone"></div></div>
+            <div class="meter-scale"><span>0 %</span><span>Zona ideal 50–80 %</span><span>100 %</span></div>
+          </div>
+          <p class="note" id="c-note"></p>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+
+<script>
+(function () {
+  var TIERS = [450, 550, 650, 750, 850, 1000, 1200, 1600];
+  var MARGIN = 1.3;
+
+  function fan(cx, cy, r) {
+    var b = '';
+    for (var i = 0; i < 5; i++) {
+      b += '<ellipse class="f-blade" cx="' + cx + '" cy="' + (cy - r * 0.48) + '" rx="' + (r * 0.22) + '" ry="' + (r * 0.42) + '" transform="rotate(' + (i * 72 + 12) + ' ' + cx + ' ' + cy + ')"/>';
+    }
+    return '<circle class="f-ring" cx="' + cx + '" cy="' + cy + '" r="' + r + '"/>' +
+      '<g class="rotor">' + b + '<circle class="f-fan" cx="' + cx + '" cy="' + cy + '" r="' + (r * 0.24) + '"/></g>';
+  }
+  function psuBody(w) {
+    return '<rect class="f-metal-dark" x="0" y="0" width="200" height="100" rx="4"/>' + fan(56, 50, 38) +
+      '<rect class="f-metal" x="110" y="18" width="78" height="40" rx="2"/>' +
+      '<text class="t-label" x="149" y="44" text-anchor="middle" font-size="' + (w >= 1000 ? 14 : 15) + '">' + w + ' W</text>' +
+      '<rect class="f-chip" x="186" y="66" width="12" height="26"/>';
+  }
+
+  /* ---------- piezas compartidas ---------- */
+  var FAN_PART = {
+    vb: '0 0 100 100',
+    body: '<rect class="f-chip" x="2" y="2" width="96" height="96" rx="6"/>' + fan(50, 50, 43) +
+      '<circle class="f-metal-dark" cx="9" cy="9" r="3"/><circle class="f-metal-dark" cx="91" cy="9" r="3"/><circle class="f-metal-dark" cx="9" cy="91" r="3"/><circle class="f-metal-dark" cx="91" cy="91" r="3"/>'
+  };
+  var M2_PART = {
+    vb: '0 0 200 40',
+    body: '<rect class="f-pcb" x="0" y="4" width="196" height="32" rx="2"/>' +
+      '<rect class="f-gold" x="0" y="4" width="10" height="32"/>' +
+      '<rect class="f-chip" x="22" y="9" width="40" height="22"/><rect class="f-chip" x="74" y="9" width="46" height="22"/><rect class="f-chip" x="132" y="9" width="46" height="22"/>' +
+      '<path class="f-metal" d="M188 14 a6 6 0 1 0 0.1 0 Z"/>'
+  };
+  var SSD_PART = {
+    vb: '0 0 100 100',
+    body: '<rect class="f-chip" x="0" y="0" width="100" height="100" rx="6"/>' +
+      '<rect class="f-metal" x="10" y="12" width="80" height="50" rx="2"/>' +
+      '<text class="t-label" x="50" y="34" text-anchor="middle" font-size="15">SSD</text>' +
+      '<text class="t-label" x="50" y="53" text-anchor="middle" font-size="12">1 TB</text>' +
+      '<rect class="f-gold" x="66" y="74" width="24" height="16"/>'
+  };
+  var HDD_PART = {
+    vb: '0 0 80 100',
+    body: '<rect class="f-metal" x="0" y="0" width="80" height="100" rx="4"/>' +
+      '<circle class="f-metal-dark" cx="40" cy="40" r="30" opacity=".55"/><circle class="f-metal" cx="40" cy="40" r="6"/>' +
+      '<path class="f-chip" d="M66 80 L44 44 L48 42 L70 78 Z"/>' +
+      '<rect class="f-chip" x="8" y="80" width="40" height="12" rx="1"/>' +
+      '<text class="t-light" x="28" y="89" text-anchor="middle" font-size="8">2 TB</text>'
+  };
+  var CPU_PART = {
+    vb: '0 0 100 100',
+    body: '<rect class="f-pcb" x="2" y="2" width="96" height="96" rx="4"/>' +
+      '<rect class="f-metal" x="14" y="14" width="72" height="72" rx="6"/>' +
+      '<text class="t-label" x="50" y="56" text-anchor="middle" font-size="15">CPU</text>' +
+      '<path class="f-gold" d="M4 96 V82 L18 96 Z"/>'
+  };
+  function ext(base, more) { var o = {}, k; for (k in base) o[k] = base[k]; for (k in more) o[k] = more[k]; return o; }
+
+  /* ---------- PC básica ---------- */
+  var BASIC = {
+    key: 'basica',
+    caseNote: 'Vista lateral del gabinete con la tapa abierta. A la izquierda está el panel trasero; a la derecha, el frente.',
+    start: 'Empezá por la pieza más grande: todo lo demás se conecta a ella.',
+    deco: '<div class="deco io"></div><div class="deco brackets"></div><div class="deco shroud"></div>' +
+      '<div class="deco screw" style="left:3%;top:3%"></div><div class="deco screw" style="left:88%;top:3%"></div><div class="deco screw" style="left:3%;top:95%"></div>' +
+      '<div class="deco front"><span class="led"></span><i style="top:14%"></i><i style="top:34%"></i><i style="top:54%"></i></div>',
+    parts: {
+      mobo: { name: 'Placa madre', short: 'Placa madre', req: [], vb: '0 0 140 145',
+        body: '<rect class="f-pcb" width="140" height="145" rx="3"/>' +
+          '<path class="s-trace" stroke-width="0.8" d="M18 40 H56 M20 62 H58 V92 M74 56 V88 M90 38 H102 M80 132 H132 M30 134 V108 M112 80 V94 M60 70 H96"/>' +
+          '<rect class="f-metal-dark" x="0" y="8" width="12" height="42"/>' +
+          '<rect class="f-metal-dark" x="20" y="18" width="34" height="10" rx="1"/>' +
+          '<rect class="f-socket" x="60" y="25" width="28" height="28" rx="1"/>' +
+          '<rect class="f-chip" x="104" y="15" width="6" height="60"/><rect class="f-chip" x="114" y="15" width="6" height="60"/>' +
+          '<rect class="f-chip" x="8" y="98" width="120" height="5"/><rect class="f-chip" x="8" y="122" width="70" height="4"/>' +
+          '<rect class="f-metal" x="90" y="108" width="20" height="20" rx="2"/>' +
+          '<rect class="f-chip" x="28" y="77" width="5" height="8"/><circle class="f-metal" cx="71" cy="81" r="1.8"/>' +
+          '<circle class="f-socket" cx="121" cy="122.5" r="5.5"/>' +
+          '<circle class="f-metal" cx="6" cy="6" r="2"/><circle class="f-metal" cx="134" cy="6" r="2"/><circle class="f-metal" cx="6" cy="139" r="2"/><circle class="f-metal" cx="134" cy="139" r="2"/>',
+        hint: 'La placa madre es la base: va atornillada contra el fondo del gabinete, pegada al panel trasero.',
+        info: 'Es la placa principal: comunica entre sí a todos los componentes. Se atornilla sobre los separadores del gabinete, con sus puertos (USB, red, audio) asomando por el panel trasero.',
+        spec: 'Formato ATX · zócalo, ranuras DIMM y PCIe' },
+      cpu: ext(CPU_PART, { name: 'Procesador (CPU)', short: 'CPU', req: ['mobo'],
+        hint: 'El procesador va en el zócalo (socket): el cuadrado del centro de la placa madre.',
+        info: 'Es el “cerebro” de la computadora: ejecuta las instrucciones de los programas. Va en el zócalo de la placa madre, alineando el triangulito dorado con la marca del socket.',
+        spec: 'Se mide en núcleos y GHz' }),
+      cooler: { name: 'Cooler', short: 'Cooler', req: ['cpu'], vb: '0 0 100 100',
+        body: '<rect class="f-metal-dark" x="2" y="2" width="96" height="96" rx="8"/>' + fan(50, 50, 42),
+        reqMsg: 'Primero colocá el procesador: el cooler va montado encima de él.',
+        hint: 'El cooler va justo encima del procesador, para sacarle el calor.',
+        info: 'Disipa el calor del procesador. Entre la CPU y el cooler se pone pasta térmica para que el calor pase mejor. Sin cooler, el procesador se recalienta en segundos.',
+        spec: 'Disipador + ventilador · se conecta a CPU_FAN' },
+      ram: { name: 'Memoria RAM', short: 'RAM', req: ['mobo'], vb: '0 0 40 120',
+        body: '<rect class="f-pcb" x="2" y="0" width="36" height="120" rx="2"/>' +
+          '<rect class="f-gold" x="2" y="0" width="5" height="120"/>' +
+          '<rect class="f-chip" x="12" y="8" width="22" height="22"/><rect class="f-chip" x="12" y="35" width="22" height="22"/>' +
+          '<rect class="f-chip" x="12" y="63" width="22" height="22"/><rect class="f-chip" x="12" y="90" width="22" height="22"/>',
+        hint: 'La RAM va en las ranuras largas que están al lado del procesador.',
+        info: 'Guarda temporalmente los datos de los programas abiertos para que el procesador acceda rápido. Se borra al apagar la PC. Se inserta en las ranuras DIMM hasta que trabe la pestaña.',
+        spec: 'Ejemplo: 16 GB DDR5' },
+      gpu: { name: 'Placa de video', short: 'GPU', req: ['mobo'], vb: '0 0 240 50',
+        body: '<rect class="f-metal" x="0" y="0" width="7" height="50"/>' +
+          '<rect class="f-fan" x="8" y="3" width="230" height="40" rx="4"/>' +
+          '<rect class="f-accent" x="8" y="40" width="230" height="3"/>' +
+          '<rect class="f-gold" x="30" y="44" width="100" height="5"/>' + fan(78, 23, 17) + fan(168, 23, 17),
+        hint: 'La placa de video va en la ranura larga horizontal (PCI Express), debajo del procesador.',
+        info: 'Procesa las imágenes y el video que ves en el monitor; es clave para juegos y diseño. Va en la ranura PCI Express x16 y su chapa se atornilla en las ranuras traseras del gabinete.',
+        spec: 'Ranura PCIe x16' },
+      psu: { name: 'Fuente de alimentación', short: 'Fuente', req: [], vb: '0 0 200 100', watts: 750,
+        body: function () { return psuBody(750); },
+        hint: 'La fuente va abajo, en la parte trasera, debajo de la cubierta del gabinete.',
+        info: 'Convierte la corriente alterna de la red (220 V) en corriente continua de 12 V, 5 V y 3,3 V para alimentar a todos los componentes. Va abajo, con el ventilador hacia afuera.',
+        spec: 'Potencia en watts (W)' },
+      m2: ext(M2_PART, { name: 'Disco SSD M.2', short: 'M.2', req: ['mobo'],
+        hint: 'El disco M.2 va acostado sobre la placa madre, en la ranura chiquita entre el procesador y la placa de video.',
+        info: 'Es un disco de estado sólido en forma de “chicle”. Se enchufa directo en la ranura M.2 de la placa madre y se sujeta con un tornillito. Es mucho más rápido que un disco común y no necesita cables.',
+        spec: 'Ranura M.2 · protocolo NVMe' }),
+      wifi: { name: 'Placa WiFi', short: 'WiFi', req: ['mobo'], vb: '0 0 180 40',
+        body: '<rect class="f-metal" x="0" y="0" width="7" height="40"/>' +
+          '<rect class="f-gold" x="1" y="6" width="5" height="6"/><rect class="f-gold" x="1" y="26" width="5" height="6"/>' +
+          '<rect class="f-pcb" x="8" y="4" width="168" height="28" rx="2"/>' +
+          '<rect class="f-chip" x="70" y="9" width="30" height="18"/>' +
+          '<rect class="f-gold" x="30" y="32" width="40" height="6"/>',
+        hint: 'La placa WiFi va en la ranura PCI Express corta, debajo de la placa de video.',
+        info: 'Es una placa de expansión que le da conexión inalámbrica (WiFi y a veces Bluetooth) a la PC. Va en una ranura PCI Express y las antenas se enroscan atrás, en la chapa del gabinete.',
+        spec: 'Ranura PCIe x1' },
+      cmos: { name: 'Pila CMOS', short: 'Pila', req: ['mobo'], vb: '0 0 100 100',
+        body: '<circle class="f-metal" cx="50" cy="50" r="46"/><circle class="f-metal-dark" cx="50" cy="50" r="38" opacity=".35"/>' +
+          '<text class="t-label" x="50" y="58" text-anchor="middle" font-size="24">+</text>',
+        hint: 'La pila es una moneda plateada que va en su portapila redondo, abajo a la derecha de la placa madre.',
+        info: 'Es una pila tipo botón que mantiene la hora y la configuración del BIOS aunque la PC esté desenchufada. Si se agota, la computadora pierde la fecha cada vez que se apaga.',
+        spec: 'Pila de litio CR2032 · 3 V' },
+      fan: ext(FAN_PART, { name: 'Ventilador frontal', short: 'Fan', req: [],
+        hint: 'El ventilador del gabinete va en el frente, a la derecha, para meter aire fresco.',
+        info: 'Mete aire fresco desde el frente del gabinete. Junto con la salida de aire de atrás arma un flujo que enfría todos los componentes. Se conecta a un conector SYS_FAN de la placa madre.',
+        spec: 'Tamaño típico: 120 mm' }),
+      ssd: ext(SSD_PART, { name: 'Disco SSD SATA', short: 'SSD', req: [],
+        hint: 'El SSD de 2,5" va en la bahía de almacenamiento, abajo y hacia el frente.',
+        info: 'Guarda los datos de forma permanente: el sistema operativo, programas y archivos. No tiene partes móviles. Se conecta con un cable SATA a la placa madre y otro a la fuente.',
+        spec: 'Conexión SATA · formato 2,5"' }),
+      hdd: ext(HDD_PART, { name: 'Disco rígido (HDD)', short: 'HDD', req: [],
+        hint: 'El disco rígido es el más grande de los discos: va en la bahía de 3,5", abajo y al frente.',
+        info: 'Guarda datos en discos magnéticos que giran a miles de vueltas por minuto. Es más lento que un SSD pero da mucha capacidad por poco dinero, ideal para fotos, videos y copias de seguridad.',
+        spec: 'Formato 3,5" · 7200 RPM · SATA' })
+    },
+    slots: [
+      { type: 'mobo', x: 8, y: 6, w: 70, h: 58, z: 1 },
+      { type: 'cpu', x: 38, y: 16, w: 14, h: 11, z: 2 },
+      { type: 'cooler', x: 33, y: 12, w: 24, h: 19, z: 3 },
+      { type: 'ram', x: 60, y: 12, w: 10, h: 24, z: 2 },
+      { type: 'gpu', x: 12, y: 42, w: 60, h: 10, z: 2 },
+      { type: 'psu', x: 6, y: 76, w: 44, h: 18, z: 1 },
+      { type: 'm2', x: 22, y: 36.5, w: 22, h: 3.5, z: 2 },
+      { type: 'wifi', x: 12, y: 53, w: 28, h: 5, z: 2 },
+      { type: 'cmos', x: 66, y: 53, w: 5, h: 4, z: 2 },
+      { type: 'fan', x: 80, y: 38, w: 13, h: 10.4, z: 1 },
+      { type: 'ssd', x: 54, y: 77, w: 17, h: 13.6, z: 1 },
+      { type: 'hdd', x: 74, y: 75, w: 18, h: 18, z: 1 }
+    ]
+  };
+
+  /* ---------- PC gamer ---------- */
+  var gm = '<rect class="f-pcb" width="620" height="650" rx="6"/>' +
+    '<path class="s-trace" stroke-width="3" d="M80 120 H200 M90 200 H210 V300 M380 120 V300 M560 260 V520 M60 400 H180 M380 500 H600 M120 600 H360 M420 300 H580"/>' +
+    '<rect class="f-metal-dark" x="0" y="30" width="60" height="230" rx="3"/>' +
+    '<rect class="f-metal-dark" x="90" y="40" width="110" height="46" rx="5"/><rect class="f-metal-dark" x="230" y="26" width="120" height="40" rx="5"/>' +
+    '<rect class="f-socket" x="230" y="90" width="120" height="96" rx="3"/>';
+  for (var gi = 0; gi < 4; gi++) gm += '<rect class="f-chip" x="' + (423 + 33 * gi) + '" y="40" width="24" height="200" rx="2"/>';
+  [324, 440, 556].forEach(function (y) { gm += '<rect class="f-chip" x="60" y="' + y + '" width="320" height="14" rx="2"/>'; });
+  gm += '<rect class="s-pcb" x="200" y="343" width="130" height="20" rx="2"/><rect class="s-pcb" x="200" y="459" width="130" height="20" rx="2"/>' +
+    '<rect class="f-metal-dark" x="420" y="588" width="130" height="50" rx="5"/>' +
+    '<rect class="f-accent" x="604" y="90" width="7" height="420" rx="3" opacity=".85"/>';
+  [[20, 20], [600, 20], [20, 630], [600, 630], [300, 630], [300, 270]].forEach(function (p) { gm += '<circle class="f-metal" cx="' + p[0] + '" cy="' + p[1] + '" r="8"/>'; });
+
+  var rad = '<rect class="f-metal-dark" x="0" y="0" width="100" height="300" rx="4"/>';
+  for (var ri = 6; ri < 300; ri += 7) rad += '<line class="f-fin" x1="4" y1="' + ri + '" x2="96" y2="' + ri + '"/>';
+  rad += '<rect class="f-chip" x="3" y="3" width="94" height="94" rx="6" opacity=".6"/><rect class="f-chip" x="3" y="103" width="94" height="94" rx="6" opacity=".6"/><rect class="f-chip" x="3" y="203" width="94" height="94" rx="6" opacity=".6"/>' +
+    fan(50, 50, 44) + fan(50, 150, 44) + fan(50, 250, 44);
+
+  var GAMER = {
+    key: 'gamer', power: true, rgb: true,
+    psuOptions: [650, 850, 1000, 1200, 1600],
+    caseNote: 'Gabinete full tower con vidrio templado. Atrás: ventilador de salida. Adelante: radiador de 360 mm y dos ventiladores de entrada.',
+    start: 'Empezá por la placa madre. La fuente la elegís vos: tiene que alcanzar para todo lo que instales.',
+    deco: '<div class="deco io" style="top:15%;height:18%"></div><div class="deco brackets" style="top:34%;height:30%"></div><div class="deco shroud" style="top:71%"></div>' +
+      '<div class="deco screw" style="left:93%;top:96%"></div><div class="deco screw" style="left:3%;top:96%"></div>' +
+      '<div class="deco front"><span class="led"></span></div><div class="deco glass"></div>',
+    parts: {
+      mobo: { name: 'Placa madre', short: 'Placa madre', req: [], watts: 60, vb: '0 0 620 650', body: gm,
+        hint: 'La placa madre va atornillada contra el fondo del gabinete, pegada al panel trasero.',
+        info: 'Una placa madre gamer trae 4 ranuras para RAM, varias ranuras PCI Express x16 para placas de video y 2 o más ranuras M.2. Es la base: todo se conecta a ella.',
+        spec: 'Formato E-ATX · 4 DIMM · 3 PCIe x16 · 2 M.2' },
+      cpu: ext(CPU_PART, { name: 'Procesador (CPU)', short: 'CPU', req: ['mobo'], watts: 170,
+        hint: 'El procesador va en el zócalo (socket), al centro y arriba de la placa madre.',
+        info: 'Un procesador de alta gama tiene muchos núcleos y consume mucho más que uno común, por eso necesita refrigeración líquida.',
+        spec: 'Consumo: 170 W' }),
+      pump: { name: 'Bomba de watercooling', short: 'Bomba', req: ['cpu'], watts: 5, vb: '0 0 100 100',
+        body: '<rect class="f-chip" x="4" y="4" width="92" height="92" rx="16"/>' +
+          '<circle class="f-metal-dark" cx="50" cy="50" r="36"/><circle class="s-accent" cx="50" cy="50" r="30" stroke-width="5"/>' +
+          '<circle class="f-chip" cx="50" cy="50" r="18"/><path class="s-accent" stroke-width="4" d="M42 50 h16 M50 42 v16"/>' +
+          '<rect class="f-metal" x="84" y="22" width="14" height="10" rx="3"/><rect class="f-metal" x="84" y="68" width="14" height="10" rx="3"/>',
+        reqMsg: 'Primero colocá el procesador: la bomba del watercooling va apoyada encima de él.',
+        hint: 'La bomba es el bloque redondo de la refrigeración líquida: va encima del procesador.',
+        info: 'Es la parte de la refrigeración líquida que toca al procesador (con pasta térmica en el medio). Bombea líquido que absorbe el calor y lo lleva por mangueras hasta el radiador.',
+        spec: 'Consumo: 5 W · se conecta a CPU_PUMP' },
+      radiator: { name: 'Radiador 360 mm', short: 'Radiador', req: [], watts: 9, vb: '0 0 100 300', body: rad,
+        hint: 'El radiador con 3 ventiladores va en el frente del gabinete, arriba.',
+        info: 'Recibe el líquido caliente de la bomba. Sus aletas y sus 3 ventiladores de 120 mm enfrían el líquido, que vuelve frío al procesador. Así se refrigera mucho mejor que con un cooler de aire.',
+        spec: '3 × 120 mm · consumo de sus ventiladores: 9 W' },
+      fan: ext(FAN_PART, { name: 'Ventilador 120 mm', short: 'Fan', req: [], watts: 3, count: 3,
+        hint: 'Los ventiladores van dos en el frente, debajo del radiador, y uno atrás arriba, al lado del panel trasero.',
+        info: 'Los de adelante meten aire fresco y el de atrás saca el aire caliente. Con 3 placas de video adentro el flujo de aire es clave para que nada se recaliente.',
+        spec: 'Consumo: 3 W cada uno' }),
+      ram: { name: 'Memoria RAM', short: 'RAM', req: ['mobo'], watts: 5, count: 4, vb: '0 0 16 120',
+        body: '<rect class="f-metal-dark" x="0" y="0" width="16" height="120" rx="2"/>' +
+          '<rect class="f-accent" x="11" y="2" width="4" height="116" rx="1"/>' +
+          '<rect class="f-chip" x="2" y="10" width="7" height="100" rx="1" opacity=".55"/>',
+        hint: 'Las 4 memorias van en las ranuras largas a la derecha del procesador.',
+        info: 'Con 4 módulos (por ejemplo 4 × 16 GB = 64 GB) la PC puede tener muchos programas y juegos abiertos a la vez. Se instalan de a pares para trabajar en doble canal.',
+        spec: 'DDR5 con disipador y RGB · 5 W cada una' },
+      gpu: { name: 'Placa de video', short: 'GPU', req: ['mobo'], watts: 250, count: 3, vb: '0 0 240 50',
+        body: '<rect class="f-metal" x="0" y="0" width="7" height="50"/>' +
+          '<rect class="f-fan" x="8" y="2" width="230" height="42" rx="4"/>' +
+          '<rect class="f-accent" x="8" y="41" width="230" height="3"/>' +
+          '<rect class="f-gold" x="30" y="44" width="100" height="5"/>' + fan(52, 22, 16) + fan(122, 22, 16) + fan(192, 22, 16),
+        hint: 'Las 3 placas de video van en las ranuras PCI Express largas, una debajo de la otra.',
+        info: 'Cada una va en una ranura PCIe x16 y lleva sus propios cables de energía desde la fuente: son lo que más consume de toda la PC. Hoy los juegos casi no aprovechan varias placas a la vez; tener varias sirve sobre todo para render 3D, edición de video e inteligencia artificial.',
+        spec: 'Consumo: 250 W cada una' },
+      m2: ext(M2_PART, { name: 'Disco SSD M.2', short: 'M.2', req: ['mobo'], watts: 7, count: 2,
+        hint: 'Los discos M.2 van acostados sobre la placa madre, en las ranuras chiquitas entre las placas de video.',
+        info: 'Son los discos más rápidos: se enchufan directo en la placa madre, sin cables. Ideal para el sistema operativo y los juegos.',
+        spec: 'NVMe · 7 W cada uno' }),
+      ssd: ext(SSD_PART, { name: 'Disco SSD SATA', short: 'SSD', req: [], watts: 5, count: 2,
+        hint: 'Los SSD de 2,5" van abajo, en la bahía que está al lado de la fuente.',
+        info: 'Más lentos que un M.2 pero más rápidos que un disco rígido. Se conectan con cable SATA de datos a la placa madre y cable SATA de energía a la fuente.',
+        spec: 'Formato 2,5" · 5 W cada uno' }),
+      hdd: ext(HDD_PART, { name: 'Disco rígido (HDD)', short: 'HDD', req: [], watts: 9, count: 4,
+        hint: 'Los 4 discos rígidos van en la jaula de discos, abajo y hacia el frente.',
+        info: 'Dan mucha capacidad de almacenamiento por poco dinero: perfectos para guardar videos, grabaciones de partidas y copias de seguridad. Tienen motor, por eso consumen más que un SSD.',
+        spec: 'Formato 3,5" · 9 W cada uno' }),
+      psu: { name: 'Fuente', short: 'Fuente', req: [], vb: '0 0 200 100',
+        body: function (item) { return psuBody(item.watts); },
+        hint: 'La fuente va abajo a la izquierda, debajo de la cubierta del gabinete.',
+        info: 'Alimenta a todos los componentes. Su potencia tiene que superar el consumo total de la PC con un margen de seguridad. Si no alcanza, la PC se apaga sola o se reinicia cuando exigís a las placas de video.',
+        spec: 'Elegí la potencia según el consumo' }
+    },
+    powerOrder: ['gpu', 'cpu', 'mobo', 'ram', 'hdd', 'm2', 'ssd', 'radiator', 'fan', 'pump'],
+    slots: [
+      { type: 'fan', x: 1.5, y: 5, w: 10, h: 8, z: 1 },
+      { type: 'mobo', x: 13, y: 4, w: 62, h: 65, z: 1 },
+      { type: 'cpu', x: 36, y: 13, w: 12, h: 9.6, z: 2 },
+      { type: 'pump', x: 34, y: 11.4, w: 16, h: 12.8, z: 3 },
+      { type: 'ram', x: 55, y: 8, w: 3, h: 20, z: 2 },
+      { type: 'ram', x: 58.3, y: 8, w: 3, h: 20, z: 2 },
+      { type: 'ram', x: 61.6, y: 8, w: 3, h: 20, z: 2 },
+      { type: 'ram', x: 64.9, y: 8, w: 3, h: 20, z: 2 },
+      { type: 'gpu', x: 15, y: 29, w: 56, h: 9, z: 2 },
+      { type: 'm2', x: 33, y: 38.3, w: 13, h: 2, z: 2 },
+      { type: 'gpu', x: 15, y: 40.6, w: 56, h: 9, z: 2 },
+      { type: 'm2', x: 33, y: 49.9, w: 13, h: 2, z: 2 },
+      { type: 'gpu', x: 15, y: 52.2, w: 56, h: 9, z: 2 },
+      { type: 'radiator', x: 80, y: 5, w: 14, h: 33.6, z: 1 },
+      { type: 'fan', x: 80, y: 41, w: 14, h: 11.2, z: 1 },
+      { type: 'fan', x: 80, y: 53.5, w: 14, h: 11.2, z: 1 },
+      { type: 'psu', x: 4, y: 76, w: 40, h: 16, z: 1 },
+      { type: 'ssd', x: 47, y: 73.5, w: 13, h: 10.4, z: 1 },
+      { type: 'ssd', x: 47, y: 85, w: 13, h: 10.4, z: 1 },
+      { type: 'hdd', x: 63, y: 73, w: 11, h: 11, z: 1 },
+      { type: 'hdd', x: 76, y: 73, w: 11, h: 11, z: 1 },
+      { type: 'hdd', x: 63, y: 85.5, w: 11, h: 11, z: 1 },
+      { type: 'hdd', x: 76, y: 85.5, w: 11, h: 11, z: 1 }
+    ]
+  };
+
+  /* ---------- motor del juego ---------- */
+  function mountGame(host, cfg) {
+    var P = cfg.parts, SL = cfg.slots;
+    host.innerHTML =
+      '<div class="app' + (cfg.power ? ' has-power' : '') + '">' +
+        '<section class="hud panel" aria-label="Progreso">' +
+          '<div class="stats">' +
+            '<div class="stat"><span class="label">Piezas</span><strong class="js-count">0 / ' + SL.length + '</strong></div>' +
+            '<div class="stat"><span class="label">Errores</span><strong class="js-errors">0</strong></div>' +
+            '<div class="stat"><span class="label">Tiempo</span><strong class="js-time">00:00</strong></div>' +
+          '</div>' +
+          '<div class="bar"><span class="js-bar"></span></div>' +
+          '<div class="status js-status" role="status" aria-live="polite"></div>' +
+          '<div class="btns"><button class="btn js-help" type="button" aria-pressed="false">Mostrar nombres</button><button class="btn js-reset" type="button">Reiniciar</button></div>' +
+        '</section>' +
+        '<section class="tray-box panel" aria-label="Bandeja de componentes"><span class="label">Bandeja de componentes</span><div class="tray js-tray"></div></section>' +
+        '<div class="case-col"><div class="case js-case' + (cfg.rgb ? ' rgb' : '') + '" aria-label="Interior del gabinete">' + cfg.deco + '</div><p class="case-note">' + cfg.caseNote + '</p></div>' +
+        (cfg.power ? '<section class="power panel" aria-label="Consumo eléctrico"><span class="label">Consumo eléctrico</span><div class="js-power"></div></section>' : '') +
+        '<section class="info panel js-info" aria-live="polite"></section>' +
+      '</div>';
+    function q(s) { return host.querySelector(s); }
+    var caseEl = q('.js-case'), trayEl = q('.js-tray'), statusEl = q('.js-status'), infoEl = q('.js-info'), powerEl = q('.js-power');
+    var S;
+
+    SL.forEach(function (s, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'slot'; b.dataset.i = i;
+      b.style.cssText = 'left:' + s.x + '%;top:' + s.y + '%;width:' + s.w + '%;height:' + s.h + '%;z-index:' + s.z;
+      b.innerHTML = '<span class="tag">' + P[s.type].short + '</span>';
+      caseEl.appendChild(b);
+    });
+    var slotEls = caseEl.querySelectorAll('.slot');
+
+    function total(type) { return SL.filter(function (s) { return s.type === type; }).length; }
+    function svg(item, fit) {
+      var p = P[item.type], body = typeof p.body === 'function' ? p.body(item) : p.body;
+      return '<svg viewBox="' + p.vb + '" preserveAspectRatio="' + (fit ? 'xMidYMid meet' : 'none') + '" aria-hidden="true">' + body + '</svg>';
+    }
+    function itemName(item) { return P[item.type].name + (item.type === 'psu' && cfg.power ? ' de ' + item.watts + ' W' : ''); }
+
+    function newState() {
+      var items = [];
+      Object.keys(P).forEach(function (t) {
+        if (t === 'psu' && cfg.psuOptions) {
+          cfg.psuOptions.forEach(function (w) { items.push({ key: 'psu' + w, type: 'psu', watts: w, left: 1 }); });
+        } else {
+          items.push({ key: t, type: t, watts: P[t].watts, left: total(t) });
+        }
+      });
+      var count = {}; Object.keys(P).forEach(function (t) { count[t] = 0; });
+      return { items: items, filled: SL.map(function () { return null; }), count: count, errors: 0, sel: null, t0: null, timer: null, psu: null };
+    }
+
+    function buildTray() {
+      trayEl.innerHTML = '';
+      var nonPsu = S.items.filter(function (it) { return it.type !== 'psu'; }).sort(function () { return Math.random() - 0.5; });
+      var psus = S.items.filter(function (it) { return it.type === 'psu'; });
+      var order = cfg.psuOptions ? nonPsu.concat(psus) : nonPsu.concat(psus).sort(function () { return Math.random() - 0.5; });
+      order.forEach(function (it) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'part'; b.dataset.key = it.key;
+        b.innerHTML = (it.left > 1 ? '<span class="qty">×' + it.left + '</span>' : '') +
+          '<div class="thumb">' + svg(it, true) + '</div><span>' + itemName(it) + '</span>';
+        trayEl.appendChild(b);
+        it.el = b;
+      });
+    }
+    function refreshTray() {
+      S.items.forEach(function (it) {
+        var used = it.left <= 0;
+        var off = !used && it.type === 'psu' && cfg.psuOptions && S.psu && S.psu !== it;
+        it.el.classList.toggle('used', used);
+        it.el.classList.toggle('off', !!off);
+        it.el.setAttribute('aria-disabled', used || off ? 'true' : 'false');
+        var qt = it.el.querySelector('.qty'); if (qt) qt.textContent = '×' + it.left;
+      });
+    }
+    function byKey(k) { for (var i = 0; i < S.items.length; i++) if (S.items[i].key === k) return S.items[i]; return null; }
+
+    function say(msg, kind) { statusEl.textContent = msg; statusEl.className = 'status js-status' + (kind ? ' ' + kind : ''); }
+    function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    function startTimer() {
+      if (S.t0) return;
+      S.t0 = Date.now();
+      S.timer = setInterval(function () { q('.js-time').textContent = fmt(Math.floor((Date.now() - S.t0) / 1000)); }, 500);
+    }
+    function filledCount() { return S.filled.filter(Boolean).length; }
+    function updateHud() {
+      var n = filledCount();
+      q('.js-count').textContent = n + ' / ' + SL.length;
+      q('.js-errors').textContent = S.errors;
+      q('.js-bar').style.width = (n / SL.length * 100) + '%';
+    }
+    function flash(i) {
+      if (i == null) return;
+      var s = slotEls[i]; s.classList.add('flash'); setTimeout(function () { s.classList.remove('flash'); }, 600);
+    }
+    function miss(msg, i) { S.errors++; updateHud(); say(msg, 'err'); flash(i); }
+
+    function consumption() {
+      var c = 0; Object.keys(P).forEach(function (t) { if (t !== 'psu' && P[t].watts) c += S.count[t] * P[t].watts; }); return c;
+    }
+    function needed() { return Math.ceil(consumption() * MARGIN); }
+    function optionFor(need) { var o = cfg.psuOptions || TIERS; for (var i = 0; i < o.length; i++) if (o[i] >= need) return o[i]; return null; }
+
+    function place(item, i) {
+      S.filled[i] = item; S.count[item.type]++; item.left--;
+      var s = slotEls[i]; s.classList.add('filled'); s.insertAdjacentHTML('beforeend', svg(item, false));
+      s.setAttribute('aria-label', itemName(item) + ' colocada');
+      if (item.type === 'psu') S.psu = item;
+    }
+    function unplace(i) {
+      var item = S.filled[i]; if (!item) return;
+      S.filled[i] = null; S.count[item.type]--; item.left++;
+      var s = slotEls[i]; s.classList.remove('filled'); var g = s.querySelector('svg'); if (g) g.remove();
+      s.setAttribute('aria-label', 'Zona ' + (i + 1) + ' del gabinete');
+      if (item === S.psu) S.psu = null;
+    }
+    function othersDone() { return SL.every(function (s, i) { return s.type === 'psu' || S.filled[i]; }); }
+
+    function attempt(item, i) {
+      startTimer();
+      if (!item || item.left <= 0) return;
+      var s = SL[i], p = P[item.type];
+      if (S.filled[i]) { say('Ese lugar ya está ocupado. Probá en otro.', 'err'); flash(i); return; }
+      if (s.type !== item.type) { miss('Ese no es el lugar de: ' + p.name + '. ' + p.hint, i); return; }
+      for (var r = 0; r < p.req.length; r++) {
+        if (!S.count[p.req[r]]) { miss(p.reqMsg || ('Lugar correcto, pero antes tenés que colocar: ' + P[p.req[r]].name + '.'), null); return; }
+      }
+      var need = needed();
+      if (item.type === 'psu' && cfg.power && item.watts < need) {
+        miss('La fuente de ' + item.watts + ' W no alcanza. Lo que instalaste consume ' + consumption() + ' W y, con el 30 % de margen, se necesitan al menos ' + need + ' W.', i);
+        return;
+      }
+      place(item, i);
+      clearSel();
+      var msg = '¡Bien! ' + itemName(item) + ' en su lugar.', kind = 'ok';
+      if (cfg.power && item.type === 'psu') {
+        if (othersDone()) {
+          var best = optionFor(need);
+          msg = item.watts === best
+            ? '¡Elección perfecta! La fuente de ' + item.watts + ' W cubre los ' + need + ' W que necesita la PC.'
+            : 'Funciona, pero sobra potencia: se necesitan ' + need + ' W y con una de ' + best + ' W alcanzaba (y es más barata).';
+        } else {
+          msg = (need ? 'La fuente de ' + item.watts + ' W alcanza por ahora (se necesitan ' + need + ' W). ' : 'Fuente de ' + item.watts + ' W colocada. ') +
+            'Cada pieza que agregues suma consumo: si deja de alcanzar, la vas a tener que cambiar.';
+        }
+      } else if (cfg.power && S.psu && S.psu.watts < needed()) {
+        var old = S.psu.watts;
+        unplace(SL.findIndex(function (x, k) { return S.filled[k] === S.psu || (x.type === 'psu' && S.filled[k]); }));
+        msg = itemName(item) + ' en su lugar, pero ahora la PC necesita ' + needed() + ' W y la fuente de ' + old + ' W ya no alcanza. La saqué: elegí una más potente.';
+        kind = 'err';
+      }
+      updateHud(); refreshTray(); renderPower();
+      say(msg, kind);
+      showInfo(item);
+      if (filledCount() === SL.length) win();
+    }
+
+    function showInfo(item) {
+      var p = P[item.type];
+      infoEl.classList.remove('win');
+      infoEl.innerHTML = '<span class="label">Ficha técnica</span><h2>' + itemName(item) + '</h2><p>' + p.info + '</p><p class="spec">' + p.spec + '</p>';
+    }
+    function introInfo() {
+      infoEl.classList.remove('win');
+      infoEl.innerHTML = '<span class="label">Ficha técnica</span><h2>Cómo se juega</h2><p>Cada vez que coloques bien una pieza vas a ver acá para qué sirve y dónde se conecta.</p>' +
+        (cfg.power ? '<p>En la bandeja hay 5 fuentes de distinta potencia. Mirá el panel de consumo para elegir la que corresponde.</p>' : '') +
+        '<p class="spec">Si te trabás, activá “Mostrar nombres”.</p>';
+    }
+
+    function renderPower() {
+      if (!powerEl) return;
+      var rows = '';
+      cfg.powerOrder.forEach(function (t) {
+        var n = S.count[t]; if (!n) return;
+        rows += '<tr><td>' + P[t].name + '</td><td>' + n + ' × ' + P[t].watts + ' W</td><td>' + (n * P[t].watts) + ' W</td></tr>';
+      });
+      if (!rows) rows = '<tr class="empty"><td colspan="3">Todavía no instalaste nada.</td></tr>';
+      var c = consumption(), need = needed(), best = optionFor(need);
+      var inst = S.psu ? S.psu.watts + ' W' : 'sin fuente';
+      var instCls = S.psu ? (S.psu.watts >= need ? 'good' : 'bad') : '';
+      powerEl.innerHTML = '<table class="ptable"><tbody>' + rows + '</tbody></table>' +
+        '<dl class="psum">' +
+          '<dt>Consumo total</dt><dd>' + c + ' W</dd>' +
+          '<dt>+ 30 % de margen</dt><dd class="big">' + need + ' W</dd>' +
+          '<dt>Fuente que corresponde</dt><dd>' + (best ? best + ' W' : 'más de 1600 W') + '</dd>' +
+          '<dt>Fuente instalada</dt><dd class="' + instCls + '">' + inst + '</dd>' +
+        '</dl>';
+    }
+
+    function win() {
+      clearInterval(S.timer);
+      var secs = Math.floor((Date.now() - S.t0) / 1000);
+      caseEl.classList.add('powered');
+      say(cfg.power ? '¡PC gamer armada y encendida!' : '¡PC armada y encendida!', 'ok');
+      infoEl.classList.add('win');
+      var extra = '';
+      if (cfg.power) {
+        var need = needed(), best = optionFor(need);
+        extra = '<p>Consumo total: <strong>' + consumption() + ' W</strong>. Fuente instalada: <strong>' + S.psu.watts + ' W</strong>' +
+          (S.psu.watts === best ? ', la justa para esta PC.' : '. Con una de ' + best + ' W alcanzaba.') + '</p>';
+      }
+      infoEl.innerHTML = '<span class="label">Resultado</span><h2>¡PC completa!</h2>' +
+        '<p>La armaste en <strong>' + fmt(secs) + '</strong> con <strong>' + S.errors + '</strong> ' + (S.errors === 1 ? 'error' : 'errores') + '.</p>' + extra +
+        '<p class="spec">' + (S.errors === 0 ? 'Armado perfecto: sin errores.' : 'Probá de nuevo para hacerlo sin errores.') + '</p>' +
+        '<button class="btn js-again" type="button">Jugar de nuevo</button>';
+      q('.js-again').addEventListener('click', reset);
+    }
+
+    function reset() {
+      if (S) clearInterval(S.timer);
+      if (S) S.filled.forEach(function (f, i) { if (f) unplace(i); });
+      S = newState();
+      q('.js-time').textContent = '00:00';
+      caseEl.classList.remove('powered');
+      slotEls.forEach(function (s, i) { s.classList.remove('filled', 'hover', 'flash'); s.setAttribute('aria-label', 'Zona ' + (i + 1) + ' del gabinete'); });
+      buildTray(); refreshTray(); updateHud(); renderPower();
+      say(cfg.start); introInfo();
+    }
+
+    function zoneAt(cx, cy, item) {
+      var r = caseEl.getBoundingClientRect();
+      var bw = caseEl.clientLeft, bh = caseEl.clientTop;
+      var iw = caseEl.clientWidth, ih = caseEl.clientHeight;
+      var x = cx - r.left - bw, y = cy - r.top - bh;
+      if (x < 0 || y < 0 || x > iw || y > ih) return { outside: true };
+      var px = x / iw * 100, py = y / ih * 100;
+      var hits = [];
+      SL.forEach(function (s, i) { if (px >= s.x && px <= s.x + s.w && py >= s.y && py <= s.y + s.h) hits.push(i); });
+      function area(i) { return SL[i].w * SL[i].h; }
+      function pick(list) { list.sort(function (a, b) { return area(a) - area(b); }); return list.length ? list[0] : null; }
+      if (item) {
+        var mine = hits.filter(function (i) { return SL[i].type === item.type && !S.filled[i]; });
+        if (mine.length) return { i: pick(mine) };
+      }
+      var free = hits.filter(function (i) { return !S.filled[i]; });
+      return { i: pick(free.length ? free : hits) };
+    }
+    function clearHover() { caseEl.querySelectorAll('.slot.hover').forEach(function (s) { s.classList.remove('hover'); }); }
+    function clearSel() { S.sel = null; trayEl.querySelectorAll('.part.selected').forEach(function (x) { x.classList.remove('selected'); }); }
+    function ghostSize(item) {
+      var idx = SL.findIndex(function (s, i) { return s.type === item.type && !S.filled[i]; });
+      if (idx < 0) idx = SL.findIndex(function (s) { return s.type === item.type; });
+      var s = SL[idx];
+      return { w: caseEl.clientWidth * s.w / 100, h: caseEl.clientHeight * s.h / 100 };
+    }
+    function usable(b) { return b && b.getAttribute('aria-disabled') !== 'true'; }
+
+    var drag = null;
+    trayEl.addEventListener('pointerdown', function (e) {
+      var b = e.target.closest('.part'); if (!usable(b)) return;
+      if (e.button !== undefined && e.button !== 0) return;
+      drag = { item: byKey(b.dataset.key), x0: e.clientX, y0: e.clientY, moved: false, ghost: null, el: b };
+      try { b.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+    trayEl.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6) return;
+      if (!drag.moved) {
+        drag.moved = true;
+        var sz = ghostSize(drag.item);
+        var g = document.createElement('div'); g.className = 'ghost';
+        g.style.width = sz.w + 'px'; g.style.height = sz.h + 'px';
+        g.innerHTML = svg(drag.item, false);
+        document.body.appendChild(g);
+        drag.ghost = g; drag.w = sz.w; drag.h = sz.h;
+        startTimer();
+      }
+      drag.ghost.style.transform = 'translate(' + (e.clientX - drag.w / 2) + 'px,' + (e.clientY - drag.h / 2) + 'px)';
+      clearHover();
+      var z = zoneAt(e.clientX, e.clientY, drag.item);
+      if (z.i != null && !S.filled[z.i]) slotEls[z.i].classList.add('hover');
+    });
+    function endDrag(e, cancel) {
+      if (!drag) return;
+      var d = drag; drag = null; clearHover();
+      if (!d.moved) return;
+      d.ghost.remove();
+      d.el.dataset.dragged = '1';
+      setTimeout(function () { delete d.el.dataset.dragged; }, 50);
+      if (cancel) return;
+      var z = zoneAt(e.clientX, e.clientY, d.item);
+      if (z.outside) { say('Soltá la pieza dentro del gabinete.'); return; }
+      if (z.i == null) { miss('Ahí no va nada. ' + P[d.item.type].hint, null); return; }
+      attempt(d.item, z.i);
+    }
+    trayEl.addEventListener('pointerup', function (e) { endDrag(e, false); });
+    trayEl.addEventListener('pointercancel', function (e) { endDrag(e, true); });
+
+    trayEl.addEventListener('click', function (e) {
+      var b = e.target.closest('.part'); if (!b || b.dataset.dragged || !usable(b)) return;
+      var it = byKey(b.dataset.key);
+      var was = S.sel === it;
+      clearSel();
+      if (was) { say('Pieza deseleccionada.'); return; }
+      S.sel = it; b.classList.add('selected');
+      say('Elegiste: ' + itemName(it) + '. Ahora tocá el lugar del gabinete donde va.');
+    });
+    caseEl.addEventListener('click', function (e) {
+      if (!S.sel) { if (e.target.closest('.slot:not(.filled)')) say('Primero elegí una pieza de la bandeja.'); return; }
+      var s = e.target.closest('.slot'), i;
+      if (e.detail === 0 && s) i = +s.dataset.i;
+      else i = zoneAt(e.clientX, e.clientY, S.sel).i;
+      if (i == null) { miss('Ahí no va nada. ' + P[S.sel.type].hint, null); return; }
+      attempt(S.sel, i);
+    });
+
+    var helpBtn = q('.js-help');
+    helpBtn.addEventListener('click', function () {
+      var on = helpBtn.getAttribute('aria-pressed') !== 'true';
+      helpBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      helpBtn.textContent = on ? 'Ocultar nombres' : 'Mostrar nombres';
+      caseEl.classList.toggle('help', on);
+    });
+    q('.js-reset').addEventListener('click', reset);
+    reset();
+  }
+
+  mountGame(document.getElementById('panel-basica'), BASIC);
+  mountGame(document.getElementById('game-gamer'), GAMER);
+
+  /* ---------- calculadora ---------- */
+  function val(id) { return +document.getElementById(id).value || 0; }
+  function calc() {
+    var gpu = val('c-gpu'), gpuw = val('c-gpuw');
+    var total = 60 + val('c-cpu') + gpu * gpuw + val('c-ram') * 5 + val('c-m2') * 7 + val('c-ssd') * 5 + val('c-hdd') * 9 + val('c-fan') * 3 + val('c-cool');
+    var need = Math.ceil(total * MARGIN), tier = null;
+    for (var i = 0; i < TIERS.length; i++) if (TIERS[i] >= need) { tier = TIERS[i]; break; }
+    document.getElementById('c-total').textContent = total + ' W';
+    document.getElementById('c-need').textContent = need + ' W';
+    var rec = document.getElementById('c-rec'), note = document.getElementById('c-note'), fill = document.getElementById('c-fill');
+    if (tier) {
+      var load = total / tier;
+      rec.innerHTML = tier + '<small>W</small>';
+      fill.style.width = Math.min(100, load * 100) + '%';
+      note.className = 'note';
+      note.textContent = 'Con la PC exigida al máximo, la fuente trabaja al ' + Math.round(load * 100) + ' % de su capacidad.' +
+        (gpu === 0 ? ' Sin placa de video se usa el video integrado del procesador, si lo tiene.' : '') +
+        (gpu >= 2 ? ' Fijate que la fuente traiga los cables de energía para ' + gpu + ' placas de video.' : '') +
+        ' Conviene que tenga certificación 80 Plus Gold o superior.';
+    } else {
+      rec.innerHTML = '+1600<small>W</small>';
+      fill.style.width = '100%';
+      note.className = 'note bad';
+      note.textContent = 'Se necesitan ' + need + ' W: más que la fuente común más grande (1600 W). Habría que usar dos fuentes o una fuente de servidor, o bajar la cantidad de placas de video.';
+    }
+  }
+  document.querySelectorAll('.stepper button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var inp = document.getElementById(b.dataset.for);
+      var v = (+inp.value || 0) + (+b.dataset.d);
+      inp.value = Math.max(+inp.min, Math.min(+inp.max, v));
+      calc();
+    });
+  });
+  document.querySelectorAll('.calc input, .calc select').forEach(function (el) {
+    el.addEventListener('input', function () {
+      if (el.type === 'number' && el.value !== '') el.value = Math.max(+el.min, Math.min(+el.max, Math.round(+el.value)));
+      calc();
+    });
+  });
+  calc();
+
+  /* ---------- pestañas ---------- */
+  var tabs = document.querySelectorAll('.tab');
+  function show(name) {
+    if (name !== 'basica' && name !== 'gamer') name = 'basica';
+    tabs.forEach(function (t) {
+      var on = t.dataset.tab === name;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById('panel-' + t.dataset.tab).hidden = !on;
+    });
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      show(t.dataset.tab);
+      try { history.replaceState(null, '', '#' + t.dataset.tab); } catch (_) { location.hash = t.dataset.tab; }
+    });
+  });
+  window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+  show(location.hash.slice(1));
+})();
+</script>
+
+</body>
+</html>
