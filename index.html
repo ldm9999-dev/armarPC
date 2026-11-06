@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego de 8 fases para configurar y armar una PC Intel o AMD, con evaluación en cada fase y una integradora final.">
+<meta name="description" content="Juego educativo para aprender a armar una PC: 8 fases, evaluaciones y una integradora final, en modo básico o avanzado.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,6 +238,77 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .head-btns { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
 .head-btns .btn { padding: 4px 10px; font-size: 13px; }
 #snd-btn[aria-pressed="false"] { color: var(--muted); }
+
+/* barra superior y navegación */
+.topbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font: 700 clamp(20px, 2.6vw, 26px)/1 var(--font-display); letter-spacing: .01em; }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.mode-chip { font: 600 11.5px var(--font-mono); text-transform: uppercase; letter-spacing: .08em; border-radius: 999px; padding: 5px 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.mode-chip:hover:not(:disabled) { border-color: var(--accent); }
+.mode-chip.a { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.mode-chip:disabled { opacity: .6; cursor: default; }
+.nav-main { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 4px; width: max-content; max-width: 100%; overflow-x: auto; }
+.nav-main button { font: 600 14.5px var(--font-display); letter-spacing: .02em; padding: 8px 18px; border-radius: 7px; border: 0; background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; }
+.nav-main button:hover:not(:disabled) { color: var(--ink); }
+.nav-main button[aria-current="true"] { background: var(--ink); color: var(--surface); }
+.nav-main button:disabled { opacity: .4; cursor: not-allowed; }
+.tabs[hidden] { display: none; }
+
+/* bienvenida */
+.welcome[hidden], .wrap[hidden] { display: none; }
+.welcome { min-height: 100%; display: grid; place-items: center; padding-block: 28px 40px; }
+.welcome-inner { width: 100%; max-width: 900px; display: grid; gap: 22px; }
+.w-brand { display: flex; align-items: center; gap: 14px; }
+.w-brand svg { width: 56px; height: 56px; }
+.welcome h1 { font: 700 clamp(38px, 7vw, 64px)/1 var(--font-display); margin: 0; letter-spacing: .01em; }
+.welcome .lead { font-size: clamp(16px, 2vw, 18px); color: var(--muted); margin: 0; max-width: 62ch; line-height: 1.55; }
+.w-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.w-steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; font-size: 14px; }
+.w-steps b { font: 700 13px var(--font-mono); color: var(--accent); }
+.w-q { font: 700 22px var(--font-display); margin: 6px 0 0; }
+.mode-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.mode-card { display: grid; gap: 10px; align-content: start; text-align: left; background: var(--surface); color: var(--ink); border: 2px solid var(--line); border-radius: 14px; padding: 20px; cursor: pointer; font: inherit; transition: border-color .15s, transform .15s; }
+.mode-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.mode-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.mode-card .mc-top { display: flex; align-items: center; gap: 12px; }
+.mode-card .mc-ico { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); flex: none; }
+.mode-card.a .mc-ico { background: var(--ink); color: var(--surface); }
+.mode-card .mc-ico svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mode-card strong { font: 700 26px var(--font-display); }
+.mode-card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.mode-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; }
+.mode-card li::before { content: "✓"; color: var(--ok); font-weight: 700; margin-right: 8px; }
+.mode-card li.no::before { content: "✕"; color: var(--err); }
+.mode-card .mc-cta { margin-top: 4px; display: flex; justify-content: space-between; align-items: center; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; font-size: 13px; color: var(--muted); }
+.mode-card .mc-cta b { font: 700 15px var(--font-display); color: var(--accent); white-space: nowrap; }
+.w-links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--muted); font-size: 13.5px; }
+.w-links .btn { font-size: 13.5px; }
+@media (max-width: 700px) { .w-steps, .mode-cards { grid-template-columns: minmax(0, 1fr); } }
+
+/* recorrido de fases */
+.lv-map { display: grid; gap: 16px; }
+.lv-headrow { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: end; justify-content: space-between; }
+.lv-headrow h2 { font: 700 clamp(22px, 3.4vw, 28px)/1.1 var(--font-display); margin: 2px 0 0; }
+.lv-stats { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 13.5px; color: var(--muted); }
+.lv-stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.journey { list-style: none; margin: 0; padding: 6px 2px 4px; display: flex; overflow-x: auto; }
+.journey li { flex: 1 0 70px; display: grid; justify-items: center; gap: 6px; position: relative; text-align: center; }
+.journey li + li::before { content: ""; position: absolute; top: 18px; right: 50%; width: 100%; height: 3px; background: var(--line); }
+.journey li.done + li::before, .journey li.done::before { background: var(--ok); }
+.journey li:first-child::before { display: none; }
+.journey .dot { position: relative; z-index: 1; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font: 700 14px var(--font-mono); background: var(--surface); color: var(--muted); border: 2px solid var(--line); cursor: pointer; padding: 0; }
+.journey li.done .dot { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.journey li.cur .dot { border-color: var(--accent); color: var(--ink); box-shadow: 0 0 0 5px var(--accent-soft); }
+.journey li.lock .dot { cursor: not-allowed; opacity: .6; }
+.journey .lbl { font-size: 11.5px; line-height: 1.2; color: var(--muted); max-width: 96px; }
+.journey li.cur .lbl { color: var(--ink); font-weight: 600; }
+.next-card { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; background: var(--surface); border: 2px solid var(--accent); border-radius: 14px; padding: 16px 20px; }
+.next-card h3 { margin: 2px 0 2px; font: 700 20px var(--font-display); }
+.next-card p { margin: 0; color: var(--muted); font-size: 14px; max-width: 60ch; }
+.next-card .btn.primary { font-size: 16px; padding: 11px 20px; }
+.next-card.fin { border-color: var(--ok); }
+.lv-subtitle { font: 700 16px var(--font-display); margin: 8px 0 -6px; color: var(--muted); }
+@media (max-width: 699px) { .journey .lbl { display: none; } .journey li { flex-basis: 40px; } }
 
 /* niveles */
 .lv-top { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: end; justify-content: space-between; }
@@ -550,27 +621,34 @@ button.btn.primary:hover { filter: brightness(1.05); }
 </head>
 <body>
 
+<div class="welcome" id="welcome" lang="es" hidden></div>
+
 <div class="wrap" lang="es">
-  <header>
-    <h1>Armá tu PC</h1>
-    <p>Jugá el modo Niveles para avanzar de fase en fase y sacar la mejor nota, o elegí otra pestaña para practicar libre. En cada juego arrastrás las piezas a su lugar, o tocás una pieza y después el lugar donde va.</p>
+  <header class="topbar">
+    <a class="brand" href="#niveles" id="brand-home" aria-label="Armá tu PC: volver al inicio"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" rx="4" fill="var(--accent)"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--surface)"/><g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"><path d="M14 3v4M20 3v4M26 3v4M14 33v4M20 33v4M26 33v4M3 14h4M3 20h4M3 26h4M33 14h4M33 20h4M33 26h4"/></g></svg><span>Armá tu PC</span></a>
+    <button type="button" class="mode-chip" id="mode-chip" hidden></button>
     <div class="head-btns">
       <button type="button" class="btn" id="snd-btn" aria-pressed="true">Sonido: activado</button>
       <button type="button" class="btn" id="fs-btn" hidden>Pantalla completa</button>
     </div>
   </header>
 
-  <nav class="tabs" role="tablist" aria-label="Modo de juego">
-    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" aria-controls="panel-niveles">Niveles<small>8 fases + integradora</small></button>
-    <button class="tab" role="tab" type="button" id="tab-muy-basica" data-tab="muy-basica" aria-controls="panel-muy-basica">PC muy básica<small>a medida</small></button>
-    <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
-    <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
-    <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
-    <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
-    <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" aria-controls="panel-evaluaciones">Evaluaciones<small>8 × 5 opción múltiple</small></button>
-    <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" aria-controls="panel-integradora">Integradora<small>18 preguntas</small></button>
+  <nav class="nav-main" aria-label="Secciones">
+    <button type="button" data-group="juego">Juego</button>
+    <button type="button" data-group="practica">Práctica libre</button>
+    <button type="button" data-group="eval">Evaluaciones</button>
   </nav>
-  <p class="lock-note" id="lock-note" hidden>Mientras jugás un nivel o una evaluación, las otras pestañas quedan bloqueadas. Volvé a los niveles para usarlas.</p>
+  <nav class="tabs" role="tablist" aria-label="Apartados de la sección">
+    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>8 fases + integradora</small></button>
+    <button class="tab" role="tab" type="button" id="tab-muy-basica" data-tab="muy-basica" data-group="practica" aria-controls="panel-muy-basica">PC muy básica<small>a medida</small></button>
+    <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" data-group="practica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" data-group="practica" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" data-group="practica" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" data-group="practica" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
+    <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" data-group="eval" aria-controls="panel-evaluaciones">Por fase<small>8 × 5 opción múltiple</small></button>
+    <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" data-group="eval" aria-controls="panel-integradora">Integradora<small>18 preguntas</small></button>
+  </nav>
+  <p class="lock-note" id="lock-note" hidden>Mientras jugás una fase o una evaluación, las otras secciones quedan bloqueadas. Tocá “Volver a los niveles” para usarlas.</p>
 
   <section class="tabpanel" role="tabpanel" id="panel-niveles" aria-labelledby="tab-niveles">
     <div class="lv-map" id="lv-map"></div>
@@ -1400,10 +1478,12 @@ button.btn.primary:hover { filter: brightness(1.05); }
   var GB = [2, 4, 6, 8];
   var conf = { disk: 'ssd', n: 2, gb: [4, 4] };
   var miniConfRef = conf;
-  var PlacaFactory, WiringFactory, tabLocked = false;
+  var PlacaFactory, WiringFactory, openWelcome, tabLocked = false;
   function setLock(on) {
     tabLocked = on;
     document.querySelectorAll('.tab').forEach(function (t) { if (t.dataset.tab !== 'niveles') { t.disabled = on; t.title = on ? 'Terminá o salí del nivel para usar esta pestaña' : ''; } });
+    document.querySelectorAll('.nav-main button').forEach(function (b) { if (b.dataset.group !== 'juego') { b.disabled = on; b.title = on ? 'Terminá o salí de la fase para usar esta sección' : ''; } });
+    var mc = document.getElementById('mode-chip'); if (mc) mc.disabled = on;
     var n = document.getElementById('lock-note'); if (n) n.hidden = !on;
   }
 
@@ -2571,27 +2651,102 @@ button.btn.primary:hover { filter: brightness(1.05); }
           opt('a', 'Avanzado', 'En todas las fases el botón “Mostrar nombres” queda bloqueado: tenés que saber dónde va todo.') +
         '</div></div>';
     }
+    var welcomeEl = document.getElementById('welcome'), wrapEl = document.querySelector('.wrap'), chip = document.getElementById('mode-chip');
+    var ICON_B = '<svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+    var ICON_A = '<svg viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7c1.7 0 3.2-.4 4.5-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+    function nextAction(m) {
+      var keep = store.mode; store.mode = m || store.mode;
+      var r = { kind: 'done', i: -1 };
+      for (var i = 0; i < LEVELS.length; i++) {
+        if (!phaseDone(i)) { r = { kind: lv(i) >= PASS ? 'quiz' : 'play', i: i }; break; }
+      }
+      if (r.kind === 'done' && !hasIg()) r = { kind: 'integ', i: -1 };
+      store.mode = keep; return r;
+    }
+    function renderWelcome() {
+      function card(m, name, desc, feats) {
+        var n = progressIn(m), na = nextAction(m);
+        var cta = n === 0 && na.kind === 'play' && na.i === 0 ? 'Empezar desde la fase 1' : na.kind === 'integ' ? 'Seguís en la integradora' : na.kind === 'done' ? 'Juego terminado: ver tus notas' : 'Seguís en la fase ' + (na.i + 1);
+        return '<button type="button" class="mode-card ' + m + '" data-mode="' + m + '">' +
+          '<div class="mc-top"><span class="mc-ico">' + (m === 'a' ? ICON_A : ICON_B) + '</span><strong>' + name + '</strong></div>' +
+          '<p>' + desc + '</p><ul>' + feats + '</ul>' +
+          '<div class="mc-cta"><span>' + (n ? n + ' de ' + LEVELS.length + ' fases completas · ' : '') + cta + '</span><b>' + (n ? 'Continuar →' : 'Empezar →') + '</b></div></button>';
+      }
+      welcomeEl.innerHTML = '<div class="welcome-inner">' +
+        '<div class="w-brand"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" rx="4" fill="var(--accent)"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--surface)"/><g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"><path d="M14 3v4M20 3v4M26 3v4M14 33v4M20 33v4M26 33v4M3 14h4M3 20h4M3 26h4M33 14h4M33 20h4M33 26h4"/></g></svg><span class="label">Juego educativo de hardware</span></div>' +
+        '<h1>Armá tu PC</h1>' +
+        '<p class="lead">Aprendé a armar una computadora paso a paso: conectá los cables de la fuente, armá placas madre AMD e Intel y configurá desde una PC muy básica hasta una PC gamer.</p>' +
+        '<ol class="w-steps">' +
+          '<li><b>01 · Fases</b>8 fases que se desbloquean de a una, de lo más simple a lo más avanzado.</li>' +
+          '<li><b>02 · Evaluaciones</b>Después de cada fase, 5 preguntas de opción múltiple.</li>' +
+          '<li><b>03 · Integradora</b>Al final, 18 preguntas sobre todo el juego y tu nota final.</li>' +
+        '</ol>' +
+        '<h2 class="w-q">¿Cómo querés jugar?</h2>' +
+        '<div class="mode-cards">' +
+          card('b', 'Básico', 'Para aprender: podés pedir ayuda para ver dónde va cada pieza.', '<li>Botón “Mostrar nombres” disponible</li><li>Las 8 fases y sus evaluaciones</li>') +
+          card('a', 'Avanzado', 'Para demostrar lo que sabés: tenés que reconocer cada pieza solo.', '<li class="no">Sin ayuda de nombres</li><li>Las mismas 8 fases y evaluaciones</li>') +
+        '</div>' +
+        '<div class="w-links"><span>¿Solo querés practicar o sos docente?</span><button type="button" class="btn" data-go="muy-basica">Práctica libre</button><button type="button" class="btn" data-go="evaluaciones">Ver evaluaciones</button></div>' +
+      '</div>';
+    }
+    openWelcome = function () {
+      if (tabLocked) return;
+      renderWelcome(); welcomeEl.hidden = false; wrapEl.hidden = true;
+      try { window.scrollTo(0, 0); } catch (_) {}
+      var f = welcomeEl.querySelector('.mode-card.' + (store.mode || 'b')); if (f) f.focus();
+    };
+    function closeWelcome() { welcomeEl.hidden = true; wrapEl.hidden = false; fitAll(); }
+    welcomeEl.addEventListener('click', function (e) {
+      var m = e.target.closest('[data-mode]'), g = e.target.closest('[data-go]');
+      if (m) {
+        store.mode = m.dataset.mode; save(); closeWelcome();
+        show('niveles'); try { history.replaceState(null, '', '#niveles'); } catch (_) {}
+        backToMap();
+      } else if (g) {
+        closeWelcome(); show(g.dataset.go); try { history.replaceState(null, '', '#' + g.dataset.go); } catch (_) {}
+      }
+    });
+    function updateChip() {
+      chip.hidden = !M();
+      if (M()) { chip.textContent = 'Modo ' + DIFF[M()]; chip.className = 'mode-chip ' + M(); chip.title = 'Cambiar de modo'; }
+    }
+    chip.addEventListener('click', function () { openWelcome(); });
+    document.getElementById('brand-home').addEventListener('click', function (e) { e.preventDefault(); openWelcome(); });
+
     function renderMap() {
       resetArm = false;
-      if (!M()) { renderStart(); return; }
+      updateChip();
+      if (!M()) { mapEl.innerHTML = ''; openWelcome(); return; }
       var done = 0;
       LEVELS.forEach(function (_, i) { if (phaseDone(i)) done++; });
       var nextIdx = -1;
       for (var i = 0; i < LEVELS.length; i++) if (unlocked(i) && !phaseDone(i)) { nextIdx = i; break; }
       var all = allPhases(), g = ig(), gd = hasIg();
+      var na = nextAction(), nextCard;
+      if (na.kind === 'play' || na.kind === 'quiz') {
+        var NL = LEVELS[na.i];
+        nextCard = '<div class="next-card"><div><span class="label">' + (na.kind === 'quiz' ? 'Te falta la evaluación' : na.i === 0 && !done ? 'Para empezar' : 'Tu próxima fase') + '</span>' +
+          '<h3>Fase ' + (na.i + 1) + ' · ' + NL.title + '</h3><p>' + (na.kind === 'quiz' ? 'Ya aprobaste el juego de esta fase. Hacé la evaluación de ' + NEV + ' preguntas de opción múltiple para desbloquear la siguiente.' : NL.desc) + '</p></div>' +
+          '<button type="button" class="btn primary" id="lv-next">' + (na.kind === 'quiz' ? 'Hacer la evaluación →' : (done || lv(na.i) ? 'Continuar →' : 'Empezar →')) + '</button></div>';
+      } else if (na.kind === 'integ') {
+        nextCard = '<div class="next-card"><div><span class="label">¡Completaste las 8 fases!</span><h3>Evaluación integradora</h3><p>' + NINT + ' preguntas que mezclan opción múltiple y verdadero o falso. Es el último paso del juego.</p></div>' +
+          '<button type="button" class="btn primary" id="lv-next">Hacer la integradora →</button></div>';
+      } else {
+        nextCard = '<div class="next-card fin"><div><span class="label">Juego terminado</span><h3>¡Felicitaciones!</h3><p>Completaste las 8 fases y la integradora. Podés repetir cualquier fase para mejorar tu nota.</p></div>' +
+          '<button type="button" class="btn primary" id="lv-next">Ver cartel de notas</button></div>';
+      }
+      var journey = '<ol class="journey" aria-label="Recorrido de fases">' + LEVELS.map(function (L, i) {
+        var st = phaseDone(i) ? 'done' : !unlocked(i) ? 'lock' : i === na.i ? 'cur' : '';
+        return '<li class="' + st + '"><button type="button" class="dot" data-i="' + i + '" aria-label="Fase ' + (i + 1) + ': ' + L.title + '"' + (st === 'lock' ? ' aria-disabled="true"' : '') + '>' + (st === 'done' ? '✓' : i + 1) + '</button><span class="lbl">' + L.title + '</span></li>';
+      }).join('') +
+        '<li class="' + (gd ? 'done' : all ? 'cur' : 'lock') + '"><button type="button" class="dot" data-ig="1" aria-label="Evaluación integradora"' + (all ? '' : ' aria-disabled="true"') + '>' + (gd ? '✓' : '★') + '</button><span class="lbl">Integradora</span></li></ol>';
       mapEl.innerHTML =
-        '<div class="lv-top">' +
-          '<div><span class="label">Modo niveles <span class="diff-tag ' + M() + '">' + DIFF[M()] + '</span></span>' +
-          '<h2>' + (gd ? '¡Terminaste el juego!' : all ? '¡Completaste las 8 fases! Falta la integradora' : 'De la PC más simple a la PC gamer') + '</h2>' +
-          '<p>Cada fase tiene dos partes: el juego (aprobás con 60 o más) y una evaluación corta de opción múltiple. Al completar las dos se desbloquea la fase siguiente.</p></div>' +
-          '<div class="lv-prog">' +
-            '<div class="row"><span>Fases completas</span><strong>' + done + ' / ' + LEVELS.length + '</strong></div>' +
-            '<div class="bar"><span style="width:' + (done / LEVELS.length * 100) + '%"></span></div>' +
-            '<div class="row"><span>Promedio de los juegos</span><strong>' + (done ? avgL() : '—') + '</strong></div>' +
-            '<div class="row"><span>Promedio de las evaluaciones</span><strong>' + (done ? avgE() : '—') + '</strong></div>' +
-          '</div>' +
-        '</div>' +
+        '<div class="lv-headrow"><div><span class="label">Juego · modo <span class="diff-tag ' + M() + '">' + DIFF[M()] + '</span></span>' +
+          '<h2>' + (gd ? '¡Terminaste el juego!' : 'De la PC más simple a la PC gamer') + '</h2></div>' +
+          '<div class="lv-stats"><span>Fases completas <b>' + done + '/' + LEVELS.length + '</b></span><span>Promedio juegos <b>' + (done ? avgL() : '—') + '</b></span><span>Promedio evaluaciones <b>' + (done ? avgE() : '—') + '</b></span>' + (gd ? '<span>Integradora <b>' + g + '</b></span>' : '') + '</div></div>' +
+        journey + nextCard +
         (gd ? '<div class="final-note"><span>Juegos <b>' + avgL() + '</b> · Evaluaciones <b>' + avgE() + '</b> · Integradora <b>' + g + '</b> · Nota final</span><strong>' + finalNote() + '/100</strong>' + starsHtml(finalNote()) + '<button type="button" class="btn" id="lv-poster">Ver cartel de notas</button></div>' : '') +
+        '<h3 class="lv-subtitle">Todas las fases</h3>' +
         '<div class="lv-grid">' + LEVELS.map(function (L, i) {
           var ok = unlocked(i), b = lv(i), e = ev(i), cls = !ok ? ' locked' : phaseDone(i) ? ' done' : i === nextIdx ? ' next' : '';
           var meta = !ok ? '<span>' + LOCK + ' Completá la fase ' + i + '</span>'
@@ -2606,11 +2761,21 @@ button.btn.primary:hover { filter: brightness(1.05); }
           '<div class="lv-meta">' + (!all ? '<span>' + LOCK + ' Completá las 8 fases</span>' : gd ? '<span>Nota: <strong>' + g + '</strong></span>' + starsHtml(g) : '<span>Disponible</span><span>' + NINT + ' preguntas</span>') + '</div></button>' +
         '</div>' +
         '<div class="btns"><button type="button" class="btn" id="lv-switch">Cambiar de modo</button><button type="button" class="btn" id="lv-reset">Borrar mi progreso en modo ' + DIFF[M()] + '</button></div>';
+      var nb = mapEl.querySelector('#lv-next');
+      if (nb) nb.addEventListener('click', function () {
+        if (na.kind === 'play') play(na.i); else if (na.kind === 'quiz') quiz(na.i); else if (na.kind === 'integ') integQuiz(); else showPoster();
+      });
     }
     mapEl.addEventListener('click', function (e) {
       var m = e.target.closest('[data-mode]');
       if (m) { store.mode = m.dataset.mode; save(); renderMap(); return; }
-      if (e.target.closest('#lv-switch')) { store.mode = null; save(); renderMap(); return; }
+      if (e.target.closest('#lv-switch')) { openWelcome(); return; }
+      var dt = e.target.closest('.journey .dot');
+      if (dt) {
+        if (dt.getAttribute('aria-disabled') === 'true') return;
+        if (dt.dataset.ig) { integQuiz(); return; }
+        var di = +dt.dataset.i; if (lv(di) >= PASS && !hasEv(di)) quiz(di); else play(di); return;
+      }
       if (e.target.closest('#lv-poster')) { showPoster(); return; }
       var rb = e.target.closest('#lv-reset');
       if (rb) {
@@ -3127,27 +3292,37 @@ button.btn.primary:hover { filter: brightness(1.05); }
     });
   })();
 
-  /* ---------- pestañas ---------- */
-  var tabs = document.querySelectorAll('.tab');
+  /* ---------- secciones y pestañas ---------- */
+  var tabs = document.querySelectorAll('.tab'), tabsNav = document.querySelector('.tabs');
+  var mainBtns = document.querySelectorAll('.nav-main button');
+  var lastIn = {};
+  function groupOf(name) { var t = document.getElementById('tab-' + name); return t ? t.dataset.group : 'juego'; }
   function show(name) {
     if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'cableado', 'evaluaciones', 'integradora'].indexOf(name) < 0) name = 'niveles';
     if (tabLocked && name !== 'niveles') name = 'niveles';
+    var g = groupOf(name); lastIn[g] = name;
     tabs.forEach(function (t) {
       var on = t.dataset.tab === name;
       t.setAttribute('aria-selected', on ? 'true' : 'false');
       t.tabIndex = on ? 0 : -1;
+      t.hidden = t.dataset.group !== g;
       document.getElementById('panel-' + t.dataset.tab).hidden = !on;
     });
+    tabsNav.hidden = g === 'juego';
+    mainBtns.forEach(function (b) { b.setAttribute('aria-current', b.dataset.group === g ? 'true' : 'false'); });
     fitAll();
   }
-  tabs.forEach(function (t) {
-    t.addEventListener('click', function () {
-      show(t.dataset.tab);
-      try { history.replaceState(null, '', '#' + t.dataset.tab); } catch (_) { location.hash = t.dataset.tab; }
+  function go(name) { show(name); try { history.replaceState(null, '', '#' + name); } catch (_) { location.hash = name; } }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { go(t.dataset.tab); }); });
+  mainBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var g = b.dataset.group;
+      go(lastIn[g] || (g === 'juego' ? 'niveles' : g === 'practica' ? 'muy-basica' : 'evaluaciones'));
     });
   });
   window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
   show(location.hash.slice(1));
+  if (!location.hash || location.hash === '#niveles') openWelcome();
 })();
 </script>
 
