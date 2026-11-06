@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego para armar una PC básica y una PC gamer, con calculadora de fuente de alimentación.">
+<meta name="description" content="Juego de 8 niveles, 8 evaluaciones y una evaluación integradora para aprender a armar una PC, con nota de 0 a 100.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,6 +33,8 @@
   --fan: #343c46;
   --blade: #59636f;
   --label: #18202a;
+  --pcb-edge: #1d4a36;
+  --cab-atx: #e8b730; --cab-eps: #e2574c; --cab-pcie: #4f8fe0; --cab-satap: #a27be0; --cab-satad: #35c2a2;
   --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
@@ -57,14 +59,15 @@ body {
   font-family: var(--font-body); font-size: 15px; line-height: 1.5;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 20px 40px;
+  padding-block: 12px 28px;
 }
-.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 18px; }
-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; margin: 0; letter-spacing: .01em; text-wrap: balance; }
-header p { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
+.wrap { max-width: 1440px; margin: 0 auto; display: grid; gap: 12px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; }
+header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3vw, 30px); line-height: 1.05; margin: 0; letter-spacing: .01em; }
+header p { margin: 0; color: var(--muted); font-size: 13.5px; max-width: 90ch; }
 
 /* pestañas */
-.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tabs { display: flex; flex-wrap: wrap; gap: 0 4px; border-bottom: 1px solid var(--line); }
 .tab {
   font: 600 15px var(--font-display); letter-spacing: .02em; color: var(--muted);
   background: transparent; border: 0; border-bottom: 3px solid transparent;
@@ -76,22 +79,26 @@ header p { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
 .tabpanel { display: grid; gap: 20px; }
 .tabpanel[hidden] { display: none; }
 
+/* Escritorio: bandeja | gabinete | tablero, todo dentro del alto de la ventana */
 .app {
-  display: grid; gap: 20px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 330px);
-  grid-template-areas: "case hud" "case tray" "case info";
+  --chrome: 190px;
+  display: grid; gap: 14px;
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) minmax(240px, 300px);
+  grid-template-areas: "tray case hud" "tray case info";
+  grid-template-rows: auto 1fr;
   align-items: start;
 }
-.app.has-power { grid-template-areas: "case hud" "case tray" "case power" "case info"; }
+.app.has-power { grid-template-areas: "tray case hud" "tray case power" "tray case info"; grid-template-rows: auto auto 1fr; }
+.lv-play .app { --chrome: 265px; }
 .hud { grid-area: hud; } .tray-box { grid-area: tray; } .info { grid-area: info; } .case-col { grid-area: case; } .power { grid-area: power; }
 
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; min-width: 0; }
 .label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
 
 /* tablero */
-.hud { display: grid; gap: 12px; }
-.stats { display: flex; gap: 18px; flex-wrap: wrap; }
-.stat strong { display: block; font-family: var(--font-display); font-size: 24px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.hud { display: grid; gap: 8px; }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.stat strong { display: block; font-family: var(--font-display); font-size: 21px; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
 .bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
 .btns { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -102,16 +109,16 @@ button.btn {
 button.btn:hover { border-color: var(--muted); }
 button.btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
 button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.status { min-height: 3em; font-size: 14px; padding: 8px 10px; border-radius: 6px; background: var(--bg); }
+.status { min-height: 2.8em; font-size: 13.5px; line-height: 1.4; padding: 6px 9px; border-radius: 6px; background: var(--bg); }
 .status.ok { color: var(--ok); } .status.err { color: var(--err); }
 
 /* bandeja */
-.tray { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; margin-top: 10px; }
+.tray { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 6px; margin-top: 8px; }
 .part {
   position: relative; display: grid; justify-items: center; align-content: start; gap: 4px;
   background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
-  padding: 8px 6px; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
-  font: 500 12.5px/1.2 var(--font-body); color: var(--ink); text-align: center;
+  padding: 6px 4px; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  font: 500 11.5px/1.2 var(--font-body); color: var(--ink); text-align: center;
 }
 .part:hover { border-color: var(--muted); }
 .part.selected { border-color: var(--accent); background: var(--accent-soft); }
@@ -122,13 +129,15 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   background: var(--accent); border-radius: 9px; padding: 0 6px; line-height: 17px; font-variant-numeric: tabular-nums;
 }
 .part.used .qty { display: none; }
-.thumb { width: 72px; height: 50px; }
+.thumb { width: 60px; height: 40px; }
 .thumb svg { width: 100%; height: 100%; display: block; }
 
 /* gabinete */
-.case-col { display: grid; gap: 8px; justify-items: center; }
+.case-col { display: grid; gap: 6px; justify-items: center; min-width: 0; }
 .case {
-  position: relative; width: 100%; max-width: 540px; aspect-ratio: 4 / 5;
+  position: relative; aspect-ratio: 4 / 5; max-width: 100%;
+  width: min(100%, 640px, max(240px, calc((100vh - var(--chrome)) * .8)));
+  width: min(100%, 780px, max(240px, calc(var(--case-h, calc(100svh - var(--chrome))) * .8)));
   background: var(--case); border: 10px solid var(--case-edge); border-radius: 14px;
   box-shadow: inset 0 0 40px rgba(0,0,0,.5);
   overflow: hidden; touch-action: manipulation;
@@ -165,15 +174,15 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .slot svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
 .slot.filled svg { animation: pop .28s ease-out; }
 @keyframes pop { from { transform: scale(1.12); opacity: .4; } to { transform: scale(1); opacity: 1; } }
-.case-note { font-size: 12.5px; color: var(--muted); text-align: center; max-width: 540px; margin: 0; }
+.case-note { font-size: 12px; color: var(--muted); text-align: center; max-width: 60ch; margin: 0; }
 
 /* fantasma de arrastre */
 .ghost { position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none; opacity: .88; filter: drop-shadow(0 8px 14px rgba(0,0,0,.4)); }
 .ghost svg { width: 100%; height: 100%; display: block; }
 
 /* ficha */
-.info h2, .calc h2 { font-family: var(--font-display); font-weight: 600; font-size: 20px; margin: 4px 0 6px; text-wrap: balance; }
-.info p { margin: 0 0 8px; }
+.info h2, .calc h2 { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin: 2px 0 4px; text-wrap: balance; }
+.info p { margin: 0 0 6px; font-size: 14px; }
 .spec { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
 .win { border-color: var(--ok); }
 
@@ -186,6 +195,221 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .psum dt { color: var(--muted); } .psum dd { margin: 0; text-align: right; font-family: var(--font-mono); }
 .psum .big { font: 700 18px var(--font-display); color: var(--ink); }
 .psum dd.bad { color: var(--err); } .psum dd.good { color: var(--ok); }
+
+/* configurador */
+.cfg { display: grid; gap: 16px; }
+.cfg > p { margin: 0; color: var(--muted); max-width: 70ch; }
+.cfg-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.cfg-opts { display: grid; gap: 16px; min-width: 0; }
+.group { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 8px; }
+.group legend { font-size: 13px; font-weight: 600; padding: 0; margin-bottom: 6px; }
+.disks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.choice { position: relative; display: grid; justify-items: center; gap: 4px; text-align: center; cursor: pointer;
+  background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 6px; font-size: 13px; line-height: 1.25; }
+.choice:hover { border-color: var(--muted); }
+.choice input { position: absolute; opacity: 0; pointer-events: none; }
+.choice:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.choice:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.choice strong { font-weight: 600; }
+.choice .sub { font: 500 11px var(--font-mono); color: var(--muted); }
+.choice .thumb { width: 60px; height: 42px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; width: max-content; max-width: 100%; }
+.seg label { position: relative; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: block; padding: 7px 14px; font: 600 14px var(--font-mono); background: var(--bg); border-left: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.seg label:first-child span { border-left: 0; }
+.seg input:checked + span { background: var(--accent); color: var(--surface); }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: -3px; }
+.mods { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+.mod { display: grid; gap: 4px; }
+.mod .unit { font: 500 11px var(--font-mono); color: var(--muted); }
+.sumcard { background: var(--bg); border-radius: 10px; padding: 14px 16px; display: grid; gap: 10px; }
+.sumcard .rec { font: 700 clamp(34px, 6vw, 46px)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.sumcard .rec small { font-size: .45em; color: var(--muted); font-weight: 600; margin-left: 4px; }
+.sumcard p { margin: 0; font-size: 13.5px; }
+.sumcard .warn { color: var(--err); }
+.speed { display: grid; gap: 4px; }
+.speed .row { display: grid; grid-template-columns: 104px 1fr auto; gap: 8px; align-items: center; font: 500 11.5px var(--font-mono); color: var(--muted); }
+.speed .row.on { color: var(--ink); }
+.speed .track { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+.speed .track span { display: block; height: 100%; background: var(--muted); border-radius: 4px; }
+.speed .row.on .track span { background: var(--accent); }
+
+.head-btns { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.head-btns .btn { padding: 4px 10px; font-size: 13px; }
+#snd-btn[aria-pressed="false"] { color: var(--muted); }
+
+/* niveles */
+.lv-top { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: end; justify-content: space-between; }
+.lv-top h2, .lv-head h2 { font: 700 clamp(22px, 4vw, 28px)/1.1 var(--font-display); margin: 2px 0 0; text-wrap: balance; }
+.lv-top p { margin: 4px 0 0; color: var(--muted); max-width: 60ch; }
+.lv-prog { display: grid; gap: 6px; min-width: min(260px, 100%); }
+.lv-prog .row { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.lv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.lv-card {
+  display: grid; gap: 6px; align-content: start; text-align: left; position: relative;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+  font: inherit; color: var(--ink); cursor: pointer;
+}
+.lv-card:hover:not(.locked) { border-color: var(--accent); }
+.lv-card .lv-num { font: 700 30px/1 var(--font-display); color: var(--accent); font-variant-numeric: tabular-nums; }
+.lv-card h3 { margin: 0; font: 600 17px/1.2 var(--font-display); }
+.lv-card p { margin: 0; font-size: 13.5px; color: var(--muted); }
+.lv-card .lv-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px; font: 500 12px var(--font-mono); color: var(--muted); }
+.lv-card.locked { cursor: not-allowed; background: var(--bg); }
+.lv-card.locked .lv-num, .lv-card.locked h3 { color: var(--muted); }
+.lv-card.done { border-color: var(--ok); }
+.lv-card.next { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.lv-card .lock { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; vertical-align: -3px; }
+.stars { color: var(--accent); letter-spacing: 2px; font-size: 15px; white-space: nowrap; }
+.stars .off { color: var(--line); }
+.lv-head { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: space-between; }
+.lv-head h2 { font-size: clamp(18px, 2.4vw, 22px); }
+.lv-head p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+.lv-play { display: grid; gap: 12px; }
+.lv-overlay {
+  position: fixed; inset: 0; z-index: 2000; background: rgba(10,14,18,.6); display: grid; place-items: center; overflow-y: auto;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+.lv-overlay[hidden], .lv-map[hidden], .lv-play[hidden] { display: none; }
+.lv-modal { background: var(--surface); color: var(--ink); border-radius: 14px; padding: 24px 22px; width: min(440px, 100%); display: grid; gap: 12px; text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,.4); animation: pop .3s ease-out; }
+.lv-modal h2 { font: 700 clamp(26px, 6vw, 32px)/1.1 var(--font-display); margin: 0; text-wrap: balance; }
+.lv-modal p { margin: 0; }
+.grade { font: 700 clamp(64px, 16vw, 84px)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.grade small { font-size: .3em; color: var(--muted); margin-left: 2px; }
+.grade.pass { color: var(--ok); } .grade.fail { color: var(--err); }
+.lv-modal .stars { font-size: 30px; letter-spacing: 6px; }
+.lv-modal .detail { font: 500 13px var(--font-mono); color: var(--muted); }
+.lv-modal .unlock { background: var(--accent-soft); border-radius: 8px; padding: 8px 10px; font-weight: 500; }
+.lv-modal .btns { justify-content: center; }
+button.btn:disabled { opacity: .5; cursor: not-allowed; }
+.diff-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; text-align: left; }
+.diff-btn { display: grid; gap: 4px; align-content: start; background: var(--bg); border: 1.5px solid var(--line); border-radius: 10px; padding: 12px; cursor: pointer; font: inherit; color: var(--ink); text-align: left; }
+.diff-btn:hover { border-color: var(--accent); }
+.diff-btn.last { border-color: var(--accent); background: var(--accent-soft); }
+.diff-btn strong { font: 700 18px var(--font-display); }
+.diff-btn span { font-size: 13px; color: var(--muted); line-height: 1.35; }
+.diff-tag { display: inline-block; font: 600 11px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); vertical-align: 2px; margin-left: 6px; }
+.diff-tag.a { background: var(--ink); color: var(--surface); }
+@media (max-width: 420px) { .diff-opts { grid-template-columns: minmax(0, 1fr); } }
+.lv-start { display: grid; gap: 14px; max-width: 760px; width: 100%; margin: 12px auto; }
+.lv-start h2 { font: 700 clamp(24px, 4vw, 32px)/1.1 var(--font-display); margin: 0; text-wrap: balance; }
+.lv-start p { margin: 0; color: var(--muted); }
+.lv-start .diff-btn { padding: 18px; }
+.lv-start .diff-btn strong { font-size: 22px; }
+.lv-start .diff-btn em { font-style: normal; font: 500 12px var(--font-mono); color: var(--accent); }
+.lv-section { display: grid; gap: 10px; margin-top: 8px; }
+.lv-section h3 { font: 700 20px var(--font-display); margin: 0; }
+.lv-section > p { margin: 0; color: var(--muted); font-size: 14px; }
+.lv-modebar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; font-size: 13.5px; }
+.final-note { background: var(--ok-soft); border: 1px solid var(--ok); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; }
+.final-note strong { font: 700 30px var(--font-display); color: var(--ok); }
+.quiz { display: grid; gap: 14px; max-width: 760px; width: 100%; margin: 0 auto; }
+.quiz .q-num { font: 500 12px var(--font-mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.quiz .q-text { font: 600 clamp(19px, 3vw, 24px)/1.3 var(--font-display); margin: 0; text-wrap: balance; }
+.q-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.q-btn { font: 700 18px var(--font-display); padding: 16px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.q-btn:hover:not(:disabled) { border-color: var(--accent); }
+.q-btn:disabled { cursor: default; opacity: .55; }
+.q-btn.right { border-color: var(--ok); background: var(--ok-soft); opacity: 1; }
+.q-btn.wrong { border-color: var(--err); opacity: 1; }
+.q-fb { border-radius: 8px; padding: 10px 12px; background: var(--bg); font-size: 14.5px; }
+.q-fb strong { display: block; margin-bottom: 2px; }
+.q-fb.ok strong { color: var(--ok); } .q-fb.err strong { color: var(--err); }
+.q-dots { display: flex; gap: 6px; }
+.q-dots i { width: 22px; height: 6px; border-radius: 3px; background: var(--line); }
+.q-dots i.ok { background: var(--ok); } .q-dots i.err { background: var(--err); } .q-dots i.cur { background: var(--accent); }
+.tab:disabled { opacity: .4; cursor: not-allowed; }
+.lock-note { font-size: 12.5px; color: var(--muted); margin: -6px 0 0; }
+.lv-card.static { cursor: default; }
+.lv-card.static:hover { border-color: var(--line); }
+.lv-card .btns { margin-top: 6px; }
+.lv-card .btns .btn { font-size: 13px; padding: 6px 10px; }
+.ans { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; max-width: 820px; }
+.ans li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; gap: 4px; }
+.ans .stmt { font-weight: 600; }
+.ans .why { color: var(--muted); font-size: 14px; margin: 0; }
+.vf { display: inline-block; font: 600 11px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; padding: 1px 8px; border-radius: 999px; margin-right: 6px; vertical-align: 1px; }
+.vf.v { background: var(--ok-soft); color: var(--ok); } .vf.f { background: rgba(194,65,45,.14); color: var(--err); }
+.q-opts.mc { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.q-btn.mc { font: 500 15.5px/1.35 var(--font-body); text-align: left; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline; }
+.q-btn.mc b { font: 700 14px var(--font-mono); color: var(--accent); flex: none; }
+.ans .opt { font-size: 14px; color: var(--muted); padding-left: 4px; }
+.ans .opt.ok { color: var(--ok); font-weight: 600; }
+.lv-card.integ { grid-column: 1 / -1; border-width: 1.5px; }
+.lv-card.integ .lv-num { font-size: 22px; }
+.lv-modal.wide { width: min(640px, 100%); }
+.poster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.poster .box { background: var(--bg); border-radius: 12px; padding: 14px 8px; display: grid; gap: 4px; justify-items: center; }
+.poster .box > span:first-child { font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.poster .box .stars { font-size: 20px; letter-spacing: 3px; }
+.poster .box strong { font: 700 clamp(34px, 9vw, 52px)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.poster .box strong.pass { color: var(--ok); } .poster .box strong.fail { color: var(--err); }
+.poster .box em { font-style: normal; font-size: 12.5px; color: var(--muted); }
+.poster-final { border: 2px solid var(--ok); border-radius: 12px; padding: 12px; display: grid; gap: 2px; justify-items: center; }
+.poster-final strong { font: 700 clamp(48px, 12vw, 72px)/1 var(--font-display); color: var(--ok); }
+@media (max-width: 480px) { .poster { grid-template-columns: minmax(0, 1fr); } }
+button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+button.btn.primary:hover { filter: brightness(1.05); }
+
+/* placa madre */
+.case.board { background: var(--pcb); border-color: var(--pcb-edge); border-radius: 10px; box-shadow: inset 0 0 36px rgba(0,0,0,.35); }
+.board .slot { color: #e8f3ec; }
+.board .slot:not(.filled) { border-color: rgba(255,255,255,.55); }
+.board .slot.hover:not(.filled) { border-color: var(--accent); }
+.board .slot.flash { border-color: var(--err); }
+.board-deco { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.labeling .slot.filled { cursor: pointer; }
+.labeling .slot.filled:hover, .labeling .slot.hit { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 3px; }
+.labeling .slot.miss { outline: 2px solid var(--err); outline-offset: 1px; }
+.mb-pill {
+  position: absolute; z-index: 8; transform: translate(-50%, -50%); pointer-events: none; white-space: nowrap;
+  background: var(--surface); color: var(--ink); border: 1.5px solid var(--ok); border-radius: 999px;
+  padding: 1px 7px; font: 600 11px/1.4 var(--font-mono); box-shadow: 0 2px 6px rgba(0,0,0,.35);
+}
+.mb-pill { animation: pop .25s ease-out; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip {
+  font: 500 13px/1.2 var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 11px; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.chip:hover { border-color: var(--muted); }
+.chip.selected { border-color: var(--accent); background: var(--accent-soft); }
+.chip.used { opacity: .4; cursor: default; text-decoration: line-through; }
+.chip-ghost { position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none; font: 600 12px var(--font-mono); background: var(--surface); color: var(--ink); border: 1.5px solid var(--accent); border-radius: 999px; padding: 3px 9px; box-shadow: 0 6px 14px rgba(0,0,0,.35); }
+
+/* cableado */
+.wire-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; user-select: none; -webkit-user-select: none; }
+.port { cursor: pointer; }
+.port-hit { fill: transparent; }
+.port-body { fill: var(--chip); stroke: var(--metal); stroke-width: 1.5; }
+.port .pin { fill: var(--metal-dark); }
+.port.sel .port-body, .port.hl .port-body { stroke: var(--accent); stroke-width: 3; }
+.port.sel .port-body { animation: pulse 1s ease-in-out infinite; }
+.port.done .port-body { stroke: var(--ok); stroke-width: 2.5; }
+.port.bad .port-body { stroke: var(--err); stroke-width: 3; }
+@keyframes pulse { 50% { stroke-width: 6; } }
+.t-tag { fill: #f2f4f6; font: 600 13px var(--font-mono); paint-order: stroke; stroke: #0b0e12; stroke-width: 4px; stroke-linejoin: round; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.help .t-tag { opacity: 1; }
+.cable { fill: none; stroke-width: 10; stroke-linecap: round; }
+.cable-sleeve { fill: none; stroke: rgba(0,0,0,.35); stroke-width: 10; stroke-dasharray: 2 5; stroke-linecap: butt; }
+.cable-in { animation: draw .45s ease-out; }
+@keyframes draw { from { stroke-dashoffset: 900; } to { stroke-dashoffset: 0; } }
+.tempwire { fill: none; stroke: var(--accent); stroke-width: 4; stroke-dasharray: 8 6; stroke-linecap: round; pointer-events: none; }
+.t-psu { fill: #e9edf1; font: 600 15px var(--font-mono); }
+.wires-list { display: grid; gap: 6px; margin-top: 10px; }
+.wire-card {
+  display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 10px; align-items: center; text-align: left;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; cursor: pointer;
+  font: 500 13.5px/1.25 var(--font-body); color: var(--ink);
+}
+.wire-card:hover { border-color: var(--muted); }
+.wire-card.selected { border-color: var(--accent); background: var(--accent-soft); }
+.wire-card .sw { width: 12px; height: 28px; border-radius: 4px; }
+.wire-card .spec { display: block; font-size: 11.5px; }
+.wire-card .st { font: 500 11px var(--font-mono); color: var(--muted); white-space: nowrap; }
+.wire-card.done { cursor: default; }
+.wire-card.done .st { color: var(--ok); }
 
 /* calculadora */
 .calc { display: grid; gap: 14px; }
@@ -218,24 +442,77 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .result .note { font-size: 13.5px; margin: 0; }
 .result .note.bad { color: var(--err); }
 
-@media (max-width: 820px) {
-  .app, .app.has-power { grid-template-columns: minmax(0, 1fr); grid-template-areas: "hud" "case" "tray" "info"; gap: 14px; }
+/* Monitores grandes: columnas y piezas más grandes */
+@media (min-width: 1600px) {
+  .app, .app.has-power { grid-template-columns: minmax(270px, 340px) minmax(0, 1fr) minmax(270px, 340px); }
+  .tray { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+  .thumb { width: 72px; height: 48px; }
+  .part { font-size: 12.5px; }
+}
+/* Tablet y notebook chica: tablero y bandeja a la izquierda, gabinete a la derecha */
+@media (max-width: 1179px) {
+  .app, .app.has-power {
+    grid-template-columns: minmax(230px, 290px) minmax(0, 1fr);
+    grid-template-areas: "hud case" "tray case" "info case";
+    grid-template-rows: auto auto 1fr;
+  }
+  .app.has-power { grid-template-areas: "hud case" "tray case" "power case" "info case"; grid-template-rows: auto auto auto 1fr; }
+  .app { --chrome: 160px; }
+  .lv-play .app { --chrome: 235px; }
+  header p { display: none; }
+  .tab small { display: none; }
+}
+@media (max-width: 1179px) and (min-width: 700px) {
+  .tray { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 5px; }
+  .thumb { width: 48px; height: 32px; }
+  .part { font-size: 10.5px; padding: 4px 2px; }
+}
+/* Celular: tablero compacto, gabinete y bandeja en la misma pantalla */
+@media (max-width: 699px) {
+  header p { display: none; }
+  .app, .app.has-power { grid-template-columns: minmax(0, 1fr); grid-template-areas: "hud" "case" "tray" "info"; grid-template-rows: none; gap: 8px; }
   .app.has-power { grid-template-areas: "hud" "case" "tray" "power" "info"; }
-  .case { max-width: min(540px, max(260px, calc((100svh - 300px) * .8))); border-width: 7px; }
-  .stat strong { font-size: 20px; }
-  .tray { grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 6px; }
-  .part { padding: 6px 4px; font-size: 11.5px; }
-  .thumb { width: 54px; height: 38px; }
-  .slot { font-size: 9px; }
-  .panel { padding: 12px; }
-  .calc-grid { grid-template-columns: minmax(0, 1fr); }
+  .app { --chrome: 462px; }
+  .lv-play .app { --chrome: 490px; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  header h1 { font-size: 22px; }
+  .case { border-width: 6px; border-radius: 10px; }
+  .case-note { display: none; }
+  .hud { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "stats stats" "status btns"; gap: 6px 8px; align-items: stretch; }
+  .hud .bar { display: none; }
+  .hud .stats { grid-area: stats; gap: 12px; } .hud .bar { grid-area: bar; } .hud .status { grid-area: status; min-height: 0; font-size: 12.5px; padding: 5px 8px; } .hud .btns { grid-area: btns; flex-direction: column; flex-wrap: nowrap; justify-content: center; gap: 4px; }
+  .hud .btns .btn { font-size: 11.5px; padding: 4px 7px; white-space: nowrap; }
+  .stat .label { font-size: 9.5px; }
+  .stat strong { font-size: 16px; }
+  .hud .stats { gap: 16px; flex-wrap: nowrap; }
+  .wire-card { padding: 5px 8px; font-size: 12.5px; gap: 8px; }
+  .wire-card .spec { display: none; }
+  .wire-card .sw { height: 18px; }
+  .wires-list { gap: 4px; margin-top: 0; }
+  .tray-box > .label { display: none; }
+  .tray { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 4px; margin-top: 0; }
+  .part > span { hyphens: auto; -webkit-hyphens: auto; }
+  .part { padding: 3px 1px; font-size: 9.5px; line-height: 1.12; border-radius: 6px; gap: 2px; }
+  .part .qty { font-size: 9.5px; line-height: 14px; padding: 0 4px; top: 2px; left: 2px; }
+  .thumb { width: 40px; height: 27px; }
+  .slot { font-size: 8px; }
+  .panel { padding: 10px; }
+  .lv-head { padding: 8px 10px; }
+  .lv-head p { display: none; }
+  .calc-grid, .cfg-grid { grid-template-columns: minmax(0, 1fr); }
+  .tab small { display: none; }
 }
 @media (max-width: 420px) {
   body { padding-block: 12px 28px; }
   header p { font-size: 14px; }
-  .tray { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .slot { font-size: 7.5px; letter-spacing: 0; }
-  .tab { padding-inline: 12px; }
+  .tab { padding-inline: 7px; font-size: 13.5px; }
+  .mb-pill { font-size: 8.5px; padding: 0 4px; }
+  .chip { font-size: 12px; padding: 5px 9px; }
+  .tab small { display: none; }
+  .choice { padding: 8px 4px; font-size: 12px; }
+  .seg span { padding: 7px 11px; }
 }
 
 /* colores de piezas */
@@ -254,25 +531,70 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .powered .rotor { animation: spin .6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) {
-  .slot.filled svg, .powered .rotor, .case.rgb.powered { animation: none; }
+  .slot.filled svg, .powered .rotor, .case.rgb.powered, .port.sel .port-body, .cable-in, .mb-pill, .lv-modal { animation: none; }
   .bar span, .meter .fill { transition: none; }
 }
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<div class="wrap" lang="es">
   <header>
     <h1>Armá tu PC</h1>
-    <p>Arrastrá cada componente desde la bandeja hasta su lugar dentro del gabinete, o tocá una pieza y después el lugar donde va. Ojo con el orden: algunas piezas necesitan que otras ya estén colocadas.</p>
+    <p>Jugá el modo Niveles para avanzar de fase en fase y sacar la mejor nota, o elegí otra pestaña para practicar libre. En cada juego arrastrás las piezas a su lugar, o tocás una pieza y después el lugar donde va.</p>
+    <div class="head-btns">
+      <button type="button" class="btn" id="snd-btn" aria-pressed="true">Sonido: activado</button>
+      <button type="button" class="btn" id="fs-btn" hidden>Pantalla completa</button>
+    </div>
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Modo de juego">
+    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" aria-controls="panel-niveles">Niveles<small>8 + 8 evaluaciones</small></button>
+    <button class="tab" role="tab" type="button" id="tab-muy-basica" data-tab="muy-basica" aria-controls="panel-muy-basica">PC muy básica<small>a medida</small></button>
     <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
+    <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" aria-controls="panel-evaluaciones">Evaluaciones<small>8 × 10 preguntas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" aria-controls="panel-integradora">Integradora<small>12 de opción múltiple</small></button>
   </nav>
+  <p class="lock-note" id="lock-note" hidden>Mientras jugás un nivel o una evaluación, las otras pestañas quedan bloqueadas. Volvé a los niveles para usarlas.</p>
 
-  <section class="tabpanel" role="tabpanel" id="panel-basica" aria-labelledby="tab-basica"></section>
+  <section class="tabpanel" role="tabpanel" id="panel-niveles" aria-labelledby="tab-niveles">
+    <div class="lv-map" id="lv-map"></div>
+    <div class="lv-play" id="lv-play" hidden></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-muy-basica" aria-labelledby="tab-muy-basica" hidden>
+    <section class="cfg panel" aria-labelledby="cfg-title">
+      <span class="label">Configurador</span>
+      <h2 id="cfg-title" style="font-family:var(--font-display);font-weight:600;font-size:20px;margin:0">Configurá tu PC muy básica</h2>
+      <p>Elegí el disco y las memorias. El gabinete de abajo se prepara con lo que elijas y después la armás. Esta PC no lleva placa de video: usa el video integrado del procesador.</p>
+      <div class="cfg-grid">
+        <div class="cfg-opts">
+          <fieldset class="group">
+            <legend>Disco (uno solo)</legend>
+            <div class="disks" id="cfg-disks"></div>
+          </fieldset>
+          <fieldset class="group">
+            <legend>Cantidad de memorias RAM</legend>
+            <div class="seg">
+              <label><input type="radio" name="cfg-n" id="cfg-n1" value="1"><span>1 memoria</span></label>
+              <label><input type="radio" name="cfg-n" id="cfg-n2" value="2" checked><span>2 memorias</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="group">
+            <legend>Capacidad de cada memoria</legend>
+            <div class="mods" id="cfg-mods"></div>
+          </fieldset>
+        </div>
+        <div class="sumcard" aria-live="polite" id="cfg-sum"></div>
+      </div>
+    </section>
+    <div id="game-mini"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-basica" aria-labelledby="tab-basica" hidden></section>
 
   <section class="tabpanel" role="tabpanel" id="panel-gamer" aria-labelledby="tab-gamer" hidden>
     <div id="game-gamer"></div>
@@ -357,6 +679,56 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       </div>
     </section>
   </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-placa" aria-labelledby="tab-placa" hidden>
+    <section class="cfg panel" id="pm-cfg" aria-labelledby="pm-title">
+      <span class="label">Configurador de placa madre</span>
+      <h2 id="pm-title" style="font-family:var(--font-display);font-weight:600;font-size:20px;margin:0">Elegí tu placa madre</h2>
+      <p>Elegí la gama, la marca, el socket, el chipset y el procesador. La placa de abajo cambia según lo que elijas: cantidad de ranuras, tipo de memoria y nombres. Después la armás y le ponés el nombre a cada parte.</p>
+      <div class="cfg-grid">
+        <div class="cfg-opts">
+          <fieldset class="group">
+            <legend>Gama</legend>
+            <div class="seg">
+              <label><input type="radio" name="pm-g" id="pm-g-base" value="base" checked><span>Base</span></label>
+              <label><input type="radio" name="pm-g" id="pm-g-media" value="media"><span>Intermedia</span></label>
+              <label><input type="radio" name="pm-g" id="pm-g-gamer" value="gamer"><span>Gamer</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="group">
+            <legend>Marca del procesador</legend>
+            <div class="seg">
+              <label><input type="radio" name="pm-b" id="pm-b-amd" value="amd" checked><span>AMD</span></label>
+              <label><input type="radio" name="pm-b" id="pm-b-intel" value="intel"><span>Intel</span></label>
+            </div>
+          </fieldset>
+          <div class="fields">
+            <div class="field"><label for="pm-socket">Socket</label><select id="pm-socket"></select></div>
+            <div class="field"><label for="pm-chip">Chipset</label><select id="pm-chip"></select></div>
+            <div class="field wide"><label for="pm-cpu">Procesador</label><select id="pm-cpu"></select><span class="unit">Solo aparecen los procesadores compatibles con el socket y la gama elegidos.</span></div>
+          </div>
+        </div>
+        <div class="sumcard" id="pm-sum" aria-live="polite"></div>
+      </div>
+    </section>
+    <div id="game-placa"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-cableado" aria-labelledby="tab-cableado" hidden>
+    <div id="game-cableado"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-evaluaciones" aria-labelledby="tab-evaluaciones" hidden>
+    <div id="ev-free" style="display:grid;gap:14px"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-integradora" aria-labelledby="tab-integradora" hidden>
+    <div id="ig-free" style="display:grid;gap:14px"></div>
+  </section>
+</div>
+
+<div class="lv-overlay" id="lv-overlay" hidden>
+  <div class="lv-modal" role="dialog" aria-modal="true" aria-labelledby="lv-r-title" id="lv-modal"></div>
 </div>
 
 <script>
@@ -539,7 +911,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     fan(50, 50, 44) + fan(50, 150, 44) + fan(50, 250, 44);
 
   var GAMER = {
-    key: 'gamer', power: true, rgb: true,
+    key: 'gamer', power: true, rgb: true, winMsg: '¡PC gamer armada y encendida!',
     psuOptions: [650, 850, 1000, 1200, 1600],
     caseNote: 'Gabinete full tower con vidrio templado. Atrás: ventilador de salida. Adelante: radiador de 360 mm y dos ventiladores de entrada.',
     start: 'Empezá por la placa madre. La fuente la elegís vos: tiene que alcanzar para todo lo que instales.',
@@ -633,6 +1005,40 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     ]
   };
 
+  /* ---------- sonidos ---------- */
+  var sfx = (function () {
+    var ctx = null, on = true;
+    try { on = localStorage.getItem('arma-tu-pc-sonido') !== 'off'; } catch (_) {}
+    function ac() {
+      if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    }
+    function tone(f0, f1, start, dur, type, vol) {
+      var c = ac(); if (!c) return;
+      var t = c.currentTime + start, o = c.createOscillator(), g = c.createGain();
+      o.type = type; o.frequency.setValueAtTime(f0, t);
+      if (f1) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(c.destination);
+      o.start(t); o.stop(t + dur + 0.03);
+    }
+    return {
+      error: function () { if (!on) return; try { tone(240, 160, 0, 0.16, 'square', 0.07); tone(170, 110, 0.15, 0.24, 'square', 0.07); } catch (_) {} },
+      win: function () { if (!on) return; try { [523, 659, 784, 1047].forEach(function (f, i) { tone(f, 0, i * 0.11, i === 3 ? 0.45 : 0.2, 'triangle', 0.12); }); } catch (_) {} },
+      isOn: function () { return on; },
+      set: function (v) { on = v; try { localStorage.setItem('arma-tu-pc-sonido', v ? 'on' : 'off'); } catch (_) {} }
+    };
+  })();
+  (function () {
+    var b = document.getElementById('snd-btn');
+    function paint() { var v = sfx.isOn(); b.setAttribute('aria-pressed', v ? 'true' : 'false'); b.textContent = 'Sonido: ' + (v ? 'activado' : 'apagado'); }
+    b.addEventListener('click', function () { sfx.set(!sfx.isOn()); paint(); if (sfx.isOn()) sfx.error(); });
+    paint();
+  })();
+
   /* ---------- motor del juego ---------- */
   function mountGame(host, cfg) {
     var P = cfg.parts, SL = cfg.slots;
@@ -649,7 +1055,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
           '<div class="btns"><button class="btn js-help" type="button" aria-pressed="false">Mostrar nombres</button><button class="btn js-reset" type="button">Reiniciar</button></div>' +
         '</section>' +
         '<section class="tray-box panel" aria-label="Bandeja de componentes"><span class="label">Bandeja de componentes</span><div class="tray js-tray"></div></section>' +
-        '<div class="case-col"><div class="case js-case' + (cfg.rgb ? ' rgb' : '') + '" aria-label="Interior del gabinete">' + cfg.deco + '</div><p class="case-note">' + cfg.caseNote + '</p></div>' +
+        '<div class="case-col"><div class="case js-case' + (cfg.rgb ? ' rgb' : '') + (cfg.caseClass ? ' ' + cfg.caseClass : '') + '" aria-label="Interior del gabinete">' + cfg.deco + '</div><p class="case-note">' + cfg.caseNote + '</p></div>' +
         (cfg.power ? '<section class="power panel" aria-label="Consumo eléctrico"><span class="label">Consumo eléctrico</span><div class="js-power"></div></section>' : '') +
         '<section class="info panel js-info" aria-live="polite"></section>' +
       '</div>';
@@ -671,13 +1077,15 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       var p = P[item.type], body = typeof p.body === 'function' ? p.body(item) : p.body;
       return '<svg viewBox="' + p.vb + '" preserveAspectRatio="' + (fit ? 'xMidYMid meet' : 'none') + '" aria-hidden="true">' + body + '</svg>';
     }
-    function itemName(item) { return P[item.type].name + (item.type === 'psu' && cfg.power ? ' de ' + item.watts + ' W' : ''); }
+    function itemName(item) { return item.label || P[item.type].name + (item.type === 'psu' && cfg.power ? ' de ' + item.watts + ' W' : ''); }
 
     function newState() {
       var items = [];
       Object.keys(P).forEach(function (t) {
         if (t === 'psu' && cfg.psuOptions) {
           cfg.psuOptions.forEach(function (w) { items.push({ key: 'psu' + w, type: 'psu', watts: w, left: 1 }); });
+        } else if (P[t].variants) {
+          P[t].variants.forEach(function (v) { items.push({ key: t + '-' + v.key, type: t, label: v.label, gb: v.gb, watts: P[t].watts, left: v.count }); });
         } else {
           items.push({ key: t, type: t, watts: P[t].watts, left: total(t) });
         }
@@ -730,7 +1138,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       if (i == null) return;
       var s = slotEls[i]; s.classList.add('flash'); setTimeout(function () { s.classList.remove('flash'); }, 600);
     }
-    function miss(msg, i) { S.errors++; updateHud(); say(msg, 'err'); flash(i); }
+    function miss(msg, i) { S.errors++; updateHud(); say(msg, 'err'); flash(i); sfx.error(); }
 
     function consumption() {
       var c = 0; Object.keys(P).forEach(function (t) { if (t !== 'psu' && P[t].watts) c += S.count[t] * P[t].watts; }); return c;
@@ -828,7 +1236,8 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       clearInterval(S.timer);
       var secs = Math.floor((Date.now() - S.t0) / 1000);
       caseEl.classList.add('powered');
-      say(cfg.power ? '¡PC gamer armada y encendida!' : '¡PC armada y encendida!', 'ok');
+      sfx.win();
+      say(cfg.winMsg || '¡PC armada y encendida!', 'ok');
       infoEl.classList.add('win');
       var extra = '';
       if (cfg.power) {
@@ -841,6 +1250,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
         '<p class="spec">' + (S.errors === 0 ? 'Armado perfecto: sin errores.' : 'Probá de nuevo para hacerlo sin errores.') + '</p>' +
         '<button class="btn js-again" type="button">Jugar de nuevo</button>';
       q('.js-again').addEventListener('click', reset);
+      if (cfg.onWin) cfg.onWin({ errors: S.errors, secs: secs });
     }
 
     function reset() {
@@ -852,6 +1262,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       slotEls.forEach(function (s, i) { s.classList.remove('filled', 'hover', 'flash'); s.setAttribute('aria-label', 'Zona ' + (i + 1) + ' del gabinete'); });
       buildTray(); refreshTray(); updateHud(); renderPower();
       say(cfg.start); introInfo();
+      if (cfg.onReset) cfg.onReset();
     }
 
     function zoneAt(cx, cy, item) {
@@ -950,7 +1361,158 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     });
     q('.js-reset').addEventListener('click', reset);
     reset();
+    if (cfg.notice) say(cfg.notice);
+    function fillAll() {
+      SL.forEach(function (s, i) {
+        if (S.filled[i]) return;
+        var it = S.items.filter(function (x) { return x.type === s.type && x.left > 0; })[0];
+        if (it) place(it, i);
+      });
+      updateHud(); refreshTray(); renderPower();
+    }
+    return { destroy: function () { clearInterval(S.timer); host.innerHTML = ''; }, reset: reset, say: say, caseEl: caseEl, slotEls: slotEls, fillAll: fillAll };
   }
+
+  /* ---------- PC muy básica (configurable) ---------- */
+  var DISKS = {
+    ssd: { name: 'SSD SATA', sub: '~550 MB/s', speed: 550, watts: 3, part: BASIC.parts.ssd,
+      slot: { type: 'ssd', x: 54, y: 77, w: 17, h: 13.6, z: 1 },
+      note: 'Un SSD SATA hace que el sistema arranque y los programas abran mucho más rápido que con un disco mecánico.' },
+    m2: { name: 'SSD M.2', sub: '~3500 MB/s', speed: 3500, watts: 5, part: BASIC.parts.m2,
+      slot: { type: 'm2', x: 22, y: 36.5, w: 22, h: 3.5, z: 2 },
+      note: 'El M.2 NVMe es el más rápido de los tres y va directo en la placa madre, sin cables.' },
+    hdd: { name: 'Disco mecánico', sub: '~150 MB/s', speed: 150, watts: 7, part: BASIC.parts.hdd,
+      slot: { type: 'hdd', x: 74, y: 75, w: 18, h: 18, z: 1 },
+      note: 'El disco mecánico (HDD) es el más barato por GB y da mucha capacidad, pero es el más lento: el sistema tarda más en arrancar.' }
+  };
+  var GB = [2, 4, 6, 8];
+  var conf = { disk: 'ssd', n: 2, gb: [4, 4] };
+  var miniConfRef = conf;
+  var PlacaFactory, WiringFactory, tabLocked = false;
+  function setLock(on) {
+    tabLocked = on;
+    document.querySelectorAll('.tab').forEach(function (t) { if (t.dataset.tab !== 'niveles') { t.disabled = on; t.title = on ? 'Terminá o salí del nivel para usar esta pestaña' : ''; } });
+    var n = document.getElementById('lock-note'); if (n) n.hidden = !on;
+  }
+
+  function ramBody(item) {
+    return '<rect class="f-pcb" x="0" y="0" width="16" height="120" rx="1.5"/>' +
+      '<rect class="f-gold" x="0" y="0" width="3" height="120"/>' +
+      '<rect class="f-chip" x="5" y="6" width="9" height="24"/><rect class="f-chip" x="5" y="34" width="9" height="24"/>' +
+      '<rect class="f-chip" x="5" y="62" width="9" height="24"/><rect class="f-chip" x="5" y="90" width="9" height="24"/>' +
+      '<text class="t-light" x="0" y="0" font-size="7" text-anchor="middle" transform="translate(11 60) rotate(-90)">' + (item.gb || '') + ' GB</text>';
+  }
+
+  function miniCfg(cfArg) {
+    var conf = cfArg || miniConfRef;
+    var d = DISKS[conf.disk], mods = conf.gb.slice(0, conf.n), variants = [];
+    mods.forEach(function (g) {
+      var v = variants.filter(function (x) { return x.gb === g; })[0];
+      if (v) v.count++; else variants.push({ key: g, gb: g, label: 'Memoria RAM ' + g + ' GB', count: 1 });
+    });
+    var parts = {
+      mobo: ext(BASIC.parts.mobo, { watts: 30,
+        info: 'Una placa madre micro-ATX sencilla: tiene 2 ranuras para memoria, una ranura M.2 y salida de video para usar el video integrado del procesador.',
+        spec: 'Formato micro-ATX · 2 DIMM · 1 M.2 · salida HDMI' }),
+      cpu: ext(BASIC.parts.cpu, { watts: 65,
+        info: 'Un procesador de gama de entrada con video integrado: no hace falta placa de video aparte, porque el monitor se conecta directo a la placa madre.',
+        spec: 'Con video integrado · 65 W' }),
+      cooler: ext(BASIC.parts.cooler, { name: 'Cooler original', watts: 3,
+        spec: 'Viene en la caja del procesador · 3 W' }),
+      ram: { name: 'Memoria RAM', short: 'RAM', req: ['mobo'], watts: 3, vb: '0 0 16 120', body: ramBody, variants: variants,
+        hint: 'Las memorias van en las ranuras largas a la derecha del procesador.',
+        info: conf.n === 1 ? 'Con una sola memoria la PC funciona, pero en canal simple. Siempre conviene dejar la otra ranura libre para ampliar más adelante.'
+          : 'Con dos memorias iguales la PC usa doble canal, que es más rápido que una sola memoria de la misma capacidad total.',
+        spec: 'Total: ' + mods.reduce(function (a, b) { return a + b; }, 0) + ' GB · 3 W cada una' },
+      psu: ext(BASIC.parts.psu, { name: 'Fuente', body: function (item) { return psuBody(item.watts); },
+        info: 'Para una PC sin placa de video alcanza con la fuente más chica del mercado. Igual conviene que sea de buena marca: una fuente mala puede dañar los demás componentes.',
+        spec: 'Potencia: 450 W' })
+    };
+    parts[conf.disk] = ext(d.part, { watts: d.watts, req: conf.disk === 'm2' ? ['mobo'] : [] });
+    var slots = [
+      { type: 'mobo', x: 8, y: 6, w: 70, h: 58, z: 1 },
+      { type: 'cpu', x: 38, y: 16, w: 14, h: 11, z: 2 },
+      { type: 'cooler', x: 33, y: 12, w: 24, h: 19, z: 3 },
+      { type: 'ram', x: 59.5, y: 12, w: 4, h: 24, z: 2 }
+    ];
+    if (conf.n === 2) slots.push({ type: 'ram', x: 64.5, y: 12, w: 4, h: 24, z: 2 });
+    slots.push(d.slot, { type: 'psu', x: 6, y: 76, w: 44, h: 18, z: 1 });
+    return {
+      key: 'mini', power: true, psuOptions: [450], parts: parts, slots: slots,
+      powerOrder: ['cpu', 'mobo', conf.disk, 'ram', 'cooler'],
+      winMsg: '¡Tu PC muy básica está armada y encendida!',
+      caseNote: 'Gabinete chico con la tapa abierta. Sin placa de video: el monitor va conectado a la placa madre.',
+      start: 'Empezá por la placa madre: todo lo demás se conecta a ella.',
+      deco: '<div class="deco io"></div><div class="deco brackets"></div><div class="deco shroud"></div>' +
+        '<div class="deco screw" style="left:3%;top:3%"></div><div class="deco screw" style="left:88%;top:3%"></div><div class="deco screw" style="left:3%;top:95%"></div>' +
+        '<div class="deco front"><span class="led"></span><i style="top:20%"></i><i style="top:42%"></i></div>'
+    };
+  }
+
+  // opciones de disco
+  var diskBox = document.getElementById('cfg-disks');
+  Object.keys(DISKS).forEach(function (k) {
+    var d = DISKS[k];
+    diskBox.insertAdjacentHTML('beforeend',
+      '<label class="choice"><input type="radio" name="cfg-disk" id="cfg-disk-' + k + '" value="' + k + '"' + (k === conf.disk ? ' checked' : '') + '>' +
+      '<div class="thumb"><svg viewBox="' + d.part.vb + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + d.part.body + '</svg></div>' +
+      '<strong>' + d.name + '</strong><span class="sub">' + d.sub + '</span></label>');
+  });
+  function renderMods() {
+    var box = document.getElementById('cfg-mods'), h = '';
+    for (var m = 0; m < conf.n; m++) {
+      h += '<div class="mod"><span class="unit">Memoria ' + (m + 1) + '</span><div class="seg">';
+      GB.forEach(function (g) {
+        h += '<label><input type="radio" name="cfg-gb' + m + '" id="cfg-gb' + m + '-' + g + '" value="' + g + '" data-m="' + m + '"' + (conf.gb[m] === g ? ' checked' : '') + '><span>' + g + ' GB</span></label>';
+      });
+      h += '</div></div>';
+    }
+    box.innerHTML = h;
+  }
+
+  function renderSummary() {
+    var mods = conf.gb.slice(0, conf.n), tot = mods.reduce(function (a, b) { return a + b; }, 0), d = DISKS[conf.disk];
+    var use = tot <= 2 ? 'Muy justo: solo para tareas muy simples y sistemas livianos. Windows 11 pide como mínimo 4 GB.'
+      : tot < 6 ? 'Lo mínimo para Windows 11: navegar y escribir, de a una cosa por vez.'
+      : tot < 8 ? 'Uso básico cómodo: navegador con varias pestañas y programas de oficina.'
+      : tot === 8 ? 'Bien para estudio y oficina: varias aplicaciones abiertas a la vez.'
+      : 'Holgado para una PC básica: multitarea sin problemas.';
+    var chan = conf.n === 1 ? 'Una sola memoria: funciona en canal simple y queda una ranura libre para ampliar.'
+      : mods[0] === mods[1] ? 'Dos memorias iguales: trabajan en doble canal, que es más rápido.'
+      : 'Dos memorias de distinta capacidad: el doble canal funciona solo en parte. Lo ideal es que sean iguales.';
+    var six = mods.indexOf(6) >= 0 ? '<p class="warn">Las memorias de 6 GB son poco comunes en los comercios; lo habitual es 2, 4 u 8 GB. Para tener 6 GB se suele usar una de 4 GB + una de 2 GB.</p>' : '';
+    var watts = 30 + 65 + 3 + conf.n * 3 + d.watts, need = Math.ceil(watts * MARGIN);
+    var maxS = 3500, speed = '';
+    Object.keys(DISKS).forEach(function (k) {
+      var x = DISKS[k];
+      speed += '<div class="row' + (k === conf.disk ? ' on' : '') + '"><span>' + x.name + '</span><div class="track"><span style="width:' + Math.max(3, x.speed / maxS * 100) + '%"></span></div><span>' + x.speed + '</span></div>';
+    });
+    document.getElementById('cfg-sum').innerHTML =
+      '<span class="label">Memoria total</span>' +
+      '<div class="rec">' + tot + '<small>GB</small></div>' +
+      '<p>' + use + '</p><p>' + chan + '</p>' + six +
+      '<span class="label">Velocidad del disco (MB/s, aprox.)</span><div class="speed">' + speed + '</div>' +
+      '<p>' + d.note + '</p>' +
+      '<dl class="psum" style="margin:0"><dt>Consumo estimado</dt><dd>' + watts + ' W</dd><dt>Con 30 % de margen</dt><dd>' + need + ' W</dd><dt>Fuente</dt><dd>450 W (la más chica alcanza)</dd></dl>';
+  }
+
+  var mini = null, miniHost = document.getElementById('game-mini');
+  function rebuildMini(changed) {
+    if (mini) mini.destroy();
+    var c = miniCfg();
+    if (changed) c.notice = 'Configuración actualizada: el gabinete está listo para armar con las piezas que elegiste.';
+    mini = mountGame(miniHost, c);
+    renderSummary();
+  }
+  document.querySelector('#panel-muy-basica .cfg').addEventListener('change', function (e) {
+    var t = e.target; if (!t || t.type !== 'radio') return;
+    if (t.name === 'cfg-disk') conf.disk = t.value;
+    else if (t.name === 'cfg-n') { conf.n = +t.value; renderMods(); }
+    else if (t.dataset.m != null) conf.gb[+t.dataset.m] = +t.value;
+    rebuildMini(true);
+  });
+  renderMods();
+  rebuildMini(false);
 
   mountGame(document.getElementById('panel-basica'), BASIC);
   mountGame(document.getElementById('game-gamer'), GAMER);
@@ -997,16 +1559,1314 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   });
   calc();
 
+  /* ---------- placa madre ---------- */
+  (function () {
+    function grid(x, y, w, h, cols, rows, cls) {
+      var o = '', pw = w / cols, ph = h / rows;
+      for (var c = 0; c < cols; c++) for (var r = 0; r < rows; r++)
+        o += '<rect class="' + cls + '" x="' + (x + c * pw + pw * .2) + '" y="' + (y + r * ph + ph * .2) + '" width="' + (pw * .6) + '" height="' + (ph * .6) + '" rx="' + (pw * .1) + '"/>';
+      return o;
+    }
+    function fins(w, h, step) { var o = ''; for (var x = step; x < w; x += step) o += '<line class="f-fin" x1="' + x + '" y1="4" x2="' + x + '" y2="' + (h - 4) + '"/>'; return o; }
+    function ramBody(n) {
+      var o = ''; for (var i = 0; i < n; i++) o += '<rect class="f-chip" x="' + (4 + 13 * i) + '" y="6" width="8" height="168" rx="2"/><rect class="f-metal" x="' + (3 + 13 * i) + '" y="0" width="10" height="7" rx="1"/><rect class="f-metal" x="' + (3 + 13 * i) + '" y="173" width="10" height="7" rx="1"/>';
+      return { vb: '0 0 ' + (4 + 13 * n) + ' 180', body: o };
+    }
+    function sataBody(n) {
+      var o = ''; for (var k = 0; k < n; k++) o += '<rect class="f-chip" x="3" y="' + (3 + 24 * k) + '" width="29" height="19" rx="2"/><path class="f-metal-dark" d="M8 ' + (8 + 24 * k) + ' h19 v5 h-4 v4 h-15 Z"/>';
+      return { vb: '0 0 35 ' + (24 * n + 4), body: o };
+    }
+    function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+    /* datos de plataformas (actualizados a fines de 2026) */
+    var SOCKETS = {
+      AM4: { brand: 'amd', label: 'AM4', tech: 'PGA 1331 · pines en el procesador', gen: 'Ryzen 5000',
+        note: 'La plataforma anterior de AMD, todavía muy usada en PCs económicas. Acá los pines están en el procesador y el zócalo tiene agujeritos.' },
+      AM5: { brand: 'amd', label: 'AM5', tech: 'LGA 1718 · contactos en el zócalo', gen: 'Ryzen 7000, 8000 y 9000',
+        note: 'El socket actual de AMD. Los contactos están en el zócalo. AMD confirmó que la próxima generación de Ryzen (Zen 6, prevista para 2027) también va a usar AM5.' },
+      LGA1700: { brand: 'intel', label: 'LGA 1700', tech: 'LGA 1700 · contactos en el zócalo', gen: 'Core de 12.ª, 13.ª y 14.ª generación',
+        note: 'El socket de los Intel Core de 12.ª a 14.ª generación. Hay placas para DDR4 y otras para DDR5: no se pueden mezclar.' },
+      LGA1851: { brand: 'intel', label: 'LGA 1851', tech: 'LGA 1851 · contactos en el zócalo', gen: 'Core Ultra 200S y 200S Plus',
+        note: 'El socket actual de Intel, para los Core Ultra 200S. Intel ya anunció un socket nuevo (LGA 1954) para su próxima generación, prevista para 2027.' }
+    };
+    var BY = {
+      amd: { base: ['AM5', 'AM4'], media: ['AM5', 'AM4'], gamer: ['AM5'] },
+      intel: { base: ['LGA1851', 'LGA1700'], media: ['LGA1851', 'LGA1700'], gamer: ['LGA1851', 'LGA1700'] }
+    };
+    var CHIPSETS = {
+      AM4: { base: ['A520'], media: ['B550'] },
+      AM5: { base: ['A620', 'B840'], media: ['B650', 'B850'], gamer: ['X870E', 'X870', 'X670E'] },
+      LGA1700: { base: ['H610'], media: ['B760'], gamer: ['Z790'] },
+      LGA1851: { base: ['H810'], media: ['B860'], gamer: ['Z890'] }
+    };
+    var CHIPNOTE = {
+      A520: 'Chipset de entrada para AM4: no permite overclock del procesador.',
+      B550: 'Chipset medio para AM4: permite overclock y tiene PCIe 4.0 para la placa de video y el M.2.',
+      A620: 'Chipset de entrada para AM5: no permite overclock del procesador.',
+      B840: 'El chipset más económico de AM5: sin overclock del procesador y con menos velocidad en las ranuras.',
+      B650: 'Chipset medio de AM5: permite overclock y tiene buena cantidad de puertos.',
+      B850: 'Chipset medio nuevo de AM5: suma M.2 PCIe 5.0 de serie.',
+      X670E: 'Chipset de alta gama de AM5: PCIe 5.0 para la placa de video y los M.2.',
+      X870: 'Chipset de alta gama de AM5: trae USB4 y M.2 PCIe 5.0.',
+      X870E: 'El tope de gama de AM5: PCIe 5.0 para video y M.2, USB4 y muchas conexiones.',
+      H610: 'Chipset de entrada para LGA 1700: sin overclock y con pocas ranuras.',
+      B760: 'Chipset medio para LGA 1700: permite overclock de la memoria.',
+      Z790: 'Chipset de alta gama para LGA 1700: permite overclock de los procesadores “K”.',
+      H810: 'Chipset de entrada para Core Ultra 200S: sin overclock.',
+      B860: 'Chipset medio para Core Ultra 200S: permite overclock de la memoria.',
+      Z890: 'El tope de gama para Core Ultra 200S: overclock completo y PCIe 5.0.'
+    };
+    function c(name, cores, threads, tdp, igpu, l1, l2) { return { name: name, cores: cores, threads: threads, tdp: tdp, igpu: igpu, l1: l1, l2: l2 }; }
+    var CPUS = {
+      AM4: {
+        base: [c('Ryzen 5 5500', 6, 12, 65, false, 'RYZEN 5', '5500'), c('Ryzen 5 5600G', 6, 12, 65, true, 'RYZEN 5', '5600G')],
+        media: [c('Ryzen 5 5600', 6, 12, 65, false, 'RYZEN 5', '5600'), c('Ryzen 7 5700X', 8, 16, 65, false, 'RYZEN 7', '5700X')] },
+      AM5: {
+        base: [c('Ryzen 5 8500G', 6, 12, 65, true, 'RYZEN 5', '8500G'), c('Ryzen 5 7600', 6, 12, 65, true, 'RYZEN 5', '7600'), c('Ryzen 5 9600', 6, 12, 65, true, 'RYZEN 5', '9600')],
+        media: [c('Ryzen 5 9600X', 6, 12, 65, true, 'RYZEN 5', '9600X'), c('Ryzen 7 9700X', 8, 16, 65, true, 'RYZEN 7', '9700X'), c('Ryzen 7 7800X3D', 8, 16, 120, true, 'RYZEN 7', '7800X3D')],
+        gamer: [c('Ryzen 7 9800X3D', 8, 16, 120, true, 'RYZEN 7', '9800X3D'), c('Ryzen 7 9850X3D', 8, 16, 120, true, 'RYZEN 7', '9850X3D'), c('Ryzen 9 9950X', 16, 32, 170, true, 'RYZEN 9', '9950X'), c('Ryzen 9 9950X3D', 16, 32, 170, true, 'RYZEN 9', '9950X3D')] },
+      LGA1700: {
+        base: [c('Core i3-14100', 4, 8, 60, true, 'CORE i3', '14100'), c('Core i5-14400', 10, 16, 65, true, 'CORE i5', '14400')],
+        media: [c('Core i5-14400', 10, 16, 65, true, 'CORE i5', '14400'), c('Core i5-14600K', 14, 20, 125, true, 'CORE i5', '14600K')],
+        gamer: [c('Core i7-14700K', 20, 28, 125, true, 'CORE i7', '14700K'), c('Core i9-14900K', 24, 32, 125, true, 'CORE i9', '14900K')] },
+      LGA1851: {
+        base: [c('Core Ultra 5 225', 10, 10, 65, true, 'ULTRA 5', '225'), c('Core Ultra 5 235', 14, 14, 65, true, 'ULTRA 5', '235')],
+        media: [c('Core Ultra 5 250K Plus', 18, 18, 125, true, 'ULTRA 5', '250K PLUS'), c('Core Ultra 7 265', 20, 20, 65, true, 'ULTRA 7', '265')],
+        gamer: [c('Core Ultra 7 270K Plus', 24, 24, 125, true, 'ULTRA 7', '270K PLUS'), c('Core Ultra 9 285K', 24, 24, 125, true, 'ULTRA 9', '285K')] }
+    };
+    var GAMA = {
+      base: { name: 'Base', format: 'Micro-ATX', ram: 2, m2: 1, x16: 1, sata: 2, vrm: 'unas 6 fases' },
+      media: { name: 'Intermedia', format: 'ATX', ram: 4, m2: 2, x16: 1, sata: 4, vrm: 'unas 12 fases' },
+      gamer: { name: 'Gamer', format: 'ATX', ram: 4, m2: 3, x16: 2, sata: 6, vrm: '16 fases o más' }
+    };
+    function ramType(cf) { return cf.socket === 'AM4' ? 'DDR4' : cf.socket === 'LGA1700' && cf.gama === 'base' ? 'DDR4' : 'DDR5'; }
+
+    function socketBody(sk) {
+      var t = '<text class="t-label" x="50" y="96" text-anchor="middle" font-size="8">' + SOCKETS[sk].label + '</text>';
+      if (sk === 'AM4') return '<rect class="f-metal" x="2" y="2" width="92" height="96" rx="4"/><rect class="f-metal-dark" x="12" y="10" width="72" height="76" rx="2" opacity=".35"/>' +
+        grid(14, 12, 68, 72, 10, 10, 'f-chip') + '<rect class="f-metal" x="94" y="10" width="5" height="76" rx="2"/>' + t;
+      if (sk === 'AM5') return '<rect class="f-metal" x="2" y="2" width="92" height="96" rx="4"/><rect class="f-chip" x="12" y="10" width="72" height="76" rx="2"/>' +
+        grid(15, 13, 66, 70, 10, 10, 'f-gold') + '<rect class="f-metal" x="94" y="10" width="5" height="76" rx="2"/>' + t;
+      return '<rect class="f-metal" x="14" y="2" width="70" height="96" rx="4"/><rect class="f-chip" x="22" y="10" width="54" height="76" rx="2"/>' +
+        grid(24, 12, 50, 72, 7, 10, 'f-gold') + '<rect class="f-metal" x="86" y="6" width="5" height="84" rx="2"/>' + t;
+    }
+    function cpuBody(cf, cpu) {
+      var intel = SOCKETS[cf.socket].brand === 'intel';
+      var x = intel ? 18 : 4, w = intel ? 64 : 92;
+      return '<rect class="f-pcb" x="' + x + '" y="4" width="' + w + '" height="92" rx="3"/>' +
+        '<rect class="f-metal" x="' + (x + 6) + '" y="12" width="' + (w - 12) + '" height="76" rx="5"/>' +
+        '<text class="t-label" x="50" y="34" text-anchor="middle" font-size="' + (intel ? 10 : 12) + '">' + (intel ? 'intel' : 'AMD') + '</text>' +
+        '<text class="t-label" x="50" y="54" text-anchor="middle" font-size="' + (intel ? 8.5 : 10) + '">' + cpu.l1 + '</text>' +
+        '<text class="t-label" x="50" y="70" text-anchor="middle" font-size="' + (cpu.l2.length > 7 ? 7.5 : 10) + '">' + cpu.l2 + '</text>' +
+        '<path class="f-gold" d="M' + (x + 2) + ' 94 V86 L' + (x + 10) + ' 94 Z"/>';
+    }
+
+    var BASEP = {
+      io: { name: 'Panel trasero de puertos (I/O)', short: 'Panel I/O', vb: '0 0 60 212',
+        body: '<rect class="f-metal-dark" width="60" height="212" rx="4"/>' +
+          '<rect class="f-metal" x="10" y="12" width="40" height="14" rx="2"/><rect class="f-metal" x="10" y="32" width="40" height="14" rx="2"/>' +
+          '<rect class="f-metal" x="10" y="58" width="40" height="14" rx="2"/><rect class="f-metal" x="10" y="78" width="40" height="14" rx="2"/>' +
+          '<rect class="f-chip" x="12" y="104" width="36" height="28" rx="2"/><rect class="f-metal" x="18" y="110" width="24" height="14"/>' +
+          '<rect class="f-chip" x="10" y="142" width="40" height="16" rx="2"/>' +
+          '<circle class="f-accent" cx="20" cy="178" r="7"/><circle class="f-gold" cx="40" cy="178" r="7"/><circle class="f-pcb" cx="30" cy="198" r="7"/>',
+        hint: 'El panel de puertos va pegado al borde izquierdo: es lo que asoma por atrás del gabinete.',
+        info: 'Son los puertos que asoman por atrás del gabinete: USB, red (Ethernet), salida de video y audio.',
+        spec: 'USB · Ethernet · HDMI · audio' },
+      eps: { name: 'Conector de energía del CPU (EPS)', short: 'EPS', vb: '0 0 60 30',
+        body: '<rect class="f-chip" width="60" height="30" rx="3"/>' + grid(3, 3, 54, 24, 4, 2, 'f-metal-dark'),
+        hint: 'El EPS es el conector chico de 8 pines arriba a la izquierda, cerca del borde.',
+        info: 'Recibe el cable de 8 pines de la fuente que alimenta al procesador, a través de las fases (VRM).',
+        spec: '8 pines (4+4) · 12 V' },
+      vrm: { name: 'Fases de alimentación (VRM)', short: 'VRM', vb: '0 0 280 75',
+        body: '<rect class="f-metal-dark" width="280" height="75" rx="6"/>' + fins(280, 75, 14) + '<rect class="f-accent" x="0" y="66" width="280" height="4" opacity=".75"/>',
+        hint: 'Las fases (VRM) llevan un disipador alargado, justo arriba del socket.',
+        info: 'Regulan la energía que recibe el procesador: bajan los 12 V de la fuente a poco más de 1 V. Cuantas más fases, más estable es la energía para procesadores potentes.' },
+      atx: { name: 'Conector de energía ATX 24 pines', short: 'ATX 24', vb: '0 0 30 150',
+        body: '<rect class="f-chip" width="30" height="150" rx="3"/>' + grid(3, 3, 24, 144, 2, 12, 'f-metal-dark'),
+        hint: 'El ATX de 24 pines va en el borde derecho de la placa, al lado de las memorias.',
+        info: 'Recibe el cable principal de la fuente, que alimenta a toda la placa madre.',
+        spec: '24 pines · 3,3 V, 5 V y 12 V' },
+      m2: { name: 'Ranura M.2', short: 'M.2', vb: '0 0 260 37',
+        body: '<rect class="s-pcb" x="1" y="4" width="250" height="29" rx="3" stroke-dasharray="6 4"/><rect class="f-chip" x="0" y="7" width="30" height="23" rx="2"/>' +
+          '<circle class="f-metal" cx="244" cy="18.5" r="8"/><text class="t-light" x="130" y="24" text-anchor="middle" font-size="14">M.2</text>',
+        hint: 'Las ranuras M.2 son ranuras cortas con un tornillo al final, entre las ranuras PCIe.',
+        info: 'Ahí se enchufa un disco SSD M.2 sin cables. Se sujeta con un tornillito en el extremo.' },
+      pcie16: { name: 'Ranura PCI Express x16', short: 'PCIe x16', vb: '0 0 280 22',
+        body: '<rect class="f-chip" width="280" height="22" rx="3"/><rect class="f-pcb" x="60" y="0" width="4" height="22"/><rect class="f-metal" x="264" y="2" width="14" height="18" rx="2"/>',
+        hint: 'La PCIe x16 es la ranura horizontal más larga, debajo del socket.',
+        info: 'Es la ranura más larga: ahí va la placa de video. “x16” significa que tiene 16 carriles para pasar datos.' },
+      pcie1: { name: 'Ranura PCI Express x1', short: 'PCIe x1', vb: '0 0 110 19',
+        body: '<rect class="f-chip" width="110" height="19" rx="2"/><rect class="f-pcb" x="24" y="0" width="4" height="19"/>',
+        hint: 'La PCIe x1 es la ranura horizontal corta, más abajo, a la izquierda.',
+        info: 'Es una ranura corta para placas de expansión chicas: WiFi, sonido o más puertos USB.',
+        spec: '1 carril de datos' },
+      cmos: { name: 'Pila CMOS', short: 'Pila', vb: '0 0 100 100',
+        body: '<circle class="f-chip" cx="50" cy="50" r="48"/><circle class="f-metal" cx="50" cy="50" r="40"/><text class="t-label" x="50" y="60" text-anchor="middle" font-size="28">+</text>',
+        hint: 'La pila CMOS es la moneda redonda, en la parte de abajo.',
+        info: 'Mantiene la hora y la configuración del BIOS cuando la PC está desenchufada.',
+        spec: 'CR2032 · 3 V' },
+      bios: { name: 'Chip del BIOS (UEFI)', short: 'BIOS', vb: '0 0 100 100',
+        body: grid(4, 22, 14, 56, 1, 4, 'f-metal') + grid(82, 22, 14, 56, 1, 4, 'f-metal') +
+          '<rect class="f-chip" x="16" y="16" width="68" height="68" rx="4"/><circle class="f-metal-dark" cx="28" cy="28" r="4"/><text class="t-light" x="50" y="58" text-anchor="middle" font-size="16">BIOS</text>',
+        hint: 'El chip del BIOS es un chip chico cuadrado en la parte de abajo, al centro.',
+        info: 'Guarda el programa que arranca la PC: revisa el hardware y busca el sistema operativo para cargarlo. A veces hay que actualizarlo para que la placa reconozca procesadores más nuevos.',
+        spec: 'Memoria flash' },
+      audio: { name: 'Chip de sonido', short: 'Audio', vb: '0 0 100 100',
+        body: '<rect class="f-chip" x="6" y="10" width="54" height="54" rx="3"/><text class="t-light" x="33" y="42" text-anchor="middle" font-size="12">AUDIO</text>' +
+          '<circle class="f-gold" cx="78" cy="22" r="11"/><circle class="f-gold" cx="78" cy="50" r="11"/><circle class="f-gold" cx="78" cy="78" r="11"/><circle class="f-gold" cx="40" cy="84" r="11"/>',
+        hint: 'El chip de sonido está abajo a la izquierda, cerca de los puertos de audio.',
+        info: 'Procesa el sonido que sale por los parlantes o auriculares y el que entra por el micrófono.',
+        spec: 'Con capacitores de audio' },
+      front: { name: 'Conectores del panel frontal', short: 'Panel frontal', vb: '0 0 180 62',
+        body: '<rect class="f-chip" width="180" height="62" rx="3"/>' + grid(6, 6, 168, 50, 9, 2, 'f-metal'),
+        hint: 'Los conectores del panel frontal son una tira de pines en el borde de abajo, a la derecha.',
+        info: 'Ahí se conectan los cables del botón de encendido, el botón de reset y las luces del frente del gabinete.',
+        spec: 'Power SW · Reset SW · LED' }
+    };
+
+    var LAYOUT = {
+      base: [
+        ['io', 2, 6, 12, 34], ['eps', 18, 3, 10, 4], ['vrm', 36, 6, 22, 5], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
+        ['ram', 68, 8, 7, 36], ['atx', 86, 18, 6, 24], ['m2', 20, 38.5, 26, 3], ['pcie16', 8, 46, 56, 3.5], ['pcie1', 8, 60, 22, 3],
+        ['cmos', 38, 62, 8, 6.4], ['chipset', 56, 58, 14, 11.2], ['sata', 86, 58, 7, 8.3], ['audio', 4, 78, 10, 8], ['bios', 36, 78, 7, 5.6], ['front', 68, 90, 18, 5]],
+      media: [
+        ['io', 2, 6, 12, 34], ['eps', 18, 3, 10, 4], ['vrm', 34, 5.5, 28, 6], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
+        ['ram', 68, 8, 14, 36], ['atx', 86, 18, 6, 24], ['m2', 20, 38.5, 26, 3], ['pcie16', 8, 46, 56, 3.5], ['m2', 20, 53, 26, 3], ['pcie1', 8, 60, 22, 3],
+        ['cmos', 38, 62, 8, 6.4], ['chipset', 54, 57, 18, 14.4], ['sata', 86, 58, 7, 16], ['audio', 4, 78, 10, 8], ['bios', 36, 78, 7, 5.6], ['front', 68, 90, 18, 5]],
+      gamer: [
+        ['io', 2, 6, 12, 34], ['eps', 18, 3, 10, 4], ['eps', 18, 8.5, 10, 4], ['vrm', 30, 4.5, 34, 8], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
+        ['ram', 68, 8, 14, 36], ['atx', 86, 18, 6, 24], ['m2', 20, 38.5, 26, 3], ['pcie16', 8, 46, 56, 3.5], ['m2', 20, 53, 26, 3], ['pcie16', 8, 59, 44, 3.5], ['m2', 20, 66, 26, 3],
+        ['chipset', 56, 57, 18, 14.4], ['cmos', 47, 74.5, 7, 5.6], ['sata', 86, 56, 7, 23.7], ['audio', 4, 78, 10, 8], ['bios', 36, 78, 7, 5.6], ['front', 68, 90, 18, 5]]
+    };
+
+    var deco = '<svg class="board-deco" viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true">' +
+      '<path class="s-trace" stroke-width=".35" d="M16 12 H30 M20 30 V45 H34 M62 30 H66 M64 50 V58 M30 54 H50 V62 M74 52 H84 M40 74 H52 V90 M14 70 V96 H30 M60 96 H70 M84 50 V70 M50 30 V40 M10 104 H60 M74 104 H90"/>' +
+      '<circle cx="4" cy="4" r="1.6" fill="none" stroke="var(--metal)" stroke-width=".5"/><circle cx="96" cy="4" r="1.6" fill="none" stroke="var(--metal)" stroke-width=".5"/>' +
+      '<circle cx="4" cy="121" r="1.6" fill="none" stroke="var(--metal)" stroke-width=".5"/><circle cx="96" cy="121" r="1.6" fill="none" stroke="var(--metal)" stroke-width=".5"/>' +
+      '<circle cx="62" cy="50" r="1.6" fill="none" stroke="var(--metal)" stroke-width=".5"/><circle cx="50" cy="104" r="1.6" fill="none" stroke="var(--metal)" stroke-width=".5"/></svg>';
+
+    var conf = { gama: 'base', brand: 'amd', socket: 'AM5', chipset: 'A620', cpu: 0 };
+    function cpuList(cf) { cf = cf || conf; return (CPUS[cf.socket] || {})[cf.gama] || []; }
+    function curCpu(cf) { cf = cf || conf; return cpuList(cf)[cf.cpu] || cpuList(cf)[0]; }
+
+    function buildCfg(conf) {
+      var g = GAMA[conf.gama], sk = SOCKETS[conf.socket], cpu = curCpu(conf), ddr = ramType(conf), P = {}, k;
+      for (k in BASEP) P[k] = ext(BASEP[k], {});
+      P.socket = { name: 'Zócalo del procesador (socket ' + sk.label + ')', short: 'Socket ' + sk.label, vb: '0 0 100 100', body: socketBody(conf.socket),
+        hint: 'El socket es el cuadrado grande del centro, arriba: ahí se coloca el procesador.',
+        info: sk.note, spec: sk.tech + ' · para ' + sk.gen };
+      P.cpu = { name: 'Procesador ' + cpu.name, short: cpu.name.replace('Core Ultra', 'Ultra'), req: ['socket'], vb: '0 0 100 100', body: cpuBody(conf, cpu),
+        reqMsg: 'Primero colocá el zócalo (socket): el procesador va adentro de él.',
+        hint: 'El procesador va adentro del socket, en el centro.',
+        info: 'El ' + cpu.name + ' tiene ' + cpu.cores + ' núcleos y ' + cpu.threads + ' hilos. Es compatible con esta placa porque usa el socket ' + sk.label + '. Se coloca alineando el triangulito dorado con la marca del zócalo.',
+        spec: cpu.cores + ' núcleos / ' + cpu.threads + ' hilos · ' + cpu.tdp + ' W' + (cpu.igpu ? ' · con gráficos integrados' : ' · sin gráficos integrados') };
+      P.chipset = { name: 'Chipset ' + conf.chipset, short: 'Chipset ' + conf.chipset, vb: '0 0 100 100',
+        body: '<rect class="f-metal-dark" width="100" height="100" rx="10"/>' + fins(100, 100, 12) + '<rect class="f-chip" x="18" y="34" width="64" height="32" rx="4"/>' +
+          '<text class="t-light" x="50" y="56" text-anchor="middle" font-size="' + (conf.chipset.length > 4 ? 15 : 17) + '">' + conf.chipset + '</text>',
+        hint: 'El chipset es el disipador cuadrado de la parte de abajo, hacia la derecha.',
+        info: CHIPNOTE[conf.chipset] + ' El chipset coordina la comunicación entre el procesador y los puertos USB, SATA y ranuras chicas.',
+        spec: 'Chipset ' + conf.chipset + ' · socket ' + sk.label };
+      var rb = ramBody(g.ram);
+      P.ram = { name: 'Ranuras de memoria RAM (' + ddr + ')', short: 'RAM ' + ddr, vb: rb.vb, body: rb.body,
+        hint: 'Las ranuras de RAM son las largas y verticales a la derecha del socket.',
+        info: 'Ahí van los módulos de memoria. Esta placa usa ' + ddr + ': las memorias DDR4 y DDR5 tienen la muesca en distinto lugar y no son intercambiables.',
+        spec: g.ram + ' ranuras · ' + ddr };
+      var sb = sataBody(g.sata);
+      P.sata = { name: 'Puertos SATA', short: 'SATA', vb: sb.vb, body: sb.body,
+        hint: 'Los puertos SATA están en el borde derecho, abajo.',
+        info: 'Ahí se conectan los cables de datos de los discos rígidos, los SSD de 2,5" y las lectoras.',
+        spec: g.sata + ' puertos SATA III' };
+      P.vrm.spec = g.vrm;
+      P.m2.spec = g.m2 + (g.m2 === 1 ? ' ranura' : ' ranuras') + ' en esta placa';
+      P.pcie16.spec = g.x16 + (g.x16 === 1 ? ' ranura x16' : ' ranuras x16 (la principal, reforzada)');
+      if (conf.gama === 'gamer') { P.eps.spec = '2 conectores de 8 pines'; P.eps.info = 'Las placas gamer traen dos conectores EPS de 8 pines para darle más energía a los procesadores potentes.'; }
+      Object.keys(P).forEach(function (t) { if (!P[t].req) P[t].req = []; });
+      var slots = LAYOUT[conf.gama].map(function (a) { return { type: a[0], x: a[1], y: a[2], w: a[3], h: a[4], z: a[5] || 1 }; });
+      return {
+        key: 'placa', caseClass: 'board', parts: P, deco: deco, slots: slots,
+        winMsg: '¡Placa armada! Ahora ponele el nombre a cada parte.',
+        caseNote: 'Placa madre ' + g.name.toLowerCase() + ' (' + g.format + ') vista de frente. A la izquierda está el panel trasero de puertos.',
+        start: 'Paso 1 de 2: colocá cada parte en la placa, incluido el procesador en su socket. Después vas a ponerle el nombre a cada parte.'
+      };
+    }
+
+    /* ---- configurador ---- */
+    var selSock = document.getElementById('pm-socket'), selChip = document.getElementById('pm-chip'), selCpu = document.getElementById('pm-cpu');
+    function opts(sel, list, cur, label) {
+      sel.innerHTML = list.map(function (v, i) { var val = typeof v === 'string' ? v : i; return '<option value="' + val + '"' + (String(val) === String(cur) ? ' selected' : '') + '>' + esc(label(v)) + '</option>'; }).join('');
+    }
+    function fixConf() {
+      var socks = BY[conf.brand][conf.gama];
+      if (socks.indexOf(conf.socket) < 0) conf.socket = socks[0];
+      var chips = CHIPSETS[conf.socket][conf.gama];
+      if (chips.indexOf(conf.chipset) < 0) conf.chipset = chips[0];
+      if (conf.cpu >= cpuList().length) conf.cpu = 0;
+    }
+    function fillSelects() {
+      opts(selSock, BY[conf.brand][conf.gama], conf.socket, function (v) { return SOCKETS[v].label + ' · ' + SOCKETS[v].gen; });
+      opts(selChip, CHIPSETS[conf.socket][conf.gama], conf.chipset, function (v) { return v; });
+      opts(selCpu, cpuList(), conf.cpu, function (v) { return v.name + ' · ' + v.cores + ' núcleos'; });
+    }
+    function renderSummary() {
+      var g = GAMA[conf.gama], sk = SOCKETS[conf.socket], cpu = curCpu(), ddr = ramType(conf);
+      document.getElementById('pm-sum').innerHTML =
+        '<span class="label">Ficha de la placa</span>' +
+        '<div class="rec" style="font-size:clamp(28px,5vw,38px)">' + sk.label + '<small>' + conf.chipset + '</small></div>' +
+        '<dl class="psum" style="margin:0">' +
+          '<dt>Gama</dt><dd>' + g.name + ' · ' + g.format + '</dd>' +
+          '<dt>Memoria</dt><dd>' + g.ram + ' ranuras ' + ddr + '</dd>' +
+          '<dt>Ranuras M.2</dt><dd>' + g.m2 + '</dd>' +
+          '<dt>Ranuras PCIe x16</dt><dd>' + g.x16 + '</dd>' +
+          '<dt>Puertos SATA</dt><dd>' + g.sata + '</dd>' +
+          '<dt>Fases VRM</dt><dd>' + g.vrm + '</dd>' +
+        '</dl>' +
+        '<p><strong>' + cpu.name + '</strong>: ' + cpu.cores + ' núcleos, ' + cpu.threads + ' hilos, ' + cpu.tdp + ' W' + (cpu.igpu ? ', con gráficos integrados.' : ', sin gráficos integrados: necesita placa de video.') + '</p>' +
+        '<p style="color:var(--ok)">✓ Compatible: el procesador y la placa usan socket ' + sk.label + '.</p>' +
+        '<p>' + CHIPNOTE[conf.chipset] + '</p>' +
+        '<p class="spec">' + sk.note + '</p>';
+    }
+
+    /* ---- juego ---- */
+    function PlacaGame(host, onComplete, mode) {
+    var api = null, L = null, panel = null, CFG = null;
+    function q(sel) { return host.querySelector(sel); }
+    function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    function types() { var o = []; CFG.slots.forEach(function (s) { if (o.indexOf(s.type) < 0) o.push(s.type); }); return o; }
+    function hudLabels() {
+      var n = Object.keys(L.done).length, tot = types().length;
+      q('.js-count').textContent = n + ' / ' + tot;
+      q('.js-errors').textContent = L.errors;
+      q('.js-bar').style.width = (n / tot * 100) + '%';
+    }
+    function startLabels(res) {
+      if (!api) return;
+      var P = CFG.parts;
+      L = { done: {}, doneSlot: {}, errors: 0, sel: null, t0: Date.now(), p1: res || { errors: 0, secs: 0 } };
+      setTimeout(function () { if (L) L.ready = true; }, 0);
+      L.timer = setInterval(function () { q('.js-time').textContent = fmt(Math.floor((Date.now() - L.t0) / 1000)); }, 500);
+      q('.js-time').textContent = '00:00';
+      q('.stat .label').textContent = 'Nombres';
+      q('.tray-box').hidden = true;
+      var help = q('.js-help');
+      if (help.getAttribute('aria-pressed') === 'true') help.click();
+      help.hidden = true;
+      api.caseEl.classList.add('labeling'); api.caseEl.classList.remove('powered');
+      panel = document.createElement('section');
+      panel.className = 'tray-box panel'; panel.setAttribute('aria-label', 'Nombres de las partes');
+      var keys = types().sort(function () { return Math.random() - 0.5; });
+      panel.innerHTML = '<span class="label">' + (mode === 'labels' ? 'Nombres' : 'Paso 2 de 2 · Nombres') + '</span><div class="chips">' +
+        keys.map(function (k) { return '<button type="button" class="chip" data-k="' + k + '">' + esc(P[k].name) + '</button>'; }).join('') + '</div>';
+      q('.app').appendChild(panel);
+      hudLabels();
+      api.say((mode === 'labels' ? 'La placa ya está armada. ' : 'Paso 2 de 2: ') + 'Arrastrá cada nombre hasta su parte en la placa, o tocá un nombre y después la parte.');
+      q('.js-info').classList.remove('win');
+      q('.js-info').innerHTML = '<span class="label">Ficha técnica</span><h2>Ponele nombre a cada parte</h2><p>' + (mode === 'labels' ? 'La placa ya está armada.' : 'Ya armaste la placa.') + ' Ahora identificá cada parte: cuando aciertes, el nombre queda pegado en la placa y acá vas a ver para qué sirve.</p><p class="spec">El socket se toca en su borde; el procesador, en el centro.</p>';
+      bindChips();
+    }
+    function stopLabels() {
+      if (L) clearInterval(L.timer);
+      L = null;
+      if (panel) { panel.remove(); panel = null; }
+      if (!api) return;
+      api.caseEl.querySelectorAll('.mb-pill').forEach(function (e) { e.remove(); });
+      api.caseEl.classList.remove('labeling');
+      q('.stat .label').textContent = 'Piezas';
+      q('.tray-box').hidden = false;
+      q('.js-help').hidden = false;
+    }
+    function chipSel(k) {
+      panel.querySelectorAll('.chip.selected').forEach(function (c) { c.classList.remove('selected'); });
+      L.sel = k;
+      if (k) panel.querySelector('[data-k="' + k + '"]').classList.add('selected');
+    }
+    function flashSlot(i, cls) { var s = api.slotEls[i]; s.classList.add(cls); setTimeout(function () { s.classList.remove(cls); }, 650); }
+    function tryLabel(k, i) {
+      var P = CFG.parts;
+      if (!L || L.done[k]) return;
+      var slot = CFG.slots[i];
+      if (L.done[slot.type]) { api.say('Esa parte ya tiene su nombre. Elegí otra.', 'err'); return; }
+      if (slot.type !== k) {
+        L.errors++; hudLabels(); flashSlot(i, 'miss'); sfx.error();
+        api.say('No: esa parte no es “' + P[k].name + '”. Pista: ' + P[k].hint, 'err');
+        chipSel(null); return;
+      }
+      L.done[k] = true;
+      var pill = document.createElement('div');
+      pill.className = 'mb-pill'; pill.textContent = P[k].short;
+      pill.style.left = (slot.x + slot.w / 2) + '%'; pill.style.top = (slot.y + slot.h / 2) + '%';
+      if (k === 'socket') pill.style.top = (slot.y + 1.6) + '%';
+      api.caseEl.appendChild(pill);
+      var chip = panel.querySelector('[data-k="' + k + '"]'); chip.classList.add('used'); chip.setAttribute('aria-disabled', 'true');
+      chipSel(null); hudLabels();
+      api.say('¡Correcto! Eso es: ' + P[k].name + '.', 'ok');
+      q('.js-info').innerHTML = '<span class="label">Ficha técnica</span><h2>' + esc(P[k].name) + '</h2><p>' + P[k].info + '</p><p class="spec">' + (P[k].spec || '') + '</p>';
+      if (Object.keys(L.done).length === types().length) finish();
+    }
+    function finish() {
+      clearInterval(L.timer);
+      var secs = Math.floor((Date.now() - L.t0) / 1000);
+      api.caseEl.classList.add('powered');
+      sfx.win();
+      api.say('¡Placa madre completa y con todos sus nombres!', 'ok');
+      var info = q('.js-info'); info.classList.add('win');
+      info.innerHTML = '<span class="label">Resultado</span><h2>¡Placa identificada!</h2><p>Pusiste los ' + types().length + ' nombres en <strong>' + fmt(secs) + '</strong> con <strong>' + L.errors + '</strong> ' + (L.errors === 1 ? 'error' : 'errores') + '.</p>' +
+        '<p class="spec">' + (L.errors === 0 ? 'Perfecto: reconocés todas las partes.' : 'Probá de nuevo para hacerlo sin errores.') + ' También podés cambiar la gama o la marca arriba y armar otra placa.</p>' +
+        '<button class="btn js-again2" type="button">Jugar de nuevo</button>';
+      info.querySelector('.js-again2').addEventListener('click', function () { api.reset(); });
+      if (onComplete) onComplete({ errors: L.p1.errors + L.errors, secs: L.p1.secs + secs });
+    }
+    function slotAt(x, y) {
+      var els = document.elementsFromPoint(x, y);
+      for (var j = 0; j < els.length; j++) if (els[j].classList && els[j].classList.contains('slot') && api.caseEl.contains(els[j])) return +els[j].dataset.i;
+      return null;
+    }
+    function bindChips() {
+      var drag = null, P = CFG.parts;
+      panel.addEventListener('pointerdown', function (e) {
+        var c = e.target.closest('.chip'); if (!c || c.classList.contains('used')) return;
+        drag = { k: c.dataset.k, x0: e.clientX, y0: e.clientY, moved: false, el: c };
+        try { c.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      panel.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6) return;
+        if (!drag.moved) {
+          drag.moved = true;
+          drag.g = document.createElement('div'); drag.g.className = 'chip-ghost'; drag.g.textContent = P[drag.k].name;
+          document.body.appendChild(drag.g);
+        }
+        drag.g.style.transform = 'translate(' + (e.clientX + 10) + 'px,' + (e.clientY - 34) + 'px)';
+        api.caseEl.querySelectorAll('.slot.hit').forEach(function (s) { s.classList.remove('hit'); });
+        var i = slotAt(e.clientX, e.clientY); if (i != null) api.slotEls[i].classList.add('hit');
+      });
+      function end(e, cancel) {
+        if (!drag) return;
+        var d = drag; drag = null;
+        api.caseEl.querySelectorAll('.slot.hit').forEach(function (s) { s.classList.remove('hit'); });
+        if (!d.moved) return;
+        d.g.remove(); d.el.dataset.dragged = '1'; setTimeout(function () { delete d.el.dataset.dragged; }, 50);
+        if (cancel) return;
+        var i = slotAt(e.clientX, e.clientY);
+        if (i == null) { api.say('Soltá el nombre encima de una parte de la placa.'); return; }
+        tryLabel(d.k, i);
+      }
+      panel.addEventListener('pointerup', function (e) { end(e, false); });
+      panel.addEventListener('pointercancel', function (e) { end(e, true); });
+      panel.addEventListener('click', function (e) {
+        var c = e.target.closest('.chip'); if (!c || c.dataset.dragged || c.classList.contains('used')) return;
+        if (L.sel === c.dataset.k) { chipSel(null); api.say('Nombre deseleccionado.'); return; }
+        chipSel(c.dataset.k);
+        api.say('Elegiste “' + P[c.dataset.k].name + '”. Ahora tocá la parte de la placa que corresponde.');
+      });
+    }
+    host.addEventListener('click', function (e) {
+      if (!L || !L.ready || !api || !api.caseEl.contains(e.target)) return;
+      var s = e.target.closest('.slot'); if (!s) return;
+      if (!L.sel) { api.say('Primero elegí un nombre de la lista.'); return; }
+      tryLabel(L.sel, +s.dataset.i);
+    });
+
+    function rebuild(cf, notice) {
+      stopLabels();
+      if (api) api.destroy();
+      api = null;
+      CFG = buildCfg(cf);
+      if (mode === 'build') {
+        CFG.winMsg = '¡Placa madre armada!';
+        CFG.start = 'Colocá cada parte en su lugar de la placa, incluido el procesador en su socket.';
+        CFG.onWin = function (res) { if (onComplete) onComplete(res); };
+        CFG.onReset = function () {};
+      } else {
+        CFG.onWin = function (res) { startLabels(res); };
+        CFG.onReset = function () {
+          stopLabels();
+          if (mode === 'labels' && api) setTimeout(function () { if (api) { api.fillAll(); startLabels(); } }, 0);
+        };
+      }
+      if (notice) CFG.notice = notice;
+      api = mountGame(host, CFG);
+      if (mode === 'labels') { api.fillAll(); startLabels(); }
+    }
+    return { rebuild: rebuild, destroy: function () { stopLabels(); if (api) api.destroy(); api = null; host.innerHTML = ''; } };
+    }
+    PlacaFactory = PlacaGame;
+    var tabGame = PlacaGame(document.getElementById('game-placa'));
+    function rebuildTab(changed) {
+      tabGame.rebuild(conf, changed ? 'Placa actualizada: ' + GAMA[conf.gama].name.toLowerCase() + ', socket ' + SOCKETS[conf.socket].label + ', chipset ' + conf.chipset + ' y ' + curCpu().name + '. Ya la podés armar.' : null);
+      renderSummary();
+    }
+    document.getElementById('pm-cfg').addEventListener('change', function (e) {
+      var t = e.target;
+      if (t.name === 'pm-g') { conf.gama = t.value; conf.cpu = 0; }
+      else if (t.name === 'pm-b') { conf.brand = t.value; conf.cpu = 0; }
+      else if (t === selSock) { conf.socket = t.value; conf.cpu = 0; }
+      else if (t === selChip) conf.chipset = t.value;
+      else if (t === selCpu) conf.cpu = +t.value;
+      else return;
+      fixConf(); fillSelects(); rebuildTab(true);
+    });
+    fixConf(); fillSelects(); rebuildTab(false);
+  })();
+
+  /* ---------- cableado ---------- */
+    var WIRE_HTML = '<div class="app">' +
+      '<section class="hud panel" aria-label="Progreso"><div class="stats">' +
+        '<div class="stat"><span class="label">Cables</span><strong class="w-count">0 / 5</strong></div>' +
+        '<div class="stat"><span class="label">Errores</span><strong class="w-errors">0</strong></div>' +
+        '<div class="stat"><span class="label">Tiempo</span><strong class="w-time">00:00</strong></div></div>' +
+        '<div class="bar"><span class="w-bar"></span></div><div class="status w-status" role="status" aria-live="polite"></div>' +
+        '<div class="btns"><button class="btn w-help" type="button" aria-pressed="false">Mostrar nombres</button><button class="btn w-reset" type="button">Reiniciar</button></div></section>' +
+      '<section class="tray-box panel" aria-label="Cables"><span class="label">Cables para conectar</span><div class="wires-list w-list"></div></section>' +
+      '<div class="case-col"><div class="case w-case" aria-label="PC armada lista para cablear">' +
+        '<div class="deco front"><span class="led"></span><i style="top:14%"></i><i style="top:34%"></i></div>' +
+        '<svg class="wire-svg w-svg" viewBox="0 0 600 750" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Placa madre, placa de video, disco y fuente con sus conectores"></svg></div>' +
+        '<p class="case-note">Arrastrá desde un conector hasta el conector donde va, o tocá uno y después el otro. Los conectores de la fuente están en su panel modular, abajo.</p></div>' +
+      '<section class="info panel w-info" aria-live="polite"></section></div>';
+  WiringFactory = function (host, onComplete) {
+    host.innerHTML = WIRE_HTML;
+    function q(sel) { return host.querySelector(sel); }
+    var NS = 'http://www.w3.org/2000/svg';
+    var svgEl = q('.w-svg'), caseEl = q('.w-case');
+    var statusEl = q('.w-status'), infoEl = q('.w-info'), listEl = q('.w-list');
+
+    function pins(x, y, w, h, cols, rows) {
+      var o = '', pw = w / cols, ph = h / rows;
+      for (var c = 0; c < cols; c++) for (var r = 0; r < rows; r++)
+        o += '<rect class="pin" x="' + (x + c * pw + pw * 0.22) + '" y="' + (y + r * ph + ph * 0.22) + '" width="' + (pw * 0.56) + '" height="' + (ph * 0.56) + '" rx="1"/>';
+      return o;
+    }
+    var PORTS = {
+      'psu-24':   { x: 210, y: 584, w: 82, h: 24, cols: 12, rows: 2, tag: '24 pines', tx: 300, ty: 600, anchor: 'start' },
+      'psu-eps':  { x: 210, y: 618, w: 38, h: 20, cols: 4, rows: 2, tag: 'CPU', tx: 205, ty: 633, anchor: 'end' },
+      'psu-pcie': { x: 254, y: 618, w: 38, h: 20, cols: 4, rows: 2, tag: 'PCIe', tx: 300, ty: 633, anchor: 'start' },
+      'psu-sata': { x: 210, y: 650, w: 82, h: 14, cols: 5, rows: 1, tag: 'SATA', tx: 300, ty: 662, anchor: 'start' },
+      'mb-24':    { x: 438, y: 110, w: 24, h: 112, cols: 2, rows: 12, tag: 'ATX 24', tx: 432, ty: 104, anchor: 'end' },
+      'mb-eps':   { x: 168, y: 52, w: 44, h: 20, cols: 4, rows: 2, tag: 'CPU 8 pines', tx: 218, ty: 67, anchor: 'start' },
+      'mb-sata':  { x: 432, y: 372, w: 30, h: 14, cols: 1, rows: 1, tag: 'SATA', tx: 426, ty: 384, anchor: 'end' },
+      'gpu-pcie': { x: 392, y: 238, w: 40, h: 16, cols: 4, rows: 2, tag: 'PCIe 8', tx: 386, ty: 251, anchor: 'end' },
+      'hdd-data': { x: 362, y: 540, w: 16, h: 24, cols: 1, rows: 1, tag: 'Datos', tx: 356, ty: 557, anchor: 'end' },
+      'hdd-power':{ x: 362, y: 576, w: 16, h: 48, cols: 1, rows: 1, tag: 'Energía', tx: 356, ty: 604, anchor: 'end' }
+    };
+    var CABLES = [
+      { id: 'atx', a: 'psu-24', b: 'mb-24', name: 'ATX 24 pines', color: 'var(--cab-atx)', spec: '24 pines (20+4) · 3,3 V, 5 V y 12 V',
+        c: [[330, 560], [520, 300]],
+        hint: 'El conector de 24 pines es el más grande: va en el borde derecho de la placa madre, al lado de las memorias.',
+        info: 'Es el cable principal: alimenta a la placa madre y, a través de ella, a las memorias, los puertos USB y las placas chicas. Es el más grueso y tiene una traba que hace clic al entrar.' },
+      { id: 'eps', a: 'psu-eps', b: 'mb-eps', name: 'EPS 8 pines (CPU)', color: 'var(--cab-eps)', spec: '8 pines (4+4) · 12 V',
+        c: [[90, 600], [80, 20]],
+        hint: 'El cable del procesador va arriba a la izquierda de la placa madre, cerca del procesador.',
+        info: 'Alimenta solamente al procesador. Va arriba a la izquierda de la placa madre y en el cable suele decir “CPU”. Sin él la PC no arranca.' },
+      { id: 'pcie', a: 'psu-pcie', b: 'gpu-pcie', name: 'PCIe 8 pines (6+2)', color: 'var(--cab-pcie)', spec: '8 pines (6+2) · 12 V',
+        c: [[330, 470], [470, 200]],
+        hint: 'El PCIe le da energía a la placa de video: su conector está en el borde de arriba de la placa.',
+        info: 'Le da energía extra a la placa de video, que consume más de los 75 W que le puede dar la ranura. Se parece al de CPU, pero tiene otra forma: no son intercambiables.' },
+      { id: 'satap', a: 'psu-sata', b: 'hdd-power', name: 'SATA de energía', color: 'var(--cab-satap)', spec: '15 pines · 3,3 V, 5 V y 12 V',
+        c: [[320, 720], [320, 600]],
+        hint: 'El SATA de energía va en el conector más ancho del disco.',
+        info: 'Alimenta a los discos rígidos y a los SSD de 2,5". Es plano y ancho, con forma de L para que entre de una sola manera.' },
+      { id: 'satad', a: 'hdd-data', b: 'mb-sata', name: 'SATA de datos', color: 'var(--cab-satad)', spec: '7 pines · no lleva energía',
+        c: [[300, 500], [520, 430]],
+        hint: 'El cable de datos une el conector chico del disco con un puerto SATA de la placa madre, abajo a la derecha.',
+        info: 'No sale de la fuente: une el disco con la placa madre para que pasen los datos. Es un cable fino con conectores en forma de L. El disco necesita los dos cables: energía y datos.' }
+    ];
+    var DEV = { psu: 'la fuente', mb: 'la placa madre', gpu: 'la placa de video', hdd: 'el disco' };
+    function center(id) { var p = PORTS[id]; return [p.x + p.w / 2, p.y + p.h / 2]; }
+    function cableOf(port) { for (var i = 0; i < CABLES.length; i++) if (CABLES[i].a === port || CABLES[i].b === port) return CABLES[i]; return null; }
+
+    // escena
+    var mb = '<rect class="f-pcb" x="120" y="40" width="360" height="400" rx="6"/>' +
+      '<path class="s-trace" stroke-width="2" d="M170 230 H230 V300 M380 240 H420 V340 M150 420 H330 M250 330 V400 M200 110 H230"/>' +
+      '<rect class="f-metal-dark" x="120" y="80" width="38" height="150" rx="3"/>' +
+      '<rect class="f-metal-dark" x="230" y="70" width="140" height="18" rx="4"/>' +
+      '<rect class="f-metal-dark" x="240" y="96" width="120" height="120" rx="10"/>' + fan(300, 156, 54) +
+      '<rect class="f-chip" x="388" y="80" width="10" height="150" rx="2"/><rect class="f-chip" x="404" y="80" width="10" height="150" rx="2"/>' +
+      '<rect class="f-pcb" x="386" y="78" width="14" height="154" rx="2" opacity=".9"/><rect class="f-gold" x="386" y="78" width="3" height="154"/>' +
+      '<rect class="f-chip" x="160" y="305" width="250" height="10" rx="2"/>' +
+      '<rect class="f-metal-dark" x="320" y="340" width="70" height="56" rx="4"/>' +
+      '<rect class="f-chip" x="432" y="392" width="30" height="14" rx="2" opacity=".7"/>' +
+      '<circle class="f-socket" cx="190" cy="380" r="12"/>' +
+      '<circle class="f-metal" cx="132" cy="52" r="4"/><circle class="f-metal" cx="468" cy="52" r="4"/><circle class="f-metal" cx="132" cy="428" r="4"/><circle class="f-metal" cx="468" cy="428" r="4"/>';
+    var gpu = '<rect class="f-metal" x="114" y="250" width="12" height="70"/>' +
+      '<rect class="f-fan" x="126" y="252" width="320" height="54" rx="6"/><rect class="f-accent" x="126" y="302" width="320" height="4"/>' +
+      fan(196, 279, 22) + fan(286, 279, 22) + fan(376, 279, 22);
+    var hdd = '<rect class="f-metal" x="378" y="520" width="150" height="122" rx="6"/>' +
+      '<circle class="f-metal-dark" cx="453" cy="575" r="42" opacity=".5"/><circle class="f-metal" cx="453" cy="575" r="8"/>' +
+      '<path class="f-chip" d="M500 630 L466 584 L472 580 L506 626 Z"/>' +
+      '<text class="t-label" x="400" y="634" font-size="12">HDD 1 TB</text>';
+    var psu = '<rect class="f-metal-dark" x="24" y="562" width="300" height="150" rx="6"/>' + fan(108, 637, 58) +
+      '<rect class="f-chip" x="200" y="574" width="114" height="100" rx="4" opacity=".55"/>' +
+      '<text class="t-psu" x="200" y="698">650 W</text>';
+    var deco = '<line x1="10" y1="470" x2="560" y2="470" stroke="var(--case-edge)" stroke-width="2"/>' +
+      '<rect x="12" y="90" width="22" height="140" fill="none" stroke="var(--case-edge)" stroke-dasharray="4 3"/>';
+    var portsSvg = '';
+    Object.keys(PORTS).forEach(function (id) {
+      var p = PORTS[id];
+      portsSvg += '<g class="port" data-port="' + id + '" tabindex="0" role="button" aria-label="Conector ' + p.tag + ' de ' + DEV[id.split('-')[0]] + '">' +
+        '<rect class="port-hit" x="' + (p.x - 8) + '" y="' + (p.y - 8) + '" width="' + (p.w + 16) + '" height="' + (p.h + 16) + '"/>' +
+        '<rect class="port-body" x="' + p.x + '" y="' + p.y + '" width="' + p.w + '" height="' + p.h + '" rx="2"/>' +
+        pins(p.x, p.y, p.w, p.h, p.cols, p.rows) + '</g>';
+    });
+    var tags = '';
+    Object.keys(PORTS).forEach(function (id) { var p = PORTS[id]; tags += '<text class="t-tag" x="' + p.tx + '" y="' + p.ty + '" text-anchor="' + p.anchor + '">' + p.tag + '</text>'; });
+    svgEl.innerHTML = deco + mb + gpu + hdd + psu + '<g class="w-cables"></g>' + portsSvg + '<path class="tempwire w-temp" d="" />' + tags;
+    var cablesG = svgEl.querySelector('.w-cables'), temp = svgEl.querySelector('.w-temp');
+    function portEl(id) { return svgEl.querySelector('.port[data-port="' + id + '"]'); }
+
+    var S;
+    function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    function say(m, k) { statusEl.textContent = m; statusEl.className = 'status' + (k ? ' ' + k : ''); }
+    function startTimer() { if (S.t0) return; S.t0 = Date.now(); S.timer = setInterval(function () { q('.w-time').textContent = fmt(Math.floor((Date.now() - S.t0) / 1000)); }, 500); }
+    function hud() {
+      var n = Object.keys(S.done).length;
+      q('.w-count').textContent = n + ' / ' + CABLES.length;
+      q('.w-errors').textContent = S.errors;
+      q('.w-bar').style.width = (n / CABLES.length * 100) + '%';
+    }
+    function renderList() {
+      listEl.innerHTML = CABLES.map(function (c) {
+        var d = S.done[c.id];
+        return '<button type="button" class="wire-card' + (d ? ' done' : '') + (S.selCable === c.id ? ' selected' : '') + '" data-c="' + c.id + '"' + (d ? ' aria-disabled="true"' : '') + '>' +
+          '<span class="sw" style="background:' + c.color + '"></span><span><strong>' + c.name + '</strong><span class="spec">' + c.spec + '</span></span>' +
+          '<span class="st">' + (d ? 'Conectado ✓' : 'Sin conectar') + '</span></button>';
+      }).join('');
+    }
+    function intro() {
+      infoEl.classList.remove('win');
+      infoEl.innerHTML = '<span class="label">Ficha técnica</span><h2>Cómo se juega</h2>' +
+        '<p>La PC ya está armada: falta cablearla. Uní cada conector de la fuente con su lugar, y el disco con la placa madre.</p>' +
+        '<p>Cada vez que conectes bien un cable, vas a ver acá para qué sirve.</p><p class="spec">Si te trabás, activá “Mostrar nombres”.</p>';
+    }
+    function clearSel() {
+      S.sel = null; S.selCable = null;
+      svgEl.querySelectorAll('.port.sel, .port.hl').forEach(function (e) { e.classList.remove('sel', 'hl'); });
+      listEl.querySelectorAll('.wire-card.selected').forEach(function (e) { e.classList.remove('selected'); });
+    }
+    function select(port) {
+      clearSel(); S.sel = port; portEl(port).classList.add('sel');
+      var c = cableOf(port); if (c && !S.done[c.id]) { S.selCable = c.id; var card = listEl.querySelector('[data-c="' + c.id + '"]'); if (card) card.classList.add('selected'); }
+      say('Elegiste el conector ' + PORTS[port].tag + ' de ' + DEV[port.split('-')[0]] + '. Ahora tocá o arrastrá hasta el conector donde va.');
+    }
+    function flashBad(ids) {
+      ids.forEach(function (id) { var e = portEl(id); if (!e) return; e.classList.add('bad'); setTimeout(function () { e.classList.remove('bad'); }, 700); });
+    }
+    function miss(msg, ids) { S.errors++; hud(); say(msg, 'err'); flashBad(ids); sfx.error(); }
+
+    function drawCable(c, animate) {
+      var a = center(c.a), b = center(c.b);
+      var d = 'M' + a[0] + ' ' + a[1] + ' C' + c.c[0][0] + ' ' + c.c[0][1] + ' ' + c.c[1][0] + ' ' + c.c[1][1] + ' ' + b[0] + ' ' + b[1];
+      var g = document.createElementNS(NS, 'g');
+      g.innerHTML = '<path class="cable' + (animate ? ' cable-in' : '') + '" d="' + d + '" style="stroke:' + c.color + (animate ? ';stroke-dasharray:900' : '') + '"/><path class="cable-sleeve" d="' + d + '"/>';
+      cablesG.appendChild(g);
+    }
+
+    function connect(p1, p2) {
+      startTimer();
+      if (p1 === p2) return;
+      var c1 = cableOf(p1), c2 = cableOf(p2);
+      if ((c1 && S.done[c1.id]) || (c2 && S.done[c2.id])) { say('Ese conector ya tiene su cable puesto.', 'err'); clearSel(); return; }
+      var d1 = p1.split('-')[0], d2 = p2.split('-')[0];
+      var pair = [p1, p2].sort().join('|');
+      var match = CABLES.filter(function (c) { return [c.a, c.b].sort().join('|') === pair; })[0];
+      if (match) {
+        S.done[match.id] = true;
+        drawCable(match, !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        portEl(match.a).classList.add('done'); portEl(match.b).classList.add('done');
+        clearSel(); hud(); renderList();
+        say('¡Bien! ' + match.name + ' conectado.', 'ok');
+        infoEl.classList.remove('win');
+        infoEl.innerHTML = '<span class="label">Ficha técnica</span><h2>' + match.name + '</h2><p>' + match.info + '</p><p class="spec">' + match.spec + '</p>';
+        if (Object.keys(S.done).length === CABLES.length) win();
+        return;
+      }
+      var msg;
+      if (d1 === d2) msg = 'Un cable siempre une dos componentes distintos: esos dos conectores son de ' + DEV[d1] + '.';
+      else if (pair === ['psu-eps', 'gpu-pcie'].sort().join('|') || pair === ['psu-pcie', 'mb-eps'].sort().join('|'))
+        msg = 'Ojo: el conector de CPU y el PCIe de la placa de video se parecen, pero tienen las trabas distintas y no son intercambiables. Forzarlo puede quemar un componente.';
+      else if ((p1 === 'psu-sata' && p2 === 'hdd-data') || (p2 === 'psu-sata' && p1 === 'hdd-data'))
+        msg = 'El conector chico del disco (7 pines) es de datos. La energía de la fuente va en el conector ancho (15 pines).';
+      else if ((d1 === 'psu' && (p2 === 'mb-sata' || p2 === 'hdd-data')) || (d2 === 'psu' && (p1 === 'mb-sata' || p1 === 'hdd-data')))
+        msg = 'El cable de datos SATA no sale de la fuente: va del disco a la placa madre.';
+      else {
+        var base = (d1 === 'psu' ? c1 : d2 === 'psu' ? c2 : c1) || c2;
+        msg = 'Ese cable no va ahí. ' + (base ? base.hint : '');
+      }
+      clearSel(); miss(msg, [p1, p2]);
+    }
+
+    function win() {
+      clearInterval(S.timer);
+      caseEl.classList.add('powered');
+      sfx.win();
+      say('¡PC cableada y encendida!', 'ok');
+      var secs = Math.floor((Date.now() - S.t0) / 1000);
+      infoEl.classList.add('win');
+      infoEl.innerHTML = '<span class="label">Resultado</span><h2>¡Todo conectado!</h2><p>Cableaste la PC en <strong>' + fmt(secs) + '</strong> con <strong>' + S.errors + '</strong> ' + (S.errors === 1 ? 'error' : 'errores') + '.</p>' +
+        '<p>Recordá: la fuente da la energía (24 pines, CPU, PCIe y SATA) y el cable de datos SATA conecta el disco con la placa madre.</p>' +
+        '<button class="btn w-again" type="button">Jugar de nuevo</button>';
+      q('.w-again').addEventListener('click', reset);
+      if (onComplete) onComplete({ errors: S.errors, secs: secs });
+    }
+    function reset() {
+      if (S) clearInterval(S.timer);
+      S = { done: {}, errors: 0, sel: null, selCable: null, t0: null, timer: null };
+      cablesG.innerHTML = ''; temp.setAttribute('d', '');
+      svgEl.querySelectorAll('.port').forEach(function (e) { e.classList.remove('done', 'sel', 'hl', 'bad'); });
+      caseEl.classList.remove('powered');
+      q('.w-time').textContent = '00:00';
+      hud(); renderList(); intro();
+      say('Empezá por el cable más grande de la fuente: el de 24 pines.');
+    }
+
+    function toSvg(e) {
+      var pt = svgEl.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+      var m = svgEl.getScreenCTM(); return m ? pt.matrixTransform(m.inverse()) : { x: 0, y: 0 };
+    }
+    function nearestPort(x, y) {
+      var best = null, bd = 34;
+      Object.keys(PORTS).forEach(function (id) {
+        var p = PORTS[id];
+        var dx = Math.max(p.x - x, 0, x - (p.x + p.w)), dy = Math.max(p.y - y, 0, y - (p.y + p.h));
+        var d = Math.hypot(dx, dy); if (d < bd) { bd = d; best = id; }
+      });
+      return best;
+    }
+    var drag = null;
+    svgEl.addEventListener('pointerdown', function (e) {
+      var pt = toSvg(e), id = nearestPort(pt.x, pt.y); if (!id) return;
+      drag = { from: id, moved: false, x0: e.clientX, y0: e.clientY };
+      try { svgEl.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+    svgEl.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6) return;
+      if (!drag.moved) { drag.moved = true; select(drag.from); startTimer(); }
+      var a = center(drag.from), pt = toSvg(e);
+      temp.setAttribute('d', 'M' + a[0] + ' ' + a[1] + ' L' + pt.x + ' ' + pt.y);
+      svgEl.querySelectorAll('.port.hl').forEach(function (x) { x.classList.remove('hl'); });
+      var over = nearestPort(pt.x, pt.y); if (over && over !== drag.from) portEl(over).classList.add('hl');
+    });
+    function endDrag(e, cancel) {
+      if (!drag) return;
+      var d = drag; drag = null; temp.setAttribute('d', '');
+      if (!d.moved) { // toque
+        if (S.sel && S.sel !== d.from) connect(S.sel, d.from);
+        else if (S.sel === d.from) { clearSel(); say('Conector deseleccionado.'); }
+        else select(d.from);
+        return;
+      }
+      if (cancel) { clearSel(); return; }
+      var pt = toSvg(e), to = nearestPort(pt.x, pt.y);
+      if (!to || to === d.from) { clearSel(); say('Soltá el cable sobre otro conector.'); return; }
+      connect(d.from, to);
+    }
+    svgEl.addEventListener('pointerup', function (e) { endDrag(e, false); });
+    svgEl.addEventListener('pointercancel', function (e) { endDrag(e, true); });
+    svgEl.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var g = e.target.closest && e.target.closest('.port'); if (!g) return;
+      e.preventDefault();
+      var id = g.dataset.port;
+      if (S.sel && S.sel !== id) connect(S.sel, id); else select(id);
+    });
+    listEl.addEventListener('click', function (e) {
+      var b = e.target.closest('.wire-card'); if (!b || b.classList.contains('done')) return;
+      var c = CABLES.filter(function (x) { return x.id === b.dataset.c; })[0];
+      select(c.a);
+      say('Elegiste el cable ' + c.name + '. Ahora tocá el conector donde va.');
+    });
+    var helpBtn = q('.w-help');
+    helpBtn.addEventListener('click', function () {
+      var on = helpBtn.getAttribute('aria-pressed') !== 'true';
+      helpBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      helpBtn.textContent = on ? 'Ocultar nombres' : 'Mostrar nombres';
+      caseEl.classList.toggle('help', on);
+    });
+    q('.w-reset').addEventListener('click', reset);
+    reset();
+    return { destroy: function () { clearInterval(S.timer); host.innerHTML = ''; } };
+  };
+  WiringFactory(document.getElementById('game-cableado'));
+
+  /* ---------- modo niveles + evaluaciones ---------- */
+  (function () {
+    var PASS = 60, NQ = 10;
+    var LEVELS = [
+      { id: 'cables', title: 'A cablear', mode: 'cables', par: 60,
+        desc: 'Los cables de la fuente y el cable de datos del disco.', goal: 'Conectá los 5 cables en su lugar.' },
+      { id: 'mini', title: 'Primer armado', mode: 'mini', par: 60,
+        desc: 'Una PC muy básica: placa madre, procesador, 2 memorias de 4 GB, un SSD y la fuente.', goal: 'Colocá las 7 piezas en su lugar del gabinete.' },
+      { id: 'placa-armado', title: 'Armá la placa madre', mode: 'placa', pmode: 'build', par: 120, conf: { gama: 'base', brand: 'amd', socket: 'AM5', chipset: 'A620', cpu: 0 },
+        desc: 'Una placa madre base AMD con socket AM5: colocá cada parte y el procesador.', goal: 'Colocá las 16 partes de la placa madre.' },
+      { id: 'placa-nombres', title: 'Poné los nombres', mode: 'placa', pmode: 'labels', par: 120, conf: { gama: 'base', brand: 'amd', socket: 'AM5', chipset: 'A620', cpu: 0 },
+        desc: 'La misma placa ya armada: identificá cada parte y ponele su nombre.', goal: 'Poné el nombre de las 16 partes de la placa, incluido el procesador.' },
+      { id: 'basica', title: 'PC completa', mode: 'basica', par: 120,
+        desc: '12 piezas: placa de video, placa WiFi, pila, dos discos y ventilador.', goal: 'Colocá las 12 piezas respetando el orden de armado.' },
+      { id: 'placa-media', title: 'Placa intermedia Intel', mode: 'placa', par: 270, conf: { gama: 'media', brand: 'intel', socket: 'LGA1851', chipset: 'B860', cpu: 0 },
+        desc: 'Placa madre intermedia con socket LGA 1851, chipset B860 y un Core Ultra 5.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
+      { id: 'placa-gamer', title: 'Placa gamer AMD', mode: 'placa', par: 300, conf: { gama: 'gamer', brand: 'amd', socket: 'AM5', chipset: 'X870E', cpu: 1 },
+        desc: 'Placa gamer con 3 ranuras M.2, 2 PCIe x16, doble EPS y un Ryzen 7 9850X3D.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
+      { id: 'gamer', title: 'Desafío final: PC gamer', mode: 'gamer', par: 240,
+        desc: '23 piezas, refrigeración líquida, 3 placas de video y la fuente justa.', goal: 'Armá la PC gamer completa y elegí la fuente que corresponde.' }
+    ];
+    var QUIZ = {
+      cables: [
+        ['El conector ATX de 24 pines alimenta a la placa madre.', true, 'Es el cable principal de la fuente: le da energía a la placa madre y, a través de ella, a memorias, USB y placas chicas.'],
+        ['El cable SATA de datos sale de la fuente de alimentación.', false, 'El cable de datos SATA une el disco con la placa madre. De la fuente sale el SATA de energía.'],
+        ['El conector EPS de 8 pines del procesador y el PCIe de la placa de video son intercambiables.', false, 'Se parecen, pero tienen las trabas distintas. Forzar uno en el lugar del otro puede quemar un componente.'],
+        ['Un disco rígido SATA necesita dos cables: uno de energía y otro de datos.', true, 'El de energía (15 pines) viene de la fuente y el de datos (7 pines) va a la placa madre.'],
+        ['La placa de video puede necesitar energía extra por un cable PCIe además de la ranura.', true, 'La ranura da hasta 75 W; las placas que consumen más reciben energía por cables PCIe de la fuente.'],
+        ['El conector ATX de 24 pines se puede separar en una parte de 20 pines y otra de 4.', true, 'Así sirve también para placas madre viejas que usaban 20 pines.'],
+        ['El conector SATA de energía es más ancho que el SATA de datos.', true, 'El de energía tiene 15 pines y el de datos 7.'],
+        ['El conector EPS del procesador suele estar arriba a la izquierda de la placa madre.', true, 'Está cerca del procesador y de las fases de alimentación (VRM).'],
+        ['El cable PCIe de energía de la placa de video se enchufa en la placa madre.', false, 'Se enchufa directo en la placa de video, en su borde.'],
+        ['Los conectores de la PC tienen formas y trabas para que entren de una sola manera.', true, 'Por ejemplo, la forma de L del SATA evita conectarlo al revés.']
+      ],
+      mini: [
+        ['Una PC sin placa de video puede mostrar imagen si el procesador tiene gráficos integrados.', true, 'El monitor se conecta a la salida de video de la placa madre y el procesador genera la imagen.'],
+        ['Dos memorias iguales pueden trabajar en doble canal.', true, 'En doble canal las memorias trabajan juntas y la PC accede más rápido a los datos.'],
+        ['Un disco mecánico (HDD) es más rápido que un SSD M.2.', false, 'Es al revés: un SSD M.2 NVMe puede ser más de 20 veces más rápido que un disco mecánico.'],
+        ['Windows 11 pide como mínimo 4 GB de memoria RAM.', true, 'Es el mínimo oficial. Para usarlo cómodo conviene tener 8 GB o más.'],
+        ['La memoria RAM guarda los archivos aunque apagues la PC.', false, 'La RAM se borra al apagar. Los archivos quedan guardados en el disco.'],
+        ['Para tener 6 GB de RAM se puede usar una memoria de 4 GB y otra de 2 GB.', true, 'La capacidad se suma: 4 + 2 = 6 GB.'],
+        ['Un SSD SATA es más rápido que un disco mecánico.', true, 'Un SSD SATA lee unos 550 MB/s; un disco mecánico, unos 150 MB/s.'],
+        ['Una PC muy básica sin placa de video necesita una fuente de 1600 W.', false, 'Consume poco más de 100 W: alcanza con la fuente más chica.'],
+        ['Con una sola memoria RAM la PC no puede encender.', false, 'Funciona en canal simple; además queda una ranura libre para ampliar.'],
+        ['El disco SSD M.2 va enchufado directamente en la placa madre.', true, 'No necesita cables: se sujeta con un tornillito.']
+      ],
+      'placa-armado': [
+        ['El procesador se coloca en el socket o zócalo de la placa madre.', true, 'El socket es el lugar del procesador; cada placa acepta solo procesadores de su tipo de socket.'],
+        ['La ranura PCI Express x16 es donde normalmente va la placa de video.', true, 'Es la ranura horizontal más larga, con 16 carriles de datos.'],
+        ['La ranura M.2 sirve para conectar la fuente de alimentación.', false, 'En la ranura M.2 va un disco SSD M.2, que se enchufa directo y se sujeta con un tornillito.'],
+        ['El procesador se puede colocar en cualquier posición dentro del socket.', false, 'Entra de una sola forma: hay que alinear el triangulito dorado con la marca del zócalo.'],
+        ['Las ranuras de memoria RAM suelen estar al lado del socket del procesador.', true, 'Están cerca para que el procesador acceda rápido a la memoria.'],
+        ['La placa madre se atornilla al gabinete sobre unos separadores.', true, 'Los separadores evitan que la placa toque la chapa del gabinete.'],
+        ['Las placas micro-ATX son más chicas que las ATX.', true, 'Por eso suelen traer menos ranuras.'],
+        ['La pila CMOS se coloca en la ranura M.2.', false, 'La pila tiene su propio portapila redondo.'],
+        ['El panel trasero de puertos (I/O) es lo que asoma por atrás del gabinete.', true, 'Ahí están los USB, la red, el audio y las salidas de video.'],
+        ['Todas las placas madre tienen la misma cantidad de ranuras de memoria.', false, 'Las de gama base suelen traer 2 y las intermedias y gamer, 4.']
+      ],
+      'placa-nombres': [
+        ['El chipset coordina la comunicación entre el procesador y otros componentes como USB y SATA.', true, 'De él dependen muchas de las funciones y puertos que tiene la placa.'],
+        ['La pila CMOS mantiene la hora y la configuración del BIOS con la PC desenchufada.', true, 'Es una pila tipo botón CR2032 de 3 V.'],
+        ['Las fases de alimentación (VRM) regulan la energía que recibe el procesador.', true, 'Bajan los 12 V de la fuente a poco más de 1 V para el procesador.'],
+        ['Los conectores del panel frontal sirven para conectar la placa de video.', false, 'Ahí van los cables del botón de encendido, el reset y las luces del frente del gabinete.'],
+        ['El chip del BIOS guarda el programa que arranca la PC.', true, 'Revisa el hardware al encender y busca el sistema operativo para cargarlo.'],
+        ['Los puertos SATA de la placa madre son para conectar discos y lectoras.', true, 'Ahí va el cable de datos SATA.'],
+        ['La ranura PCI Express x1 es más larga que la x16.', false, 'La x16 es la más larga; la x1 es corta.'],
+        ['El conector ATX de 24 pines está en el borde de la placa, cerca de las memorias.', true, 'Así el cable de la fuente llega sin cruzar toda la placa.'],
+        ['El chip de sonido procesa el audio de parlantes, auriculares y micrófono.', true, 'Por eso está cerca de los conectores de audio del panel trasero.'],
+        ['El chipset y el procesador son lo mismo.', false, 'Son chips distintos: el procesador ejecuta los programas y el chipset coordina las conexiones.']
+      ],
+      basica: [
+        ['Entre el procesador y el cooler se pone pasta térmica.', true, 'La pasta térmica ayuda a que el calor pase del procesador al cooler.'],
+        ['La fuente convierte los 220 V de la red en corriente continua de 12 V, 5 V y 3,3 V.', true, 'Los componentes de la PC funcionan con corriente continua de esos voltajes.'],
+        ['La placa WiFi se coloca en una ranura PCI Express.', true, 'Va en una ranura PCIe x1 y sus antenas se enroscan en la parte de atrás.'],
+        ['El ventilador frontal del gabinete saca el aire caliente hacia afuera.', false, 'El frontal mete aire fresco; el aire caliente sale por el ventilador de atrás.'],
+        ['Un SSD SATA de 2,5" se enchufa directo en la placa madre, sin cables.', false, 'Necesita un cable SATA de datos y otro de energía. El que va sin cables es el M.2.'],
+        ['La chapa de la placa de video se atornilla en las ranuras traseras del gabinete.', true, 'Ahí quedan los conectores para el monitor.'],
+        ['La fuente de alimentación suele ir en la parte de abajo del gabinete.', true, 'En la mayoría de los gabinetes actuales va abajo, atrás.'],
+        ['El cooler se coloca antes que el procesador.', false, 'Primero va el procesador; el cooler se monta encima con pasta térmica.'],
+        ['Un disco rígido (HDD) tiene discos que giran adentro.', true, 'Giran a miles de vueltas por minuto, por ejemplo 7200 RPM.'],
+        ['La placa WiFi necesita antenas para tener buena señal.', true, 'Las antenas se enroscan en la parte de atrás del gabinete.']
+      ],
+      'placa-media': [
+        ['El socket LGA 1851 es para procesadores Intel Core Ultra 200S.', true, 'Es el socket actual de Intel para escritorio.'],
+        ['Un procesador AMD Ryzen se puede instalar en una placa con socket LGA 1851.', false, 'LGA 1851 es de Intel. Los Ryzen actuales usan el socket AM5.'],
+        ['En los sockets LGA, los contactos están en el zócalo y no en el procesador.', true, 'LGA significa “Land Grid Array”: el procesador tiene superficies planas que apoyan sobre los contactos.'],
+        ['Las memorias DDR4 y DDR5 son intercambiables.', false, 'Tienen la muesca en distinto lugar: una placa acepta solo un tipo.'],
+        ['El chipset B860 es de gama intermedia para Intel.', true, 'H810 es el de entrada, B860 el intermedio y Z890 el tope de gama.'],
+        ['Los procesadores Intel Core de 14.ª generación usan el socket LGA 1700.', true, 'LGA 1700 sirve para la 12.ª, 13.ª y 14.ª generación.'],
+        ['El chipset Z890 permite hacer overclock en los procesadores Intel “K”.', true, 'Es la gama alta de LGA 1851, con overclock completo.'],
+        ['Un procesador para LGA 1700 se puede instalar en una placa LGA 1851.', false, 'Son sockets distintos y no son compatibles.'],
+        ['Los Core Ultra 200S funcionan con memorias DDR5.', true, 'La plataforma LGA 1851 usa solo DDR5.'],
+        ['El chipset H810 es el de mayor gama para los Core Ultra 200S.', false, 'Es el de entrada; el de mayor gama es el Z890.']
+      ],
+      'placa-gamer': [
+        ['El socket AM5 usa memorias DDR5.', true, 'AM5 funciona solo con DDR5; el anterior, AM4, usa DDR4.'],
+        ['En el socket AM4 los pines están en el procesador.', true, 'AM4 es PGA: el zócalo tiene agujeritos y los pines están en el procesador.'],
+        ['Las placas gamer suelen tener más fases de alimentación (VRM) que las de gama base.', true, 'Más fases dan energía más estable a procesadores potentes.'],
+        ['El chipset X870E es de gama de entrada.', false, 'Es el tope de gama de AM5. Los de entrada son A620 y B840.'],
+        ['AMD confirmó que la próxima generación de Ryzen va a seguir usando el socket AM5.', true, 'Los Ryzen Zen 6, previstos para 2027, son compatibles con AM5.'],
+        ['Muchas placas gamer traen dos conectores EPS de 8 pines.', true, 'Así le pueden dar más energía a procesadores potentes.'],
+        ['Los Ryzen con “X3D” tienen una memoria caché extra que ayuda en los juegos.', true, 'Esa caché apilada (3D V-Cache) mejora el rendimiento en muchos juegos.'],
+        ['Una placa gamer con socket AM5 acepta procesadores Ryzen 5000.', false, 'Los Ryzen 5000 son para AM4. AM5 es para Ryzen 7000, 8000 y 9000.'],
+        ['Las placas gamer suelen tener más ranuras M.2 que las placas base.', true, 'En el juego, la gamer tiene 3 y la base, 1.'],
+        ['El chipset A620 es de alta gama.', false, 'Es el chipset de entrada de AM5.']
+      ],
+      gamer: [
+        ['La fuente tiene que tener un margen de potencia por encima del consumo total de la PC.', true, 'En el juego usamos un 30 % de margen para que la fuente no trabaje al límite.'],
+        ['En una PC gamer, la placa de video suele ser lo que más energía consume.', true, 'Cada placa de video puede consumir cientos de watts.'],
+        ['En la refrigeración líquida, el radiador va montado directamente sobre el procesador.', false, 'Sobre el procesador va la bomba. El radiador va en el frente o arriba del gabinete.'],
+        ['Si la fuente no alcanza, la PC se puede apagar o reiniciar sola al exigirla.', true, 'Por eso hay que calcular bien el consumo antes de elegir la fuente.'],
+        ['Hoy casi todos los juegos aprovechan muy bien tener varias placas de video a la vez.', false, 'Los juegos casi no lo aprovechan; varias placas sirven más para render 3D, edición de video e inteligencia artificial.'],
+        ['Un radiador de 360 mm lleva 3 ventiladores de 120 mm.', true, '3 × 120 mm = 360 mm.'],
+        ['Cuantas más placas de video tiene la PC, más potencia necesita la fuente.', true, 'Cada placa de video suma cientos de watts al consumo.'],
+        ['El consumo total de la PC se calcula sumando lo que consume cada componente.', true, 'Después se le agrega el margen de seguridad para elegir la fuente.'],
+        ['Una fuente más grande de lo necesario no funciona.', false, 'Funciona, pero es más cara de lo que hace falta.'],
+        ['Las memorias RAM consumen mucho menos que la placa de video.', true, 'Unos 5 W cada memoria, contra cientos de watts de una placa de video.']
+      ]
+    };
+
+    var INTEG = [
+      { q: 'Una PC consume 500 W en total. Con un margen del 30 %, ¿cuál es la fuente más chica que alcanza?', o: ['550 W', '650 W', '750 W', '450 W'], a: 1,
+        why: '500 W × 1,3 = 650 W. Una de 550 W quedaría trabajando al límite.' },
+      { q: '¿Qué procesador se puede instalar en una placa madre con chipset B650?', o: ['Ryzen 7 9700X', 'Core i5-14400', 'Ryzen 5 5600', 'Core Ultra 7 265'], a: 0,
+        why: 'El B650 es un chipset de AM5. El Ryzen 5 5600 es AM4 y los otros dos son Intel.' },
+      { q: 'Vas a armar una PC con un Core Ultra 7 270K Plus. ¿Qué combinación de placa y memoria es la correcta?', o: ['Socket LGA 1851, chipset Z890 y memoria DDR5', 'Socket LGA 1700, chipset Z790 y memoria DDR4', 'Socket AM5, chipset X870E y memoria DDR5', 'Socket LGA 1851, chipset B860 y memoria DDR4'], a: 0,
+        why: 'Los Core Ultra 200S Plus usan LGA 1851 y solo funcionan con DDR5. El Z890 es el chipset de alta gama de esa plataforma.' },
+      { q: '¿Cuál de estos cables NO sale de la fuente de alimentación?', o: ['ATX de 24 pines', 'EPS de 8 pines', 'SATA de datos', 'PCIe 6+2 pines'], a: 2,
+        why: 'El SATA de datos une el disco con la placa madre. De la fuente sale el SATA de energía, que es más ancho.' },
+      { q: 'Una PC sin placa de video tiene un Ryzen 5 5500. Al encenderla, ¿qué pasa?', o: ['No da imagen: ese procesador no tiene gráficos integrados', 'Funciona con los gráficos de la placa madre', 'Funciona igual, solo que más lento', 'Hay que actualizar el BIOS para que dé imagen'], a: 0,
+        why: 'El Ryzen 5 5500 no trae gráficos integrados, así que necesita placa de video. El Ryzen 5 5600G sí los tiene.' },
+      { q: '¿Cuál es la diferencia física principal entre los sockets AM4 y AM5?', o: ['En AM4 los pines están en el procesador y en AM5 los contactos están en el zócalo', 'AM4 es de Intel y AM5 es de AMD', 'AM4 usa memorias DDR5 y AM5 usa DDR4', 'No hay diferencia: son el mismo socket con otro nombre'], a: 0,
+        why: 'AM4 es PGA (pines en el procesador). AM5 es LGA 1718 (contactos en el zócalo) y usa DDR5.' },
+      { q: 'Una PC tiene dos memorias: una de 8 GB y otra de 4 GB. ¿Qué afirmación es correcta?', o: ['La PC tiene 12 GB, pero el doble canal funciona solo en parte', 'La PC usa solo 8 GB, la memoria más grande', 'La PC no arranca con memorias distintas', 'La PC tiene 16 GB porque se duplica la menor'], a: 0,
+        why: 'La capacidad se suma (12 GB). Para aprovechar el doble canal completo conviene que las dos memorias sean iguales.' },
+      { q: 'En una refrigeración líquida, ¿cuál es el recorrido correcto del calor?', o: ['Procesador → bomba → mangueras → radiador → aire', 'Procesador → radiador → bomba → fuente', 'Radiador → procesador → ventilador trasero', 'Procesador → chipset → radiador → disco'], a: 0,
+        why: 'La bomba toca al procesador, el líquido lleva el calor por las mangueras y el radiador lo pasa al aire con sus ventiladores.' },
+      { q: '¿Qué hacen las fases de alimentación (VRM) de la placa madre?', o: ['Convierten los 12 V de la fuente en el voltaje bajo que usa el procesador', 'Cargan la pila CMOS', 'Le dan energía a los discos SATA', 'Enfrían el chipset'], a: 0,
+        why: 'Bajan los 12 V a poco más de 1 V. Por eso las placas para procesadores potentes tienen más fases.' },
+      { q: 'Una PC gamer consume 1083 W. Con el 30 % de margen, ¿cuál es la fuente más chica que alcanza?', o: ['1000 W', '1200 W', '1300 W', '1600 W'], a: 3,
+        why: '1083 W × 1,3 ≈ 1408 W. La primera fuente común que supera ese valor es la de 1600 W.' },
+      { q: '¿Para qué se suele actualizar el BIOS de una placa madre?', o: ['Para que reconozca procesadores más nuevos y corregir errores', 'Para aumentar la capacidad del disco', 'Para cambiar el socket de la placa', 'Para que funcionen memorias DDR4 en una placa DDR5'], a: 0,
+        why: 'El BIOS es el programa de arranque: una actualización puede sumar compatibilidad con procesadores nuevos. No cambia el hardware.' },
+      { q: '¿Por qué una memoria DDR4 no se puede poner en una placa madre DDR5?', o: ['La muesca está en otro lugar y además son eléctricamente distintas', 'Porque la DDR4 es más grande y no entra en el gabinete', 'Sí se puede, pero funciona más lento', 'Porque la DDR4 necesita un cable de la fuente'], a: 0,
+        why: 'La muesca evita que se coloque una memoria equivocada: cada placa acepta un solo tipo.' }
+    ];
+
+    var KEY = 'arma-tu-pc-juego';
+    var DIFF = { b: 'Básico', a: 'Avanzado' };
+    var store = {};
+    try { store = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (_) { store = {}; }
+    if (!store.best) store.best = { b: {}, a: {} };
+    if (!store.evals) store.evals = { b: {}, a: {} };
+    if (!store.integ) store.integ = {};
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (_) {} }
+    function M() { return store.mode; }
+    function lv(i) { return (store.best[M()] || {})[LEVELS[i].id] || 0; }
+    function ev(i) { return (store.evals[M()] || {})[LEVELS[i].id] || 0; }
+    function unlocked(i) { return i === 0 || lv(i - 1) >= PASS; }
+    function allLevels() { return LEVELS.every(function (_, i) { return lv(i) >= PASS; }); }
+    function evDone() { return LEVELS.filter(function (_, i) { return ev(i) > 0; }).length; }
+    function ig() { return store.integ[M()] || 0; }
+    function avgL() { var a = 0; LEVELS.forEach(function (_, i) { a += lv(i); }); return Math.round(a / LEVELS.length); }
+    function avgE() { var e = 0; LEVELS.forEach(function (_, i) { e += ev(i); }); return Math.round(e / LEVELS.length); }
+    function finalNote() {
+      var a = 0, e = 0; LEVELS.forEach(function (_, i) { a += lv(i); e += ev(i); });
+      a /= LEVELS.length; e /= LEVELS.length;
+      return ig() ? Math.round(a * .4 + e * .3 + ig() * .3) : Math.round((a + e) / 2);
+    }
+    function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    function grade(r, par) {
+      var ep = Math.min(60, r.errors * 6);
+      var tp = Math.min(25, Math.max(0, (r.secs - par) / par * 25));
+      return Math.max(10, Math.round(100 - ep - tp));
+    }
+    function starsOf(n) { return n >= 90 ? 3 : n >= 75 ? 2 : n >= PASS ? 1 : 0; }
+    function starsHtml(n) { var k = starsOf(n), o = ''; for (var i = 0; i < 3; i++) o += i < k ? '★' : '<span class="off">★</span>'; return '<span class="stars" aria-label="' + k + ' de 3 estrellas">' + o + '</span>'; }
+    function titleFor(n) { return n >= 90 ? '¡Excelente!' : n >= 75 ? '¡Muy bien!' : n >= PASS ? '¡Aprobado!' : 'Casi lo lográs'; }
+    var LOCK = '<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+    var mapEl = document.getElementById('lv-map'), playEl = document.getElementById('lv-play');
+    var overlay = document.getElementById('lv-overlay'), modal = document.getElementById('lv-modal');
+    var current = null, curIdx = -1, resetArm = false;
+
+    function progressIn(m) { var n = 0; LEVELS.forEach(function (L) { if ((store.best[m] || {})[L.id] >= PASS) n++; }); return n; }
+    function renderStart() {
+      function opt(m, name, txt) {
+        var n = progressIn(m);
+        return '<button type="button" class="diff-btn" data-mode="' + m + '"><strong>' + name + '</strong><span>' + txt + '</span>' +
+          (n ? '<em>Ya aprobaste ' + n + ' de ' + LEVELS.length + ' niveles en este modo</em>' : '<em>Empezás desde el nivel 1</em>') + '</button>';
+      }
+      mapEl.innerHTML = '<div class="lv-start panel"><span class="label">Nuevo juego</span><h2>Elegí cómo querés jugar</h2>' +
+        '<p>Vas a jugar los 8 niveles en el modo que elijas. Cuando apruebes los 8, se habilitan 8 evaluaciones de verdadero o falso, una por cada nivel.</p>' +
+        '<div class="diff-opts">' +
+          opt('b', 'Básico', 'En todos los niveles podés usar el botón “Mostrar nombres” para ver dónde va cada pieza.') +
+          opt('a', 'Avanzado', 'En todos los niveles el botón “Mostrar nombres” queda bloqueado: tenés que saber dónde va todo.') +
+        '</div></div>';
+    }
+    function renderMap() {
+      resetArm = false;
+      if (!M()) { renderStart(); return; }
+      var passed = 0, sum = 0;
+      LEVELS.forEach(function (L, i) { var b = lv(i); if (b >= PASS) { passed++; sum += b; } });
+      var nextIdx = -1;
+      for (var i = 0; i < LEVELS.length; i++) if (unlocked(i) && lv(i) < PASS) { nextIdx = i; break; }
+      var all = allLevels(), evs = evDone();
+      var evNext = -1; if (all) for (var k = 0; k < LEVELS.length; k++) if (!ev(k)) { evNext = k; break; }
+      mapEl.innerHTML =
+        '<div class="lv-top">' +
+          '<div><span class="label">Modo niveles <span class="diff-tag ' + M() + '">' + DIFF[M()] + '</span></span>' +
+          '<h2>' + (ig() ? '¡Terminaste el juego!' : all && evs === LEVELS.length ? '¡Solo falta la evaluación integradora!' : all ? '¡Aprobaste los 8 niveles! Ahora, las evaluaciones' : 'De la PC más simple a la PC gamer') + '</h2>' +
+          '<p>Cada nivel aprobado con 60 o más desbloquea el siguiente. La nota baja con cada error y si tardás más que el tiempo ideal.</p></div>' +
+          '<div class="lv-prog">' +
+            '<div class="row"><span>Niveles aprobados</span><strong>' + passed + ' / ' + LEVELS.length + '</strong></div>' +
+            '<div class="bar"><span style="width:' + (passed / LEVELS.length * 100) + '%"></span></div>' +
+            '<div class="row"><span>Evaluaciones hechas</span><strong>' + evs + ' / ' + LEVELS.length + '</strong></div>' +
+            '<div class="row"><span>Promedio de niveles</span><strong>' + (passed ? Math.round(sum / passed) : '—') + '</strong></div>' +
+          '</div>' +
+        '</div>' +
+        (all && evs === LEVELS.length ? '<div class="final-note">' + (ig()
+            ? '<span>Niveles <b>' + avgL() + '</b> · Verdadero o falso <b>' + avgE() + '</b> · Integradora <b>' + ig() + '</b> · Nota final</span><strong>' + finalNote() + '/100</strong>' + starsHtml(finalNote()) + '<button type="button" class="btn" id="lv-poster">Ver cartel de notas</button>'
+            : '<span>Nota parcial (niveles y evaluaciones). Te falta la integradora.</span><strong>' + finalNote() + '/100</strong>' + starsHtml(finalNote())) + '</div>' : '') +
+        '<div class="lv-grid">' + LEVELS.map(function (L, i) {
+          var ok = unlocked(i), b = lv(i), cls = !ok ? ' locked' : b >= PASS ? ' done' : i === nextIdx ? ' next' : '';
+          var meta = !ok ? '<span>' + LOCK + ' Aprobá el nivel ' + i + '</span>'
+            : b ? '<span>Mejor nota: <strong>' + b + '</strong></span>' + starsHtml(b)
+            : '<span>Disponible</span><span>Tiempo ideal ' + fmt(L.par) + '</span>';
+          return '<button type="button" class="lv-card' + cls + '" data-i="' + i + '"' + (ok ? '' : ' aria-disabled="true"') + '>' +
+            '<span class="lv-num">' + (i + 1) + '</span><h3>' + L.title + '</h3><p>' + L.desc + '</p><div class="lv-meta">' + meta + '</div></button>';
+        }).join('') + '</div>' +
+        '<section class="lv-section" id="lv-evals"><h3>Evaluaciones</h3>' +
+          '<p>' + (all ? 'Cada evaluación tiene ' + NQ + ' preguntas de verdadero o falso sobre lo que aprendiste en su nivel. Con 60 o más está aprobada.' : 'Se habilitan cuando apruebes los 8 niveles. Cada una tiene ' + NQ + ' preguntas de verdadero o falso.') + '</p>' +
+          '<div class="lv-grid">' + LEVELS.map(function (L, i) {
+            var e = ev(i), cls = !all ? ' locked' : e >= PASS ? ' done' : i === evNext ? ' next' : '';
+            var meta = !all ? '<span>' + LOCK + ' Aprobá los 8 niveles</span>' : e ? '<span>Nota: <strong>' + e + '</strong></span>' + starsHtml(e) : '<span>Disponible</span><span>' + NQ + ' preguntas</span>';
+            return '<button type="button" class="lv-card ev-card' + cls + '" data-e="' + i + '"' + (all ? '' : ' aria-disabled="true"') + '>' +
+              '<span class="lv-num">E' + (i + 1) + '</span><h3>Evaluación: ' + L.title + '</h3><p>Verdadero o falso sobre el nivel ' + (i + 1) + '.</p><div class="lv-meta">' + meta + '</div></button>';
+          }).join('') +
+          (function () {
+            var open = all && evs === LEVELS.length, g = ig();
+            return '<button type="button" class="lv-card ev-card integ' + (!open ? ' locked' : g >= PASS ? ' done' : ' next') + '" data-ig="1"' + (open ? '' : ' aria-disabled="true"') + '>' +
+              '<span class="lv-num">Integradora</span><h3>Evaluación integradora</h3><p>' + INTEG.length + ' preguntas de opción múltiple que combinan todo lo que aprendiste. Es más difícil que las de verdadero o falso.</p>' +
+              '<div class="lv-meta">' + (!open ? '<span>' + LOCK + ' Hacé las 8 evaluaciones</span>' : g ? '<span>Nota: <strong>' + g + '</strong></span>' + starsHtml(g) : '<span>Disponible</span><span>' + INTEG.length + ' preguntas · 4 opciones</span>') + '</div></button>';
+          })() + '</div></section>' +
+        '<div class="btns"><button type="button" class="btn" id="lv-switch">Cambiar de modo</button><button type="button" class="btn" id="lv-reset">Borrar mi progreso en modo ' + DIFF[M()] + '</button></div>';
+    }
+    mapEl.addEventListener('click', function (e) {
+      var m = e.target.closest('[data-mode]');
+      if (m) { store.mode = m.dataset.mode; save(); renderMap(); return; }
+      if (e.target.closest('#lv-switch')) { store.mode = null; save(); renderMap(); return; }
+      if (e.target.closest('#lv-poster')) { showPoster(); return; }
+      var rb = e.target.closest('#lv-reset');
+      if (rb) {
+        if (!resetArm) { resetArm = true; rb.textContent = '¿Seguro? Tocá de nuevo para borrar'; return; }
+        store.best[M()] = {}; store.evals[M()] = {}; delete store.integ[M()]; save(); renderMap(); return;
+      }
+      var c = e.target.closest('.lv-card'); if (!c || c.classList.contains('locked')) return;
+      if (c.dataset.ig) integQuiz(); else if (c.dataset.e != null) quiz(+c.dataset.e); else play(+c.dataset.i);
+    });
+
+    function lockHelp(host) {
+      host.querySelectorAll('.js-help, .w-help').forEach(function (b) {
+        b.disabled = true; b.setAttribute('aria-pressed', 'false');
+        b.textContent = 'Nombres bloqueados';
+        b.title = 'En el modo avanzado no se pueden mostrar los nombres';
+      });
+    }
+    function stopCurrent() { if (current && current.destroy) current.destroy(); current = null; }
+    function head(label, title, text) {
+      return '<div class="lv-head panel"><div><span class="label">' + label + '</span><h2>' + title + '<span class="diff-tag ' + M() + '">' + DIFF[M()] + '</span></h2><p>' + text + '</p></div>' +
+        '<button type="button" class="btn" id="lv-back">← Volver a los niveles</button></div>';
+    }
+    function showPlay(html) {
+      mapEl.hidden = true; playEl.hidden = false; playEl.innerHTML = html;
+      playEl.querySelector('#lv-back').addEventListener('click', backToMap);
+      try { playEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function play(i) {
+      stopCurrent(); closeModal();
+      curIdx = i; setLock(true);
+      var L = LEVELS[i];
+      showPlay(head('Nivel ' + (i + 1) + ' de ' + LEVELS.length, L.title, L.goal + ' Tiempo ideal: ' + fmt(L.par) + '. Necesitás 60 para pasar.') + '<div class="lv-host"></div>');
+      var host = playEl.querySelector('.lv-host');
+      var done = function (r) { finished(i, r); };
+      if (L.mode === 'mini') current = mountGame(host, ext(miniCfg({ disk: 'ssd', n: 2, gb: [4, 4] }), { onWin: done }));
+      else if (L.mode === 'basica') current = mountGame(host, ext(BASIC, { onWin: done }));
+      else if (L.mode === 'gamer') current = mountGame(host, ext(GAMER, { onWin: done }));
+      else if (L.mode === 'cables') current = WiringFactory(host, done);
+      else if (L.mode === 'placa') { current = PlacaFactory(host, done, L.pmode); current.rebuild(L.conf); }
+      if (M() === 'a') lockHelp(host);
+    }
+    function backToMap(toEvals) {
+      stopCurrent(); closeModal(); setLock(false); playEl.hidden = true; playEl.innerHTML = ''; mapEl.hidden = false; renderMap();
+      if (toEvals === true) { var e = document.getElementById('lv-evals'); if (e) try { e.scrollIntoView({ block: 'start' }); } catch (_) {} }
+    }
+    function showResult(o) {
+      modal.classList.remove('wide');
+      modal.innerHTML =
+        '<span class="label">' + o.label + ' · ' + (o.tag || DIFF[M()]) + '</span>' +
+        '<h2 id="lv-r-title">' + titleFor(o.n) + '</h2>' +
+        '<div class="grade ' + (o.n >= PASS ? 'pass' : 'fail') + '">' + o.n + '<small>/100</small></div>' +
+        starsHtml(o.n) + '<p>' + o.msg + '</p>' + (o.detail ? '<p class="detail">' + o.detail + '</p>' : '') + (o.extra || '') +
+        '<div class="btns">' + o.buttons + '</div>';
+      overlay.hidden = false;
+      var f = modal.querySelector('.btn.primary'); if (f) f.focus();
+    }
+    function finished(i, r) {
+      var L = LEVELS[i], n = grade(r, L.par), rec = store.best[M()] || (store.best[M()] = {}), prev = rec[L.id] || 0;
+      var wasAll = allLevels(), wasUnlocked = i + 1 < LEVELS.length && unlocked(i + 1);
+      if (n > prev) { rec[L.id] = n; save(); }
+      var pass = n >= PASS, last = i === LEVELS.length - 1, extra = '';
+      if (pass && !last && !wasUnlocked) extra = '<p class="unlock">Desbloqueaste el nivel ' + (i + 2) + ': ' + LEVELS[i + 1].title + '</p>';
+      if (allLevels() && !wasAll) extra = '<p class="unlock">¡Aprobaste los 8 niveles! Se habilitaron las 8 evaluaciones.</p>';
+      var tips = [r.errors ? r.errors + (r.errors === 1 ? ' error' : ' errores') + ' (−' + Math.min(60, r.errors * 6) + ')' : 'sin errores',
+        'tiempo ' + fmt(r.secs) + (r.secs > L.par ? ' (ideal ' + fmt(L.par) + ')' : ', dentro del ideal')];
+      var btn = '';
+      if (pass && allLevels() && (last || !wasAll)) btn += '<button type="button" class="btn primary" data-act="evals">Ir a las evaluaciones</button>';
+      else if (pass && !last) btn += '<button type="button" class="btn primary" data-act="next">Siguiente nivel</button>';
+      btn += '<button type="button" class="btn' + (pass ? '' : ' primary') + '" data-act="retry">Repetir nivel</button><button type="button" class="btn" data-act="map">Ver niveles</button>';
+      showResult({ label: 'Nivel ' + (i + 1) + ' · ' + L.title, n: n,
+        msg: pass ? '¡Felicitaciones! Completaste el nivel ' + (i + 1) + ': ' + L.title + '.' : 'Terminaste el nivel, pero necesitás 60 para pasar al siguiente. ¡Probá de nuevo!',
+        detail: tips.join(' · ') + (prev && n <= prev ? ' · tu mejor nota sigue siendo ' + prev : prev && n > prev ? ' · ¡nuevo récord!' : ''),
+        extra: extra, buttons: btn });
+    }
+
+    /* ---- evaluaciones ---- */
+    function rnd() { return Math.random() - 0.5; }
+    function shuffled(i) { return QUIZ[LEVELS[i].id].slice().sort(rnd); }
+    function integList() { return INTEG.map(function (q) { return ext(q, { order: [0, 1, 2, 3].sort(rnd) }); }).sort(rnd); }
+    function integQuiz() {
+      stopCurrent(); closeModal();
+      curIdx = -1; setLock(true);
+      showPlay(head('Evaluación integradora', 'Todo lo que aprendiste', INTEG.length + ' preguntas de opción múltiple. Elegí la respuesta correcta entre 4 opciones. Con 60 o más aprobás.') + '<section class="quiz panel" aria-live="polite"></section>');
+      runQuiz(playEl.querySelector('.quiz'), integList(), function (ok, tot) {
+        var n = Math.round(ok / tot * 100), prev = ig();
+        if (n > prev) { store.integ[M()] = n; save(); }
+        if (ig()) { showPoster(); return; }
+        showResult({ label: 'Evaluación integradora', n: n,
+          msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
+          detail: prev && n <= prev ? 'Tu mejor nota en la integradora sigue siendo ' + prev : prev && n > prev ? '¡Nuevo récord!' : '',
+          extra: '<p class="unlock">' + (ig() ? 'Nota final del juego: ' : 'Nota parcial del juego: ') + finalNote() + '/100</p>',
+          buttons: '<button type="button" class="btn" data-act="igretry">Repetir integradora</button><button type="button" class="btn primary" data-act="evmap">Ver niveles</button>' });
+      });
+    }
+    function runQuiz(box, list, onEnd) {
+      var st = { k: 0, ok: 0, res: [] };
+      function render() {
+        var q = list[st.k], dots = '', mc = !Array.isArray(q);
+        for (var d = 0; d < list.length; d++) dots += '<i class="' + (st.res[d] === true ? 'ok' : st.res[d] === false ? 'err' : d === st.k ? 'cur' : '') + '"></i>';
+        box.innerHTML = '<div class="q-dots" aria-hidden="true">' + dots + '</div>' +
+          '<span class="q-num">Pregunta ' + (st.k + 1) + ' de ' + list.length + '</span>' +
+          '<p class="q-text">' + (mc ? q.q : q[0]) + '</p>' +
+          (mc ? '<div class="q-opts mc">' + q.order.map(function (oi, n) { return '<button type="button" class="q-btn mc" data-o="' + oi + '"><b>' + 'ABCD'[n] + '</b><span>' + q.o[oi] + '</span></button>'; }).join('') + '</div>'
+              : '<div class="q-opts"><button type="button" class="q-btn" data-v="1">Verdadero</button><button type="button" class="q-btn" data-v="0">Falso</button></div>') +
+          '<div class="q-fb" hidden></div><div class="btns"><button type="button" class="btn primary q-next" hidden></button></div>';
+        box.querySelector('.q-opts').addEventListener('click', function (e) {
+          var b = e.target.closest('.q-btn'); if (!b || b.disabled) return;
+          function isRight(x) { return mc ? +x.dataset.o === q.a : (x.dataset.v === '1') === q[1]; }
+          var right = isRight(b);
+          box.querySelectorAll('.q-btn').forEach(function (x) {
+            x.disabled = true;
+            if (isRight(x)) x.classList.add('right'); else if (x === b) x.classList.add('wrong');
+          });
+          st.res[st.k] = right; if (right) st.ok++; else sfx.error();
+          var dl = box.querySelectorAll('.q-dots i')[st.k]; if (dl) dl.className = right ? 'ok' : 'err';
+          var fb = box.querySelector('.q-fb'); fb.hidden = false; fb.className = 'q-fb ' + (right ? 'ok' : 'err');
+          fb.innerHTML = mc ? '<strong>' + (right ? '¡Correcto!' : 'Incorrecto. La respuesta correcta es: ' + q.o[q.a] + '.') + '</strong>' + q.why
+                            : '<strong>' + (right ? '¡Correcto!' : 'Incorrecto: es ' + (q[1] ? 'verdadero' : 'falso') + '.') + '</strong>' + q[2];
+          var nx = box.querySelector('.q-next'); nx.hidden = false;
+          nx.textContent = st.k + 1 < list.length ? 'Siguiente pregunta' : 'Ver mi nota';
+          nx.focus();
+          nx.addEventListener('click', function () { st.k++; if (st.k < list.length) render(); else onEnd(st.ok, list.length); });
+        });
+      }
+      render();
+    }
+    function quiz(i) {
+      stopCurrent(); closeModal();
+      curIdx = i; setLock(true);
+      showPlay(head('Evaluación ' + (i + 1) + ' de ' + LEVELS.length, LEVELS[i].title, 'Leé cada afirmación y elegí si es verdadera o falsa. Con 60 o más aprobás.') + '<section class="quiz panel" aria-live="polite"></section>');
+      runQuiz(playEl.querySelector('.quiz'), shuffled(i), function (ok, tot) { endQuiz(i, ok, tot); });
+    }
+    function endQuiz(i, ok, tot) {
+      var L = LEVELS[i], n = Math.round(ok / tot * 100);
+      var rec = store.evals[M()] || (store.evals[M()] = {}), prev = rec[L.id] || 0;
+      if (n > prev) { rec[L.id] = n; save(); }
+      if (n >= PASS) sfx.win();
+      var last = evDone() === LEVELS.length, nextE = -1;
+      for (var k = 0; k < LEVELS.length; k++) if (!ev(k)) { nextE = k; break; }
+      if (nextE < 0 && i + 1 < LEVELS.length) nextE = i + 1;
+      var extra = last ? '<p class="unlock">¡Terminaste las 8 evaluaciones! Se habilitó la evaluación integradora.</p>' : '';
+      var btn = (last ? '<button type="button" class="btn primary" data-act="igretry">Hacer la integradora</button>' : '') +
+        (nextE >= 0 && !last ? '<button type="button" class="btn primary" data-act="evnext" data-e="' + nextE + '">Siguiente evaluación</button>' : '') +
+        '<button type="button" class="btn' + (nextE >= 0 || last ? '' : ' primary') + '" data-act="evretry">Repetir evaluación</button><button type="button" class="btn" data-act="evmap">Ver niveles</button>';
+      showResult({ label: 'Evaluación ' + (i + 1) + ' · ' + L.title, n: n,
+        msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
+        detail: prev && n <= prev ? 'Tu mejor nota en esta evaluación sigue siendo ' + prev : prev && n > prev ? '¡Nuevo récord!' : '',
+        extra: extra, buttons: btn });
+    }
+
+    /* ---- pestaña Evaluaciones (libre, para practicar o revisar) ---- */
+    var freeEl = document.getElementById('ev-free'), freeIdx = -1;
+    function freeHead(label, title, text) {
+      return '<div class="lv-head panel"><div><span class="label">' + label + '</span><h2>' + title + '</h2><p>' + text + '</p></div>' +
+        '<button type="button" class="btn ev-back">← Volver a las evaluaciones</button></div>';
+    }
+    function renderFree() {
+      freeIdx = -1;
+      freeEl.innerHTML = '<div class="lv-top"><div><span class="label">Evaluaciones</span><h2>Las 8 evaluaciones</h2>' +
+        '<p>Hacé o revisá cualquier evaluación sin jugar los niveles. Las notas de esta pestaña son de práctica: no cuentan para el juego.</p></div></div>' +
+        '<div class="lv-grid">' + LEVELS.map(function (L, i) {
+          return '<div class="lv-card static"><span class="lv-num">E' + (i + 1) + '</span><h3>' + L.title + '</h3>' +
+            '<p>' + QUIZ[L.id].length + ' preguntas de verdadero o falso sobre el nivel ' + (i + 1) + '.</p>' +
+            '<div class="btns"><button type="button" class="btn primary" data-fq="' + i + '">Hacer evaluación</button><button type="button" class="btn" data-fa="' + i + '">Ver respuestas</button></div></div>';
+        }).join('') + '</div>';
+    }
+    var igEl = document.getElementById('ig-free');
+    function igHome() {
+      igEl.innerHTML = '<div class="lv-top"><div><span class="label">Integradora</span><h2>Evaluación integradora</h2>' +
+        '<p>' + INTEG.length + ' preguntas de opción múltiple, con 4 opciones cada una, que combinan los temas de todos los niveles. Es más difícil que las de verdadero o falso. Acá la podés probar sin jugar: la nota es de práctica y no cuenta para el juego.</p></div></div>' +
+        '<div class="btns"><button type="button" class="btn primary" data-ig="run">Hacer la integradora</button><button type="button" class="btn" data-ig="ans">Ver respuestas</button></div>';
+    }
+    igEl.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ig]');
+      if (b) { if (b.dataset.ig === 'run') freeInteg(); else freeIntegAnswers(); return; }
+      if (e.target.closest('.ev-back')) igHome();
+    });
+    function freeInteg() {
+      closeModal(); freeIdx = 'ig';
+      igEl.innerHTML = freeHead('Evaluación integradora · práctica', 'Todo lo que aprendiste', 'Elegí la respuesta correcta entre 4 opciones.') + '<section class="quiz panel" aria-live="polite"></section>';
+      runQuiz(igEl.querySelector('.quiz'), integList(), function (ok, tot) {
+        var n = Math.round(ok / tot * 100);
+        if (n >= PASS) sfx.win();
+        showResult({ label: 'Evaluación integradora', tag: 'Práctica', n: n,
+          msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
+          detail: 'Esta nota es de práctica y no se guarda en el juego.',
+          buttons: '<button type="button" class="btn primary" data-act="fqretry">Repetir</button><button type="button" class="btn" data-act="fqlist">Ver respuestas</button>' });
+      });
+      try { igEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function freeIntegAnswers() {
+      igEl.innerHTML = freeHead('Respuestas · integradora', 'Todo lo que aprendiste', 'Las ' + INTEG.length + ' preguntas con sus opciones; la correcta está marcada en verde.') +
+        '<ol class="ans">' + INTEG.map(function (q, k) {
+          return '<li><span class="stmt">' + (k + 1) + '. ' + q.q + '</span>' +
+            q.o.map(function (o, n) { return '<span class="opt' + (n === q.a ? ' ok' : '') + '">' + 'ABCD'[n] + ') ' + o + (n === q.a ? ' ✓' : '') + '</span>'; }).join('') +
+            '<p class="why">' + q.why + '</p></li>';
+        }).join('') + '</ol><div class="btns"><button type="button" class="btn primary" data-ig="run">Hacer la integradora</button></div>';
+      try { igEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function freeQuiz(i) {
+      closeModal(); freeIdx = i;
+      var L = LEVELS[i];
+      freeEl.innerHTML = freeHead('Evaluación ' + (i + 1) + ' de ' + LEVELS.length + ' · práctica', L.title, 'Leé cada afirmación y elegí si es verdadera o falsa.') + '<section class="quiz panel" aria-live="polite"></section>';
+      runQuiz(freeEl.querySelector('.quiz'), shuffled(i), function (ok, tot) {
+        var n = Math.round(ok / tot * 100);
+        if (n >= PASS) sfx.win();
+        showResult({ label: 'Evaluación ' + (i + 1) + ' · ' + L.title, tag: 'Práctica', n: n,
+          msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
+          detail: 'Esta nota es de práctica y no se guarda en el juego.',
+          buttons: (i + 1 < LEVELS.length ? '<button type="button" class="btn primary" data-act="fqnext">Siguiente evaluación</button>' : '') +
+            '<button type="button" class="btn' + (i + 1 < LEVELS.length ? '' : ' primary') + '" data-act="fqretry">Repetir</button><button type="button" class="btn" data-act="fqlist">Ver todas</button>' });
+      });
+      try { freeEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function freeAnswers(i) {
+      var L = LEVELS[i];
+      freeEl.innerHTML = freeHead('Respuestas · evaluación ' + (i + 1), L.title, 'Las ' + QUIZ[L.id].length + ' afirmaciones con su respuesta correcta y la explicación.') +
+        '<ol class="ans">' + QUIZ[L.id].map(function (q, k) {
+          return '<li><span class="stmt"><span class="vf ' + (q[1] ? 'v' : 'f') + '">' + (q[1] ? 'Verdadero' : 'Falso') + '</span>' + (k + 1) + '. ' + q[0] + '</span><p class="why">' + q[2] + '</p></li>';
+        }).join('') + '</ol>' +
+        '<div class="btns"><button type="button" class="btn primary" data-fq="' + i + '">Hacer esta evaluación</button></div>';
+      try { freeEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    freeEl.addEventListener('click', function (e) {
+      var b;
+      if ((b = e.target.closest('[data-fq]'))) freeQuiz(+b.dataset.fq);
+      else if ((b = e.target.closest('[data-fa]'))) freeAnswers(+b.dataset.fa);
+      else if (e.target.closest('.ev-back')) renderFree();
+    });
+    renderFree();
+    igHome();
+
+    function showPoster() {
+      var L = avgL(), E = avgE(), G = ig(), F = finalNote();
+      function box(t, n, sub) { return '<div class="box"><span>' + t + '</span><strong class="' + (n >= PASS ? 'pass' : 'fail') + '">' + n + '</strong>' + starsHtml(n) + '<em>' + sub + '</em></div>'; }
+      modal.classList.add('wide');
+      modal.innerHTML = '<span class="label">Modo ' + DIFF[M()] + ' · resultados finales</span>' +
+        '<h2 id="lv-r-title">¡Felicitaciones, terminaste el juego!</h2>' +
+        '<p>Estas son tus notas:</p>' +
+        '<div class="poster">' +
+          box('1 · Niveles', L, 'Promedio de los 8 niveles') +
+          box('2 · Verdadero o falso', E, 'Promedio de las 8 evaluaciones') +
+          box('3 · Integradora', G, INTEG.length + ' preguntas de opción múltiple') +
+        '</div>' +
+        '<div class="poster-final"><span class="label">Nota final</span><strong>' + F + '</strong>' + starsHtml(F) +
+          '<span class="detail" style="font:500 12px var(--font-mono);color:var(--muted)">40 % niveles · 30 % verdadero o falso · 30 % integradora</span></div>' +
+        '<div class="btns"><button type="button" class="btn primary" data-act="evmap">Ver niveles</button><button type="button" class="btn" data-act="igretry">Repetir integradora</button></div>';
+      overlay.hidden = false;
+      sfx.win();
+      var f = modal.querySelector('.btn.primary'); if (f) f.focus();
+    }
+    function closeModal() { overlay.hidden = true; modal.classList.remove('wide'); }
+    modal.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var a = b.dataset.act;
+      if (a === 'igretry') integQuiz();
+      else if (a === 'fqnext') freeQuiz(freeIdx + 1);
+      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else freeQuiz(freeIdx); }
+      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else renderFree(); }
+      else if (a === 'poster') showPoster();
+      else if (a === 'next') play(curIdx + 1);
+      else if (a === 'retry') play(curIdx);
+      else if (a === 'evals' || a === 'evmap') backToMap(true);
+      else if (a === 'evnext') quiz(+b.dataset.e);
+      else if (a === 'evretry') quiz(curIdx);
+      else backToMap();
+    });
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+    renderMap();
+  })();
+
+  /* ---------- ajuste automático a la pantalla ---------- */
+  var fitAll = (function () {
+    var pending = false, ro = null, seen = typeof WeakSet !== 'undefined' ? new WeakSet() : null;
+    function h(el) { return el && !el.hidden && el.offsetParent !== null ? el.getBoundingClientRect().height : 0; }
+    function fitOne(app) {
+      if (!app.offsetParent) return;
+      var caseEl = app.querySelector('.case'); if (!caseEl) return;
+      var vh = window.innerHeight, gap = parseFloat(getComputedStyle(app).rowGap) || 8;
+      var single = getComputedStyle(app).gridTemplateColumns.split(' ').length === 1;
+      var note = h(app.querySelector('.case-note'));
+      var rest = single ? h(app.querySelector('.hud')) + h(app.querySelector('.tray-box')) + gap * 2 + 14
+                        : note + (note ? 6 : 0) + 16;
+      var top = app.getBoundingClientRect().top + window.scrollY;
+      var H = vh - top - rest;
+      if (H < 320) H = vh - rest - 12;
+      H = Math.max(300, Math.floor(H));
+      var cur = parseFloat(app.style.getPropertyValue('--case-h')) || 0;
+      if (Math.abs(cur - H) > 1) app.style.setProperty('--case-h', H + 'px');
+      if (ro && seen) [app, app.querySelector('.hud'), app.querySelector('.tray-box')].forEach(function (el) {
+        if (el && !seen.has(el)) { seen.add(el); ro.observe(el); }
+      });
+    }
+    function run() { pending = false; document.querySelectorAll('.app').forEach(fitOne); }
+    function schedule() { if (!pending) { pending = true; requestAnimationFrame(run); } }
+    if (typeof ResizeObserver !== 'undefined') ro = new ResizeObserver(schedule);
+    window.addEventListener('resize', schedule);
+    window.addEventListener('orientationchange', schedule);
+    if (typeof MutationObserver !== 'undefined') new MutationObserver(schedule).observe(document.querySelector('.wrap'), { childList: true, subtree: true });
+    try { document.fonts.ready.then(schedule); } catch (_) {}
+    return schedule;
+  })();
+
+  (function () {
+    var b = document.getElementById('fs-btn'), root = document.documentElement;
+    if (!b || !root.requestFullscreen || document.fullscreenEnabled === false) return;
+    b.hidden = false;
+    b.addEventListener('click', function () {
+      if (document.fullscreenElement) { document.exitFullscreen().catch(function () {}); return; }
+      root.requestFullscreen().catch(function () { b.hidden = true; });
+    });
+    document.addEventListener('fullscreenchange', function () {
+      b.textContent = document.fullscreenElement ? 'Salir de pantalla completa' : 'Pantalla completa';
+      fitAll();
+    });
+  })();
+
   /* ---------- pestañas ---------- */
   var tabs = document.querySelectorAll('.tab');
   function show(name) {
-    if (name !== 'basica' && name !== 'gamer') name = 'basica';
+    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'cableado', 'evaluaciones', 'integradora'].indexOf(name) < 0) name = 'niveles';
+    if (tabLocked && name !== 'niveles') name = 'niveles';
     tabs.forEach(function (t) {
       var on = t.dataset.tab === name;
       t.setAttribute('aria-selected', on ? 'true' : 'false');
       t.tabIndex = on ? 0 : -1;
       document.getElementById('panel-' + t.dataset.tab).hidden = !on;
     });
+    fitAll();
   }
   tabs.forEach(function (t) {
     t.addEventListener('click', function () {
