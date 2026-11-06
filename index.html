@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego de 8 niveles, 8 evaluaciones y una evaluación integradora para aprender a armar una PC, con nota de 0 a 100.">
+<meta name="description" content="Juego de 8 fases para configurar y armar una PC Intel o AMD, con evaluación en cada fase y una integradora final.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -349,6 +349,18 @@ button.btn:disabled { opacity: .5; cursor: not-allowed; }
 .poster-final { border: 2px solid var(--ok); border-radius: 12px; padding: 12px; display: grid; gap: 2px; justify-items: center; }
 .poster-final strong { font: 700 clamp(48px, 12vw, 72px)/1 var(--font-display); color: var(--ok); }
 @media (max-width: 480px) { .poster { grid-template-columns: minmax(0, 1fr); } }
+.setup { display: grid; gap: 14px; }
+.setup-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.setup .step-n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: var(--surface); font: 700 12px var(--font-mono); margin-right: 6px; }
+.setup .choice.off { opacity: .45; cursor: not-allowed; }
+.setup .choice .note { font: 500 11px var(--font-mono); color: var(--muted); }
+.coolers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.setup-msg { border-radius: 8px; padding: 9px 11px; font-size: 14px; background: var(--surface); }
+.setup-msg.ok { color: var(--ok); border: 1px solid var(--ok); }
+.setup-msg.err { color: var(--err); border: 1px solid var(--err); }
+.setup-msg.warn { color: var(--ink); border: 1px solid var(--accent); }
+.setup .btn.primary { font-size: 16px; padding: 10px 16px; }
+@media (max-width: 760px) { .setup-grid { grid-template-columns: minmax(0, 1fr); } .coolers { grid-template-columns: minmax(0, 1fr); } }
 button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
 button.btn.primary:hover { filter: brightness(1.05); }
 
@@ -549,14 +561,14 @@ button.btn.primary:hover { filter: brightness(1.05); }
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Modo de juego">
-    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" aria-controls="panel-niveles">Niveles<small>8 + 8 evaluaciones</small></button>
+    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" aria-controls="panel-niveles">Niveles<small>8 fases + integradora</small></button>
     <button class="tab" role="tab" type="button" id="tab-muy-basica" data-tab="muy-basica" aria-controls="panel-muy-basica">PC muy básica<small>a medida</small></button>
     <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
     <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
-    <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" aria-controls="panel-evaluaciones">Evaluaciones<small>8 × 10 preguntas</small></button>
-    <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" aria-controls="panel-integradora">Integradora<small>12 de opción múltiple</small></button>
+    <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" aria-controls="panel-evaluaciones">Evaluaciones<small>8 × 5 opción múltiple</small></button>
+    <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" aria-controls="panel-integradora">Integradora<small>18 preguntas</small></button>
   </nav>
   <p class="lock-note" id="lock-note" hidden>Mientras jugás un nivel o una evaluación, las otras pestañas quedan bloqueadas. Volvé a los niveles para usarlas.</p>
 
@@ -1208,7 +1220,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function introInfo() {
       infoEl.classList.remove('win');
       infoEl.innerHTML = '<span class="label">Ficha técnica</span><h2>Cómo se juega</h2><p>Cada vez que coloques bien una pieza vas a ver acá para qué sirve y dónde se conecta.</p>' +
-        (cfg.power ? '<p>En la bandeja hay 5 fuentes de distinta potencia. Mirá el panel de consumo para elegir la que corresponde.</p>' : '') +
+        (cfg.power && cfg.psuOptions && cfg.psuOptions.length > 1 ? '<p>En la bandeja hay 5 fuentes de distinta potencia. Mirá el panel de consumo para elegir la que corresponde.</p>' : '') +
         '<p class="spec">Si te trabás, activá “Mostrar nombres”.</p>';
     }
 
@@ -2294,19 +2306,19 @@ button.btn.primary:hover { filter: brightness(1.05); }
       { id: 'cables', title: 'A cablear', mode: 'cables', par: 60,
         desc: 'Los cables de la fuente y el cable de datos del disco.', goal: 'Conectá los 5 cables en su lugar.' },
       { id: 'mini', title: 'Primer armado', mode: 'mini', par: 60,
-        desc: 'Una PC muy básica: placa madre, procesador, 2 memorias de 4 GB, un SSD y la fuente.', goal: 'Colocá las 7 piezas en su lugar del gabinete.' },
+        desc: 'Configurá una PC muy básica Intel o AMD (discos, fuente y refrigeración) y armala.', goal: 'Colocá todas las piezas en su lugar del gabinete.' },
       { id: 'placa-armado', title: 'Armá la placa madre', mode: 'placa', pmode: 'build', par: 120, conf: { gama: 'base', brand: 'amd', socket: 'AM5', chipset: 'A620', cpu: 0 },
         desc: 'Una placa madre base AMD con socket AM5: colocá cada parte y el procesador.', goal: 'Colocá las 16 partes de la placa madre.' },
       { id: 'placa-nombres', title: 'Poné los nombres', mode: 'placa', pmode: 'labels', par: 120, conf: { gama: 'base', brand: 'amd', socket: 'AM5', chipset: 'A620', cpu: 0 },
         desc: 'La misma placa ya armada: identificá cada parte y ponele su nombre.', goal: 'Poné el nombre de las 16 partes de la placa, incluido el procesador.' },
       { id: 'basica', title: 'PC completa', mode: 'basica', par: 120,
-        desc: '12 piezas: placa de video, placa WiFi, pila, dos discos y ventilador.', goal: 'Colocá las 12 piezas respetando el orden de armado.' },
+        desc: 'Configurá una PC básica Intel o AMD con placa de video y WiFi, y armala respetando el orden.', goal: 'Colocá todas las piezas respetando el orden de armado.' },
       { id: 'placa-media', title: 'Placa intermedia Intel', mode: 'placa', par: 270, conf: { gama: 'media', brand: 'intel', socket: 'LGA1851', chipset: 'B860', cpu: 0 },
         desc: 'Placa madre intermedia con socket LGA 1851, chipset B860 y un Core Ultra 5.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
       { id: 'placa-gamer', title: 'Placa gamer AMD', mode: 'placa', par: 300, conf: { gama: 'gamer', brand: 'amd', socket: 'AM5', chipset: 'X870E', cpu: 1 },
         desc: 'Placa gamer con 3 ranuras M.2, 2 PCIe x16, doble EPS y un Ryzen 7 9850X3D.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
       { id: 'gamer', title: 'Desafío final: PC gamer', mode: 'gamer', par: 240,
-        desc: '23 piezas, refrigeración líquida, 3 placas de video y la fuente justa.', goal: 'Armá la PC gamer completa y elegí la fuente que corresponde.' }
+        desc: 'Configurá tu PC gamer: marca, discos, placas de video, refrigeración y la fuente justa. Después armala.', goal: 'Armá la PC gamer completa.' }
     ];
     var QUIZ = {
       cables: [
@@ -2434,7 +2446,74 @@ button.btn.primary:hover { filter: brightness(1.05); }
         why: 'La muesca evita que se coloque una memoria equivocada: cada placa acepta un solo tipo.' }
     ];
 
-    var KEY = 'arma-tu-pc-juego';
+    /* evaluación de opción múltiple de cada fase (la correcta va primera y se rota al cargar) */
+    var MCQ_RAW = {
+      cables: [
+        ['¿Qué cable alimenta a la placa madre?', ['ATX de 24 pines', 'EPS de 8 pines', 'SATA de datos', 'PCIe 6+2 pines'], 'El ATX de 24 pines es el cable principal de la fuente y alimenta a toda la placa madre.'],
+        ['¿Dónde se conecta el cable EPS de 8 pines?', ['Arriba a la izquierda de la placa madre, cerca del procesador', 'En el borde de la placa de video', 'En el disco rígido', 'En los conectores del panel frontal'], 'El EPS alimenta al procesador, por eso su conector está cerca de él y de las fases (VRM).'],
+        ['¿Cuántos cables necesita un disco rígido SATA para funcionar?', ['Dos: uno de energía y otro de datos', 'Uno solo, de energía', 'Uno solo, de datos', 'Ninguno: va enchufado directo en la placa'], 'El SATA de energía viene de la fuente y el SATA de datos va a la placa madre.'],
+        ['¿Qué conector le da energía extra a la placa de video?', ['PCIe 6+2 pines', 'SATA de datos', 'ATX de 24 pines', 'Un cable USB'], 'La ranura da hasta 75 W; lo que falta llega por los cables PCIe de la fuente.'],
+        ['¿Por qué no hay que intercambiar el conector EPS del procesador y el PCIe de la placa de video?', ['Tienen trabas distintas y forzarlos puede dañar componentes', 'Porque son de distinto color', 'Porque el PCIe es mucho más largo', 'Sí se pueden intercambiar sin problema'], 'Se parecen, pero no son compatibles: los voltajes van en pines distintos.']
+      ],
+      mini: [
+        ['Si la PC no tiene placa de video, ¿de dónde sale la imagen?', ['De los gráficos integrados del procesador', 'Del disco SSD', 'De la fuente de alimentación', 'De la memoria RAM'], 'El monitor se conecta a la placa madre y el procesador genera la imagen.'],
+        ['¿Cuánta memoria RAM pide como mínimo Windows 11?', ['4 GB', '2 GB', '1 GB', '16 GB'], 'Es el mínimo oficial. Para usarlo cómodo conviene tener 8 GB o más.'],
+        ['¿Cuál de estos discos es el más rápido?', ['SSD M.2 NVMe', 'SSD SATA', 'Disco mecánico (HDD)', 'Pendrive USB'], 'Un M.2 NVMe lee unos 3500 MB/s; un SSD SATA, unos 550; un disco mecánico, unos 150.'],
+        ['¿Qué pasa con la información de la RAM cuando apagás la PC?', ['Se borra', 'Queda guardada en la RAM', 'Se guarda en la fuente', 'Se guarda en la pila CMOS'], 'La RAM es memoria temporal. Lo que queda guardado está en el disco.'],
+        ['Con dos memorias iguales de 4 GB, ¿qué se obtiene?', ['8 GB trabajando en doble canal', '4 GB en canal simple', '16 GB', '8 GB, pero la segunda queda sin usar'], 'La capacidad se suma y, al ser iguales, trabajan juntas en doble canal.']
+      ],
+      'placa-armado': [
+        ['¿Dónde se coloca el procesador?', ['En el socket o zócalo', 'En la ranura M.2', 'En la ranura PCIe x16', 'Encima del chipset'], 'El socket es el lugar del procesador.'],
+        ['¿Para qué sirve el triangulito dorado del procesador?', ['Indica cómo orientarlo para colocarlo en el socket', 'Muestra la marca del procesador', 'Se enciende cuando está funcionando', 'Marca dónde va la pasta térmica'], 'Hay que alinearlo con la marca del zócalo: entra de una sola forma.'],
+        ['¿En qué ranura va la placa de video?', ['PCI Express x16', 'PCI Express x1', 'Ranura de memoria (DIMM)', 'Ranura M.2'], 'Es la ranura horizontal más larga, con 16 carriles de datos.'],
+        ['¿Qué se instala en la ranura M.2?', ['Un disco SSD', 'Una memoria RAM', 'El cable de la fuente', 'La pila CMOS'], 'El SSD M.2 se enchufa sin cables y se sujeta con un tornillito.'],
+        ['¿Para qué sirven los separadores donde se atornilla la placa madre?', ['Para que la placa no toque la chapa del gabinete', 'Para enfriar el procesador', 'Para conectar los discos', 'Para sostener la fuente'], 'Si la placa toca la chapa puede hacer cortocircuito.']
+      ],
+      'placa-nombres': [
+        ['¿Qué parte mantiene la hora cuando la PC está desenchufada?', ['La pila CMOS', 'El chipset', 'Las fases (VRM)', 'El chip de sonido'], 'Es una pila tipo botón CR2032 de 3 V.'],
+        ['¿Qué hacen las fases de alimentación (VRM)?', ['Regulan la energía que recibe el procesador', 'Procesan el sonido', 'Guardan el BIOS', 'Conectan los discos'], 'Bajan los 12 V de la fuente a poco más de 1 V.'],
+        ['¿Qué se conecta en los conectores del panel frontal?', ['El botón de encendido, el reset y las luces del gabinete', 'La placa de video', 'Las memorias RAM', 'El disco M.2'], 'Son los cables que vienen del frente del gabinete.'],
+        ['¿Qué guarda el chip del BIOS?', ['El programa que arranca la PC', 'Las fotos y documentos', 'Los juegos instalados', 'La hora'], 'Revisa el hardware al encender y busca el sistema operativo. La hora la mantiene la pila CMOS.'],
+        ['¿Cuál es la función del chipset?', ['Coordinar la comunicación entre el procesador y los USB, SATA y ranuras chicas', 'Ejecutar los programas', 'Dar imagen al monitor', 'Enfriar la placa madre'], 'De él dependen muchas funciones y puertos de la placa.']
+      ],
+      basica: [
+        ['¿Qué se pone entre el procesador y el cooler?', ['Pasta térmica', 'Pegamento', 'Cinta aislante', 'Nada'], 'La pasta térmica ayuda a que el calor pase al cooler.'],
+        ['¿Qué hace la fuente de alimentación?', ['Convierte los 220 V de la red en 12 V, 5 V y 3,3 V de corriente continua', 'Guarda los archivos', 'Enfría el gabinete', 'Procesa la imagen'], 'Los componentes funcionan con corriente continua de esos voltajes.'],
+        ['¿En qué ranura se coloca la placa WiFi?', ['PCI Express x1', 'Ranura de memoria (DIMM)', 'Puerto SATA', 'Conector EPS'], 'Es una placa de expansión chica; sus antenas se enroscan atrás.'],
+        ['¿Qué hace el ventilador frontal del gabinete?', ['Mete aire fresco', 'Saca el aire caliente', 'Enfría solo el disco', 'Le da energía a la placa'], 'El aire caliente sale por el ventilador trasero.'],
+        ['¿Qué necesita un SSD SATA de 2,5" para funcionar?', ['Un cable SATA de datos y otro de energía', 'Nada: va en la ranura M.2', 'Solo un cable USB', 'Un cable PCIe'], 'El que va sin cables es el M.2.']
+      ],
+      'placa-media': [
+        ['¿Qué socket usan los Intel Core Ultra 200S?', ['LGA 1851', 'LGA 1700', 'AM5', 'AM4'], 'LGA 1851 es el socket actual de Intel para escritorio.'],
+        ['¿Qué memoria usa la plataforma LGA 1851?', ['Solo DDR5', 'Solo DDR4', 'DDR4 o DDR5', 'DDR3'], 'Los Core Ultra 200S funcionan solo con DDR5.'],
+        ['¿Cuál es el chipset de gama intermedia para los Core Ultra 200S?', ['B860', 'H810', 'Z890', 'B650'], 'H810 es de entrada, B860 intermedio y Z890 tope de gama. B650 es de AMD.'],
+        ['¿Qué significa que un socket sea LGA?', ['Que los contactos están en el zócalo', 'Que los pines están en el procesador', 'Que es solo para AMD', 'Que no necesita cooler'], 'El procesador tiene superficies planas que apoyan sobre los contactos del zócalo.'],
+        ['¿Qué procesador se puede instalar en una placa LGA 1851?', ['Core Ultra 5 250K Plus', 'Core i5-14400', 'Ryzen 7 9700X', 'Ryzen 5 5600'], 'El i5-14400 es LGA 1700 y los Ryzen son de AMD.']
+      ],
+      'placa-gamer': [
+        ['¿Qué memoria usa el socket AM5?', ['DDR5', 'DDR4', 'DDR3', 'DDR4 o DDR5'], 'AM5 funciona solo con DDR5; el anterior, AM4, usa DDR4.'],
+        ['¿Cuál de estos es un chipset gamer de AM5?', ['X870E', 'A620', 'B840', 'H810'], 'A620 y B840 son de entrada; H810 es de Intel.'],
+        ['¿Por qué las placas gamer tienen más fases de alimentación?', ['Para dar energía estable a procesadores potentes', 'Para tener más puertos USB', 'Para mejorar el sonido', 'Para usar menos memoria'], 'Los procesadores de alta gama piden mucha energía y estable.'],
+        ['¿Qué tienen de especial los Ryzen “X3D”?', ['Una memoria caché extra que ayuda en los juegos', 'Gráficos 3D integrados más potentes', 'Funcionan sin cooler', 'Usan memoria DDR4'], 'La caché apilada (3D V-Cache) mejora el rendimiento en muchos juegos.'],
+        ['¿Qué procesadores NO entran en una placa AM5?', ['Ryzen 5000', 'Ryzen 7000', 'Ryzen 8000', 'Ryzen 9000'], 'Los Ryzen 5000 son para el socket anterior, AM4.']
+      ],
+      gamer: [
+        ['Si una PC consume 800 W, ¿qué potencia mínima necesita la fuente con un 30 % de margen?', ['1040 W', '800 W', '880 W', '1600 W'], '800 W × 1,3 = 1040 W.'],
+        ['¿Qué componente suele consumir más energía en una PC gamer?', ['La placa de video', 'La memoria RAM', 'El disco SSD', 'Un ventilador'], 'Cada placa de video puede consumir cientos de watts.'],
+        ['En la refrigeración líquida, ¿qué va montado encima del procesador?', ['La bomba', 'El radiador', 'La fuente', 'Un disco'], 'El radiador va en el frente o arriba del gabinete, unido a la bomba por mangueras.'],
+        ['¿Cuántos ventiladores de 120 mm lleva un radiador de 360 mm?', ['3', '1', '2', '6'], '3 × 120 mm = 360 mm.'],
+        ['¿Qué puede pasar si la fuente no alcanza para la PC?', ['Que se apague o se reinicie sola cuando se la exige', 'Que funcione más rápido', 'Nada, funciona igual', 'Que se apague solo el monitor'], 'Por eso hay que calcular bien el consumo antes de elegir la fuente.']
+      ]
+    };
+    var MCQ = {};
+    Object.keys(MCQ_RAW).forEach(function (id) {
+      MCQ[id] = MCQ_RAW[id].map(function (r, k) {
+        var sh = k % 4, o = r[1].slice(sh).concat(r[1].slice(0, sh));
+        return { q: r[0], o: o, a: (4 - sh) % 4, why: r[2] };
+      });
+    });
+
+    var KEY = 'arma-tu-pc-juego-v2';
     var DIFF = { b: 'Básico', a: 'Avanzado' };
     var store = {};
     try { store = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (_) { store = {}; }
@@ -2445,17 +2524,15 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function M() { return store.mode; }
     function lv(i) { return (store.best[M()] || {})[LEVELS[i].id] || 0; }
     function ev(i) { return (store.evals[M()] || {})[LEVELS[i].id] || 0; }
-    function unlocked(i) { return i === 0 || lv(i - 1) >= PASS; }
-    function allLevels() { return LEVELS.every(function (_, i) { return lv(i) >= PASS; }); }
-    function evDone() { return LEVELS.filter(function (_, i) { return ev(i) > 0; }).length; }
+    function hasEv(i) { return LEVELS[i].id in (store.evals[M()] || {}); }
+    function phaseDone(i) { return lv(i) >= PASS && hasEv(i); }
+    function unlocked(i) { return i === 0 || phaseDone(i - 1); }
+    function allPhases() { return LEVELS.every(function (_, i) { return phaseDone(i); }); }
     function ig() { return store.integ[M()] || 0; }
+    function hasIg() { return M() in store.integ; }
     function avgL() { var a = 0; LEVELS.forEach(function (_, i) { a += lv(i); }); return Math.round(a / LEVELS.length); }
     function avgE() { var e = 0; LEVELS.forEach(function (_, i) { e += ev(i); }); return Math.round(e / LEVELS.length); }
-    function finalNote() {
-      var a = 0, e = 0; LEVELS.forEach(function (_, i) { a += lv(i); e += ev(i); });
-      a /= LEVELS.length; e /= LEVELS.length;
-      return ig() ? Math.round(a * .4 + e * .3 + ig() * .3) : Math.round((a + e) / 2);
-    }
+    function finalNote() { return hasIg() ? Math.round(avgL() * .4 + avgE() * .3 + ig() * .3) : Math.round((avgL() + avgE()) / 2); }
     function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
     function grade(r, par) {
       var ep = Math.min(60, r.errors * 6);
@@ -2466,71 +2543,68 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function starsHtml(n) { var k = starsOf(n), o = ''; for (var i = 0; i < 3; i++) o += i < k ? '★' : '<span class="off">★</span>'; return '<span class="stars" aria-label="' + k + ' de 3 estrellas">' + o + '</span>'; }
     function titleFor(n) { return n >= 90 ? '¡Excelente!' : n >= 75 ? '¡Muy bien!' : n >= PASS ? '¡Aprobado!' : 'Casi lo lográs'; }
     var LOCK = '<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+    function rnd() { return Math.random() - 0.5; }
+    function withOrder(q) { return ext(q, { order: [0, 1, 2, 3].sort(rnd) }); }
+    function phaseList(i) { return MCQ[LEVELS[i].id].map(withOrder).sort(rnd); }
+    function integList() {
+      var mc = INTEG.slice().sort(rnd).slice(0, 10).map(withOrder);
+      var tf = LEVELS.map(function (L) { var b = QUIZ[L.id]; return b[Math.floor(Math.random() * b.length)]; });
+      return mc.concat(tf).sort(rnd);
+    }
+    var NINT = 18, NEV = 5;
 
     var mapEl = document.getElementById('lv-map'), playEl = document.getElementById('lv-play');
     var overlay = document.getElementById('lv-overlay'), modal = document.getElementById('lv-modal');
     var current = null, curIdx = -1, resetArm = false;
 
-    function progressIn(m) { var n = 0; LEVELS.forEach(function (L) { if ((store.best[m] || {})[L.id] >= PASS) n++; }); return n; }
+    function progressIn(m) { var n = 0; LEVELS.forEach(function (L) { if ((store.best[m] || {})[L.id] >= PASS && (store.evals[m] || {})[L.id] > 0) n++; }); return n; }
     function renderStart() {
       function opt(m, name, txt) {
         var n = progressIn(m);
         return '<button type="button" class="diff-btn" data-mode="' + m + '"><strong>' + name + '</strong><span>' + txt + '</span>' +
-          (n ? '<em>Ya aprobaste ' + n + ' de ' + LEVELS.length + ' niveles en este modo</em>' : '<em>Empezás desde el nivel 1</em>') + '</button>';
+          (n ? '<em>Ya completaste ' + n + ' de ' + LEVELS.length + ' fases en este modo</em>' : '<em>Empezás desde la fase 1</em>') + '</button>';
       }
       mapEl.innerHTML = '<div class="lv-start panel"><span class="label">Nuevo juego</span><h2>Elegí cómo querés jugar</h2>' +
-        '<p>Vas a jugar los 8 niveles en el modo que elijas. Cuando apruebes los 8, se habilitan 8 evaluaciones de verdadero o falso, una por cada nivel.</p>' +
+        '<p>El juego tiene 8 fases. En cada una armás algo y después hacés una evaluación corta de opción múltiple. Al terminar las 8 fases llega la evaluación integradora, con ' + NINT + ' preguntas.</p>' +
         '<div class="diff-opts">' +
-          opt('b', 'Básico', 'En todos los niveles podés usar el botón “Mostrar nombres” para ver dónde va cada pieza.') +
-          opt('a', 'Avanzado', 'En todos los niveles el botón “Mostrar nombres” queda bloqueado: tenés que saber dónde va todo.') +
+          opt('b', 'Básico', 'En todas las fases podés usar el botón “Mostrar nombres” para ver dónde va cada pieza.') +
+          opt('a', 'Avanzado', 'En todas las fases el botón “Mostrar nombres” queda bloqueado: tenés que saber dónde va todo.') +
         '</div></div>';
     }
     function renderMap() {
       resetArm = false;
       if (!M()) { renderStart(); return; }
-      var passed = 0, sum = 0;
-      LEVELS.forEach(function (L, i) { var b = lv(i); if (b >= PASS) { passed++; sum += b; } });
+      var done = 0;
+      LEVELS.forEach(function (_, i) { if (phaseDone(i)) done++; });
       var nextIdx = -1;
-      for (var i = 0; i < LEVELS.length; i++) if (unlocked(i) && lv(i) < PASS) { nextIdx = i; break; }
-      var all = allLevels(), evs = evDone();
-      var evNext = -1; if (all) for (var k = 0; k < LEVELS.length; k++) if (!ev(k)) { evNext = k; break; }
+      for (var i = 0; i < LEVELS.length; i++) if (unlocked(i) && !phaseDone(i)) { nextIdx = i; break; }
+      var all = allPhases(), g = ig(), gd = hasIg();
       mapEl.innerHTML =
         '<div class="lv-top">' +
           '<div><span class="label">Modo niveles <span class="diff-tag ' + M() + '">' + DIFF[M()] + '</span></span>' +
-          '<h2>' + (ig() ? '¡Terminaste el juego!' : all && evs === LEVELS.length ? '¡Solo falta la evaluación integradora!' : all ? '¡Aprobaste los 8 niveles! Ahora, las evaluaciones' : 'De la PC más simple a la PC gamer') + '</h2>' +
-          '<p>Cada nivel aprobado con 60 o más desbloquea el siguiente. La nota baja con cada error y si tardás más que el tiempo ideal.</p></div>' +
+          '<h2>' + (gd ? '¡Terminaste el juego!' : all ? '¡Completaste las 8 fases! Falta la integradora' : 'De la PC más simple a la PC gamer') + '</h2>' +
+          '<p>Cada fase tiene dos partes: el juego (aprobás con 60 o más) y una evaluación corta de opción múltiple. Al completar las dos se desbloquea la fase siguiente.</p></div>' +
           '<div class="lv-prog">' +
-            '<div class="row"><span>Niveles aprobados</span><strong>' + passed + ' / ' + LEVELS.length + '</strong></div>' +
-            '<div class="bar"><span style="width:' + (passed / LEVELS.length * 100) + '%"></span></div>' +
-            '<div class="row"><span>Evaluaciones hechas</span><strong>' + evs + ' / ' + LEVELS.length + '</strong></div>' +
-            '<div class="row"><span>Promedio de niveles</span><strong>' + (passed ? Math.round(sum / passed) : '—') + '</strong></div>' +
+            '<div class="row"><span>Fases completas</span><strong>' + done + ' / ' + LEVELS.length + '</strong></div>' +
+            '<div class="bar"><span style="width:' + (done / LEVELS.length * 100) + '%"></span></div>' +
+            '<div class="row"><span>Promedio de los juegos</span><strong>' + (done ? avgL() : '—') + '</strong></div>' +
+            '<div class="row"><span>Promedio de las evaluaciones</span><strong>' + (done ? avgE() : '—') + '</strong></div>' +
           '</div>' +
         '</div>' +
-        (all && evs === LEVELS.length ? '<div class="final-note">' + (ig()
-            ? '<span>Niveles <b>' + avgL() + '</b> · Verdadero o falso <b>' + avgE() + '</b> · Integradora <b>' + ig() + '</b> · Nota final</span><strong>' + finalNote() + '/100</strong>' + starsHtml(finalNote()) + '<button type="button" class="btn" id="lv-poster">Ver cartel de notas</button>'
-            : '<span>Nota parcial (niveles y evaluaciones). Te falta la integradora.</span><strong>' + finalNote() + '/100</strong>' + starsHtml(finalNote())) + '</div>' : '') +
+        (gd ? '<div class="final-note"><span>Juegos <b>' + avgL() + '</b> · Evaluaciones <b>' + avgE() + '</b> · Integradora <b>' + g + '</b> · Nota final</span><strong>' + finalNote() + '/100</strong>' + starsHtml(finalNote()) + '<button type="button" class="btn" id="lv-poster">Ver cartel de notas</button></div>' : '') +
         '<div class="lv-grid">' + LEVELS.map(function (L, i) {
-          var ok = unlocked(i), b = lv(i), cls = !ok ? ' locked' : b >= PASS ? ' done' : i === nextIdx ? ' next' : '';
-          var meta = !ok ? '<span>' + LOCK + ' Aprobá el nivel ' + i + '</span>'
-            : b ? '<span>Mejor nota: <strong>' + b + '</strong></span>' + starsHtml(b)
+          var ok = unlocked(i), b = lv(i), e = ev(i), cls = !ok ? ' locked' : phaseDone(i) ? ' done' : i === nextIdx ? ' next' : '';
+          var meta = !ok ? '<span>' + LOCK + ' Completá la fase ' + i + '</span>'
+            : b >= PASS && !hasEv(i) ? '<span>Juego <strong>' + b + '</strong> · Falta la evaluación</span>'
+            : b ? '<span>Juego <strong>' + b + '</strong> · Evaluación <strong>' + (hasEv(i) ? e : '—') + '</strong></span>' + starsHtml(Math.round((b + e) / 2))
             : '<span>Disponible</span><span>Tiempo ideal ' + fmt(L.par) + '</span>';
           return '<button type="button" class="lv-card' + cls + '" data-i="' + i + '"' + (ok ? '' : ' aria-disabled="true"') + '>' +
             '<span class="lv-num">' + (i + 1) + '</span><h3>' + L.title + '</h3><p>' + L.desc + '</p><div class="lv-meta">' + meta + '</div></button>';
-        }).join('') + '</div>' +
-        '<section class="lv-section" id="lv-evals"><h3>Evaluaciones</h3>' +
-          '<p>' + (all ? 'Cada evaluación tiene ' + NQ + ' preguntas de verdadero o falso sobre lo que aprendiste en su nivel. Con 60 o más está aprobada.' : 'Se habilitan cuando apruebes los 8 niveles. Cada una tiene ' + NQ + ' preguntas de verdadero o falso.') + '</p>' +
-          '<div class="lv-grid">' + LEVELS.map(function (L, i) {
-            var e = ev(i), cls = !all ? ' locked' : e >= PASS ? ' done' : i === evNext ? ' next' : '';
-            var meta = !all ? '<span>' + LOCK + ' Aprobá los 8 niveles</span>' : e ? '<span>Nota: <strong>' + e + '</strong></span>' + starsHtml(e) : '<span>Disponible</span><span>' + NQ + ' preguntas</span>';
-            return '<button type="button" class="lv-card ev-card' + cls + '" data-e="' + i + '"' + (all ? '' : ' aria-disabled="true"') + '>' +
-              '<span class="lv-num">E' + (i + 1) + '</span><h3>Evaluación: ' + L.title + '</h3><p>Verdadero o falso sobre el nivel ' + (i + 1) + '.</p><div class="lv-meta">' + meta + '</div></button>';
-          }).join('') +
-          (function () {
-            var open = all && evs === LEVELS.length, g = ig();
-            return '<button type="button" class="lv-card ev-card integ' + (!open ? ' locked' : g >= PASS ? ' done' : ' next') + '" data-ig="1"' + (open ? '' : ' aria-disabled="true"') + '>' +
-              '<span class="lv-num">Integradora</span><h3>Evaluación integradora</h3><p>' + INTEG.length + ' preguntas de opción múltiple que combinan todo lo que aprendiste. Es más difícil que las de verdadero o falso.</p>' +
-              '<div class="lv-meta">' + (!open ? '<span>' + LOCK + ' Hacé las 8 evaluaciones</span>' : g ? '<span>Nota: <strong>' + g + '</strong></span>' + starsHtml(g) : '<span>Disponible</span><span>' + INTEG.length + ' preguntas · 4 opciones</span>') + '</div></button>';
-          })() + '</div></section>' +
+        }).join('') +
+        '<button type="button" class="lv-card ev-card integ' + (!all ? ' locked' : gd ? ' done' : ' next') + '" data-ig="1"' + (all ? '' : ' aria-disabled="true"') + '>' +
+          '<span class="lv-num">Integradora</span><h3>Evaluación integradora</h3><p>' + NINT + ' preguntas que mezclan opción múltiple y verdadero o falso sobre todo el juego.</p>' +
+          '<div class="lv-meta">' + (!all ? '<span>' + LOCK + ' Completá las 8 fases</span>' : gd ? '<span>Nota: <strong>' + g + '</strong></span>' + starsHtml(g) : '<span>Disponible</span><span>' + NINT + ' preguntas</span>') + '</div></button>' +
+        '</div>' +
         '<div class="btns"><button type="button" class="btn" id="lv-switch">Cambiar de modo</button><button type="button" class="btn" id="lv-reset">Borrar mi progreso en modo ' + DIFF[M()] + '</button></div>';
     }
     mapEl.addEventListener('click', function (e) {
@@ -2544,7 +2618,9 @@ button.btn.primary:hover { filter: brightness(1.05); }
         store.best[M()] = {}; store.evals[M()] = {}; delete store.integ[M()]; save(); renderMap(); return;
       }
       var c = e.target.closest('.lv-card'); if (!c || c.classList.contains('locked')) return;
-      if (c.dataset.ig) integQuiz(); else if (c.dataset.e != null) quiz(+c.dataset.e); else play(+c.dataset.i);
+      if (c.dataset.ig) { integQuiz(); return; }
+      var i = +c.dataset.i;
+      if (lv(i) >= PASS && !hasEv(i)) quiz(i); else play(i);
     });
 
     function lockHelp(host) {
@@ -2564,13 +2640,215 @@ button.btn.primary:hover { filter: brightness(1.05); }
       playEl.querySelector('#lv-back').addEventListener('click', backToMap);
       try { playEl.scrollIntoView({ block: 'start' }); } catch (_) {}
     }
+    /* ---- configuración de la PC antes de armar (fases de PC) ---- */
+    var CPU_LV = {
+      mini: { amd: ['Ryzen 5 8500G', 'RYZEN 5', '8500G', 65], intel: ['Core Ultra 5 225', 'ULTRA 5', '225', 65] },
+      basica: { amd: ['Ryzen 5 9600', 'RYZEN 5', '9600', 65], intel: ['Core Ultra 5 245', 'ULTRA 5', '245', 65] },
+      gamer: { amd: ['Ryzen 7 9800X3D', 'RYZEN 7', '9800X3D', 120], intel: ['Core Ultra 9 285K', 'ULTRA 9', '285K', 125] }
+    };
+    var SOCK_LV = { amd: 'AM5', intel: 'LGA 1851' };
+    function cpuFor(mode, brand, base) {
+      var c = CPU_LV[mode][brand], intel = brand === 'intel', x = intel ? 18 : 4, w = intel ? 64 : 92;
+      return ext(base, {
+        name: 'Procesador ' + c[0], watts: c[3],
+        body: '<rect class="f-pcb" x="' + x + '" y="4" width="' + w + '" height="92" rx="3"/><rect class="f-metal" x="' + (x + 6) + '" y="12" width="' + (w - 12) + '" height="76" rx="5"/>' +
+          '<text class="t-label" x="50" y="34" text-anchor="middle" font-size="' + (intel ? 10 : 12) + '">' + (intel ? 'intel' : 'AMD') + '</text>' +
+          '<text class="t-label" x="50" y="54" text-anchor="middle" font-size="9">' + c[1] + '</text>' +
+          '<text class="t-label" x="50" y="70" text-anchor="middle" font-size="' + (c[2].length > 6 ? 8 : 10) + '">' + c[2] + '</text>' +
+          '<path class="f-gold" d="M' + (x + 2) + ' 94 V86 L' + (x + 10) + ' 94 Z"/>',
+        info: 'Elegiste un ' + c[0] + ' (' + (intel ? 'Intel' : 'AMD') + '). Va en el socket ' + SOCK_LV[brand] + ' de la placa madre, alineando el triangulito dorado con la marca del zócalo.',
+        spec: 'Socket ' + SOCK_LV[brand] + ' · ' + c[3] + ' W'
+      });
+    }
+    function copyParts(src) { var P = {}; Object.keys(src).forEach(function (k) { P[k] = ext(src[k], {}); }); return P; }
+    function prune(cfg) {
+      var used = {}; cfg.slots.forEach(function (s) { used[s.type] = 1; });
+      Object.keys(cfg.parts).forEach(function (k) { if (!used[k]) delete cfg.parts[k]; });
+      if (cfg.powerOrder) cfg.powerOrder = cfg.powerOrder.filter(function (t) { return used[t]; });
+      return cfg;
+    }
+    function consumptionOf(cfg) { var c = 0; cfg.slots.forEach(function (s) { if (s.type !== 'psu') c += cfg.parts[s.type].watts || 0; }); return c; }
+    var DISK_ORDER = ['m2', 'ssd', 'hdd'];
+    var DISK_INFO = { m2: ['SSD M.2', 'el más rápido', 5], ssd: ['SSD SATA', 'rápido', 3], hdd: ['Disco rígido (HDD)', 'mucha capacidad', 7] };
+    var COOLERS = {
+      stock: ['Cooler común', 'El que viene con el procesador. Ideal para una PC básica.'],
+      air: ['Cooler de torre por aire', 'Disipador grande con ventilador. Bueno para procesadores potentes.'],
+      liquid240: ['Watercooling 240 mm', 'Refrigeración líquida con radiador de 2 ventiladores.'],
+      liquid360: ['Watercooling 360 mm', 'Refrigeración líquida con radiador de 3 ventiladores. La que más enfría.']
+    };
+
+    function buildMini(sc) {
+      var base = miniCfg({ disk: 'ssd', n: 2, gb: [4, 4] });
+      var cfg = ext(base, { parts: copyParts(base.parts), psuOptions: [sc.psu] });
+      cfg.slots = base.slots.filter(function (s) { return DISK_ORDER.indexOf(s.type) < 0; });
+      sc.disks.forEach(function (t) {
+        cfg.slots.push(DISKS[t].slot);
+        cfg.parts[t] = ext(DISKS[t].part, { watts: DISK_INFO[t][2], req: t === 'm2' ? ['mobo'] : [] });
+      });
+      cfg.parts.cpu = cpuFor('mini', sc.brand, cfg.parts.cpu);
+      cfg.parts.cooler.name = 'Cooler común';
+      cfg.powerOrder = ['cpu', 'mobo', 'm2', 'ssd', 'hdd', 'ram', 'cooler'];
+      return prune(cfg);
+    }
+    function buildBasica(sc) {
+      var P = copyParts(BASIC.parts);
+      var W = { mobo: 50, cooler: 3, ram: 5, gpu: 160, m2: 5, ssd: 3, hdd: 7, wifi: 5, cmos: 0, fan: 3 };
+      Object.keys(W).forEach(function (k) { P[k].watts = W[k]; });
+      P.cpu = cpuFor('basica', sc.brand, P.cpu);
+      P.cooler.name = 'Cooler común';
+      P.psu = ext(P.psu, { name: 'Fuente de ' + sc.psu + ' W', watts: sc.psu, body: function () { return psuBody(sc.psu); }, spec: sc.psu + ' W' });
+      var slots = BASIC.slots.filter(function (s) { return DISK_ORDER.indexOf(s.type) < 0 || sc.disks.indexOf(s.type) >= 0; });
+      return prune(ext(BASIC, { parts: P, slots: slots }));
+    }
+    function buildGamer(sc) {
+      var P = copyParts(GAMER.parts), slots = [], seen = {};
+      function keep(s, max) { seen[s.type] = (seen[s.type] || 0) + 1; if (seen[s.type] <= max) slots.push(s); }
+      GAMER.slots.forEach(function (s) {
+        if (s.type === 'gpu') keep(s, sc.gpus);
+        else if (s.type === 'ram') keep(s, sc.ram);
+        else if (DISK_ORDER.indexOf(s.type) >= 0) keep(s, sc.disks.indexOf(s.type) >= 0 ? 1 : 0);
+        else if (s.type === 'fan' || s.type === 'pump' || s.type === 'radiator') { /* se arma según la refrigeración */ }
+        else slots.push(s);
+      });
+      var F = function (x, y, w, h) { return { type: 'fan', x: x, y: y, w: w, h: h, z: 1 }; };
+      slots.push(F(1.5, 5, 10, 8));
+      if (sc.cool === 'air') {
+        slots.push({ type: 'tower', x: 32, y: 9, w: 20, h: 16, z: 3 });
+        [8, 21, 34].forEach(function (y) { slots.push(F(80, y, 14, 11.2)); });
+        var fins = ''; for (var k = 12; k < 96; k += 7) fins += '<line class="f-fin" x1="36" y1="' + k + '" x2="96" y2="' + k + '"/>';
+        P.tower = { name: 'Cooler de torre', short: 'Cooler', req: ['cpu'], watts: 6, vb: '0 0 100 100',
+          body: '<rect class="f-metal" x="34" y="4" width="64" height="92" rx="4"/>' + fins + '<rect class="f-chip" x="2" y="8" width="34" height="84" rx="4"/>' + fan(19, 50, 15),
+          reqMsg: 'Primero colocá el procesador: el cooler de torre va montado encima de él.',
+          hint: 'El cooler de torre va encima del procesador.',
+          info: 'Es un disipador grande de aluminio con caños de cobre y un ventilador. Saca el calor del procesador sin usar líquido. Entre el procesador y el cooler va pasta térmica.',
+          spec: 'Refrigeración por aire · 6 W' };
+      } else {
+        slots.push({ type: 'pump', x: 34, y: 11.4, w: 16, h: 12.8, z: 3 });
+        if (sc.cool === 'liquid240') {
+          slots.push({ type: 'radiator', x: 80, y: 5, w: 14, h: 22.4, z: 1 });
+          [30.5, 43, 55.5].forEach(function (y) { slots.push(F(80, y, 14, 11.2)); });
+          var r2 = '<rect class="f-metal-dark" x="0" y="0" width="100" height="200" rx="4"/>';
+          for (var j = 6; j < 200; j += 7) r2 += '<line class="f-fin" x1="4" y1="' + j + '" x2="96" y2="' + j + '"/>';
+          r2 += '<rect class="f-chip" x="3" y="3" width="94" height="94" rx="6" opacity=".6"/><rect class="f-chip" x="3" y="103" width="94" height="94" rx="6" opacity=".6"/>' + fan(50, 50, 44) + fan(50, 150, 44);
+          P.radiator = ext(P.radiator, { name: 'Radiador 240 mm', vb: '0 0 100 200', body: r2, watts: 6, spec: '2 × 120 mm · consumo de sus ventiladores: 6 W',
+            info: 'Recibe el líquido caliente de la bomba. Sus aletas y sus 2 ventiladores de 120 mm lo enfrían antes de que vuelva al procesador.' });
+        } else {
+          slots.push({ type: 'radiator', x: 80, y: 5, w: 14, h: 33.6, z: 1 });
+          [41, 53.5].forEach(function (y) { slots.push(F(80, y, 14, 11.2)); });
+        }
+      }
+      P.cpu = cpuFor('gamer', sc.brand, P.cpu);
+      P.cpu.req = ['mobo'];
+      return prune(ext(GAMER, {
+        parts: P, slots: slots, psuOptions: [sc.psu],
+        start: 'Empezá por la placa madre. Armá la PC gamer que configuraste.',
+        caseNote: 'Gabinete full tower con vidrio templado. ' + (sc.cool === 'air' ? 'Cooler de torre sobre el procesador, tres ventiladores adelante y uno atrás.' : sc.cool === 'liquid240' ? 'Radiador de 240 mm y tres ventiladores adelante; uno atrás.' : 'Radiador de 360 mm y dos ventiladores adelante; uno atrás.'),
+        powerOrder: ['gpu', 'cpu', 'mobo', 'ram', 'hdd', 'm2', 'ssd', 'radiator', 'pump', 'tower', 'fan']
+      }));
+    }
+    function buildFor(mode, sc) { return mode === 'mini' ? buildMini(sc) : mode === 'basica' ? buildBasica(sc) : buildGamer(sc); }
+    function tierFor(need) { for (var i = 0; i < TIERS.length; i++) if (TIERS[i] >= need) return TIERS[i]; return null; }
+
+    function setupScreen(host, mode, prev, onStart) {
+      var gamer = mode === 'gamer';
+      var sc = prev ? ext(prev, { disks: prev.disks.slice() }) : { brand: 'amd', disks: ['ssd'], psu: 0, cool: gamer ? '' : 'stock', gpus: 3, ram: 4 };
+      var modeName = { mini: 'PC muy básica', basica: 'PC básica', gamer: 'PC gamer' }[mode];
+      function seg(name, opts, cur) {
+        return '<div class="seg">' + opts.map(function (o) {
+          return '<label><input type="radio" name="' + name + '" value="' + o[0] + '"' + (String(o[0]) === String(cur) ? ' checked' : '') + '><span>' + o[1] + '</span></label>';
+        }).join('') + '</div>';
+      }
+      var step = 0;
+      function H(t) { step++; return '<legend><span class="step-n">' + step + '</span>' + t + '</legend>'; }
+      var disks = DISK_ORDER.map(function (t) {
+        var d = DISKS[t].part;
+        return '<label class="choice"><input type="checkbox" name="su-disk" value="' + t + '"' + (sc.disks.indexOf(t) >= 0 ? ' checked' : '') + '>' +
+          '<div class="thumb"><svg viewBox="' + d.vb + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + d.body + '</svg></div>' +
+          '<strong>' + DISK_INFO[t][0] + '</strong><span class="sub">' + DISK_INFO[t][1] + '</span></label>';
+      }).join('');
+      var coolOpts = (gamer ? ['air', 'liquid240', 'liquid360'] : ['stock', 'air', 'liquid360']).map(function (k) {
+        var off = !gamer && k !== 'stock';
+        return '<label class="choice' + (off ? ' off' : '') + '"><input type="radio" name="su-cool" value="' + k + '"' + (sc.cool === k ? ' checked' : '') + (off ? ' disabled' : '') + '>' +
+          '<strong>' + COOLERS[k][0] + '</strong><span class="sub" style="font-family:var(--font-body);font-size:12px">' + COOLERS[k][1] + '</span>' +
+          (off ? '<span class="note">Solo en la PC gamer</span>' : '') + '</label>';
+      }).join('');
+      host.innerHTML = '<section class="cfg panel setup" aria-labelledby="su-title">' +
+        '<span class="label">Paso 1 de 2 · Configuración</span><h2 id="su-title" style="font:600 22px var(--font-display);margin:0">Configurá tu ' + modeName + '</h2>' +
+        '<p>Elegí cómo va a ser la computadora. Cuando la configuración sea correcta, vas a poder empezar a armarla.</p>' +
+        '<div class="setup-grid"><div class="cfg-opts">' +
+          '<fieldset class="group">' + H('Marca') + seg('su-brand', [['amd', 'AMD · ' + CPU_LV[mode].amd[0]], ['intel', 'Intel · ' + CPU_LV[mode].intel[0]]], sc.brand) + '</fieldset>' +
+          '<fieldset class="group">' + H('Discos: elegí 1, 2 o 3') + '<div class="disks">' + disks + '</div></fieldset>' +
+          (gamer ? '<fieldset class="group">' + H('Placas de video y memorias') +
+            '<div class="mods"><div class="mod"><span class="unit">Placas de video</span>' + seg('su-gpus', [[1, '1'], [2, '2'], [3, '3']], sc.gpus) + '</div>' +
+            '<div class="mod"><span class="unit">Memorias RAM</span>' + seg('su-ram', [[2, '2'], [4, '4']], sc.ram) + '</div></div></fieldset>' : '') +
+          '<fieldset class="group">' + H('Fuente de alimentación') +
+            '<div class="field"><select id="su-psu" aria-label="Potencia de la fuente"><option value="0">Elegí la potencia…</option>' +
+            TIERS.map(function (w) { return '<option value="' + w + '"' + (sc.psu === w ? ' selected' : '') + '>' + w + ' W</option>'; }).join('') + '</select></div></fieldset>' +
+          '<fieldset class="group">' + H('Refrigeración del procesador') + '<div class="coolers">' + coolOpts + '</div></fieldset>' +
+        '</div><div class="sumcard su-sum" aria-live="polite"></div></div></section>';
+
+      var sum = host.querySelector('.su-sum'), lastBad = false;
+      function update() {
+        var problems = [];
+        if (!sc.disks.length) problems.push('Elegí al menos un disco.');
+        if (!sc.cool) problems.push('Elegí el tipo de refrigeración.');
+        var cfg = null, c = 0, need = 0;
+        if (sc.disks.length && sc.cool) { cfg = buildFor(mode, ext(sc, { psu: sc.psu || 450 })); c = consumptionOf(cfg); need = Math.ceil(c * MARGIN); }
+        var best = need ? tierFor(need) : 0, msg = '', cls = '';
+        if (problems.length) { msg = problems.join(' '); cls = 'err'; }
+        else if (!sc.psu) { msg = 'Elegí la fuente de alimentación. Esta PC necesita al menos ' + need + ' W.'; cls = 'warn'; }
+        else if (sc.psu < need) { msg = 'La fuente de ' + sc.psu + ' W no alcanza: esta PC consume ' + c + ' W y, con el 30 % de margen, necesita al menos ' + need + ' W.'; cls = 'err'; }
+        else if (best && sc.psu > best) { msg = 'La fuente de ' + sc.psu + ' W alcanza, pero sobra potencia: con una de ' + best + ' W era suficiente y más barata.'; cls = 'warn'; }
+        else { msg = '¡Muy bien! La fuente de ' + sc.psu + ' W es la justa para esta PC.'; cls = 'ok'; }
+        var ok = !problems.length && sc.psu && sc.psu >= need;
+        var bad = cls === 'err' && sc.psu > 0 && sc.psu < need;
+        if (bad && !lastBad) sfx.error();
+        lastBad = bad;
+        sum.innerHTML = '<span class="label">Resumen</span>' +
+          '<dl class="psum" style="margin:0">' +
+            '<dt>Procesador</dt><dd>' + CPU_LV[mode][sc.brand][0] + '</dd>' +
+            '<dt>Socket</dt><dd>' + SOCK_LV[sc.brand] + '</dd>' +
+            '<dt>Discos</dt><dd>' + (sc.disks.length ? sc.disks.map(function (t) { return DISK_INFO[t][0]; }).join(', ') : '—') + '</dd>' +
+            (gamer ? '<dt>Placas de video</dt><dd>' + sc.gpus + '</dd><dt>Memorias</dt><dd>' + sc.ram + '</dd>' : '') +
+            '<dt>Refrigeración</dt><dd>' + (sc.cool ? COOLERS[sc.cool][0] : '—') + '</dd>' +
+            '<dt>Consumo estimado</dt><dd>' + (c ? c + ' W' : '—') + '</dd>' +
+            '<dt>Con 30 % de margen</dt><dd class="big">' + (need ? need + ' W' : '—') + '</dd>' +
+            '<dt>Fuente elegida</dt><dd class="' + (sc.psu ? (sc.psu >= need ? 'good' : 'bad') : '') + '">' + (sc.psu ? sc.psu + ' W' : '—') + '</dd>' +
+          '</dl>' +
+          '<div class="setup-msg ' + cls + '">' + msg + '</div>' +
+          '<button type="button" class="btn primary su-start"' + (ok ? '' : ' disabled') + '>Empezar a armar →</button>';
+        sum.querySelector('.su-start').addEventListener('click', function () { if (ok) onStart(ext(sc, { disks: sc.disks.slice() })); });
+      }
+      host.querySelector('.setup').addEventListener('change', function (e) {
+        var t = e.target;
+        if (t.name === 'su-brand') sc.brand = t.value;
+        else if (t.name === 'su-disk') sc.disks = DISK_ORDER.filter(function (k) { var i = host.querySelector('input[name="su-disk"][value="' + k + '"]'); return i && i.checked; });
+        else if (t.name === 'su-gpus') sc.gpus = +t.value;
+        else if (t.name === 'su-ram') sc.ram = +t.value;
+        else if (t.name === 'su-cool') sc.cool = t.value;
+        else if (t.id === 'su-psu') sc.psu = +t.value;
+        update();
+      });
+      update();
+    }
+    var lastSetup = {};
+
     function play(i) {
       stopCurrent(); closeModal();
       curIdx = i; setLock(true);
-      var L = LEVELS[i];
-      showPlay(head('Nivel ' + (i + 1) + ' de ' + LEVELS.length, L.title, L.goal + ' Tiempo ideal: ' + fmt(L.par) + '. Necesitás 60 para pasar.') + '<div class="lv-host"></div>');
+      var L = LEVELS[i], needsSetup = L.mode === 'mini' || L.mode === 'basica' || L.mode === 'gamer';
+      showPlay(head('Fase ' + (i + 1) + ' de ' + LEVELS.length + ' · juego', L.title, (needsSetup ? 'Primero configurá la PC y después armala. ' : L.goal + ' ') + 'Tiempo ideal de armado: ' + fmt(L.par) + '. Necesitás 60 para pasar.') + '<div class="lv-host"></div>');
       var host = playEl.querySelector('.lv-host');
       var done = function (r) { finished(i, r); };
+      if (needsSetup) {
+        setupScreen(host, L.mode, lastSetup[i], function (sc) {
+          lastSetup[i] = sc;
+          current = mountGame(host, ext(buildFor(L.mode, sc), { onWin: done }));
+          if (M() === 'a') lockHelp(host);
+          try { playEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+        });
+        return;
+      }
       if (L.mode === 'mini') current = mountGame(host, ext(miniCfg({ disk: 'ssd', n: 2, gb: [4, 4] }), { onWin: done }));
       else if (L.mode === 'basica') current = mountGame(host, ext(BASIC, { onWin: done }));
       else if (L.mode === 'gamer') current = mountGame(host, ext(GAMER, { onWin: done }));
@@ -2578,9 +2856,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
       else if (L.mode === 'placa') { current = PlacaFactory(host, done, L.pmode); current.rebuild(L.conf); }
       if (M() === 'a') lockHelp(host);
     }
-    function backToMap(toEvals) {
+    function backToMap() {
       stopCurrent(); closeModal(); setLock(false); playEl.hidden = true; playEl.innerHTML = ''; mapEl.hidden = false; renderMap();
-      if (toEvals === true) { var e = document.getElementById('lv-evals'); if (e) try { e.scrollIntoView({ block: 'start' }); } catch (_) {} }
     }
     function showResult(o) {
       modal.classList.remove('wide');
@@ -2595,49 +2872,25 @@ button.btn.primary:hover { filter: brightness(1.05); }
     }
     function finished(i, r) {
       var L = LEVELS[i], n = grade(r, L.par), rec = store.best[M()] || (store.best[M()] = {}), prev = rec[L.id] || 0;
-      var wasAll = allLevels(), wasUnlocked = i + 1 < LEVELS.length && unlocked(i + 1);
       if (n > prev) { rec[L.id] = n; save(); }
-      var pass = n >= PASS, last = i === LEVELS.length - 1, extra = '';
-      if (pass && !last && !wasUnlocked) extra = '<p class="unlock">Desbloqueaste el nivel ' + (i + 2) + ': ' + LEVELS[i + 1].title + '</p>';
-      if (allLevels() && !wasAll) extra = '<p class="unlock">¡Aprobaste los 8 niveles! Se habilitaron las 8 evaluaciones.</p>';
+      var pass = n >= PASS;
       var tips = [r.errors ? r.errors + (r.errors === 1 ? ' error' : ' errores') + ' (−' + Math.min(60, r.errors * 6) + ')' : 'sin errores',
         'tiempo ' + fmt(r.secs) + (r.secs > L.par ? ' (ideal ' + fmt(L.par) + ')' : ', dentro del ideal')];
-      var btn = '';
-      if (pass && allLevels() && (last || !wasAll)) btn += '<button type="button" class="btn primary" data-act="evals">Ir a las evaluaciones</button>';
-      else if (pass && !last) btn += '<button type="button" class="btn primary" data-act="next">Siguiente nivel</button>';
-      btn += '<button type="button" class="btn' + (pass ? '' : ' primary') + '" data-act="retry">Repetir nivel</button><button type="button" class="btn" data-act="map">Ver niveles</button>';
-      showResult({ label: 'Nivel ' + (i + 1) + ' · ' + L.title, n: n,
-        msg: pass ? '¡Felicitaciones! Completaste el nivel ' + (i + 1) + ': ' + L.title + '.' : 'Terminaste el nivel, pero necesitás 60 para pasar al siguiente. ¡Probá de nuevo!',
+      showResult({ label: 'Fase ' + (i + 1) + ' · ' + L.title, n: n,
+        msg: pass ? '¡Felicitaciones! Terminaste el juego de la fase ' + (i + 1) + '. Ahora viene la evaluación de ' + NEV + ' preguntas de opción múltiple.' : 'Terminaste, pero necesitás 60 para pasar a la evaluación. ¡Probá de nuevo!',
         detail: tips.join(' · ') + (prev && n <= prev ? ' · tu mejor nota sigue siendo ' + prev : prev && n > prev ? ' · ¡nuevo récord!' : ''),
-        extra: extra, buttons: btn });
+        buttons: (pass ? '<button type="button" class="btn primary" data-act="evnow">Hacer la evaluación</button>' : '') +
+          '<button type="button" class="btn' + (pass ? '' : ' primary') + '" data-act="retry">Repetir el juego</button><button type="button" class="btn" data-act="map">Ver niveles</button>' });
     }
 
-    /* ---- evaluaciones ---- */
-    function rnd() { return Math.random() - 0.5; }
-    function shuffled(i) { return QUIZ[LEVELS[i].id].slice().sort(rnd); }
-    function integList() { return INTEG.map(function (q) { return ext(q, { order: [0, 1, 2, 3].sort(rnd) }); }).sort(rnd); }
-    function integQuiz() {
-      stopCurrent(); closeModal();
-      curIdx = -1; setLock(true);
-      showPlay(head('Evaluación integradora', 'Todo lo que aprendiste', INTEG.length + ' preguntas de opción múltiple. Elegí la respuesta correcta entre 4 opciones. Con 60 o más aprobás.') + '<section class="quiz panel" aria-live="polite"></section>');
-      runQuiz(playEl.querySelector('.quiz'), integList(), function (ok, tot) {
-        var n = Math.round(ok / tot * 100), prev = ig();
-        if (n > prev) { store.integ[M()] = n; save(); }
-        if (ig()) { showPoster(); return; }
-        showResult({ label: 'Evaluación integradora', n: n,
-          msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
-          detail: prev && n <= prev ? 'Tu mejor nota en la integradora sigue siendo ' + prev : prev && n > prev ? '¡Nuevo récord!' : '',
-          extra: '<p class="unlock">' + (ig() ? 'Nota final del juego: ' : 'Nota parcial del juego: ') + finalNote() + '/100</p>',
-          buttons: '<button type="button" class="btn" data-act="igretry">Repetir integradora</button><button type="button" class="btn primary" data-act="evmap">Ver niveles</button>' });
-      });
-    }
+    /* ---- cuestionarios (verdadero o falso y opción múltiple) ---- */
     function runQuiz(box, list, onEnd) {
       var st = { k: 0, ok: 0, res: [] };
       function render() {
         var q = list[st.k], dots = '', mc = !Array.isArray(q);
         for (var d = 0; d < list.length; d++) dots += '<i class="' + (st.res[d] === true ? 'ok' : st.res[d] === false ? 'err' : d === st.k ? 'cur' : '') + '"></i>';
         box.innerHTML = '<div class="q-dots" aria-hidden="true">' + dots + '</div>' +
-          '<span class="q-num">Pregunta ' + (st.k + 1) + ' de ' + list.length + '</span>' +
+          '<span class="q-num">Pregunta ' + (st.k + 1) + ' de ' + list.length + (mc ? ' · opción múltiple' : ' · verdadero o falso') + '</span>' +
           '<p class="q-text">' + (mc ? q.q : q[0]) + '</p>' +
           (mc ? '<div class="q-opts mc">' + q.order.map(function (oi, n) { return '<button type="button" class="q-btn mc" data-o="' + oi + '"><b>' + 'ABCD'[n] + '</b><span>' + q.o[oi] + '</span></button>'; }).join('') + '</div>'
               : '<div class="q-opts"><button type="button" class="q-btn" data-v="1">Verdadero</button><button type="button" class="q-btn" data-v="0">Falso</button></div>') +
@@ -2666,84 +2919,73 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function quiz(i) {
       stopCurrent(); closeModal();
       curIdx = i; setLock(true);
-      showPlay(head('Evaluación ' + (i + 1) + ' de ' + LEVELS.length, LEVELS[i].title, 'Leé cada afirmación y elegí si es verdadera o falsa. Con 60 o más aprobás.') + '<section class="quiz panel" aria-live="polite"></section>');
-      runQuiz(playEl.querySelector('.quiz'), shuffled(i), function (ok, tot) { endQuiz(i, ok, tot); });
+      showPlay(head('Fase ' + (i + 1) + ' de ' + LEVELS.length + ' · evaluación', LEVELS[i].title, NEV + ' preguntas de opción múltiple sobre lo que hiciste en esta fase. Elegí la respuesta correcta entre 4 opciones.') + '<section class="quiz panel" aria-live="polite"></section>');
+      runQuiz(playEl.querySelector('.quiz'), phaseList(i), function (ok, tot) { endQuiz(i, ok, tot); });
     }
     function endQuiz(i, ok, tot) {
       var L = LEVELS[i], n = Math.round(ok / tot * 100);
-      var rec = store.evals[M()] || (store.evals[M()] = {}), prev = rec[L.id] || 0;
-      if (n > prev) { rec[L.id] = n; save(); }
+      var rec = store.evals[M()] || (store.evals[M()] = {}), had = L.id in rec, prev = rec[L.id] || 0;
+      var wasUnlocked = i + 1 < LEVELS.length && unlocked(i + 1), wasAll = allPhases();
+      if (!had || n > prev) { rec[L.id] = n; save(); }
       if (n >= PASS) sfx.win();
-      var last = evDone() === LEVELS.length, nextE = -1;
-      for (var k = 0; k < LEVELS.length; k++) if (!ev(k)) { nextE = k; break; }
-      if (nextE < 0 && i + 1 < LEVELS.length) nextE = i + 1;
-      var extra = last ? '<p class="unlock">¡Terminaste las 8 evaluaciones! Se habilitó la evaluación integradora.</p>' : '';
-      var btn = (last ? '<button type="button" class="btn primary" data-act="igretry">Hacer la integradora</button>' : '') +
-        (nextE >= 0 && !last ? '<button type="button" class="btn primary" data-act="evnext" data-e="' + nextE + '">Siguiente evaluación</button>' : '') +
-        '<button type="button" class="btn' + (nextE >= 0 || last ? '' : ' primary') + '" data-act="evretry">Repetir evaluación</button><button type="button" class="btn" data-act="evmap">Ver niveles</button>';
-      showResult({ label: 'Evaluación ' + (i + 1) + ' · ' + L.title, n: n,
+      var last = i === LEVELS.length - 1, extra = '';
+      if (!last && !wasUnlocked && unlocked(i + 1)) extra = '<p class="unlock">¡Fase ' + (i + 1) + ' completa! Desbloqueaste la fase ' + (i + 2) + ': ' + LEVELS[i + 1].title + '</p>';
+      if (allPhases() && !wasAll) extra = '<p class="unlock">¡Completaste las 8 fases! Se habilitó la evaluación integradora.</p>';
+      var btn = allPhases() && last ? '<button type="button" class="btn primary" data-act="igretry">Hacer la integradora</button>'
+        : !last && unlocked(i + 1) ? '<button type="button" class="btn primary" data-act="next">Siguiente fase</button>' : '';
+      btn += '<button type="button" class="btn' + (btn ? '' : ' primary') + '" data-act="evretry">Repetir evaluación</button><button type="button" class="btn" data-act="map">Ver niveles</button>';
+      showResult({ label: 'Fase ' + (i + 1) + ' · evaluación · ' + L.title, n: n,
         msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
-        detail: prev && n <= prev ? 'Tu mejor nota en esta evaluación sigue siendo ' + prev : prev && n > prev ? '¡Nuevo récord!' : '',
+        detail: had && n <= prev ? 'Tu mejor nota en esta evaluación sigue siendo ' + prev : had && n > prev ? '¡Nuevo récord!' : '',
         extra: extra, buttons: btn });
     }
+    function integQuiz() {
+      stopCurrent(); closeModal();
+      curIdx = -1; setLock(true);
+      showPlay(head('Evaluación integradora', 'Todo lo que aprendiste', NINT + ' preguntas que mezclan opción múltiple y verdadero o falso. Con 60 o más aprobás.') + '<section class="quiz panel" aria-live="polite"></section>');
+      runQuiz(playEl.querySelector('.quiz'), integList(), function (ok, tot) {
+        var n = Math.round(ok / tot * 100), had = hasIg(), prev = ig();
+        if (!had || n > prev) { store.integ[M()] = n; save(); }
+        showPoster(n, ok, tot);
+      });
+    }
 
-    /* ---- pestaña Evaluaciones (libre, para practicar o revisar) ---- */
+    /* ---- pestaña Evaluaciones (libre) ---- */
     var freeEl = document.getElementById('ev-free'), freeIdx = -1;
     function freeHead(label, title, text) {
       return '<div class="lv-head panel"><div><span class="label">' + label + '</span><h2>' + title + '</h2><p>' + text + '</p></div>' +
-        '<button type="button" class="btn ev-back">← Volver a las evaluaciones</button></div>';
+        '<button type="button" class="btn ev-back">← Volver</button></div>';
+    }
+    function mcAnswers(list) {
+      return '<ol class="ans">' + list.map(function (q, k) {
+        return '<li><span class="stmt">' + (k + 1) + '. ' + q.q + '</span>' +
+          q.o.map(function (o, n) { return '<span class="opt' + (n === q.a ? ' ok' : '') + '">' + 'ABCD'[n] + ') ' + o + (n === q.a ? ' ✓' : '') + '</span>'; }).join('') +
+          '<p class="why">' + q.why + '</p></li>';
+      }).join('') + '</ol>';
+    }
+    function tfAnswers(list) {
+      return '<ol class="ans">' + list.map(function (q, k) {
+        return '<li><span class="stmt"><span class="vf ' + (q[1] ? 'v' : 'f') + '">' + (q[1] ? 'Verdadero' : 'Falso') + '</span>' + (k + 1) + '. ' + q[0] + '</span><p class="why">' + q[2] + '</p></li>';
+      }).join('') + '</ol>';
     }
     function renderFree() {
       freeIdx = -1;
-      freeEl.innerHTML = '<div class="lv-top"><div><span class="label">Evaluaciones</span><h2>Las 8 evaluaciones</h2>' +
-        '<p>Hacé o revisá cualquier evaluación sin jugar los niveles. Las notas de esta pestaña son de práctica: no cuentan para el juego.</p></div></div>' +
+      freeEl.innerHTML = '<div class="lv-top"><div><span class="label">Evaluaciones</span><h2>Evaluaciones de cada fase</h2>' +
+        '<p>Las ' + LEVELS.length + ' evaluaciones de opción múltiple que aparecen al terminar cada fase del juego. Acá las podés hacer o revisar sin jugar; las notas son de práctica y no cuentan para el juego.</p></div></div>' +
         '<div class="lv-grid">' + LEVELS.map(function (L, i) {
-          return '<div class="lv-card static"><span class="lv-num">E' + (i + 1) + '</span><h3>' + L.title + '</h3>' +
-            '<p>' + QUIZ[L.id].length + ' preguntas de verdadero o falso sobre el nivel ' + (i + 1) + '.</p>' +
+          return '<div class="lv-card static"><span class="lv-num">' + (i + 1) + '</span><h3>' + L.title + '</h3>' +
+            '<p>' + MCQ[L.id].length + ' preguntas de opción múltiple sobre la fase ' + (i + 1) + '.</p>' +
             '<div class="btns"><button type="button" class="btn primary" data-fq="' + i + '">Hacer evaluación</button><button type="button" class="btn" data-fa="' + i + '">Ver respuestas</button></div></div>';
         }).join('') + '</div>';
-    }
-    var igEl = document.getElementById('ig-free');
-    function igHome() {
-      igEl.innerHTML = '<div class="lv-top"><div><span class="label">Integradora</span><h2>Evaluación integradora</h2>' +
-        '<p>' + INTEG.length + ' preguntas de opción múltiple, con 4 opciones cada una, que combinan los temas de todos los niveles. Es más difícil que las de verdadero o falso. Acá la podés probar sin jugar: la nota es de práctica y no cuenta para el juego.</p></div></div>' +
-        '<div class="btns"><button type="button" class="btn primary" data-ig="run">Hacer la integradora</button><button type="button" class="btn" data-ig="ans">Ver respuestas</button></div>';
-    }
-    igEl.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-ig]');
-      if (b) { if (b.dataset.ig === 'run') freeInteg(); else freeIntegAnswers(); return; }
-      if (e.target.closest('.ev-back')) igHome();
-    });
-    function freeInteg() {
-      closeModal(); freeIdx = 'ig';
-      igEl.innerHTML = freeHead('Evaluación integradora · práctica', 'Todo lo que aprendiste', 'Elegí la respuesta correcta entre 4 opciones.') + '<section class="quiz panel" aria-live="polite"></section>';
-      runQuiz(igEl.querySelector('.quiz'), integList(), function (ok, tot) {
-        var n = Math.round(ok / tot * 100);
-        if (n >= PASS) sfx.win();
-        showResult({ label: 'Evaluación integradora', tag: 'Práctica', n: n,
-          msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
-          detail: 'Esta nota es de práctica y no se guarda en el juego.',
-          buttons: '<button type="button" class="btn primary" data-act="fqretry">Repetir</button><button type="button" class="btn" data-act="fqlist">Ver respuestas</button>' });
-      });
-      try { igEl.scrollIntoView({ block: 'start' }); } catch (_) {}
-    }
-    function freeIntegAnswers() {
-      igEl.innerHTML = freeHead('Respuestas · integradora', 'Todo lo que aprendiste', 'Las ' + INTEG.length + ' preguntas con sus opciones; la correcta está marcada en verde.') +
-        '<ol class="ans">' + INTEG.map(function (q, k) {
-          return '<li><span class="stmt">' + (k + 1) + '. ' + q.q + '</span>' +
-            q.o.map(function (o, n) { return '<span class="opt' + (n === q.a ? ' ok' : '') + '">' + 'ABCD'[n] + ') ' + o + (n === q.a ? ' ✓' : '') + '</span>'; }).join('') +
-            '<p class="why">' + q.why + '</p></li>';
-        }).join('') + '</ol><div class="btns"><button type="button" class="btn primary" data-ig="run">Hacer la integradora</button></div>';
-      try { igEl.scrollIntoView({ block: 'start' }); } catch (_) {}
     }
     function freeQuiz(i) {
       closeModal(); freeIdx = i;
       var L = LEVELS[i];
-      freeEl.innerHTML = freeHead('Evaluación ' + (i + 1) + ' de ' + LEVELS.length + ' · práctica', L.title, 'Leé cada afirmación y elegí si es verdadera o falsa.') + '<section class="quiz panel" aria-live="polite"></section>';
-      runQuiz(freeEl.querySelector('.quiz'), shuffled(i), function (ok, tot) {
+      freeEl.innerHTML = freeHead('Evaluación de la fase ' + (i + 1) + ' · práctica', L.title, 'Elegí la respuesta correcta entre 4 opciones.') + '<section class="quiz panel" aria-live="polite"></section>';
+      runQuiz(freeEl.querySelector('.quiz'), phaseList(i), function (ok, tot) {
         var n = Math.round(ok / tot * 100);
         if (n >= PASS) sfx.win();
-        showResult({ label: 'Evaluación ' + (i + 1) + ' · ' + L.title, tag: 'Práctica', n: n,
+        showResult({ label: 'Evaluación de la fase ' + (i + 1) + ' · ' + L.title, tag: 'Práctica', n: n,
           msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
           detail: 'Esta nota es de práctica y no se guarda en el juego.',
           buttons: (i + 1 < LEVELS.length ? '<button type="button" class="btn primary" data-act="fqnext">Siguiente evaluación</button>' : '') +
@@ -2753,11 +2995,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
     }
     function freeAnswers(i) {
       var L = LEVELS[i];
-      freeEl.innerHTML = freeHead('Respuestas · evaluación ' + (i + 1), L.title, 'Las ' + QUIZ[L.id].length + ' afirmaciones con su respuesta correcta y la explicación.') +
-        '<ol class="ans">' + QUIZ[L.id].map(function (q, k) {
-          return '<li><span class="stmt"><span class="vf ' + (q[1] ? 'v' : 'f') + '">' + (q[1] ? 'Verdadero' : 'Falso') + '</span>' + (k + 1) + '. ' + q[0] + '</span><p class="why">' + q[2] + '</p></li>';
-        }).join('') + '</ol>' +
-        '<div class="btns"><button type="button" class="btn primary" data-fq="' + i + '">Hacer esta evaluación</button></div>';
+      freeEl.innerHTML = freeHead('Respuestas · fase ' + (i + 1), L.title, 'Las ' + MCQ[L.id].length + ' preguntas con la opción correcta marcada en verde.') +
+        mcAnswers(MCQ[L.id]) + '<div class="btns"><button type="button" class="btn primary" data-fq="' + i + '">Hacer esta evaluación</button></div>';
       try { freeEl.scrollIntoView({ block: 'start' }); } catch (_) {}
     }
     freeEl.addEventListener('click', function (e) {
@@ -2766,28 +3005,64 @@ button.btn.primary:hover { filter: brightness(1.05); }
       else if ((b = e.target.closest('[data-fa]'))) freeAnswers(+b.dataset.fa);
       else if (e.target.closest('.ev-back')) renderFree();
     });
+
+    /* ---- pestaña Integradora (libre) ---- */
+    var igEl = document.getElementById('ig-free');
+    function igHome() {
+      igEl.innerHTML = '<div class="lv-top"><div><span class="label">Integradora</span><h2>Evaluación integradora</h2>' +
+        '<p>' + NINT + ' preguntas que mezclan opción múltiple y verdadero o falso sobre todo el juego: 10 de opción múltiple elegidas de un banco de ' + INTEG.length + ', y 8 de verdadero o falso, una por cada fase, elegidas al azar de un banco de ' + (LEVELS.length * 10) + '. Cambia cada vez que se hace. Acá la podés probar sin jugar: la nota es de práctica.</p></div></div>' +
+        '<div class="btns"><button type="button" class="btn primary" data-ig="run">Hacer la integradora</button><button type="button" class="btn" data-ig="ans">Ver el banco de preguntas</button></div>';
+    }
+    function freeInteg() {
+      closeModal(); freeIdx = 'ig';
+      igEl.innerHTML = freeHead('Evaluación integradora · práctica', 'Todo lo que aprendiste', NINT + ' preguntas de opción múltiple y verdadero o falso.') + '<section class="quiz panel" aria-live="polite"></section>';
+      runQuiz(igEl.querySelector('.quiz'), integList(), function (ok, tot) {
+        var n = Math.round(ok / tot * 100);
+        if (n >= PASS) sfx.win();
+        showResult({ label: 'Evaluación integradora', tag: 'Práctica', n: n,
+          msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
+          detail: 'Esta nota es de práctica y no se guarda en el juego.',
+          buttons: '<button type="button" class="btn primary" data-act="fqretry">Repetir</button><button type="button" class="btn" data-act="fqlist">Ver el banco de preguntas</button>' });
+      });
+      try { igEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function freeIntegAnswers() {
+      igEl.innerHTML = freeHead('Banco de la integradora', 'Todo lo que aprendiste', 'Primero, las ' + INTEG.length + ' preguntas de opción múltiple; después, las de verdadero o falso de cada fase. En cada integradora se eligen 10 y 8 al azar.') +
+        '<h3 style="font:700 18px var(--font-display);margin:4px 0 0">Opción múltiple</h3>' + mcAnswers(INTEG) +
+        LEVELS.map(function (L, i) { return '<h3 style="font:700 18px var(--font-display);margin:10px 0 0">Verdadero o falso · fase ' + (i + 1) + ': ' + L.title + '</h3>' + tfAnswers(QUIZ[L.id]); }).join('') +
+        '<div class="btns"><button type="button" class="btn primary" data-ig="run">Hacer la integradora</button></div>';
+      try { igEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    igEl.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ig]');
+      if (b) { if (b.dataset.ig === 'run') freeInteg(); else freeIntegAnswers(); return; }
+      if (e.target.closest('.ev-back')) igHome();
+    });
     renderFree();
     igHome();
 
-    function showPoster() {
+    /* ---- cartel final ---- */
+    function showPoster(n, ok, tot) {
       var L = avgL(), E = avgE(), G = ig(), F = finalNote();
-      function box(t, n, sub) { return '<div class="box"><span>' + t + '</span><strong class="' + (n >= PASS ? 'pass' : 'fail') + '">' + n + '</strong>' + starsHtml(n) + '<em>' + sub + '</em></div>'; }
+      function box(t, v, sub) { return '<div class="box"><span>' + t + '</span><strong class="' + (v >= PASS ? 'pass' : 'fail') + '">' + v + '</strong>' + starsHtml(v) + '<em>' + sub + '</em></div>'; }
       modal.classList.add('wide');
       modal.innerHTML = '<span class="label">Modo ' + DIFF[M()] + ' · resultados finales</span>' +
         '<h2 id="lv-r-title">¡Felicitaciones, terminaste el juego!</h2>' +
+        (n != null ? '<p>En la integradora respondiste bien ' + ok + ' de ' + tot + ' preguntas (' + n + '/100).' + (n < G ? ' Se guarda tu mejor nota.' : '') + '</p>' : '') +
         '<p>Estas son tus notas:</p>' +
         '<div class="poster">' +
-          box('1 · Niveles', L, 'Promedio de los 8 niveles') +
-          box('2 · Verdadero o falso', E, 'Promedio de las 8 evaluaciones') +
-          box('3 · Integradora', G, INTEG.length + ' preguntas de opción múltiple') +
+          box('1 · Juegos de las fases', L, 'Promedio de los 8 juegos') +
+          box('2 · Evaluaciones', E, 'Promedio de las 8 evaluaciones de opción múltiple') +
+          box('3 · Integradora', G, NINT + ' preguntas') +
         '</div>' +
         '<div class="poster-final"><span class="label">Nota final</span><strong>' + F + '</strong>' + starsHtml(F) +
-          '<span class="detail" style="font:500 12px var(--font-mono);color:var(--muted)">40 % niveles · 30 % verdadero o falso · 30 % integradora</span></div>' +
-        '<div class="btns"><button type="button" class="btn primary" data-act="evmap">Ver niveles</button><button type="button" class="btn" data-act="igretry">Repetir integradora</button></div>';
+          '<span class="detail" style="font:500 12px var(--font-mono);color:var(--muted)">40 % juegos · 30 % evaluaciones · 30 % integradora</span></div>' +
+        '<div class="btns"><button type="button" class="btn primary" data-act="map">Ver niveles</button><button type="button" class="btn" data-act="igretry">Repetir integradora</button></div>';
       overlay.hidden = false;
       sfx.win();
       var f = modal.querySelector('.btn.primary'); if (f) f.focus();
     }
+
     function closeModal() { overlay.hidden = true; modal.classList.remove('wide'); }
     modal.addEventListener('click', function (e) {
       var b = e.target.closest('[data-act]'); if (!b) return;
@@ -2796,12 +3071,9 @@ button.btn.primary:hover { filter: brightness(1.05); }
       else if (a === 'fqnext') freeQuiz(freeIdx + 1);
       else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else freeQuiz(freeIdx); }
       else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else renderFree(); }
-      else if (a === 'poster') showPoster();
+      else if (a === 'evnow' || a === 'evretry') quiz(curIdx);
       else if (a === 'next') play(curIdx + 1);
       else if (a === 'retry') play(curIdx);
-      else if (a === 'evals' || a === 'evmap') backToMap(true);
-      else if (a === 'evnext') quiz(+b.dataset.e);
-      else if (a === 'evretry') quiz(curIdx);
       else backToMap();
     });
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
