@@ -657,6 +657,60 @@ button.btn.primary:hover { filter: brightness(1.05); }
   .slot.filled svg, .powered .rotor, .case.rgb.powered, .port.sel .port-body, .cable-in, .mb-pill, .lv-modal { animation: none; }
   .bar span, .meter .fill { transition: none; }
 }
+
+/* ===== Bandeja legible y adaptable (va al final para tener prioridad) ===== */
+.app, .app.has-power { grid-template-columns: clamp(220px, 19vw, 360px) minmax(0, 1fr) clamp(240px, 19vw, 340px); }
+.tray { grid-template-columns: repeat(auto-fill, minmax(clamp(72px, 5.5vw, 118px), 1fr)); gap: clamp(5px, .5vw, 8px); }
+.part { font-size: clamp(11.5px, .82vw, 14px); padding: clamp(5px, .45vw, 8px) 4px; }
+.thumb { width: clamp(54px, 4.4vw, 84px); height: clamp(36px, 2.95vw, 56px); }
+.hud .btns, .view-btns { gap: 6px; }
+.view-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.view-btns .zoom-ctl { grid-column: 1 / -1; width: 100%; }
+.view-btns .zoom-ctl .btn { flex: 1; }
+.view-btns .btn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Bandeja chica: lista con dibujo y nombre */
+.app.tray-mini, .app.tray-mini.has-power { grid-template-columns: clamp(170px, 14vw, 250px) minmax(0, 1fr) clamp(240px, 19vw, 340px); }
+.app.tray-mini.side-off { grid-template-columns: clamp(170px, 14vw, 250px) minmax(0, 1fr) clamp(200px, 15vw, 260px); }
+.app.side-off { grid-template-columns: clamp(220px, 19vw, 360px) minmax(0, 1fr) clamp(200px, 15vw, 260px); }
+.app.tray-mini .tray { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+.app.tray-mini .part { display: flex; align-items: center; gap: 8px; text-align: left; padding: 4px 8px; font-size: clamp(11.5px, .8vw, 13.5px); }
+.app.tray-mini .part > span:not(.qty) { display: block; }
+.app.tray-mini .thumb { width: 40px; height: 28px; flex: none; }
+.app.tray-mini .part .qty { position: static; order: 3; margin-left: auto; }
+@media (max-width: 1179px) and (min-width: 700px) {
+  .app, .app.has-power, .app.tray-mini, .app.side-off, .app.tray-mini.side-off, .app.tray-mini.has-power { grid-template-columns: clamp(210px, 26vw, 280px) minmax(0, 1fr); }
+  .tray { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+  .part { font-size: 11px; }
+  .thumb { width: 50px; height: 33px; }
+}
+/* Celular: bandeja fija abajo, en una tira que se desliza de costado */
+@media (max-width: 699px) {
+  .app, .app.has-power, .app.tray-mini, .app.side-off, .app.tray-mini.side-off, .app.tray-mini.has-power { grid-template-columns: minmax(0, 1fr); }
+  .app > .tray-box {
+    position: sticky; bottom: 0; z-index: 30; border-radius: 12px 12px 0 0;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -6px 18px rgba(0, 0, 0, .18);
+  }
+  .tray-box > .label { display: block !important; font-size: 9.5px; margin-bottom: 4px; }
+  .app .tray, .app.tray-mini .tray { display: flex; overflow-x: auto; gap: 6px; scroll-snap-type: x proximity; padding-bottom: 2px; }
+  .app .part, .app.tray-mini .part { flex: 0 0 74px; display: grid; justify-items: center; text-align: center; padding: 5px 3px; font-size: 10.5px; line-height: 1.15; touch-action: pan-x; scroll-snap-align: start; }
+  .app .part > span:not(.qty) { display: block; }
+  .app .thumb, .app.tray-mini .thumb { width: 50px; height: 33px; }
+  .app.tray-mini .part .qty { position: absolute; }
+  .wires-list { display: flex; overflow-x: auto; gap: 6px; }
+  .wire-card, .app.tray-mini .wire-card { flex: 0 0 auto; grid-template-columns: 8px auto; gap: 6px; padding: 6px 9px; font-size: 12px; }
+  .wire-card .st, .wire-card .spec { display: none; }
+  .tray-box .chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
+  .tray-box .chip { flex: none; touch-action: pan-x; }
+  .view-btns { display: flex; grid-column: 1 / -1; }
+  .view-btns .vb-tray, .view-btns .vb-side { display: none; }
+  .view-btns .zoom-ctl { flex: 1; width: auto; }
+  .view-btns .vb-fill { flex: 1; font-size: 11.5px; }
+  .head-btns .btn { font-size: 11.5px; padding: 3px 8px; white-space: nowrap; }
+  #fs-btn { display: none; }
+  .brand { font-size: 19px; } .brand svg { width: 28px; height: 28px; }
+  .topbar { flex-wrap: nowrap; } .head-btns { flex-wrap: nowrap; }
+}
 </style>
 </head>
 <body>
@@ -2757,7 +2811,11 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function renderMap() {
       resetArm = false;
       updateChip();
-      if (!M()) { mapEl.innerHTML = ''; openWelcome(); return; }
+      if (!M()) {
+        mapEl.innerHTML = '<div class="next-card"><div><span class="label">Juego</span><h3>Elegí cómo querés jugar</h3><p>Antes de empezar las fases, elegí el modo Básico o Avanzado.</p></div><button type="button" class="btn primary" id="lv-choose">Elegir modo →</button></div>';
+        mapEl.querySelector('#lv-choose').addEventListener('click', function () { openWelcome(); });
+        return;
+      }
       var done = 0;
       LEVELS.forEach(function (_, i) { if (phaseDone(i)) done++; });
       var nextIdx = -1;
@@ -3298,9 +3356,9 @@ button.btn.primary:hover { filter: brightness(1.05); }
       app.classList.toggle('tray-mini', !!view.mini);
       app.classList.toggle('side-off', !!view.side);
       var a = app.querySelector('.vb-tray'), b = app.querySelector('.vb-side'), f = app.querySelector('.vb-fill'), z = app.querySelector('.vb-fit');
-      if (f) { f.setAttribute('aria-pressed', view.fill ? 'true' : 'false'); f.textContent = view.fill ? 'Ajustar al alto' : 'Usar todo el ancho'; }
+      if (f) { f.setAttribute('aria-pressed', view.fill ? 'true' : 'false'); f.textContent = view.fill ? 'Ajustar al alto' : 'Todo el ancho'; }
       if (z) z.textContent = Math.round((view.zoom || 1) * 100) + '%';
-      if (a) { a.setAttribute('aria-pressed', view.mini ? 'true' : 'false'); a.textContent = view.mini ? 'Bandeja grande' : 'Bandeja chica'; }
+      if (a) { a.setAttribute('aria-pressed', view.mini ? 'true' : 'false'); a.textContent = view.mini ? 'Bandeja normal' : 'Bandeja chica'; }
       if (b) { b.setAttribute('aria-pressed', view.side ? 'true' : 'false'); b.textContent = view.side ? 'Mostrar ficha' : 'Ocultar ficha'; }
     }
     function enhance(app) {
