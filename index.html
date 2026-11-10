@@ -933,7 +933,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
 
 <script>
 (function () {
-  var TIERS = [450, 550, 650, 750, 850, 1000, 1200, 1600];
+  var TIERS = [450, 550, 650, 750, 850, 1000, 1200, 1300, 1600];
   var MARGIN = 1.3;
 
   function fan(cx, cy, r) {
@@ -3063,7 +3063,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
             '<div class="mod"><span class="unit">Memorias RAM</span>' + seg('su-ram', [[2, '2'], [4, '4']], sc.ram) + '</div></div></fieldset>' : '') +
           '<fieldset class="group">' + H('Fuente de alimentación') +
             '<div class="field"><select id="su-psu" aria-label="Potencia de la fuente"><option value="0">Elegí la potencia…</option>' +
-            TIERS.map(function (w) { return '<option value="' + w + '"' + (sc.psu === w ? ' selected' : '') + '>' + w + ' W</option>'; }).join('') + '</select></div></fieldset>' +
+            (gamer ? [550, 650, 750, 850, 1000, 1200, 1300, 1600] : [450, 550, 650, 750, 850]).map(function (w) { return '<option value="' + w + '"' + (sc.psu === w ? ' selected' : '') + '>' + w + ' W</option>'; }).join('') + '</select>' +
+            '<span class="unit">Elegí la que te parezca. Cuando la elijas te digo si sirve para esta PC.</span></div></fieldset>' +
           '<fieldset class="group">' + H('Refrigeración del procesador') + '<div class="coolers">' + coolOpts + '</div></fieldset>' +
         '</div><div class="sumcard su-sum" aria-live="polite"></div></div></section>';
 
@@ -3076,14 +3077,18 @@ button.btn.primary:hover { filter: brightness(1.05); }
         if (sc.disks.length && sc.cool) { cfg = buildFor(mode, ext(sc, { psu: sc.psu || 450 })); c = consumptionOf(cfg); need = Math.ceil(c * MARGIN); }
         var best = need ? tierFor(need) : 0, msg = '', cls = '';
         if (problems.length) { msg = problems.join(' '); cls = 'err'; }
-        else if (!sc.psu) { msg = 'Elegí la fuente de alimentación. Esta PC necesita al menos ' + need + ' W.'; cls = 'warn'; }
-        else if (sc.psu < need) { msg = 'La fuente de ' + sc.psu + ' W no alcanza: esta PC consume ' + c + ' W y, con el 30 % de margen, necesita al menos ' + need + ' W.'; cls = 'err'; }
-        else if (best && sc.psu > best) { msg = 'La fuente de ' + sc.psu + ' W alcanza, pero sobra potencia: con una de ' + best + ' W era suficiente y más barata.'; cls = 'warn'; }
-        else { msg = '¡Muy bien! La fuente de ' + sc.psu + ' W es la justa para esta PC.'; cls = 'ok'; }
-        var ok = !problems.length && sc.psu && sc.psu >= need;
-        var bad = cls === 'err' && sc.psu > 0 && sc.psu < need;
-        if (bad && !lastBad) sfx.error();
-        lastBad = bad;
+        else if (!sc.psu) { msg = 'Elegí una fuente de alimentación y te digo si sirve para esta PC.'; cls = 'warn'; }
+        else if (sc.psu < need) {
+          msg = '<b>La fuente de ' + sc.psu + ' W no alcanza para esta PC.</b> Le faltan ' + (need - sc.psu) + ' W: la PC consume ' + c + ' W y, con el 30 % de margen de seguridad, necesita ' + need + ' W. Con esta fuente se podría apagar o reiniciar sola. <b>La fuente recomendada es la de ' + best + ' W.</b>';
+          cls = 'err';
+        } else if (sc.psu > best) {
+          msg = '<b>La fuente de ' + sc.psu + ' W es demasiado grande para esta PC.</b> Le sobran ' + (sc.psu - need) + ' W: la PC consume ' + c + ' W y, con el 30 % de margen, necesita ' + need + ' W. Una fuente tan grande es más cara y trabaja casi sin carga. <b>La fuente recomendada es la de ' + best + ' W.</b>';
+          cls = 'err';
+        } else { msg = '<b>¡Muy bien! La fuente de ' + sc.psu + ' W es la recomendada para esta PC.</b> Consume ' + c + ' W y, con el 30 % de margen de seguridad, necesita ' + need + ' W.'; cls = 'ok'; }
+        var ok = !problems.length && sc.psu === best;
+        var bad = cls === 'err' && sc.psu > 0;
+        if (bad && sc.psu !== lastBad) sfx.error();
+        lastBad = bad ? sc.psu : false;
         sum.innerHTML = '<span class="label">Resumen</span>' +
           '<dl class="psum" style="margin:0">' +
             '<dt>Procesador</dt><dd>' + CPU_LV[mode][sc.brand][0] + '</dd>' +
@@ -3091,9 +3096,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
             '<dt>Discos</dt><dd>' + (sc.disks.length ? sc.disks.map(function (t) { return DISK_INFO[t][0]; }).join(', ') : '—') + '</dd>' +
             (gamer ? '<dt>Placas de video</dt><dd>' + sc.gpus + '</dd><dt>Memorias</dt><dd>' + sc.ram + '</dd>' : '') +
             '<dt>Refrigeración</dt><dd>' + (sc.cool ? COOLERS[sc.cool][0] : '—') + '</dd>' +
-            '<dt>Consumo estimado</dt><dd>' + (c ? c + ' W' : '—') + '</dd>' +
-            '<dt>Con 30 % de margen</dt><dd class="big">' + (need ? need + ' W' : '—') + '</dd>' +
-            '<dt>Fuente elegida</dt><dd class="' + (sc.psu ? (sc.psu >= need ? 'good' : 'bad') : '') + '">' + (sc.psu ? sc.psu + ' W' : '—') + '</dd>' +
+            '<dt>Fuente elegida</dt><dd class="' + (sc.psu ? (ok ? 'good' : 'bad') : '') + '">' + (sc.psu ? sc.psu + ' W' : '—') + '</dd>' +
           '</dl>' +
           '<div class="setup-msg ' + cls + '">' + msg + '</div>' +
           '<button type="button" class="btn primary su-start"' + (ok ? '' : ' disabled') + '>Empezar a armar →</button>';
