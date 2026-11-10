@@ -137,7 +137,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .case {
   position: relative; aspect-ratio: 4 / 5; max-width: 100%;
   width: min(100%, 640px, max(240px, calc((100vh - var(--chrome)) * .8)));
-  width: min(100%, 780px, max(240px, calc(var(--case-h, calc(100svh - var(--chrome))) * .8)));
+  width: min(100%, 940px, max(240px, calc(var(--case-h, calc(100svh - var(--chrome))) * .8)));
   background: var(--case); border: 10px solid var(--case-edge); border-radius: 14px;
   box-shadow: inset 0 0 40px rgba(0,0,0,.5);
   overflow: hidden; touch-action: manipulation;
@@ -284,6 +284,31 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .w-links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--muted); font-size: 13.5px; }
 .w-links .btn { font-size: 13.5px; }
 @media (max-width: 700px) { .w-steps, .mode-cards { grid-template-columns: minmax(0, 1fr); } }
+
+/* vista: bandeja chica, paneles ocultos, modo juego */
+body.playing .nav-main, body.playing .tabs, body.playing .lock-note, body.playing .case-note { display: none; }
+body.playing .wrap { gap: 10px; }
+.lv-play .lv-head { padding: 8px 14px; }
+.lv-play .lv-head h2 { font-size: clamp(17px, 2vw, 20px); }
+.lv-play .lv-head p { font-size: 12.5px; margin-top: 0; }
+.view-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.view-btns .btn { font-size: 12.5px; padding: 5px 9px; }
+.view-btns .btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.app.tray-mini { grid-template-columns: minmax(92px, 132px) minmax(0, 1fr) minmax(240px, 300px); }
+.app.tray-mini .tray { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 4px; }
+.app.tray-mini .part { padding: 4px 2px; }
+.app.tray-mini .part > span:not(.qty) { display: none; }
+.app.tray-mini .thumb { width: 44px; height: 30px; }
+.app.tray-mini .tray-box > .label { font-size: 9.5px; letter-spacing: .04em; }
+.app.tray-mini .wire-card { grid-template-columns: 8px minmax(0, 1fr); gap: 6px; padding: 5px 6px; font-size: 11.5px; }
+.app.tray-mini .wire-card .spec, .app.tray-mini .wire-card .st { display: none; }
+.app.tray-mini .wire-card .sw { width: 8px; height: 18px; }
+.app.tray-mini .wire-card.done strong::after { content: " ✓"; color: var(--ok); }
+.app.tray-mini .chips { gap: 4px; }
+.app.tray-mini .chip { font-size: 11px; padding: 4px 7px; }
+.app.side-off .info, .app.side-off .power { display: none; }
+.app.side-off { grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) minmax(200px, 240px); }
+.app.tray-mini.side-off { grid-template-columns: minmax(92px, 132px) minmax(0, 1fr) minmax(200px, 240px); }
 
 /* recorrido de fases */
 .lv-map { display: grid; gap: 16px; }
@@ -550,8 +575,13 @@ button.btn.primary:hover { filter: brightness(1.05); }
   .thumb { width: 48px; height: 32px; }
   .part { font-size: 10.5px; padding: 4px 2px; }
 }
+@media (max-width: 1179px) and (min-width: 700px) {
+  .app.tray-mini, .app.side-off, .app.tray-mini.side-off { grid-template-columns: minmax(200px, 250px) minmax(0, 1fr); }
+}
 /* Celular: tablero compacto, gabinete y bandeja en la misma pantalla */
 @media (max-width: 699px) {
+  .app.tray-mini, .app.side-off, .app.tray-mini.side-off { grid-template-columns: minmax(0, 1fr); }
+  .view-btns .btn { font-size: 11px; padding: 3px 7px; }
   header p { display: none; }
   .app, .app.has-power { grid-template-columns: minmax(0, 1fr); grid-template-areas: "hud" "case" "tray" "info"; grid-template-rows: none; gap: 8px; }
   .app.has-power { grid-template-areas: "hud" "case" "tray" "power" "info"; }
@@ -1484,6 +1514,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
     document.querySelectorAll('.tab').forEach(function (t) { if (t.dataset.tab !== 'niveles') { t.disabled = on; t.title = on ? 'Terminá o salí del nivel para usar esta pestaña' : ''; } });
     document.querySelectorAll('.nav-main button').forEach(function (b) { if (b.dataset.group !== 'juego') { b.disabled = on; b.title = on ? 'Terminá o salí de la fase para usar esta sección' : ''; } });
     var mc = document.getElementById('mode-chip'); if (mc) mc.disabled = on;
+    document.body.classList.toggle('playing', on);
     var n = document.getElementById('lock-note'); if (n) n.hidden = !on;
   }
 
@@ -3250,13 +3281,42 @@ button.btn.primary:hover { filter: brightness(1.05); }
   var fitAll = (function () {
     var pending = false, ro = null, seen = typeof WeakSet !== 'undefined' ? new WeakSet() : null;
     function h(el) { return el && !el.hidden && el.offsetParent !== null ? el.getBoundingClientRect().height : 0; }
+    var VKEY = 'arma-tu-pc-vista', view = { mini: false, side: false };
+    try { view = JSON.parse(localStorage.getItem(VKEY) || '{}') || {}; } catch (_) {}
+    function saveView() { try { localStorage.setItem(VKEY, JSON.stringify(view)); } catch (_) {} }
+    function applyView(app) {
+      app.classList.toggle('tray-mini', !!view.mini);
+      app.classList.toggle('side-off', !!view.side);
+      var a = app.querySelector('.vb-tray'), b = app.querySelector('.vb-side');
+      if (a) { a.setAttribute('aria-pressed', view.mini ? 'true' : 'false'); a.textContent = view.mini ? 'Bandeja grande' : 'Bandeja chica'; }
+      if (b) { b.setAttribute('aria-pressed', view.side ? 'true' : 'false'); b.textContent = view.side ? 'Mostrar ficha' : 'Ocultar ficha'; }
+    }
+    function enhance(app) {
+      if (!app.dataset.enh) {
+        var hud = app.querySelector('.hud'); if (!hud) return;
+        app.dataset.enh = '1';
+        var row = document.createElement('div'); row.className = 'view-btns';
+        row.innerHTML = '<button type="button" class="btn vb-tray" title="Achica la bandeja para que el gabinete se vea más grande"></button>' +
+          '<button type="button" class="btn vb-side" title="Oculta los paneles de la derecha (ficha y consumo)"></button>';
+        hud.appendChild(row);
+        row.addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b) return;
+          if (b.classList.contains('vb-tray')) view.mini = !view.mini; else view.side = !view.side;
+          saveView(); document.querySelectorAll('.app').forEach(applyView); schedule();
+        });
+      }
+      if (app.classList.contains('tray-mini') !== !!view.mini || app.classList.contains('side-off') !== !!view.side || !app.querySelector('.vb-tray').textContent) applyView(app);
+      app.querySelectorAll('.part').forEach(function (p) { if (!p.title) { var t = p.querySelector('span:not(.qty)'); if (t) p.title = t.textContent; } });
+    }
     function fitOne(app) {
       if (!app.offsetParent) return;
       var caseEl = app.querySelector('.case'); if (!caseEl) return;
       var vh = window.innerHeight, gap = parseFloat(getComputedStyle(app).rowGap) || 8;
       var single = getComputedStyle(app).gridTemplateColumns.split(' ').length === 1;
-      var note = h(app.querySelector('.case-note'));
-      var rest = single ? h(app.querySelector('.hud')) + h(app.querySelector('.tray-box')) + gap * 2 + 14
+      enhance(app);
+      var note = h(app.querySelector('.case-note')), trays = 0;
+      app.querySelectorAll('.tray-box').forEach(function (t) { trays += h(t); });
+      var rest = single ? h(app.querySelector('.hud')) + trays + gap * 2 + 14
                         : note + (note ? 6 : 0) + 16;
       var top = app.getBoundingClientRect().top + window.scrollY;
       var H = vh - top - rest;
