@@ -310,6 +310,16 @@ body.playing .wrap { gap: 10px; }
 .app.side-off { grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) minmax(200px, 240px); }
 .app.tray-mini.side-off { grid-template-columns: minmax(92px, 132px) minmax(0, 1fr) minmax(200px, 240px); }
 
+/* zoom del gabinete */
+.zoom-ctl { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.zoom-ctl .btn { border: 0; border-radius: 0; min-width: 32px; }
+.zoom-ctl .btn + .btn { border-left: 1px solid var(--line); }
+.zoom-ctl .vb-fit { font-variant-numeric: tabular-nums; min-width: 58px; }
+.case-col.scroll { overflow-x: auto; justify-items: start; padding-bottom: 6px; }
+@media (min-width: 1180px) {
+  .app > .tray-box, .app > .hud { position: sticky; top: 8px; max-height: calc(100vh - 16px); overflow-y: auto; }
+}
+
 /* recorrido de fases */
 .lv-map { display: grid; gap: 16px; }
 .lv-headrow { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: end; justify-content: space-between; }
@@ -3287,7 +3297,9 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function applyView(app) {
       app.classList.toggle('tray-mini', !!view.mini);
       app.classList.toggle('side-off', !!view.side);
-      var a = app.querySelector('.vb-tray'), b = app.querySelector('.vb-side');
+      var a = app.querySelector('.vb-tray'), b = app.querySelector('.vb-side'), f = app.querySelector('.vb-fill'), z = app.querySelector('.vb-fit');
+      if (f) { f.setAttribute('aria-pressed', view.fill ? 'true' : 'false'); f.textContent = view.fill ? 'Ajustar al alto' : 'Usar todo el ancho'; }
+      if (z) z.textContent = Math.round((view.zoom || 1) * 100) + '%';
       if (a) { a.setAttribute('aria-pressed', view.mini ? 'true' : 'false'); a.textContent = view.mini ? 'Bandeja grande' : 'Bandeja chica'; }
       if (b) { b.setAttribute('aria-pressed', view.side ? 'true' : 'false'); b.textContent = view.side ? 'Mostrar ficha' : 'Ocultar ficha'; }
     }
@@ -3296,16 +3308,29 @@ button.btn.primary:hover { filter: brightness(1.05); }
         var hud = app.querySelector('.hud'); if (!hud) return;
         app.dataset.enh = '1';
         var row = document.createElement('div'); row.className = 'view-btns';
-        row.innerHTML = '<button type="button" class="btn vb-tray" title="Achica la bandeja para que el gabinete se vea más grande"></button>' +
+        row.innerHTML = '<span class="zoom-ctl" role="group" aria-label="Tamaño del gabinete">' +
+            '<button type="button" class="btn vb-zout" title="Alejar" aria-label="Alejar">−</button>' +
+            '<button type="button" class="btn vb-fit" title="Ajustar al espacio disponible">100%</button>' +
+            '<button type="button" class="btn vb-zin" title="Acercar" aria-label="Acercar">+</button></span>' +
+          '<button type="button" class="btn vb-fill" title="El gabinete usa todo el ancho del centro"></button>' +
+          '<button type="button" class="btn vb-tray" title="Achica la bandeja para que el gabinete se vea más grande"></button>' +
           '<button type="button" class="btn vb-side" title="Oculta los paneles de la derecha (ficha y consumo)"></button>';
         hud.appendChild(row);
         row.addEventListener('click', function (e) {
           var b = e.target.closest('button'); if (!b) return;
-          if (b.classList.contains('vb-tray')) view.mini = !view.mini; else view.side = !view.side;
+          var z = view.zoom || 1;
+          if (b.classList.contains('vb-tray')) view.mini = !view.mini;
+          else if (b.classList.contains('vb-side')) view.side = !view.side;
+          else if (b.classList.contains('vb-fill')) { view.fill = !view.fill; view.zoom = 1; }
+          else if (b.classList.contains('vb-zin')) view.zoom = Math.min(2.5, Math.round((z + .1) * 10) / 10);
+          else if (b.classList.contains('vb-zout')) view.zoom = Math.max(.6, Math.round((z - .1) * 10) / 10);
+          else if (b.classList.contains('vb-fit')) { view.zoom = 1; view.fill = false; }
           saveView(); document.querySelectorAll('.app').forEach(applyView); schedule();
         });
       }
-      if (app.classList.contains('tray-mini') !== !!view.mini || app.classList.contains('side-off') !== !!view.side || !app.querySelector('.vb-tray').textContent) applyView(app);
+      var zl = app.querySelector('.vb-fit');
+      if (app.classList.contains('tray-mini') !== !!view.mini || app.classList.contains('side-off') !== !!view.side || !app.querySelector('.vb-tray').textContent ||
+          (zl && zl.textContent !== Math.round((view.zoom || 1) * 100) + '%')) applyView(app);
       app.querySelectorAll('.part').forEach(function (p) { if (!p.title) { var t = p.querySelector('span:not(.qty)'); if (t) p.title = t.textContent; } });
     }
     function fitOne(app) {
@@ -3324,6 +3349,15 @@ button.btn.primary:hover { filter: brightness(1.05); }
       H = Math.max(300, Math.floor(H));
       var cur = parseFloat(app.style.getPropertyValue('--case-h')) || 0;
       if (Math.abs(cur - H) > 1) app.style.setProperty('--case-h', H + 'px');
+      // tamaño final: ocupa el mayor espacio posible del centro, con zoom opcional
+      var col = app.querySelector('.case-col');
+      if (col) {
+        var cs = getComputedStyle(col), CW = col.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+        var base = view.fill ? CW : Math.min(CW, H * .8);
+        var W = Math.round(Math.max(240, base) * (view.zoom || 1));
+        if (caseEl.style.width !== W + 'px') { caseEl.style.width = W + 'px'; caseEl.style.maxWidth = 'none'; }
+        col.classList.toggle('scroll', W > CW + 1);
+      }
       if (ro && seen) [app, app.querySelector('.hud'), app.querySelector('.tray-box')].forEach(function (el) {
         if (el && !seen.has(el)) { seen.add(el); ro.observe(el); }
       });
