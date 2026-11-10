@@ -711,6 +711,22 @@ button.btn.primary:hover { filter: brightness(1.05); }
   .brand { font-size: 19px; } .brand svg { width: 28px; height: 28px; }
   .topbar { flex-wrap: nowrap; } .head-btns { flex-wrap: nowrap; }
 }
+
+/* Las piezas ya colocadas salen de la bandeja: el espacio se libera */
+.app .tray .part.used, .app .tray .part.off { display: none; }
+.app .wires-list .wire-card.done { display: none; }
+.app .tray-box .chips .chip.used { display: none; }
+.app .tray:not(:has(.part:not(.used):not(.off)))::after,
+.app .wires-list:not(:has(.wire-card:not(.done)))::after,
+.app .chips:not(:has(.chip:not(.used)))::after {
+  content: "✓ No quedan piezas: está todo colocado."; display: block; grid-column: 1 / -1;
+  font-size: 13px; color: var(--ok); padding: 6px 2px;
+}
+.app .wires-list:not(:has(.wire-card:not(.done)))::after { content: "✓ Todos los cables están conectados."; }
+.app .chips:not(:has(.chip:not(.used)))::after { content: "✓ Pusiste todos los nombres."; }
+@keyframes part-in { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+.app .tray .part, .app .wire-card, .app .chip { animation: part-in .2s ease-out; }
+@media (prefers-reduced-motion: reduce) { .app .tray .part, .app .wire-card, .app .chip { animation: none; } }
 </style>
 </head>
 <body>
