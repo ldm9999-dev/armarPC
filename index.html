@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego educativo para aprender a armar una PC: modo básico y avanzado con 5 fases cada uno, evaluaciones e integradora.">
+<meta name="description" content="Juego educativo para aprender a armar una PC: modo básico con 5 fases y avanzado con 8, evaluaciones e integradora.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,6 +238,20 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .head-btns { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
 .head-btns .btn { padding: 4px 10px; font-size: 13px; }
 #snd-btn[aria-pressed="false"] { color: var(--muted); }
+.home-btn { display: inline-flex; align-items: center; gap: 5px; }
+.home-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.home-btn:disabled { opacity: .45; cursor: not-allowed; }
+.to-top { position: fixed; right: 16px; bottom: 16px; z-index: 60; display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 600 13px var(--font-mono); cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.18); transition: opacity .2s, transform .2s; }
+.to-top[hidden] { display: none !important; }
+.to-top:hover { border-color: var(--accent); color: var(--accent); }
+.to-top svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 760px) {
+  .to-top { padding: 10px; right: 12px; bottom: 12px; } .to-top span { display: none; }
+  body.playing .to-top { bottom: 150px; }
+  .home-btn span { display: none; }
+}
 
 /* barra superior y navegación */
 .topbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
@@ -743,13 +757,16 @@ button.btn.primary:hover { filter: brightness(1.05); }
 </head>
 <body>
 
+
 <div class="welcome" id="welcome" lang="es" hidden></div>
+<button type="button" class="to-top" id="to-top" aria-label="Ir arriba" title="Ir arriba" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg><span>Arriba</span></button>
 
 <div class="wrap" lang="es">
   <header class="topbar">
     <a class="brand" href="#niveles" id="brand-home" aria-label="Armá tu PC: volver al inicio"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" rx="4" fill="var(--accent)"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--surface)"/><g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"><path d="M14 3v4M20 3v4M26 3v4M14 33v4M20 33v4M26 33v4M3 14h4M3 20h4M3 26h4M33 14h4M33 20h4M33 26h4"/></g></svg><span>Armá tu PC</span></a>
     <button type="button" class="mode-chip" id="mode-chip" hidden></button>
     <div class="head-btns">
+      <button type="button" class="btn home-btn" id="home-btn" title="Volver a la pantalla de inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>Inicio</span></button>
       <button type="button" class="btn" id="snd-btn" aria-pressed="true">Sonido: activado</button>
       <button type="button" class="btn" id="fs-btn" hidden>Pantalla completa</button>
     </div>
@@ -761,7 +778,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
     <button type="button" data-group="eval">Evaluaciones</button>
   </nav>
   <nav class="tabs" role="tablist" aria-label="Apartados de la sección">
-    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>5 fases por modo</small></button>
+    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>5 básico · 8 avanzado</small></button>
     <button class="tab" role="tab" type="button" id="tab-muy-basica" data-tab="muy-basica" data-group="practica" aria-controls="panel-muy-basica">PC muy básica<small>a medida</small></button>
     <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" data-group="practica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" data-group="practica" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
@@ -2634,6 +2651,12 @@ button.btn.primary:hover { filter: brightness(1.05); }
     var LV_A = [
       { id: 'cables-adv', title: 'Cableado avanzado', mode: 'cables', variant: 'adv', par: 90,
         desc: '8 cables de una PC potente: doble EPS para el procesador, dos PCIe para la placa de video y el ventilador del cooler.', goal: 'Conectá los 8 cables en su lugar.' },
+      { id: 'mini-adv', title: 'PC muy básica, sin ayuda', mode: 'mini', par: 45,
+        desc: 'Configurá una PC muy básica y elegí la fuente justa sin pistas. Después armala sin ver los nombres.', goal: 'Colocá todas las piezas en su lugar del gabinete.' },
+      { id: 'placa-base-adv', title: 'Placa base Intel', mode: 'placa', par: 210, conf: { gama: 'base', brand: 'intel', socket: 'LGA1851', chipset: 'H810', cpu: 0 },
+        desc: 'Placa de entrada LGA 1851 con chipset H810 y un Core Ultra 5 225: armala y nombrá cada parte en el mismo nivel.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
+      { id: 'basica-adv', title: 'PC básica, sin ayuda', mode: 'basica', par: 90,
+        desc: 'Configurá una PC básica con placa de video y WiFi, elegí la fuente sin pistas y armala en el orden correcto.', goal: 'Colocá todas las piezas respetando el orden de armado.' },
       { id: 'placa-media', title: 'Placa intermedia Intel', mode: 'placa', par: 270, conf: { gama: 'media', brand: 'intel', socket: 'LGA1851', chipset: 'B860', cpu: 0 },
         desc: 'Placa intermedia LGA 1851 con chipset B860 y un Core Ultra 5: armala y nombrá cada parte.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
       { id: 'placa-gamer', title: 'Placa gamer AMD', mode: 'placa', par: 300, conf: { gama: 'gamer', brand: 'amd', socket: 'AM5', chipset: 'X870E', cpu: 1 },
@@ -2873,6 +2896,30 @@ button.btn.primary:hover { filter: brightness(1.05); }
         ['¿Qué diferencia hay entre los núcleos P y E?', ['P para tareas pesadas; E para tareas livianas con menos consumo', 'P de placa y E de energía', 'Los E son más rápidos', 'No hay diferencia'], 'El sistema reparte el trabajo entre los dos tipos.'],
         ['¿Qué ofrece Thunderbolt en una placa gamer?', ['Una conexión USB-C muy rápida para datos, video y carga', 'Un tipo de memoria', 'Una ranura M.2 extra', 'Un ventilador más potente'], 'Permite conectar discos externos rápidos, monitores y más con un solo cable.']
       ],
+      'mini-adv': [
+        ['Una PC muy básica consume 160 W. Con 30 % de margen, ¿cuál es la fuente más chica que sirve?', ['450 W, porque necesita 208 W', '550 W, porque necesita 480 W', '160 W, porque es lo que consume', '850 W, para estar seguros'], '160 × 1,3 = 208 W: la fuente más chica de la lista (450 W) ya alcanza.'],
+        ['Tenés una memoria de 4 GB y otra de 2 GB. ¿Qué pasa?', ['Suman 6 GB, pero no trabajan en doble canal completo', 'Suman 6 GB en doble canal perfecto', 'La PC usa solo 2 GB', 'La PC no enciende'], 'La capacidad se suma, pero para el doble canal completo las memorias tienen que ser iguales.'],
+        ['¿Qué procesador NO entra en un socket AM5?', ['Ryzen 7 5700X', 'Ryzen 5 9600', 'Ryzen 5 8500G', 'Ryzen 7 9800X3D'], 'Los Ryzen 5000 usan el socket AM4 y memoria DDR4.'],
+        ['Un Core Ultra 5 225 va en el socket...', ['LGA 1851', 'LGA 1700', 'AM5', 'AM4'], 'Los Core Ultra 200S usan LGA 1851; los Core de 12.ª a 14.ª generación usan LGA 1700.'],
+        ['¿Por qué una PC muy básica puede usar el cooler que viene con el procesador?', ['Porque el procesador consume poco (unos 65 W)', 'Porque no tiene disco', 'Porque la fuente es chica', 'Porque no tiene placa de video'], 'Un procesador de 65 W se enfría bien con el cooler de fábrica.'],
+        ['Si el disco M.2 NVMe va directo en la placa madre, ¿qué cables necesita?', ['Ninguno: recibe energía y datos por la ranura', 'Un SATA de energía', 'Un SATA de datos y uno de energía', 'Un cable PCIe'], 'La ranura M.2 le da energía y datos al mismo tiempo.']
+      ],
+      'placa-base-adv': [
+        ['¿Qué NO se puede hacer con un chipset H810?', ['Overclock', 'Usar memoria DDR5', 'Instalar un SSD M.2', 'Usar los gráficos integrados'], 'H810 es el chipset de entrada: no permite overclock ni del procesador ni de la memoria.'],
+        ['En un socket LGA 1851, ¿dónde están los pines?', ['En el socket de la placa madre', 'En el procesador', 'En el cooler', 'No tiene pines'], 'En los LGA (Land Grid Array) los pines están en la placa y el procesador tiene contactos planos.'],
+        ['¿Qué hay que sacarle al cooler antes de instalarlo?', ['El plástico protector de la base', 'La pasta térmica', 'El ventilador', 'Los tornillos'], 'Si el plástico queda puesto, el calor no pasa al cooler y el procesador se recalienta.'],
+        ['¿Dónde se enchufa el ventilador del cooler del procesador?', ['En CPU_FAN', 'En SYS_FAN', 'En la fuente', 'En el puerto USB'], 'La placa controla y vigila ese ventilador; si no gira, avisa al encender.'],
+        ['¿Para qué sirven los pines del panel frontal (F_PANEL)?', ['Para el botón de encendido, el reset y las luces del gabinete', 'Para el audio de la placa de video', 'Para conectar el disco', 'Para la fuente'], 'Sin ese cable, el botón de encendido del gabinete no hace nada.'],
+        ['¿Qué parte de la placa madre guarda la configuración (BIOS/UEFI) y la hora?', ['El chip de BIOS y la pila CMOS', 'La memoria RAM', 'El chipset', 'El disco M.2'], 'La pila mantiene la hora y la configuración aunque la PC esté desenchufada.']
+      ],
+      'basica-adv': [
+        ['¿Cuál es el orden correcto de armado?', ['Fuente y placa madre en el gabinete, después placa de video y cables', 'Placa de video antes que la placa madre', 'Cables primero y después las piezas', 'Discos antes que la fuente siempre, sin placa'], 'Primero lo que va atornillado al gabinete; la placa de video va en la ranura de la placa madre, así que va después.'],
+        ['¿En qué ranura conviene poner la placa de video?', ['En la PCIe x16 más cercana al procesador', 'En la PCIe x1 de abajo', 'En la ranura M.2', 'En cualquiera, da igual'], 'La primera ranura x16 es la que tiene todas las líneas PCIe conectadas al procesador.'],
+        ['Una PC consume 330 W. Con 30 % de margen, ¿qué fuente corresponde?', ['450 W', '550 W', '650 W', '850 W'], '330 × 1,3 = 429 W: alcanza la de 450 W.'],
+        ['¿Qué pasa si conectás el monitor a la placa madre en una PC con placa de video?', ['Normalmente no da imagen o usa los gráficos integrados, no la placa de video', 'Da imagen con la placa de video', 'Se quema la placa de video', 'La PC no enciende'], 'El monitor se conecta a la placa de video para usar su potencia.'],
+        ['En una PC con buena circulación de aire, ¿cómo se mueve el aire?', ['Entra frío por el frente y sale caliente por atrás y arriba', 'Entra por atrás y sale por el frente', 'Entra y sale por arriba', 'No importa la dirección'], 'El aire caliente sube, así que conviene sacarlo por atrás y por arriba.'],
+        ['¿Dónde se conecta la antena de una placa WiFi PCIe?', ['En la parte trasera de la placa WiFi, fuera del gabinete', 'En la fuente', 'En la placa madre, al lado del procesador', 'No usa antena'], 'Las antenas se enroscan atrás, en el bracket de la placa, para recibir bien la señal.']
+      ],
       gamer: [
         ['Una PC tiene: procesador 120 W, 2 placas de video de 250 W, placa madre 60 W, 4 memorias de 5 W y 40 W de otros. ¿Cuánto consume?', ['740 W', '620 W', '870 W', '500 W'], '120 + 500 + 60 + 20 + 40 = 740 W.'],
         ['Esa PC consume 740 W. Con 30 % de margen, ¿qué fuente corresponde?', ['1000 W', '850 W', '750 W', '1600 W'], '740 × 1,3 = 962 W: la de 850 W no alcanza.'],
@@ -2898,7 +2945,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
     if (!store.evals) store.evals = { b: {}, a: {} };
     if (!store.integ) store.integ = {};
     if (store.mode) LEVELS = levelsFor(store.mode);
-    function vfBank(id) { return QUIZ[id] || QUIZ[{ 'cables-adv': 'cables', 'placa-intel-gamer': 'placa-media' }[id]] || []; }
+    function vfBank(id) { return QUIZ[id] || QUIZ[{ 'cables-adv': 'cables', 'mini-adv': 'mini', 'placa-base-adv': 'placa-armado', 'basica-adv': 'basica', 'placa-intel-gamer': 'placa-media' }[id]] || []; }
     function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (_) {} }
     function M() { return store.mode; }
     function lv(i) { return (store.best[M()] || {})[LEVELS[i].id] || 0; }
@@ -2913,8 +2960,9 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function avgE() { var e = 0; LEVELS.forEach(function (_, i) { e += ev(i); }); return Math.round(e / LEVELS.length); }
     function finalNote() { return hasIg() ? Math.round(avgL() * .4 + avgE() * .3 + ig() * .3) : Math.round((avgL() + avgE()) / 2); }
     function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    function EP() { return M() === 'a' ? 8 : 6; }
     function grade(r, par) {
-      var ep = Math.min(60, r.errors * 6);
+      var ep = Math.min(60, r.errors * EP());
       var tp = Math.min(25, Math.max(0, (r.secs - par) / par * 25));
       return Math.max(10, Math.round(100 - ep - tp));
     }
@@ -2946,10 +2994,10 @@ button.btn.primary:hover { filter: brightness(1.05); }
       function opt(m, name, txt) {
         var n = progressIn(m);
         return '<button type="button" class="diff-btn" data-mode="' + m + '"><strong>' + name + '</strong><span>' + txt + '</span>' +
-          (n ? '<em>Ya completaste ' + n + ' de ' + LEVELS.length + ' fases en este modo</em>' : '<em>Empezás desde la fase 1</em>') + '</button>';
+          (n ? '<em>Ya completaste ' + n + ' de ' + levelsFor(m).length + ' fases en este modo</em>' : '<em>Empezás desde la fase 1</em>') + '</button>';
       }
       mapEl.innerHTML = '<div class="lv-start panel"><span class="label">Nuevo juego</span><h2>Elegí cómo querés jugar</h2>' +
-        '<p>El juego tiene 8 fases. En cada una armás algo y después hacés una evaluación corta de opción múltiple. Al terminar las 8 fases llega la evaluación integradora, con ' + nInt() + ' preguntas.</p>' +
+        '<p>El modo Básico tiene 5 fases y el Avanzado tiene 8. En cada una armás algo y después hacés una evaluación corta de opción múltiple. Al terminar todas las fases llega la evaluación integradora, con ' + nInt() + ' preguntas.</p>' +
         '<div class="diff-opts">' +
           opt('b', 'Básico', 'En todas las fases podés usar el botón “Mostrar nombres” para ver dónde va cada pieza.') +
           opt('a', 'Avanzado', 'En todas las fases el botón “Mostrar nombres” queda bloqueado: tenés que saber dónde va todo.') +
@@ -2974,21 +3022,21 @@ button.btn.primary:hover { filter: brightness(1.05); }
         return '<button type="button" class="mode-card ' + m + '" data-mode="' + m + '">' +
           '<div class="mc-top"><span class="mc-ico">' + (m === 'a' ? ICON_A : ICON_B) + '</span><strong>' + name + '</strong></div>' +
           '<p>' + desc + '</p><ul>' + feats + '</ul>' +
-          '<div class="mc-cta"><span>' + (n ? n + ' de ' + LEVELS.length + ' fases completas · ' : '') + cta + '</span><b>' + (n ? 'Continuar →' : 'Empezar →') + '</b></div></button>';
+          '<div class="mc-cta"><span>' + (n ? n + ' de ' + levelsFor(m).length + ' fases completas · ' : '') + cta + '</span><b>' + (n ? 'Continuar →' : 'Empezar →') + '</b></div></button>';
       }
       welcomeEl.innerHTML = '<div class="welcome-inner">' +
         '<div class="w-brand"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" rx="4" fill="var(--accent)"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--surface)"/><g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"><path d="M14 3v4M20 3v4M26 3v4M14 33v4M20 33v4M26 33v4M3 14h4M3 20h4M3 26h4M33 14h4M33 20h4M33 26h4"/></g></svg><span class="label">Juego educativo de hardware</span></div>' +
         '<h1>Armá tu PC</h1>' +
         '<p class="lead">Aprendé a armar una computadora paso a paso: conectá los cables de la fuente, armá placas madre AMD e Intel y configurá desde una PC muy básica hasta una PC gamer.</p>' +
         '<ol class="w-steps">' +
-          '<li><b>01 · Fases</b>5 fases en cada modo, que se desbloquean de a una.</li>' +
+          '<li><b>01 · Fases</b>5 fases en Básico y 8 en Avanzado, que se desbloquean de a una.</li>' +
           '<li><b>02 · Evaluaciones</b>Después de cada fase, ' + NEV + ' preguntas de opción múltiple.</li>' +
           '<li><b>03 · Integradora</b>Al final, una evaluación integradora y tu nota final.</li>' +
         '</ol>' +
         '<h2 class="w-q">¿Cómo querés jugar?</h2>' +
         '<div class="mode-cards">' +
           card('b', 'Básico', 'Para empezar: las 5 fases más simples, con ayuda para ver dónde va cada pieza.', '<li>Cableado de 5 cables, PC muy básica, placa base y PC completa</li><li>Botón “Mostrar nombres” disponible</li><li>Integradora de 15 preguntas</li>') +
-          card('a', 'Avanzado', 'Para demostrar lo que sabés: 5 fases más difíciles y sin ayuda de nombres.', '<li>Cableado de 8 cables, placas intermedia y gamer AMD e Intel, PC gamer</li><li class="no">Sin ayuda de nombres</li><li>Integradora de 20 preguntas, más difícil</li>') +
+          card('a', 'Avanzado', 'Para demostrar lo que sabés: 8 fases más difíciles, sin ayuda de nombres y con más descuento por error.', '<li>Cableado de 8 cables, PC muy básica y básica sin pistas, placas base, intermedia y gamer AMD e Intel, PC gamer</li><li class="no">Sin ayuda de nombres ni pistas de la fuente</li><li>Integradora de 20 preguntas, más difícil</li>') +
         '</div>' +
         '<div class="w-links"><span>¿Solo querés practicar o sos docente?</span><button type="button" class="btn" data-go="muy-basica">Práctica libre</button><button type="button" class="btn" data-go="evaluaciones">Ver evaluaciones</button></div>' +
       '</div>';
@@ -2997,7 +3045,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
       if (tabLocked) return;
       renderWelcome(); welcomeEl.hidden = false; wrapEl.hidden = true;
       try { window.scrollTo(0, 0); } catch (_) {}
-      var f = welcomeEl.querySelector('.mode-card.' + (store.mode || 'b')); if (f) f.focus();
+      var f = welcomeEl.querySelector('.mode-card.' + (store.mode || 'b')); if (f) { try { f.focus({ preventScroll: true }); } catch (_) {} }
     };
     function closeWelcome() { welcomeEl.hidden = true; wrapEl.hidden = false; fitAll(); }
     welcomeEl.addEventListener('click', function (e) {
@@ -3222,7 +3270,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function buildFor(mode, sc) { return mode === 'mini' ? buildMini(sc) : mode === 'basica' ? buildBasica(sc) : buildGamer(sc); }
     function tierFor(need) { for (var i = 0; i < TIERS.length; i++) if (TIERS[i] >= need) return TIERS[i]; return null; }
 
-    function setupScreen(host, mode, prev, onStart) {
+    function setupScreen(host, mode, prev, onStart, strict) {
+      var setupErr = 0, psuChanged = false;
       var gamer = mode === 'gamer';
       var sc = prev ? ext(prev, { disks: prev.disks.slice() }) : { brand: 'amd', disks: ['ssd'], psu: 0, cool: gamer ? '' : 'stock', gpus: 3, ram: 4 };
       var modeName = { mini: 'PC muy básica', basica: 'PC básica', gamer: 'PC gamer' }[mode];
@@ -3256,8 +3305,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
             '<div class="mod"><span class="unit">Memorias RAM</span>' + seg('su-ram', [[2, '2'], [4, '4']], sc.ram) + '</div></div></fieldset>' : '') +
           '<fieldset class="group">' + H('Fuente de alimentación') +
             '<div class="field"><select id="su-psu" aria-label="Potencia de la fuente"><option value="0">Elegí la potencia…</option>' +
-            (gamer ? [550, 650, 750, 850, 1000, 1200, 1300, 1600] : [450, 550, 650, 750, 850]).map(function (w) { return '<option value="' + w + '"' + (sc.psu === w ? ' selected' : '') + '>' + w + ' W</option>'; }).join('') + '</select>' +
-            '<span class="unit">Elegí la que te parezca. Cuando la elijas te digo si sirve para esta PC.</span></div></fieldset>' +
+            (gamer ? [550, 650, 750, 850, 1000, 1200, 1300, 1600] : strict ? [450, 550, 650, 750, 850, 1000] : [450, 550, 650, 750, 850]).map(function (w) { return '<option value="' + w + '"' + (sc.psu === w ? ' selected' : '') + '>' + w + ' W</option>'; }).join('') + '</select>' +
+            '<span class="unit">' + (strict ? 'Modo avanzado: te digo si sirve, pero no cuál es la correcta. Cada fuente equivocada cuenta como error.' : 'Elegí la que te parezca. Cuando la elijas te digo si sirve para esta PC.') + '</span></div></fieldset>' +
           '<fieldset class="group">' + H('Refrigeración del procesador') + '<div class="coolers">' + coolOpts + '</div></fieldset>' +
         '</div><div class="sumcard su-sum" aria-live="polite"></div></div></section>';
 
@@ -3278,6 +3327,13 @@ button.btn.primary:hover { filter: brightness(1.05); }
           msg = '<b>La fuente de ' + sc.psu + ' W es demasiado grande para esta PC.</b> Le sobran ' + (sc.psu - need) + ' W: la PC consume ' + c + ' W y, con el 30 % de margen, necesita ' + need + ' W. Una fuente tan grande es más cara y trabaja casi sin carga. <b>La fuente recomendada es la de ' + best + ' W.</b>';
           cls = 'err';
         } else { msg = '<b>¡Muy bien! La fuente de ' + sc.psu + ' W es la recomendada para esta PC.</b> Consume ' + c + ' W y, con el 30 % de margen de seguridad, necesita ' + need + ' W.'; cls = 'ok'; }
+        if (strict && cls === 'err' && sc.psu && !problems.length && psuChanged) setupErr++;
+        if (strict && cls === 'err' && sc.psu) {
+          msg = sc.psu < need ? '<b>La fuente de ' + sc.psu + ' W no alcanza para esta PC.</b> La PC consume ' + c + ' W. Calculá el 30 % de margen de seguridad y probá otra.'
+            : '<b>La fuente de ' + sc.psu + ' W es demasiado grande para esta PC.</b> La PC consume ' + c + ' W. Buscá la más chica que alcance con el 30 % de margen.';
+        }
+        if (strict && cls === 'ok') msg = '<b>¡Muy bien! La fuente de ' + sc.psu + ' W es la correcta.</b> Consume ' + c + ' W × 1,3 = ' + need + ' W.';
+        if (strict && setupErr) msg += '<br><small>Errores en la fuente: ' + setupErr + ' (se suman al resultado).</small>';
         var ok = !problems.length && sc.psu === best;
         var bad = cls === 'err' && sc.psu > 0;
         if (bad && sc.psu !== lastBad) sfx.error();
@@ -3293,7 +3349,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
           '</dl>' +
           '<div class="setup-msg ' + cls + '">' + msg + '</div>' +
           '<button type="button" class="btn primary su-start"' + (ok ? '' : ' disabled') + '>Empezar a armar →</button>';
-        sum.querySelector('.su-start').addEventListener('click', function () { if (ok) onStart(ext(sc, { disks: sc.disks.slice() })); });
+        sum.querySelector('.su-start').addEventListener('click', function () { if (ok) onStart(ext(sc, { disks: sc.disks.slice() }), setupErr); });
       }
       host.querySelector('.setup').addEventListener('change', function (e) {
         var t = e.target;
@@ -3302,8 +3358,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
         else if (t.name === 'su-gpus') sc.gpus = +t.value;
         else if (t.name === 'su-ram') sc.ram = +t.value;
         else if (t.name === 'su-cool') sc.cool = t.value;
-        else if (t.id === 'su-psu') sc.psu = +t.value;
-        update();
+        else if (t.id === 'su-psu') { sc.psu = +t.value; psuChanged = true; }
+        update(); psuChanged = false;
       });
       update();
     }
@@ -3317,12 +3373,12 @@ button.btn.primary:hover { filter: brightness(1.05); }
       var host = playEl.querySelector('.lv-host');
       var done = function (r) { finished(i, r); };
       if (needsSetup) {
-        setupScreen(host, L.mode, lastSetup[L.id], function (sc) {
+        setupScreen(host, L.mode, lastSetup[L.id], function (sc, extra) {
           lastSetup[L.id] = sc;
-          current = mountGame(host, ext(buildFor(L.mode, sc), { onWin: done }));
+          current = mountGame(host, ext(buildFor(L.mode, sc), { onWin: function (r) { if (extra) { r.errors = (r.errors || 0) + extra; r.setupErr = extra; } done(r); } }));
           if (M() === 'a') lockHelp(host);
           try { playEl.scrollIntoView({ block: 'start' }); } catch (_) {}
-        });
+        }, M() === 'a');
         return;
       }
       if (L.mode === 'mini') current = mountGame(host, ext(miniCfg({ disk: 'ssd', n: 2, gb: [4, 4] }), { onWin: done }));
@@ -3350,7 +3406,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
       var L = LEVELS[i], n = grade(r, L.par), rec = store.best[M()] || (store.best[M()] = {}), prev = rec[L.id] || 0;
       if (n > prev) { rec[L.id] = n; save(); }
       var pass = n >= PASS;
-      var tips = [r.errors ? r.errors + (r.errors === 1 ? ' error' : ' errores') + ' (−' + Math.min(60, r.errors * 6) + ')' : 'sin errores',
+      var tips = [r.errors ? r.errors + (r.errors === 1 ? ' error' : ' errores') + ' (−' + Math.min(60, r.errors * EP()) + (r.setupErr ? '; ' + r.setupErr + ' en la fuente' : '') + ')' : 'sin errores',
         'tiempo ' + fmt(r.secs) + (r.secs > L.par ? ' (ideal ' + fmt(L.par) + ')' : ', dentro del ideal')];
       showResult({ label: 'Fase ' + (i + 1) + ' · ' + L.title, n: n,
         msg: pass ? '¡Felicitaciones! Terminaste el juego de la fase ' + (i + 1) + '. Ahora viene la evaluación de ' + NEV + ' preguntas de opción múltiple.' : 'Terminaste, pero necesitás 60 para pasar a la evaluación. ¡Probá de nuevo!',
@@ -3707,7 +3763,16 @@ button.btn.primary:hover { filter: brightness(1.05); }
   });
   window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
   show(location.hash.slice(1));
-  if (!location.hash || location.hash === '#niveles') openWelcome();
+  openWelcome();
+  (function () {
+    var hb = document.getElementById('home-btn'), tt = document.getElementById('to-top');
+    hb.addEventListener('click', function () { if (!tabLocked) openWelcome(); });
+    var obs = new MutationObserver(function () { hb.disabled = tabLocked; hb.title = tabLocked ? 'Terminá o salí de la fase para volver al inicio' : 'Volver a la pantalla de inicio'; });
+    obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    function onScroll() { tt.hidden = (window.scrollY || document.documentElement.scrollTop) < 400; }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    tt.addEventListener('click', function () { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) { window.scrollTo(0, 0); } });
+  })();
 })();
 </script>
 
