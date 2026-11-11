@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego educativo para aprender a armar una PC: modo básico con 5 fases y avanzado con 8, evaluaciones e integradora.">
+<meta name="description" content="Juego educativo para aprender a armar y arreglar una PC: modo básico con 6 fases y avanzado con 9, panel frontal, evaluaciones, integradora y reparación.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -170,6 +170,14 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .help .slot:not(.filled) .tag { opacity: 1; }
 .slot.hover { border-style: solid; border-color: var(--accent); background: var(--accent-soft); }
 .slot.filled { border-color: transparent; cursor: default; }
+.slot[data-type="cmos"] { border-radius: 50%; }
+.io-plate { fill: #9aa3ad; } .io-plate-in { fill: #b9c1c9; }
+.io-shell { fill: #d5dbe1; stroke: #6d7782; stroke-width: .7; } .io-void { fill: #0d0f12; } .io-tongue { fill: #2f353d; }
+.io-btxt { font: 600 5.5px var(--font-mono); fill: #2b3138; }
+.io-numc { fill: var(--accent); } .io-num { font: 700 10px var(--font-mono); fill: #fff; }
+.io-big { display: block; width: 100%; height: auto; margin: 6px 0 4px; }
+.io-legend { margin: 0; padding-left: 20px; font-size: 13px; display: grid; gap: 3px; }
+.io-legend li::marker { font-weight: 700; color: var(--accent); }
 .slot.flash { border-color: var(--err); border-style: solid; }
 .slot svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
 .slot.filled svg { animation: pop .28s ease-out; }
@@ -442,8 +450,8 @@ button.btn:disabled { opacity: .5; cursor: not-allowed; }
 .q-fb { border-radius: 8px; padding: 10px 12px; background: var(--bg); font-size: 14.5px; }
 .q-fb strong { display: block; margin-bottom: 2px; }
 .q-fb.ok strong { color: var(--ok); } .q-fb.err strong { color: var(--err); }
-.q-dots { display: flex; gap: 6px; }
-.q-dots i { width: 22px; height: 6px; border-radius: 3px; background: var(--line); }
+.q-dots { display: flex; gap: 4px; max-width: 100%; }
+.q-dots i { flex: 0 1 22px; min-width: 4px; height: 6px; border-radius: 3px; background: var(--line); }
 .q-dots i.ok { background: var(--ok); } .q-dots i.err { background: var(--err); } .q-dots i.cur { background: var(--accent); }
 .tab:disabled { opacity: .4; cursor: not-allowed; }
 .lock-note { font-size: 12.5px; color: var(--muted); margin: -6px 0 0; }
@@ -738,6 +746,51 @@ button.btn.primary:hover { filter: brightness(1.05); }
   .topbar { flex-wrap: nowrap; } .head-btns { flex-wrap: nowrap; }
 }
 
+
+/* panel frontal */
+.fp-case .wire-svg { touch-action: manipulation; }
+.fp-silk { fill: none; stroke: #e8efe9; stroke-width: 1.2; opacity: .55; }
+.fp-base { fill: #101418; }
+.fp-shroud { fill: #15191f; stroke: #2b323b; stroke-width: 1.5; }
+.fp-notch { fill: var(--pcb); }
+.fp-slot { fill: #050608; }
+.fp-pinrow { fill: var(--gold); }
+.fp-fanwall { fill: #e9e4d6; opacity: .85; }
+.fp-pin { fill: var(--gold); stroke: #8b6b1d; stroke-width: .8; }
+.fp-pin.one { stroke: #fff; stroke-width: 1.4; }
+.fp-pin-hi { fill: #fff3c4; opacity: .55; }
+.fp-hole { fill: none; stroke: #e8efe9; stroke-width: 1; opacity: .6; stroke-dasharray: 2 2; }
+.fp-p1 { fill: #f2f4f6; }
+.fp-code { fill: #f2f4f6; font-family: var(--font-mono); font-weight: 600; letter-spacing: .02em; opacity: .9; }
+.fp-pinlab { fill: #f2f4f6; font-family: var(--font-mono); font-weight: 600; }
+.fp-pinlab.plus { fill: #ffd479; }
+.fp-title { fill: #fff; font: 700 13px var(--font-body); paint-order: stroke; stroke: #0b0e12; stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.fp-target { fill: none; stroke: var(--accent); stroke-width: 3; stroke-dasharray: 7 4; animation: pulse 1s ease-in-out infinite; }
+.fp-badbox { fill: rgba(220,60,60,.18); stroke: var(--err); stroke-width: 3; }
+.fp-wire { fill: none; stroke-linecap: round; }
+.fp-shadow { fill: none; stroke: rgba(0,0,0,.35); stroke-linecap: round; }
+.fp-plugbody { fill: #121519; stroke: #343b45; stroke-width: 1.4; }
+.fp-plugbody.blue { fill: #1d4ed8; stroke: #93c5fd; }
+.fp-plughole { fill: #000; opacity: .5; }
+.fp-pluglab { fill: #f2f4f6; font-family: var(--font-mono); font-weight: 700; pointer-events: none; }
+.fp-screw { fill: none; stroke: var(--metal); stroke-width: 3; opacity: .8; }
+.fp-fbox { fill: #20252c; stroke: #3a424c; stroke-width: 2; }
+.fp-flabel { fill: #cfd6dd; font: 600 13px var(--font-mono); }
+.fp-flabel.dim { fill: #e8efe9; opacity: .7; }
+.fp-mini { fill: #9aa4ae; font: 500 10px var(--font-mono); }
+.fp-btn { fill: #2c333c; stroke: #59626d; stroke-width: 2; }
+.fp-sym { fill: none; stroke: #8d969f; stroke-width: 2.4; stroke-linecap: round; }
+.fp-ico.on .fp-btn { stroke: var(--ok); }
+.fp-ico.on .fp-sym { stroke: #8be7b1; }
+.fp-led { fill: #3a2a2a; }
+.fp-led.ready { fill: #5a4b2a; }
+.fp-led.g.on { fill: #47e08a; filter: drop-shadow(0 0 4px #47e08a); }
+.fp-led.r.on { fill: #ff5a5a; filter: drop-shadow(0 0 4px #ff5a5a); }
+.fp-port { fill: #0b0d10; stroke: #6b747e; stroke-width: 1.2; }
+.fp-tongue { fill: #2d333b; } .fp-tongue.blue { fill: #2563eb; }
+.fp-jack { fill: #0b0d10; stroke: #6b747e; stroke-width: 2; } .fp-jack.mic { stroke: #d16aa8; }
+.fp-ico.on .fp-port, .fp-ico.on .fp-jack { stroke: var(--ok); }
+
 /* Las piezas ya colocadas salen de la bandeja: el espacio se libera */
 .app .tray .part.used, .app .tray .part.off { display: none; }
 .app .wires-list .wire-card.done { display: none; }
@@ -778,14 +831,16 @@ button.btn.primary:hover { filter: brightness(1.05); }
     <button type="button" data-group="eval">Evaluaciones</button>
   </nav>
   <nav class="tabs" role="tablist" aria-label="Apartados de la sección">
-    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>5 básico · 8 avanzado</small></button>
+    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>6 básico · 9 avanzado</small></button>
     <button class="tab" role="tab" type="button" id="tab-muy-basica" data-tab="muy-basica" data-group="practica" aria-controls="panel-muy-basica">PC muy básica<small>a medida</small></button>
     <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" data-group="practica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" data-group="practica" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" data-group="practica" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
     <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" data-group="practica" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
+    <button class="tab" role="tab" type="button" id="tab-frontal" data-tab="frontal" data-group="practica" aria-controls="panel-frontal">Panel frontal<small>botones, luces y USB</small></button>
     <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" data-group="eval" aria-controls="panel-evaluaciones">Por fase<small>básico y avanzado</small></button>
     <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" data-group="eval" aria-controls="panel-integradora">Integradora<small>básica y avanzada</small></button>
+    <button class="tab" role="tab" type="button" id="tab-reparacion" data-tab="reparacion" data-group="eval" aria-controls="panel-reparacion">Arreglá la PC<small>fallas y soluciones</small></button>
   </nav>
   <p class="lock-note" id="lock-note" hidden>Mientras jugás una fase o una evaluación, las otras secciones quedan bloqueadas. Tocá “Volver a los niveles” para usarlas.</p>
 
@@ -947,12 +1002,20 @@ button.btn.primary:hover { filter: brightness(1.05); }
     <div id="game-cableado"></div>
   </section>
 
+  <section class="tabpanel" role="tabpanel" id="panel-frontal" aria-labelledby="tab-frontal" hidden>
+    <div id="game-frontal"></div>
+  </section>
+
   <section class="tabpanel" role="tabpanel" id="panel-evaluaciones" aria-labelledby="tab-evaluaciones" hidden>
     <div id="ev-free" style="display:grid;gap:14px"></div>
   </section>
 
   <section class="tabpanel" role="tabpanel" id="panel-integradora" aria-labelledby="tab-integradora" hidden>
     <div id="ig-free" style="display:grid;gap:14px"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-reparacion" aria-labelledby="tab-reparacion" hidden>
+    <div id="rep-free" style="display:grid;gap:14px"></div>
   </section>
 </div>
 
@@ -1018,6 +1081,83 @@ button.btn.primary:hover { filter: brightness(1.05); }
   };
   function ext(base, more) { var o = {}, k; for (k in base) o[k] = base[k]; for (k in more) o[k] = more[k]; return o; }
 
+  /* ---- panel trasero (I/O): dibujo de cada puerto ---- */
+  var IOP = {
+    usbA: function (x, y, c) { return '<rect class="io-shell" x="' + x + '" y="' + y + '" width="24" height="11" rx="1"/><rect class="io-void" x="' + (x + 2) + '" y="' + (y + 2) + '" width="20" height="7"/><rect x="' + (x + 3) + '" y="' + (y + 2) + '" width="18" height="3.4" fill="' + c + '"/>'; },
+    usbC: function (x, y) { return '<rect class="io-shell" x="' + x + '" y="' + y + '" width="18" height="7.5" rx="3.75"/><rect class="io-void" x="' + (x + 1.6) + '" y="' + (y + 1.6) + '" width="14.8" height="4.3" rx="2.1"/><rect class="io-tongue" x="' + (x + 4) + '" y="' + (y + 3) + '" width="10" height="1.6" rx=".8"/>'; },
+    hdmi: function (x, y) { return '<path class="io-shell" d="M' + x + ' ' + y + ' h28 v6.5 l-3 4.5 h-22 l-3 -4.5 Z"/><path class="io-void" d="M' + (x + 2) + ' ' + (y + 2) + ' h24 v4 l-2.4 3.2 h-19.2 l-2.4 -3.2 Z"/><rect class="io-tongue" x="' + (x + 5) + '" y="' + (y + 3.3) + '" width="18" height="2.4"/>'; },
+    dp: function (x, y) { return '<path class="io-shell" d="M' + x + ' ' + y + ' h26 v11 h-22 l-4 -4 Z"/><path class="io-void" d="M' + (x + 2) + ' ' + (y + 2) + ' h22 v7 h-18.5 l-3.5 -3.2 Z"/><rect class="io-tongue" x="' + (x + 6) + '" y="' + (y + 4.6) + '" width="15" height="2"/>'; },
+    rj45: function (x, y) { return '<rect class="io-shell" x="' + x + '" y="' + y + '" width="26" height="22" rx="1"/><rect class="io-void" x="' + (x + 3) + '" y="' + (y + 4) + '" width="20" height="15"/><rect class="io-shell" x="' + (x + 9) + '" y="' + (y + 15) + '" width="8" height="4"/>' +
+      '<rect x="' + (x + 2) + '" y="' + (y + 1) + '" width="4" height="2.4" fill="#36d27a"/><rect x="' + (x + 20) + '" y="' + (y + 1) + '" width="4" height="2.4" fill="#f2a33a"/>' + (function () { var o = ''; for (var k = 0; k < 8; k++) o += '<rect fill="#d2a637" x="' + (x + 5 + k * 2.1) + '" y="' + (y + 5) + '" width="1" height="3"/>'; return o; })(); },
+    jack: function (x, y, c) { return '<circle class="io-shell" cx="' + (x + 7) + '" cy="' + (y + 7) + '" r="7"/><circle cx="' + (x + 7) + '" cy="' + (y + 7) + '" r="5.2" fill="' + c + '"/><circle class="io-void" cx="' + (x + 7) + '" cy="' + (y + 7) + '" r="2.3"/>'; },
+    ps2: function (x, y) { return '<circle class="io-shell" cx="' + (x + 9) + '" cy="' + (y + 9) + '" r="9"/><path d="M' + (x + 9) + ' ' + (y + 1.8) + ' a7.2 7.2 0 0 0 0 14.4 Z" fill="#7c5cc4"/><path d="M' + (x + 9) + ' ' + (y + 1.8) + ' a7.2 7.2 0 0 1 0 14.4 Z" fill="#3fae5a"/><circle class="io-void" cx="' + (x + 9) + '" cy="' + (y + 9) + '" r="4.4"/>'; },
+    btn: function (x, y, t) { return '<rect class="io-shell" x="' + x + '" y="' + y + '" width="18" height="12" rx="2"/><circle cx="' + (x + 9) + '" cy="' + (y + 6) + '" r="3.8" fill="#1c2027" stroke="#8a939d" stroke-width=".8"/>'; },
+    sma: function (x, y) { return '<path fill="#c9a23a" stroke="#8b6b1d" stroke-width=".7" d="M' + (x + 3.5) + ' ' + y + ' h6 l3.5 6.5 l-3.5 6.5 h-6 l-3.5 -6.5 Z"/><circle cx="' + (x + 6.5) + '" cy="' + (y + 6.5) + '" r="3" fill="#e6c766"/><circle cx="' + (x + 6.5) + '" cy="' + (y + 6.5) + '" r="1" fill="#2a2a2a"/>'; },
+    spdif: function (x, y) { return '<rect class="io-shell" x="' + x + '" y="' + y + '" width="13" height="12" rx="1.5"/><rect x="' + (x + 2.5) + '" y="' + (y + 2.5) + '" width="8" height="7" rx="1" fill="#0a0b0d"/><circle cx="' + (x + 6.5) + '" cy="' + (y + 6) + '" r="1.6" fill="#d33"/>'; }
+  };
+  var IOW = { usbA: [24, 11], usbC: [18, 7.5], hdmi: [28, 11], dp: [26, 11], rj45: [26, 22], jack: [14, 14], ps2: [18, 18], btn: [18, 12], sma: [13, 13], spdif: [13, 12] };
+  var BLK = '#2f353d', BLU = '#2a64d6', RED = '#d23b3b', TEAL = '#1fa7a0';
+  /* cada columna: lista de puertos [tipo, color] y su descripción */
+  var IO_SETS = {
+    base: { title: 'Panel trasero básico (Micro-ATX)', cols: [
+      { items: [['ps2'], ['usbA', BLK], ['usbA', BLK]], label: 'PS/2 (teclado o mouse viejos) y 2 USB 2.0 negros (480 Mb/s): para teclado y mouse' },
+      { items: [['hdmi'], ['dp']], label: 'HDMI y DisplayPort: salidas de video de los gráficos integrados del procesador' },
+      { items: [['usbA', BLU], ['usbA', BLU]], label: '2 USB 5 Gb/s azules (USB 3.2 Gen 1): para pendrives y discos externos' },
+      { items: [['rj45'], ['usbA', BLK], ['usbA', BLK]], label: 'Red RJ-45 de 1 Gb/s (con 2 luces: conexión y actividad) y 2 USB 2.0 más' },
+      { items: [['jack', '#3b82f6'], ['jack', '#22c55e'], ['jack', '#ec4899']], label: 'Audio: azul = entrada de línea, verde = salida a parlantes o auriculares, rosa = micrófono' }
+    ] },
+    media: { title: 'Panel trasero intermedio (ATX)', cols: [
+      { items: [['btn', 'FLASH'], ['usbA', BLK], ['usbA', BLK]], label: 'Botón BIOS Flashback (actualiza la BIOS sin procesador) y 2 USB 2.0' },
+      { items: [['hdmi'], ['dp']], label: 'HDMI y DisplayPort de los gráficos integrados' },
+      { items: [['usbA', BLU], ['usbA', BLU], ['usbA', BLU], ['usbA', BLU]], label: '4 USB 5 Gb/s azules' },
+      { items: [['usbC'], ['usbA', RED], ['usbA', RED]], label: 'USB-C 10 Gb/s y 2 USB 10 Gb/s rojos (USB 3.2 Gen 2)' },
+      { items: [['rj45'], ['usbA', BLU], ['usbA', BLU]], label: 'Red RJ-45 de 2,5 Gb/s y 2 USB 5 Gb/s' },
+      { items: [['sma'], ['sma']], label: '2 conectores dorados para las antenas del WiFi 6E / Bluetooth' },
+      { items: [['jack', '#3b82f6'], ['jack', '#22c55e'], ['jack', '#ec4899']], label: 'Audio: entrada (azul), salida (verde) y micrófono (rosa)' }
+    ] },
+    gamer: { title: 'Panel trasero gamer (ATX de alta gama)', cols: [
+      { items: [['btn', 'CLR'], ['btn', 'FLASH']], label: 'Botón Clear CMOS (borra la configuración de la BIOS) y botón BIOS Flashback' },
+      { items: [['usbC'], ['usbC'], ['hdmi']], label: '2 USB4 tipo C de 40 Gb/s (datos, video y carga) y HDMI' },
+      { items: [['usbA', RED], ['usbA', RED], ['usbA', RED], ['usbA', RED]], label: '4 USB 10 Gb/s rojos (USB 3.2 Gen 2)' },
+      { items: [['usbC'], ['usbA', TEAL], ['usbA', TEAL]], label: 'USB-C 20 Gb/s (USB 3.2 Gen 2x2) y 2 USB 10 Gb/s' },
+      { items: [['usbA', BLU], ['usbA', BLU], ['usbA', BLU], ['usbA', BLU]], label: '4 USB 5 Gb/s azules' },
+      { items: [['rj45'], ['usbA', BLU], ['usbA', BLU]], label: 'Red RJ-45 de 5 Gb/s y 2 USB 5 Gb/s más' },
+      { items: [['sma'], ['sma']], label: '2 conectores para las antenas del WiFi 7 / Bluetooth' },
+      { items: [['spdif'], ['jack', '#22c55e'], ['jack', '#ec4899']], label: 'Salida de audio óptica (S/PDIF), salida verde y micrófono rosa' }
+    ] }
+  };
+  function ioDraw(gama, nums) {
+    var set = IO_SETS[gama], W = 340, H = 120, gap = 6, o = '';
+    var widths = set.cols.map(function (c) { return Math.max.apply(null, c.items.map(function (it) { return IOW[it[0]][0]; })); });
+    var total = widths.reduce(function (a, b) { return a + b; }, 0), sp = (W - 16 - total) / (set.cols.length - 1 || 1), x = 8;
+    o += '<rect class="io-plate" width="' + W + '" height="' + H + '" rx="4"/><rect class="io-plate-in" x="3" y="3" width="' + (W - 6) + '" height="' + (H - 6) + '" rx="3"/>';
+    set.cols.forEach(function (c, ci) {
+      var hs = c.items.map(function (it) { return IOW[it[0]][1]; }), th = hs.reduce(function (a, b) { return a + b; }, 0) + gap * (c.items.length - 1), y = (H - th) / 2;
+      c.items.forEach(function (it, k) {
+        var w = IOW[it[0]][0];
+        o += IOP[it[0]](x + (widths[ci] - w) / 2, y, it[1]);
+        if (it[0] === 'btn') o += '<text class="io-btxt" x="' + (x + widths[ci] / 2) + '" y="' + (y - 1.5) + '" text-anchor="middle">' + it[1] + '</text>';
+        y += hs[k] + gap;
+      });
+      if (nums) o += '<circle cx="' + (x + widths[ci] / 2) + '" cy="' + (H + 14) + '" r="8" class="io-numc"/><text class="io-num" x="' + (x + widths[ci] / 2) + '" y="' + (H + 17.5) + '" text-anchor="middle">' + (ci + 1) + '</text>';
+      x += widths[ci] + sp;
+    });
+    return o;
+  }
+  function ioPart(gama) {
+    var set = IO_SETS[gama];
+    var strip = '<g transform="translate(0 340) rotate(-90)">' + ioDraw(gama, false) + '</g>';
+    var big = '<svg class="io-big" viewBox="0 0 340 146" role="img" aria-label="' + set.title + '">' + ioDraw(gama, true) + '</svg>' +
+      '<ol class="io-legend">' + set.cols.map(function (c) { return '<li>' + c.label + '</li>'; }).join('') + '</ol>';
+    var n = 0; set.cols.forEach(function (c) { n += c.items.length; });
+    return { name: 'Panel trasero de puertos (I/O)', short: 'Panel I/O', vb: '0 0 120 340', body: strip,
+      hint: 'El panel de puertos va pegado al borde izquierdo: es lo que asoma por atrás del gabinete.',
+      info: 'Son los puertos que asoman por atrás del gabinete. Este es el <b>' + set.title.toLowerCase() + '</b>:</p>' + big + '<p>',
+      spec: n + ' conectores y botones' };
+  }
+
+  function ioMini(gama) { return '<g transform="translate(0 340) rotate(-90)">' + ioDraw(gama, false) + '</g>'; }
+
   /* ---------- PC básica ---------- */
   var BASIC = {
     key: 'basica',
@@ -1030,7 +1170,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
       mobo: { name: 'Placa madre', short: 'Placa madre', req: [], vb: '0 0 140 145',
         body: '<rect class="f-pcb" width="140" height="145" rx="3"/>' +
           '<path class="s-trace" stroke-width="0.8" d="M18 40 H56 M20 62 H58 V92 M74 56 V88 M90 38 H102 M80 132 H132 M30 134 V108 M112 80 V94 M60 70 H96"/>' +
-          '<rect class="f-metal-dark" x="0" y="8" width="12" height="42"/>' +
+          '<svg x="0" y="8" width="13" height="42" viewBox="0 0 120 340" preserveAspectRatio="none">' + ioMini('base') + '</svg>' +
           '<rect class="f-metal-dark" x="20" y="18" width="34" height="10" rx="1"/>' +
           '<rect class="f-socket" x="60" y="25" width="28" height="28" rx="1"/>' +
           '<rect class="f-chip" x="104" y="15" width="6" height="60"/><rect class="f-chip" x="114" y="15" width="6" height="60"/>' +
@@ -1056,7 +1196,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
         body: '<rect class="f-pcb" x="2" y="0" width="36" height="120" rx="2"/>' +
           '<rect class="f-gold" x="2" y="0" width="5" height="120"/>' +
           '<rect class="f-chip" x="12" y="8" width="22" height="22"/><rect class="f-chip" x="12" y="35" width="22" height="22"/>' +
-          '<rect class="f-chip" x="12" y="63" width="22" height="22"/><rect class="f-chip" x="12" y="90" width="22" height="22"/>',
+          '<rect class="f-chip" x="12" y="63" width="22" height="22"/><rect class="f-chip" x="12" y="90" width="22" height="22"/>' +
+          '<rect x="1" y="57" width="7" height="5" style="fill:var(--case)"/><rect x="0" y="0" width="1.5" height="120" fill="#8b6b1d" opacity=".5"/>',
         hint: 'La RAM va en las ranuras largas que están al lado del procesador.',
         info: 'Guarda temporalmente los datos de los programas abiertos para que el procesador acceda rápido. Se borra al apagar la PC. Se inserta en las ranuras DIMM hasta que trabe la pestaña.',
         spec: 'Ejemplo: 16 GB DDR5' },
@@ -1087,8 +1228,10 @@ button.btn.primary:hover { filter: brightness(1.05); }
         info: 'Es una placa de expansión que le da conexión inalámbrica (WiFi y a veces Bluetooth) a la PC. Va en una ranura PCI Express y las antenas se enroscan atrás, en la chapa del gabinete.',
         spec: 'Ranura PCIe x1' },
       cmos: { name: 'Pila CMOS', short: 'Pila', req: ['mobo'], vb: '0 0 100 100',
-        body: '<circle class="f-metal" cx="50" cy="50" r="46"/><circle class="f-metal-dark" cx="50" cy="50" r="38" opacity=".35"/>' +
-          '<text class="t-label" x="50" y="58" text-anchor="middle" font-size="24">+</text>',
+        body: '<circle cx="50" cy="50" r="46" fill="#c3cad1" stroke="#7e8790" stroke-width="3"/><circle cx="50" cy="50" r="38" fill="none" stroke="#e9edf1" stroke-width="1.5"/>' +
+          '<path d="M30 28 A30 30 0 0 1 62 22" fill="none" stroke="#fff" stroke-width="3" opacity=".7" stroke-linecap="round"/>' +
+          '<text x="50" y="44" text-anchor="middle" font-size="16" font-weight="700" fill="#3b4148" font-family="var(--font-mono)">+</text>' +
+          '<text x="50" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="#3b4148" font-family="var(--font-mono)">CR2032</text>',
         hint: 'La pila es una moneda plateada que va en su portapila redondo, abajo a la derecha de la placa madre.',
         info: 'Es una pila tipo botón que mantiene la hora y la configuración del BIOS aunque la PC esté desenchufada. Si se agota, la computadora pierde la fecha cada vez que se apaga.',
         spec: 'Pila de litio CR2032 · 3 V' },
@@ -1124,7 +1267,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
   /* ---------- PC gamer ---------- */
   var gm = '<rect class="f-pcb" width="620" height="650" rx="6"/>' +
     '<path class="s-trace" stroke-width="3" d="M80 120 H200 M90 200 H210 V300 M380 120 V300 M560 260 V520 M60 400 H180 M380 500 H600 M120 600 H360 M420 300 H580"/>' +
-    '<rect class="f-metal-dark" x="0" y="30" width="60" height="230" rx="3"/>' +
+    '<svg x="0" y="30" width="64" height="230" viewBox="0 0 120 340" preserveAspectRatio="none">' + ioMini('gamer') + '</svg>' +
     '<rect class="f-metal-dark" x="90" y="40" width="110" height="46" rx="5"/><rect class="f-metal-dark" x="230" y="26" width="120" height="40" rx="5"/>' +
     '<rect class="f-socket" x="230" y="90" width="120" height="96" rx="3"/>';
   for (var gi = 0; gi < 4; gi++) gm += '<rect class="f-chip" x="' + (423 + 33 * gi) + '" y="40" width="24" height="200" rx="2"/>';
@@ -1333,7 +1476,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function pos(b, g) { b.style.cssText = 'left:' + g.x + '%;top:' + g.y + '%;width:' + g.w + '%;height:' + g.h + '%;z-index:' + g.z; }
     SL.forEach(function (s, i) {
       var b = document.createElement('button');
-      b.type = 'button'; b.className = 'slot'; b.dataset.i = i;
+      b.type = 'button'; b.className = 'slot'; b.dataset.i = i; b.dataset.type = s.type;
       pos(b, G(i));
       b.innerHTML = '<span class="tag">' + P[s.type].short + '</span>';
       caseEl.appendChild(b);
@@ -1674,7 +1817,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
 
   function ramBody(item) {
     return '<rect class="f-pcb" x="0" y="0" width="16" height="120" rx="1.5"/>' +
-      '<rect class="f-gold" x="0" y="0" width="3" height="120"/>' +
+      '<rect class="f-gold" x="0" y="0" width="3" height="120"/><rect x="0" y="57" width="3.6" height="4.5" style="fill:var(--case)"/>' +
       '<rect class="f-chip" x="5" y="6" width="9" height="24"/><rect class="f-chip" x="5" y="34" width="9" height="24"/>' +
       '<rect class="f-chip" x="5" y="62" width="9" height="24"/><rect class="f-chip" x="5" y="90" width="9" height="24"/>' +
       '<text class="t-light" x="0" y="0" font-size="7" text-anchor="middle" transform="translate(11 60) rotate(-90)">' + (item.gb || '') + ' GB</text>';
@@ -1845,8 +1988,17 @@ button.btn.primary:hover { filter: brightness(1.05); }
       return o;
     }
     function fins(w, h, step) { var o = ''; for (var x = step; x < w; x += step) o += '<line class="f-fin" x1="' + x + '" y1="4" x2="' + x + '" y2="' + (h - 4) + '"/>'; return o; }
-    function ramBody(n) {
-      var o = ''; for (var i = 0; i < n; i++) o += '<rect class="f-chip" x="' + (4 + 13 * i) + '" y="6" width="8" height="168" rx="2"/><rect class="f-metal" x="' + (3 + 13 * i) + '" y="0" width="10" height="7" rx="1"/><rect class="f-metal" x="' + (3 + 13 * i) + '" y="173" width="10" height="7" rx="1"/>';
+    function ramBody(n, ddr) {
+      var o = '', key = ddr === 'DDR4' ? .55 : .47;
+      for (var i = 0; i < n; i++) {
+        var x = 3 + 13 * i, hi = n === 2 ? true : i % 2 === 1, col = hi ? '#4d5866' : '#16191e';
+        o += '<rect x="' + (x + 1) + '" y="8" width="9" height="164" rx="1.2" fill="' + col + '" stroke="#0a0c0f" stroke-width=".5"/>' +
+          '<rect x="' + (x + 4.3) + '" y="11" width="2.4" height="158" fill="#050608"/>' +
+          '<line x1="' + (x + 5.5) + '" y1="12" x2="' + (x + 5.5) + '" y2="168" stroke="#d2a637" stroke-width=".9" stroke-dasharray=".8 1.2" opacity=".75"/>' +
+          '<rect x="' + (x + 3.6) + '" y="' + (11 + 158 * key) + '" width="3.8" height="3" fill="' + col + '"/>' +
+          '<path fill="#e8e3d6" stroke="#9a9384" stroke-width=".5" d="M' + x + ' 1 h11 v7 h-2 v-3 h-7 v3 h-2 Z"/>' +
+          '<path fill="#e8e3d6" stroke="#9a9384" stroke-width=".5" d="M' + x + ' 179 h11 v-7 h-2 v3 h-7 v-3 h-2 Z"/>';
+      }
       return { vb: '0 0 ' + (4 + 13 * n) + ' 180', body: o };
     }
     function sataBody(n) {
@@ -1921,11 +2073,11 @@ button.btn.primary:hover { filter: brightness(1.05); }
     function socketBody(sk) {
       var t = '<text class="t-label" x="50" y="96" text-anchor="middle" font-size="8">' + SOCKETS[sk].label + '</text>';
       if (sk === 'AM4') return '<rect class="f-metal" x="2" y="2" width="92" height="96" rx="4"/><rect class="f-metal-dark" x="12" y="10" width="72" height="76" rx="2" opacity=".35"/>' +
-        grid(14, 12, 68, 72, 10, 10, 'f-chip') + '<rect class="f-metal" x="94" y="10" width="5" height="76" rx="2"/>' + t;
+        grid(14, 12, 68, 72, 18, 18, 'f-chip') + '<rect class="f-metal" x="94" y="10" width="5" height="76" rx="2"/>' + t;
       if (sk === 'AM5') return '<rect class="f-metal" x="2" y="2" width="92" height="96" rx="4"/><rect class="f-chip" x="12" y="10" width="72" height="76" rx="2"/>' +
-        grid(15, 13, 66, 70, 10, 10, 'f-gold') + '<rect class="f-metal" x="94" y="10" width="5" height="76" rx="2"/>' + t;
+        grid(15, 13, 66, 70, 18, 18, 'f-gold') + '<rect class="f-metal" x="94" y="10" width="5" height="76" rx="2"/>' + t;
       return '<rect class="f-metal" x="14" y="2" width="70" height="96" rx="4"/><rect class="f-chip" x="22" y="10" width="54" height="76" rx="2"/>' +
-        grid(24, 12, 50, 72, 7, 10, 'f-gold') + '<rect class="f-metal" x="86" y="6" width="5" height="84" rx="2"/>' + t;
+        grid(24, 12, 50, 72, 13, 18, 'f-gold') + '<rect class="f-metal" x="86" y="6" width="5" height="84" rx="2"/>' + t;
     }
     function cpuBody(cf, cpu) {
       var intel = SOCKETS[cf.socket].brand === 'intel';
@@ -1938,6 +2090,12 @@ button.btn.primary:hover { filter: brightness(1.05); }
         '<path class="f-gold" d="M' + (x + 2) + ' 94 V86 L' + (x + 10) + ' 94 Z"/>';
     }
 
+    var CMOS_BODY = '<circle cx="50" cy="52" r="47" fill="#121417"/><rect x="40" y="0" width="20" height="16" rx="2" fill="#9aa3ad"/>' +
+      '<circle cx="50" cy="52" r="40" fill="#c3cad1" stroke="#7e8790" stroke-width="2"/><circle cx="50" cy="52" r="33" fill="none" stroke="#e9edf1" stroke-width="1.2"/>' +
+      '<path d="M28 36 A28 28 0 0 1 58 26" fill="none" stroke="#fff" stroke-width="3" opacity=".75" stroke-linecap="round"/>' +
+      '<text x="50" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#3b4148" font-family="var(--font-mono)">+</text>' +
+      '<text x="50" y="57" text-anchor="middle" font-size="13" font-weight="700" fill="#3b4148" font-family="var(--font-mono)">CR2032</text>' +
+      '<text x="50" y="72" text-anchor="middle" font-size="11" fill="#3b4148" font-family="var(--font-mono)">3V</text>';
     var BASEP = {
       io: { name: 'Panel trasero de puertos (I/O)', short: 'Panel I/O', vb: '0 0 60 212',
         body: '<rect class="f-metal-dark" width="60" height="212" rx="4"/>' +
@@ -1950,7 +2108,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
         info: 'Son los puertos que asoman por atrás del gabinete: USB, red (Ethernet), salida de video y audio.',
         spec: 'USB · Ethernet · HDMI · audio' },
       eps: { name: 'Conector de energía del CPU (EPS)', short: 'EPS', vb: '0 0 60 30',
-        body: '<rect class="f-chip" width="60" height="30" rx="3"/>' + grid(3, 3, 54, 24, 4, 2, 'f-metal-dark'),
+        body: '<rect class="f-chip" width="60" height="30" rx="3"/><rect x="24" y="-1" width="12" height="4" rx="1" fill="#2a3038"/>' + (function () { var o = ''; for (var r = 0; r < 2; r++) for (var c = 0; c < 4; c++) { var sq = (r + c) % 2; o += '<rect x="' + (4 + c * 13.5) + '" y="' + (4 + r * 12) + '" width="11" height="10" rx="' + (sq ? 0.8 : 3.5) + '" fill="#050608" stroke="#3a414a" stroke-width=".6"/><rect x="' + (8 + c * 13.5) + '" y="' + (7.5 + r * 12) + '" width="3" height="3" fill="#d2a637"/>'; } return o; })(),
         hint: 'El EPS es el conector chico de 8 pines arriba a la izquierda, cerca del borde.',
         info: 'Recibe el cable de 8 pines de la fuente que alimenta al procesador, a través de las fases (VRM).',
         spec: '8 pines (4+4) · 12 V' },
@@ -1959,32 +2117,38 @@ button.btn.primary:hover { filter: brightness(1.05); }
         hint: 'Las fases (VRM) llevan un disipador alargado, justo arriba del socket.',
         info: 'Regulan la energía que recibe el procesador: bajan los 12 V de la fuente a poco más de 1 V. Cuantas más fases, más estable es la energía para procesadores potentes.' },
       atx: { name: 'Conector de energía ATX 24 pines', short: 'ATX 24', vb: '0 0 30 150',
-        body: '<rect class="f-chip" width="30" height="150" rx="3"/>' + grid(3, 3, 24, 144, 2, 12, 'f-metal-dark'),
+        body: '<rect class="f-chip" width="30" height="150" rx="3"/><rect x="26" y="66" width="4" height="18" rx="1" fill="#2a3038"/>' + (function () { var o = ''; for (var r = 0; r < 12; r++) for (var c = 0; c < 2; c++) { var sq = (r + c) % 2; o += '<rect x="' + (4 + c * 12) + '" y="' + (4 + r * 12) + '" width="10" height="10" rx="' + (sq ? 0.8 : 3.5) + '" fill="#050608" stroke="#3a414a" stroke-width=".6"/><rect x="' + (7.5 + c * 12) + '" y="' + (7.5 + r * 12) + '" width="3" height="3" fill="#d2a637"/>'; } return o; })(),
         hint: 'El ATX de 24 pines va en el borde derecho de la placa, al lado de las memorias.',
         info: 'Recibe el cable principal de la fuente, que alimenta a toda la placa madre.',
         spec: '24 pines · 3,3 V, 5 V y 12 V' },
       m2: { name: 'Ranura M.2', short: 'M.2', vb: '0 0 260 37',
-        body: '<rect class="s-pcb" x="1" y="4" width="250" height="29" rx="3" stroke-dasharray="6 4"/><rect class="f-chip" x="0" y="7" width="30" height="23" rx="2"/>' +
-          '<circle class="f-metal" cx="244" cy="18.5" r="8"/><text class="t-light" x="130" y="24" text-anchor="middle" font-size="14">M.2</text>',
+        body: '<rect class="s-pcb" x="1" y="4" width="250" height="29" rx="3" stroke-dasharray="6 4"/><rect class="f-chip" x="0" y="6" width="26" height="25" rx="2"/>' +
+          '<rect x="4" y="10" width="18" height="17" fill="#050608"/><line x1="7" y1="11" x2="7" y2="26" stroke="#d2a637" stroke-width="1.4" stroke-dasharray="1 1"/><rect class="f-chip" x="6" y="20" width="4" height="7"/>' +
+          '<circle cx="128" cy="18.5" r="4" fill="none" stroke="#c9d0d7" stroke-width="1.2" opacity=".7"/><circle cx="182" cy="18.5" r="4" fill="none" stroke="#c9d0d7" stroke-width="1.2" opacity=".7"/>' +
+          '<circle class="f-metal" cx="244" cy="18.5" r="7"/><circle cx="244" cy="18.5" r="2.4" fill="#5f6a77"/>' +
+          '<text x="128" y="34" text-anchor="middle" font-size="6" fill="#e8efe9" font-family="var(--font-mono)">2242</text><text x="182" y="34" text-anchor="middle" font-size="6" fill="#e8efe9" font-family="var(--font-mono)">2260</text><text x="232" y="34" text-anchor="end" font-size="6" fill="#e8efe9" font-family="var(--font-mono)">2280</text>' +
+          '<text class="t-light" x="75" y="23" text-anchor="middle" font-size="12">M.2 NVMe</text>',
         hint: 'Las ranuras M.2 son ranuras cortas con un tornillo al final, entre las ranuras PCIe.',
         info: 'Ahí se enchufa un disco SSD M.2 sin cables. Se sujeta con un tornillito en el extremo.' },
       pcie16: { name: 'Ranura PCI Express x16', short: 'PCIe x16', vb: '0 0 280 22',
-        body: '<rect class="f-chip" width="280" height="22" rx="3"/><rect class="f-pcb" x="60" y="0" width="4" height="22"/><rect class="f-metal" x="264" y="2" width="14" height="18" rx="2"/>',
+        body: '<rect class="f-chip" width="262" height="22" rx="2.5"/><rect x="4" y="8.6" width="254" height="4.8" fill="#050608"/>' +
+          '<line x1="6" y1="11" x2="256" y2="11" stroke="#d2a637" stroke-width="1.6" stroke-dasharray="1 1.6" opacity=".8"/>' +
+          '<rect class="f-pcb" x="58" y="0" width="5" height="22"/><path fill="#e8e3d6" stroke="#9a9384" stroke-width=".6" d="M262 1 h12 l4 4 v12 l-4 4 h-12 Z"/><rect x="266" y="6" width="6" height="10" rx="1" fill="#bcb5a5"/>',
         hint: 'La PCIe x16 es la ranura horizontal más larga, debajo del socket.',
         info: 'Es la ranura más larga: ahí va la placa de video. “x16” significa que tiene 16 carriles para pasar datos.' },
       pcie1: { name: 'Ranura PCI Express x1', short: 'PCIe x1', vb: '0 0 110 19',
-        body: '<rect class="f-chip" width="110" height="19" rx="2"/><rect class="f-pcb" x="24" y="0" width="4" height="19"/>',
+        body: '<rect class="f-chip" width="110" height="19" rx="2"/><rect x="4" y="7.5" width="102" height="4" fill="#050608"/><line x1="6" y1="9.5" x2="104" y2="9.5" stroke="#d2a637" stroke-width="1.4" stroke-dasharray="1 1.6" opacity=".8"/><rect class="f-pcb" x="24" y="0" width="4" height="19"/>',
         hint: 'La PCIe x1 es la ranura horizontal corta, más abajo, a la izquierda.',
         info: 'Es una ranura corta para placas de expansión chicas: WiFi, sonido o más puertos USB.',
         spec: '1 carril de datos' },
       cmos: { name: 'Pila CMOS', short: 'Pila', vb: '0 0 100 100',
-        body: '<circle class="f-chip" cx="50" cy="50" r="48"/><circle class="f-metal" cx="50" cy="50" r="40"/><text class="t-label" x="50" y="60" text-anchor="middle" font-size="28">+</text>',
+        body: CMOS_BODY,
         hint: 'La pila CMOS es la moneda redonda, en la parte de abajo.',
         info: 'Mantiene la hora y la configuración del BIOS cuando la PC está desenchufada.',
         spec: 'CR2032 · 3 V' },
       bios: { name: 'Chip del BIOS (UEFI)', short: 'BIOS', vb: '0 0 100 100',
         body: grid(4, 22, 14, 56, 1, 4, 'f-metal') + grid(82, 22, 14, 56, 1, 4, 'f-metal') +
-          '<rect class="f-chip" x="16" y="16" width="68" height="68" rx="4"/><circle class="f-metal-dark" cx="28" cy="28" r="4"/><text class="t-light" x="50" y="58" text-anchor="middle" font-size="16">BIOS</text>',
+          '<rect class="f-chip" x="16" y="16" width="68" height="68" rx="4"/><circle class="f-metal-dark" cx="28" cy="28" r="4"/><text class="t-light" x="50" y="54" text-anchor="middle" font-size="16">BIOS</text><text class="t-light" x="50" y="70" text-anchor="middle" font-size="9" opacity=".7">25Q256</text>',
         hint: 'El chip del BIOS es un chip chico cuadrado en la parte de abajo, al centro.',
         info: 'Guarda el programa que arranca la PC: revisa el hardware y busca el sistema operativo para cargarlo. A veces hay que actualizarlo para que la placa reconozca procesadores más nuevos.',
         spec: 'Memoria flash' },
@@ -1995,23 +2159,33 @@ button.btn.primary:hover { filter: brightness(1.05); }
         info: 'Procesa el sonido que sale por los parlantes o auriculares y el que entra por el micrófono.',
         spec: 'Con capacitores de audio' },
       front: { name: 'Conectores del panel frontal', short: 'Panel frontal', vb: '0 0 180 62',
-        body: '<rect class="f-chip" width="180" height="62" rx="3"/>' + grid(6, 6, 168, 50, 9, 2, 'f-metal'),
+        body: (function () {
+          var o = '<rect x="0" y="0" width="180" height="62" rx="3" fill="none" stroke="#e8efe9" stroke-width="1" opacity=".5"/>', cols = ['#22c55e', '#22c55e', '#3b82f6', '#3b82f6', '', '#ef4444', '#ef4444', '#a855f7', '#a855f7', '#94a3b8'];
+          o += '<rect x="6" y="14" width="70" height="34" rx="1.5" fill="#101418"/><rect x="100" y="14" width="74" height="34" rx="1.5" fill="#101418"/>';
+          for (var c = 0; c < 5; c++) for (var r = 0; r < 2; r++) {
+            if (!(r === 0 && c === 4)) o += '<rect x="' + (10 + c * 13.5) + '" y="' + (18 + r * 15) + '" width="8" height="8" fill="#d2a637" stroke="#8b6b1d" stroke-width=".6"/>';
+            var k = r * 5 + c; if (cols[k]) o += '<rect x="' + (103 + c * 14.4) + '" y="' + (17 + r * 15) + '" width="11" height="11" rx="1" fill="' + cols[k] + '" opacity=".35"/>';
+            if (!(r === 0 && c === 4)) o += '<rect x="' + (104.5 + c * 14.4) + '" y="' + (18.5 + r * 15) + '" width="8" height="8" fill="#d2a637" stroke="#8b6b1d" stroke-width=".6"/>';
+          }
+          return o + '<text x="41" y="10" text-anchor="middle" font-size="8" fill="#e8efe9" font-family="var(--font-mono)">JUSB1</text><text x="137" y="10" text-anchor="middle" font-size="8" fill="#e8efe9" font-family="var(--font-mono)">JFP1 · F_PANEL</text>' +
+            '<text x="137" y="58" text-anchor="middle" font-size="6.5" fill="#e8efe9" font-family="var(--font-mono)">HDD  RST · PLED PWR</text>';
+        })(),
         hint: 'Los conectores del panel frontal son una tira de pines en el borde de abajo, a la derecha.',
-        info: 'Ahí se conectan los cables del botón de encendido, el botón de reset y las luces del frente del gabinete.',
+        info: 'Ahí se conectan los cables del frente del gabinete: el botón de encendido (PWR), el reset (RST), la luz de encendido (PLED) y la del disco (HDD), además del USB 2.0 del frente (JUSB1). Practicalo en la pestaña “Panel frontal”.',
         spec: 'Power SW · Reset SW · LED' }
     };
 
     var LAYOUT = {
       base: [
-        ['io', 2, 6, 12, 34], ['eps', 18, 3, 10, 4], ['vrm', 36, 6, 22, 5], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
+        ['io', 1, 5.5, 14, 35], ['eps', 18, 3, 10, 4], ['vrm', 36, 6, 22, 5], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
         ['ram', 68, 8, 7, 36], ['atx', 86, 18, 6, 24], ['m2', 20, 38.5, 26, 3], ['pcie16', 8, 46, 56, 3.5], ['pcie1', 8, 60, 22, 3],
         ['cmos', 38, 62, 8, 6.4], ['chipset', 56, 58, 14, 11.2], ['sata', 86, 58, 7, 8.3], ['audio', 4, 78, 10, 8], ['bios', 36, 78, 7, 5.6], ['front', 68, 90, 18, 5]],
       media: [
-        ['io', 2, 6, 12, 34], ['eps', 18, 3, 10, 4], ['vrm', 34, 5.5, 28, 6], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
+        ['io', 1, 5.5, 14, 35], ['eps', 18, 3, 10, 4], ['vrm', 34, 5.5, 28, 6], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
         ['ram', 68, 8, 14, 36], ['atx', 86, 18, 6, 24], ['m2', 20, 38.5, 26, 3], ['pcie16', 8, 46, 56, 3.5], ['m2', 20, 53, 26, 3], ['pcie1', 8, 60, 22, 3],
         ['cmos', 38, 62, 8, 6.4], ['chipset', 54, 57, 18, 14.4], ['sata', 86, 58, 7, 16], ['audio', 4, 78, 10, 8], ['bios', 36, 78, 7, 5.6], ['front', 68, 90, 18, 5]],
       gamer: [
-        ['io', 2, 6, 12, 34], ['eps', 18, 3, 10, 4], ['eps', 18, 8.5, 10, 4], ['vrm', 30, 4.5, 34, 8], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
+        ['io', 1, 5.5, 14, 35], ['eps', 18, 3, 10, 4], ['eps', 18, 8.5, 10, 4], ['vrm', 30, 4.5, 34, 8], ['socket', 36, 14, 24, 19.2], ['cpu', 40, 17.2, 16, 12.8, 2],
         ['ram', 68, 8, 14, 36], ['atx', 86, 18, 6, 24], ['m2', 20, 38.5, 26, 3], ['pcie16', 8, 46, 56, 3.5], ['m2', 20, 53, 26, 3], ['pcie16', 8, 59, 44, 3.5], ['m2', 20, 66, 26, 3],
         ['chipset', 56, 57, 18, 14.4], ['cmos', 47, 74.5, 7, 5.6], ['sata', 86, 56, 7, 23.7], ['audio', 4, 78, 10, 8], ['bios', 36, 78, 7, 5.6], ['front', 68, 90, 18, 5]]
     };
@@ -2043,16 +2217,18 @@ button.btn.primary:hover { filter: brightness(1.05); }
         hint: 'El chipset es el disipador cuadrado de la parte de abajo, hacia la derecha.',
         info: CHIPNOTE[conf.chipset] + ' El chipset coordina la comunicación entre el procesador y los puertos USB, SATA y ranuras chicas.',
         spec: 'Chipset ' + conf.chipset + ' · socket ' + sk.label };
-      var rb = ramBody(g.ram);
+      var rb = ramBody(g.ram, ddr);
       P.ram = { name: 'Ranuras de memoria RAM (' + ddr + ')', short: 'RAM ' + ddr, vb: rb.vb, body: rb.body,
         hint: 'Las ranuras de RAM son las largas y verticales a la derecha del socket.',
-        info: 'Ahí van los módulos de memoria. Esta placa usa ' + ddr + ': las memorias DDR4 y DDR5 tienen la muesca en distinto lugar y no son intercambiables.',
-        spec: g.ram + ' ranuras · ' + ddr };
+        info: 'Ahí van los módulos de memoria. Esta placa usa ' + ddr + '. Cada ranura tiene una <b>muesca</b> (el puentecito dentro de la ranura) que coincide con el corte de la memoria: en DDR4 y DDR5 está en distinto lugar, así que no se pueden intercambiar. Las <b>trabas</b> blancas de las puntas se cierran solas cuando la memoria entra bien.' +
+          (g.ram > 2 ? ' Con 2 memorias se usan las ranuras grises (A2 y B2) para el doble canal.' : ''),
+        spec: g.ram + ' ranuras · ' + ddr + (ddr === 'DDR5' ? ' · hasta 6000 MT/s o más' : ' · hasta 3200 MT/s') };
       var sb = sataBody(g.sata);
       P.sata = { name: 'Puertos SATA', short: 'SATA', vb: sb.vb, body: sb.body,
         hint: 'Los puertos SATA están en el borde derecho, abajo.',
         info: 'Ahí se conectan los cables de datos de los discos rígidos, los SSD de 2,5" y las lectoras.',
         spec: g.sata + ' puertos SATA III' };
+      P.io = ext(ioPart(conf.gama), { req: [] });
       P.vrm.spec = g.vrm;
       P.m2.spec = g.m2 + (g.m2 === 1 ? ' ranura' : ' ranuras') + ' en esta placa';
       P.pcie16.spec = g.x16 + (g.x16 === 1 ? ' ranura x16' : ' ranuras x16 (la principal, reforzada)');
@@ -2633,12 +2809,382 @@ button.btn.primary:hover { filter: brightness(1.05); }
     mount('basic');
   })();
 
+  /* ---------- panel frontal (F_PANEL, USB y audio del frente) ---------- */
+  var FP_HTML = '<div class="app fp-app">' +
+      '<section class="hud panel" aria-label="Progreso"><div class="stats">' +
+        '<div class="stat"><span class="label">Cables</span><strong class="w-count">0 / 0</strong></div>' +
+        '<div class="stat"><span class="label">Errores</span><strong class="w-errors">0</strong></div>' +
+        '<div class="stat"><span class="label">Tiempo</span><strong class="w-time">00:00</strong></div></div>' +
+        '<div class="bar"><span class="w-bar"></span></div><div class="status w-status" role="status" aria-live="polite"></div>' +
+        '<div class="btns"><button class="btn w-help" type="button" aria-pressed="false">Mostrar nombres</button><button class="btn w-reset" type="button">Reiniciar</button></div></section>' +
+      '<section class="tray-box panel" aria-label="Cables del frente del gabinete"><span class="label">Cables del frente del gabinete</span><div class="wires-list w-list"></div></section>' +
+      '<div class="case-col"><div class="case board fp-case" aria-label="Esquina de la placa madre con los conectores del frente">' +
+        '<svg class="wire-svg fp-svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Conectores de la placa madre para el frente del gabinete"></svg></div>' +
+        '<p class="case-note">Elegí un cable de la bandeja (tocándolo o arrastrándolo) y después tocá los pines donde va. Vista ampliada de la parte de abajo de la placa madre.</p></div>' +
+      '<section class="info panel w-info" aria-live="polite"></section></div>';
+
+  var FrontPanelFactory = function (host, onComplete, variant) {
+    var ADV = variant === 'adv';
+    host.innerHTML = FP_HTML;
+    function q(sel) { return host.querySelector(sel); }
+    var svgEl = q('.fp-svg'), caseEl = q('.fp-case'), statusEl = q('.w-status'), infoEl = q('.w-info'), listEl = q('.w-list');
+
+    /* conectores de la placa: filas y columnas de pines; "miss" = lugar sin pin (la guía) */
+    var HEAD = {
+      fp:     { code: 'JFP1 · F_PANEL', title: 'Panel frontal', rows: 2, cols: 5, miss: ['0,4'] },
+      aud:    { code: 'JAUD1 · HD_AUDIO', title: 'Audio frontal', rows: 2, cols: 5, miss: ['0,3'] },
+      usb2:   { code: 'JUSB1 · USB 2.0', title: 'USB 2.0 frontal', rows: 2, cols: 5, miss: ['0,4'] },
+      usb3:   { code: 'JUSB3 · USB 3.2', title: 'USB 3.0 frontal (19 pines)', rows: 2, cols: 10, miss: ['0,9'], shroud: true, adv: 1 },
+      usbc:   { code: 'JUSBC · USB-C', title: 'USB-C frontal', rows: 1, cols: 1, miss: [], slot: true, adv: 1 },
+      cpufan: { code: 'CPU_FAN', title: 'Ventilador del procesador', rows: 1, cols: 4, miss: [], fan: true },
+      sysfan: { code: 'SYS_FAN1', title: 'Ventilador del gabinete', rows: 1, cols: 4, miss: [], fan: true },
+      rgb:    { code: 'JRGB1 · 12V G R B', title: 'Luces RGB de 12 V', rows: 1, cols: 4, miss: [], adv: 1 }
+    };
+    var FPN = { '0,0': 'PLED+', '0,1': 'PLED−', '0,2': 'PWR', '0,3': 'GND', '0,4': '', '1,0': 'HDD+', '1,1': 'HDD−', '1,2': 'GND', '1,3': 'RST', '1,4': 'NC' };
+    var FPLONG = { '0,0': 'el positivo de la luz de encendido (PLED+)', '0,1': 'el negativo de la luz de encendido (PLED−)', '0,2': 'el botón de encendido (PWR)', '0,3': 'el botón de encendido (su tierra, GND)',
+      '1,0': 'el positivo de la luz del disco (HDD+)', '1,1': 'el negativo de la luz del disco (HDD−)', '1,2': 'el botón de reset (su tierra, GND)', '1,3': 'el botón de reset (RST)', '1,4': 'un pin de +5 V que no se usa (NC)' };
+    var LAY = {
+      L: { vb: [1000, 625], box: [748, 22, 226, 196],
+        pos: { usb3: [60, 130, 24], usbc: [380, 132, 26], cpufan: [540, 136, 26], rgb: [60, 270, 26], aud: [56, 400, 30], usb2: [270, 400, 30], sysfan: [486, 414, 30], fp: [680, 382, 44] } },
+      P: { vb: [600, 750], box: [334, 18, 244, 150],
+        pos: { usb3: [30, 60, 24], usbc: [30, 196, 26], cpufan: [140, 200, 26], rgb: [30, 282, 26], aud: [30, 380, 30], usb2: [222, 380, 30], sysfan: [420, 394, 30], fp: [150, 532, 56] } }
+    };
+    var curL = 'P';
+
+    var W = { w: '#e5e7eb' };
+    var ITEMS = [
+      { id: 'pwr', label: 'POWER SW', name: 'Botón de encendido (POWER SW)', h: 'fp', pins: ['0,2', '0,3'], col: ['#3b82f6', W.w],
+        info: 'Es el botón grande del frente. No lleva polaridad: los dos pines (PWR y GND) son iguales. Al apretarlo, “avisa” a la placa madre que tiene que encender.',
+        spec: '2 pines · sin polaridad', hint: 'Va en el panel frontal, en los pines PWR.' },
+      { id: 'rst', label: 'RESET SW', name: 'Botón de reset (RESET SW)', h: 'fp', pins: ['1,2', '1,3'], col: ['#a855f7', W.w],
+        info: 'Es el botón chico que reinicia la PC. Tampoco tiene polaridad. Muchos gabinetes nuevos ya no lo traen.',
+        spec: '2 pines · sin polaridad', hint: 'Va en el panel frontal, en los pines RST.' },
+      { id: 'pled', basic: 1, label: 'POWER LED', name: 'Luz de encendido (POWER LED)', h: 'fp', pins: ['0,0', '0,1'], col: ['#22c55e', W.w],
+        info: 'Es la luz que muestra que la PC está prendida. Es un LED: tiene polaridad. El cable de color va en el + y el blanco en el −.',
+        spec: '2 pines · con polaridad (+ y −)', hint: 'Va en el panel frontal, en los pines PLED+ y PLED−.' },
+      { id: 'hdd', basic: 1, label: 'HDD LED', name: 'Luz del disco (HDD LED)', h: 'fp', pins: ['1,0', '1,1'], col: ['#ef4444', W.w],
+        info: 'Es la luz que parpadea cuando el disco lee o escribe. Tiene polaridad: el cable de color va en el + y el blanco en el −.',
+        spec: '2 pines · con polaridad (+ y −)', hint: 'Va en el panel frontal, en los pines HDD+ y HDD−.' },
+      { id: 'pledp', adv: 1, label: 'PLED+', name: 'Luz de encendido + (POWER LED+)', h: 'fp', pins: ['0,0'], col: ['#22c55e'],
+        info: 'El cable de color de la luz de encendido es el positivo. Va en el pin PLED+ (en el panel frontal estándar, el primero de la fila de arriba).',
+        spec: '1 pin · positivo', hint: 'Es el positivo de la luz: va en PLED+.' },
+      { id: 'pledm', adv: 1, label: 'PLED−', name: 'Luz de encendido − (POWER LED−)', h: 'fp', pins: ['0,1'], col: [W.w],
+        info: 'El cable blanco o negro de la luz es el negativo. Si se invierten + y −, el LED no se quema, pero no prende.',
+        spec: '1 pin · negativo', hint: 'Es el negativo de la luz: va en PLED−.' },
+      { id: 'hddp', adv: 1, label: 'HDD+', name: 'Luz del disco + (HDD LED+)', h: 'fp', pins: ['1,0'], col: ['#ef4444'],
+        info: 'El cable de color de la luz del disco es el positivo. Va en HDD+, el primer pin de la fila de abajo (el pin 1, marcado con un triángulo).',
+        spec: '1 pin · positivo', hint: 'Es el positivo de la luz del disco: va en HDD+.' },
+      { id: 'hddm', adv: 1, label: 'HDD−', name: 'Luz del disco − (HDD LED−)', h: 'fp', pins: ['1,1'], col: [W.w],
+        info: 'El cable blanco de la luz del disco es el negativo y va en HDD−, al lado del HDD+.',
+        spec: '1 pin · negativo', hint: 'Es el negativo de la luz del disco: va en HDD−.' },
+      { id: 'aud', label: 'HD AUDIO', name: 'Audio frontal (HD AUDIO)', h: 'aud', all: 1, col: ['#1f2937', '#64748b'],
+        info: 'Lleva el sonido a la salida de auriculares y la entrada de micrófono del frente. Tiene 9 pines y un lugar tapado (el pin 8) que sirve de guía: entra de una sola manera.',
+        spec: '9 pines · guía en el pin 8', hint: 'Va en el conector de audio frontal, abajo a la izquierda de la placa.' },
+      { id: 'usb2', label: 'USB 2.0', name: 'USB 2.0 del frente', h: 'usb2', all: 1, col: ['#111827', '#ef4444'],
+        info: 'Hace andar los puertos USB negros del frente. Tiene 9 pines y le falta el pin 10 (la esquina): por eso no entra en el conector de audio, que tiene la guía en otro lugar.',
+        spec: '9 pines · guía en el pin 10', hint: 'Va en el conector USB 2.0 de la placa (9 pines, sin la esquina).' },
+      { id: 'usb3', adv: 1, label: 'USB 3.0', name: 'USB 3.0 del frente (19 pines)', h: 'usb3', all: 1, col: ['#2563eb', '#1e3a8a'],
+        info: 'Hace andar los puertos USB azules del frente (5 Gb/s). Es un conector grande de 19 pines con una carcasa y una muesca: hay que alinearla y empujar derecho, porque los pines se doblan fácil.',
+        spec: '19 pines · carcasa con muesca', hint: 'Va en el conector grande con carcasa (JUSB3).' },
+      { id: 'usbc', adv: 1, label: 'USB-C', name: 'USB-C del frente', h: 'usbc', all: 1, col: ['#111827', '#94a3b8'],
+        info: 'Es el conector chico y rectangular para el puerto USB-C del frente (10 o 20 Gb/s). Se enchufa en el conector Key-A de la placa; si la placa no lo tiene, el puerto USB-C del gabinete no funciona.',
+        spec: 'Conector Key-A · USB 3.2 Gen 2', hint: 'Va en el conector chico y rectangular (JUSBC).' }
+    ].filter(function (it) { return ADV ? !it.basic : !it.adv; });
+    var TOTAL = ITEMS.length;
+    function itemById(id) { for (var i = 0; i < ITEMS.length; i++) if (ITEMS[i].id === id) return ITEMS[i]; return null; }
+    function headerIds() { return Object.keys(HEAD).filter(function (h) { return ADV || !HEAD[h].adv; }); }
+    function geo(h) {
+      var H = HEAD[h], P = LAY[curL].pos[h], p = P[2];
+      var w = H.slot ? p * 2.8 : H.cols * p, ht = H.slot ? p * 1.2 : H.rows * p;
+      return { x: P[0], y: P[1], p: p, w: w, h: ht };
+    }
+    function cellsOf(h) { var H = HEAD[h], o = []; for (var r = 0; r < H.rows; r++) for (var c = 0; c < H.cols; c++) if (H.miss.indexOf(r + ',' + c) < 0) o.push(r + ',' + c); return o; }
+    function cellRect(h, cell) {
+      var g = geo(h); if (HEAD[h].slot) return { x: g.x, y: g.y, w: g.w, h: g.h };
+      var rc = cell.split(','); return { x: g.x + (+rc[1]) * g.p, y: g.y + (+rc[0]) * g.p, w: g.p, h: g.p };
+    }
+    function boundsOf(h, cells) {
+      var x1 = 1e9, y1 = 1e9, x2 = -1e9, y2 = -1e9;
+      cells.forEach(function (c) { var r = cellRect(h, c); x1 = Math.min(x1, r.x); y1 = Math.min(y1, r.y); x2 = Math.max(x2, r.x + r.w); y2 = Math.max(y2, r.y + r.h); });
+      return { x: x1, y: y1, w: x2 - x1, h: y2 - y1 };
+    }
+    function targetCells(it) { return it.all ? cellsOf(it.h) : it.pins; }
+
+    var S;
+    function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+    function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    function say(m, k) { statusEl.textContent = m; statusEl.className = 'status w-status' + (k ? ' ' + k : ''); }
+    function startTimer() { if (S.t0) return; S.t0 = Date.now(); S.timer = setInterval(function () { q('.w-time').textContent = fmt(Math.floor((Date.now() - S.t0) / 1000)); }, 500); }
+    function isDone(id) { return S.done.indexOf(id) >= 0; }
+    function help() { return caseEl.classList.contains('help'); }
+
+    function drawHeader(h) {
+      var H = HEAD[h], g = geo(h), p = g.p, o = '<g class="fp-h" data-h="' + h + '">';
+      var pad = p * .22;
+      o += '<rect class="fp-silk" x="' + (g.x - pad) + '" y="' + (g.y - pad) + '" width="' + (g.w + pad * 2) + '" height="' + (g.h + pad * 2) + '" rx="2"/>';
+      if (H.slot) {
+        o += '<rect class="fp-shroud" x="' + g.x + '" y="' + g.y + '" width="' + g.w + '" height="' + g.h + '" rx="3"/>' +
+          '<rect class="fp-slot" x="' + (g.x + p * .35) + '" y="' + (g.y + p * .3) + '" width="' + (g.w - p * .7) + '" height="' + (g.h - p * .6) + '" rx="2"/>' +
+          '<rect class="fp-pinrow" x="' + (g.x + p * .55) + '" y="' + (g.y + g.h / 2 - 1.5) + '" width="' + (g.w - p * 1.1) + '" height="3"/>';
+      } else {
+        if (H.shroud) o += '<rect class="fp-shroud" x="' + (g.x - p * .18) + '" y="' + (g.y - p * .18) + '" width="' + (g.w + p * .36) + '" height="' + (g.h + p * .36) + '" rx="3"/>' +
+          '<rect class="fp-notch" x="' + (g.x + g.w / 2 - p * .7) + '" y="' + (g.y + g.h + p * .06) + '" width="' + (p * 1.4) + '" height="' + (p * .14) + '"/>';
+        else o += '<rect class="fp-base" x="' + g.x + '" y="' + g.y + '" width="' + g.w + '" height="' + g.h + '" rx="1.5"/>';
+        if (H.fan) o += '<rect class="fp-fanwall" x="' + (g.x - p * .12) + '" y="' + (g.y - p * .28) + '" width="' + (g.w + p * .24) + '" height="' + (p * .16) + '"/>' +
+          '<rect class="fp-fanwall" x="' + (g.x + g.w - p * 1.4) + '" y="' + (g.y + g.h + p * .1) + '" width="' + (p * .9) + '" height="' + (p * .14) + '"/>';
+        for (var r = 0; r < H.rows; r++) for (var c = 0; c < H.cols; c++) {
+          var key = r + ',' + c, cx = g.x + c * p + p / 2, cy = g.y + r * p + p / 2, s = p * .36;
+          if (H.miss.indexOf(key) >= 0) { o += '<circle class="fp-hole" cx="' + cx + '" cy="' + cy + '" r="' + (p * .16) + '"/>'; continue; }
+          o += '<rect class="fp-pin' + (h === 'fp' && r === 1 && c === 0 ? ' one' : '') + '" x="' + (cx - s / 2) + '" y="' + (cy - s / 2) + '" width="' + s + '" height="' + s + '" rx="' + (s * .12) + '"/>' +
+            '<rect class="fp-pin-hi" x="' + (cx - s / 2 + s * .18) + '" y="' + (cy - s / 2 + s * .18) + '" width="' + (s * .3) + '" height="' + (s * .3) + '"/>';
+        }
+        // marca del pin 1
+        var one = h === 'fp' ? cellRect(h, '1,0') : cellRect(h, (H.rows - 1) + ',0');
+        o += '<path class="fp-p1" d="M' + (one.x - pad - p * .32) + ' ' + (one.y + p * .3) + ' l' + (p * .24) + ' ' + (p * .2) + ' l-' + (p * .24) + ' ' + (p * .2) + 'Z"/>';
+      }
+      // serigrafía
+      var fs = Math.max(10, Math.min(15, p * .42));
+      o += '<text class="fp-code" x="' + (g.x - pad) + '" y="' + (g.y - pad - (h === 'fp' ? p * .62 : p * .2)) + '" font-size="' + fs + '">' + esc(H.code) + '</text>';
+      if (h === 'fp') {
+        var show = !ADV || help(), fz = Math.max(9, Math.min(14, p * .27));
+        if (show) Object.keys(FPN).forEach(function (k) {
+          if (!FPN[k]) return; var cr = cellRect('fp', k), top = k.charAt(0) === '0';
+          o += '<text class="fp-pinlab' + (/\+/.test(FPN[k]) ? ' plus' : '') + '" x="' + (cr.x + p / 2) + '" y="' + (top ? cr.y - pad - 4 : cr.y + p + pad + fz) + '" font-size="' + fz + '" text-anchor="middle">' + FPN[k] + '</text>';
+        });
+      }
+      if (help()) o += '<text class="fp-title" x="' + (g.x + g.w / 2) + '" y="' + (g.y + g.h / 2 + 5) + '" text-anchor="middle">' + esc(H.title) + '</text>';
+      return o + '</g>';
+    }
+    function drawFront() {
+      var b = LAY[curL].box, x = b[0], y = b[1], w = b[2], hh = b[3], on = function (ids) { return ids.every(isDone) ? ' on' : ''; };
+      var land = curL === 'L', o = '<g class="fp-front">';
+      o += '<rect class="fp-fbox" x="' + x + '" y="' + y + '" width="' + w + '" height="' + hh + '" rx="10"/>' +
+        '<text class="fp-flabel" x="' + (x + 12) + '" y="' + (y + 20) + '">Frente del gabinete</text>';
+      var r1 = land ? 26 : 22, cx = x + (land ? 50 : 44), cy = y + (land ? 72 : 68);
+      o += '<g class="fp-ico' + on(['pwr']) + '"><circle cx="' + cx + '" cy="' + cy + '" r="' + r1 + '" class="fp-btn"/><path class="fp-sym" d="M' + cx + ' ' + (cy - r1 * .55) + ' V' + (cy - r1 * .05) + ' M' + (cx - r1 * .38) + ' ' + (cy - r1 * .38) + ' A' + (r1 * .5) + ' ' + (r1 * .5) + ' 0 1 0 ' + (cx + r1 * .38) + ' ' + (cy - r1 * .38) + '"/></g>';
+      var rx = cx + r1 + 26;
+      o += '<g class="fp-ico' + on(['rst']) + '"><circle cx="' + rx + '" cy="' + (cy + 4) + '" r="9" class="fp-btn"/></g>';
+      var led1 = ADV ? ['pledp', 'pledm'] : ['pled'], led2 = ADV ? ['hddp', 'hddm'] : ['hdd'];
+      o += '<circle class="fp-led g' + (S.win ? ' on' : led1.every(isDone) ? ' ready' : '') + '" cx="' + (rx + 30) + '" cy="' + (cy - 8) + '" r="5"/><circle class="fp-led r' + (S.win ? ' on' : led2.every(isDone) ? ' ready' : '') + '" cx="' + (rx + 30) + '" cy="' + (cy + 12) + '" r="5"/>';
+      o += '<text class="fp-mini" x="' + (rx + 40) + '" y="' + (cy - 4) + '">PWR</text><text class="fp-mini" x="' + (rx + 40) + '" y="' + (cy + 16) + '">HDD</text>';
+      var py = land ? y + 126 : y + 108, px = x + 14;
+      function usbA(xx, blue, ids) { return '<g class="fp-ico' + on(ids) + '"><rect class="fp-port" x="' + xx + '" y="' + py + '" width="26" height="12" rx="1.5"/><rect class="fp-tongue' + (blue ? ' blue' : '') + '" x="' + (xx + 4) + '" y="' + (py + 2.5) + '" width="18" height="4"/></g>'; }
+      o += usbA(px, false, ['usb2']) + usbA(px + 32, false, ['usb2']);
+      var nx = px + 66;
+      if (ADV) { o += usbA(nx, true, ['usb3']) + usbA(nx + 32, true, ['usb3']); nx += 66;
+        o += '<g class="fp-ico' + on(['usbc']) + '"><rect class="fp-port" x="' + nx + '" y="' + (py + 1) + '" width="20" height="9" rx="4.5"/><rect class="fp-tongue" x="' + (nx + 4) + '" y="' + (py + 4.5) + '" width="12" height="2"/></g>'; nx += 28; }
+      o += '<g class="fp-ico' + on(['aud']) + '"><circle class="fp-jack" cx="' + (nx + 8) + '" cy="' + (py + 6) + '" r="6.5"/><circle class="fp-jack mic" cx="' + (nx + 26) + '" cy="' + (py + 6) + '" r="6.5"/></g>';
+      if (land) o += '<text class="fp-mini" x="' + (x + 12) + '" y="' + (y + hh - 12) + '">' + S.done.length + ' de ' + TOTAL + ' conectados</text>';
+      return o + '</g>';
+    }
+    function plugBox(it) {
+      var cells = S.where[it.id], b = boundsOf(it.h, cells), p = geo(it.h).p;
+      if (cells.length === 1 && !HEAD[it.h].slot) { var k = p * .07; return { x: b.x + k, y: b.y - p * .08, w: b.w - 2 * k, h: b.h + p * .16 }; }
+      var m = p * .1; return { x: b.x - m, y: b.y - m, w: b.w + 2 * m, h: b.h + 2 * m };
+    }
+    function drawWires(it, animate) {
+      var B = plugBox(it), vb = LAY[curL].vb, up = it.h === 'usb3' || it.h === 'usbc' || (curL === 'P' && false), o = '<g class="' + (animate ? 'cable-in' : '') + '">';
+      var n = it.col.length;
+      it.col.forEach(function (cc, k) {
+        var sx = B.x + B.w * (k + 1) / (n + 1), sy = up ? B.y : B.y + B.h, ex = sx + 30 + k * 5, ey = up ? -8 : vb[1] + 8;
+        var d = 'M' + sx + ' ' + sy + ' C' + sx + ' ' + (up ? sy - 50 : sy + 50) + ' ' + ex + ' ' + (up ? ey + 60 : ey - 60) + ' ' + ex + ' ' + ey;
+        o += '<path class="fp-shadow" d="' + d + '" stroke-width="' + (it.all ? 9 : 6) + '"/><path class="fp-wire" d="' + d + '" stroke-width="' + (it.all ? 6 : 3.5) + '" style="stroke:' + cc + '"/>';
+      });
+      return o + '</g>';
+    }
+    function drawPlug(it, animate) {
+      var cells = S.where[it.id], B = plugBox(it), p = geo(it.h).p, o = '<g class="fp-plug' + (animate ? ' cable-in' : '') + '">';
+      o += '<rect class="fp-plugbody' + (it.h === 'usb3' ? ' blue' : '') + '" x="' + B.x + '" y="' + B.y + '" width="' + B.w + '" height="' + B.h + '" rx="3"/>';
+      if (!it.all) cells.forEach(function (c) { var r = cellRect(it.h, c); o += '<rect class="fp-plughole" x="' + (r.x + p * .34) + '" y="' + (r.y + p * .62) + '" width="' + (p * .32) + '" height="' + (p * .2) + '"/>'; });
+      var fs = Math.max(8, Math.min(13, B.w / (it.label.length * .64)));
+      o += '<text class="fp-pluglab" x="' + (B.x + B.w / 2) + '" y="' + (B.y + B.h * (it.all ? .5 : .42) + fs * .35) + '" font-size="' + fs + '" text-anchor="middle">' + esc(it.label) + '</text>';
+      return o + '</g>';
+    }
+    function render(anim) {
+      var vb = LAY[curL].vb;
+      svgEl.setAttribute('viewBox', '0 0 ' + vb[0] + ' ' + vb[1]);
+      var o = '<rect class="f-pcb" width="' + vb[0] + '" height="' + vb[1] + '"/>' +
+        '<path class="s-trace" stroke-width="1.6" d="M0 ' + (vb[1] * .62) + ' H' + (vb[0] * .3) + ' V' + (vb[1] * .9) + ' M' + (vb[0] * .45) + ' 0 V' + (vb[1] * .3) + ' H' + (vb[0] * .7) + ' M' + (vb[0] * .55) + ' ' + vb[1] + ' V' + (vb[1] * .8) + ' H' + (vb[0] * .95) + '"/>' +
+        '<circle class="fp-screw" cx="30" cy="30" r="11"/>' +
+        '<text class="fp-flabel dim" x="16" y="' + (vb[1] - 12) + '" style="font-size:12px">Borde inferior de la placa madre (vista ampliada)</text>';
+      headerIds().forEach(function (h) { o += drawHeader(h); });
+      if (S.sel) {
+        var it = itemById(S.sel);
+        if (help()) { var tb = boundsOf(it.h, targetCells(it)); o += '<rect class="fp-target" x="' + (tb.x - 5) + '" y="' + (tb.y - 5) + '" width="' + (tb.w + 10) + '" height="' + (tb.h + 10) + '" rx="5"/>'; }
+      }
+      if (S.bad) { var bb = S.bad; o += '<rect class="fp-badbox" x="' + (bb.x - 4) + '" y="' + (bb.y - 4) + '" width="' + (bb.w + 8) + '" height="' + (bb.h + 8) + '" rx="4"/>'; }
+      ITEMS.forEach(function (it) { if (isDone(it.id)) o += drawWires(it, anim === it.id); });
+      ITEMS.forEach(function (it) { if (isDone(it.id)) o += drawPlug(it, anim === it.id); });
+      o += drawFront();
+      svgEl.innerHTML = o;
+    }
+    function hud() {
+      q('.w-count').textContent = S.done.length + ' / ' + TOTAL;
+      q('.w-errors').textContent = S.errors;
+      q('.w-bar').style.width = (S.done.length / TOTAL * 100) + '%';
+    }
+    function renderList() {
+      listEl.innerHTML = ITEMS.map(function (it) {
+        var fin = isDone(it.id), sw = it.col.length > 1 ? 'linear-gradient(90deg,' + it.col[0] + ' 50%,' + it.col[1] + ' 50%)' : it.col[0];
+        return '<button type="button" class="wire-card' + (fin ? ' done' : '') + (S.sel === it.id ? ' selected' : '') + '" data-k="' + it.id + '"' + (fin ? ' aria-disabled="true"' : '') + '>' +
+          '<span class="sw" style="background:' + sw + '"></span><span><strong>' + esc(it.label) + '</strong><span class="spec">' + esc(it.name) + ' · ' + esc(it.spec) + '</span></span>' +
+          '<span class="st">' + (fin ? 'Conectado ✓' : 'Sin conectar') + '</span></button>';
+      }).join('');
+    }
+    function intro() {
+      infoEl.classList.remove('win');
+      infoEl.innerHTML = '<span class="label">Ficha técnica</span><h2>Cómo se juega</h2>' +
+        '<p>Del frente del gabinete salen cables finitos: los botones, las luces, los USB y el audio. Cada uno va en un conector de la parte de abajo de la placa madre.</p>' +
+        (ADV ? '<p><b>Modo avanzado:</b> las luces vienen en cables sueltos (+ y −) y la placa no muestra el nombre de cada pin: guiate por el pin 1 (el triángulo) y la distribución estándar.</p>'
+             : '<p>Mirá los nombres impresos al lado de cada pin. Las luces tienen polaridad: el cable de color va en el <b>+</b>.</p>') +
+        '<p class="spec">Distribución estándar del panel frontal: arriba PLED+, PLED−, PWR, GND · abajo HDD+, HDD−, GND, RST, NC.</p>';
+      if (ADV) infoEl.querySelector('.spec').hidden = true;
+    }
+    function select(id) {
+      S.sel = id; S.bad = null; startTimer(); render(); renderList();
+      var it = itemById(id);
+      say('Elegiste el cable ' + it.label + '. Ahora tocá los pines de la placa donde va.');
+    }
+    function cellAt(x, y) {
+      var hit = null;
+      headerIds().forEach(function (h) {
+        var g = geo(h), m = g.p * .35;
+        if (x < g.x - m || x > g.x + g.w + m || y < g.y - m || y > g.y + g.h + m) return;
+        var c = HEAD[h].slot ? '0,0' : Math.max(0, Math.min(HEAD[h].rows - 1, Math.floor((y - g.y) / g.p))) + ',' + Math.max(0, Math.min(HEAD[h].cols - 1, Math.floor((x - g.x) / g.p)));
+        hit = { h: h, c: c };
+      });
+      return hit;
+    }
+    function occupied(h, c) {
+      return ITEMS.some(function (it) { return isDone(it.id) && it.h === h && S.where[it.id].indexOf(c) >= 0; });
+    }
+    function miss(msg, rect) { S.errors++; S.bad = rect; hud(); say(msg, 'err'); sfx.error(); render(); var t = S; setTimeout(function () { if (S === t) { S.bad = null; render(); } }, 900); }
+    function tryPlace(hit) {
+      var it = itemById(S.sel); if (!it) return;
+      var H = HEAD[hit.h], rect = H.slot ? cellRect(hit.h, '0,0') : hit.h === it.h && !it.all ? cellRect(hit.h, hit.c) : boundsOf(hit.h, cellsOf(hit.h));
+      if (hit.h === it.h) {
+        if (it.all) return place(it, cellsOf(it.h));
+        if (it.pins.indexOf(hit.c) >= 0) {
+          if (it.pins.some(function (c) { return occupied(it.h, c); })) { say('Ese pin ya tiene un cable puesto.', 'err'); return; }
+          return place(it, it.pins);
+        }
+        var msg;
+        if (H.miss.indexOf(hit.c) >= 0) msg = 'Ahí no hay pin: ese lugar vacío es la guía del conector (pin 10).';
+        else if (hit.c === '1,4') msg = 'Ese es ' + FPLONG['1,4'] + '. ' + it.hint;
+        else if ((it.id === 'pledp' && hit.c === '0,1') || (it.id === 'pledm' && hit.c === '0,0') || (it.id === 'hddp' && hit.c === '1,1') || (it.id === 'hddm' && hit.c === '1,0'))
+          msg = 'Ojo con la polaridad: ese es ' + FPLONG[hit.c] + '. Si invertís + y −, el LED no se quema pero no prende.';
+        else msg = 'Ese es ' + FPLONG[hit.c] + '. ' + (ADV ? 'Recordá la distribución: arriba van la luz de encendido y el botón de encendido; abajo, la luz del disco y el reset.' : it.hint);
+        return miss(msg, rect);
+      }
+      var m2;
+      if (H.fan) m2 = 'Ese es ' + H.code + ': es para un ventilador (4 pines con una pestaña), no para los cables del frente.';
+      else if (hit.h === 'rgb') m2 = '¡Cuidado! Ese es un conector de luces RGB de 12 V. Enchufar otro cable ahí puede quemar la placa o el componente.';
+      else if ((it.id === 'usb2' && hit.h === 'aud') || (it.id === 'aud' && hit.h === 'usb2')) m2 = 'Se parecen (los dos tienen 9 pines), pero la guía está en otro lugar: el audio tiene tapado el pin 8 y el USB 2.0 el pin 10. Si lo forzás, podés dañar la placa.';
+      else if (it.id === 'usb2' && hit.h === 'fp') m2 = 'Tiene la misma forma (9 pines, sin el pin 10), pero ese es el panel frontal: ahí van los botones y las luces. El USB 2.0 va en JUSB1.';
+      else if (it.h === 'fp') m2 = 'Los botones y las luces van todos en el panel frontal (JFP1 · F_PANEL), el conector de 2 filas de la derecha.';
+      else m2 = 'Ese conector es ' + H.title + ' (' + H.code + '). ' + it.hint;
+      miss(m2, rect);
+    }
+    function place(it, cells) {
+      S.where[it.id] = cells.slice(); S.done.push(it.id); S.sel = null; S.bad = null;
+      hud(); renderList(); render(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? null : it.id);
+      say('¡Bien! ' + it.label + ' conectado.', 'ok');
+      infoEl.classList.remove('win');
+      infoEl.innerHTML = '<span class="label">Ficha técnica</span><h2>' + esc(it.name) + '</h2><p>' + it.info + '</p><p class="spec">' + esc(it.spec) + '</p>';
+      if (S.done.length === TOTAL) win();
+    }
+    function win() {
+      clearInterval(S.timer); S.win = true; render();
+      caseEl.classList.add('powered'); sfx.win();
+      var secs = Math.floor((Date.now() - (S.t0 || Date.now())) / 1000);
+      say('¡Panel frontal conectado! Al apretar el botón, la PC enciende y se prende la luz.', 'ok');
+      infoEl.classList.add('win');
+      infoEl.innerHTML = '<span class="label">Resultado</span><h2>¡Todo conectado!</h2><p>Conectaste los ' + TOTAL + ' cables del frente en <strong>' + fmt(secs) + '</strong> con <strong>' + S.errors + '</strong> ' + (S.errors === 1 ? 'error' : 'errores') + '.</p>' +
+        '<button class="btn w-again" type="button">Jugar de nuevo</button>';
+      q('.w-again').addEventListener('click', reset);
+      if (onComplete) onComplete({ errors: S.errors, secs: secs });
+    }
+    function reset() {
+      if (S) clearInterval(S.timer);
+      S = { done: [], where: {}, errors: 0, sel: null, bad: null, t0: null, timer: null, win: false };
+      caseEl.classList.remove('powered'); q('.w-time').textContent = '00:00';
+      hud(); renderList(); intro(); render();
+      say('Empezá por el botón de encendido: elegí el cable POWER SW.');
+    }
+    function toSvg(e) {
+      var pt = svgEl.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+      var m = svgEl.getScreenCTM(); return m ? pt.matrixTransform(m.inverse()) : { x: -1, y: -1 };
+    }
+    svgEl.addEventListener('click', function (e) {
+      if (S.win) return;
+      var pt = toSvg(e), hit = cellAt(pt.x, pt.y); if (!hit) return;
+      if (!S.sel) { say('Primero elegí un cable de la bandeja.', 'warn'); return; }
+      tryPlace(hit);
+    });
+    var drag = null, ghost = null;
+    listEl.addEventListener('pointerdown', function (e) {
+      var b = e.target.closest('.wire-card'); if (!b || b.classList.contains('done')) return;
+      drag = { id: b.dataset.k, x0: e.clientX, y0: e.clientY, moved: false };
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 8) return;
+      if (!drag.moved) { drag.moved = true; select(drag.id); ghost = document.createElement('div'); ghost.className = 'chip-ghost'; ghost.textContent = itemById(drag.id).label; document.body.appendChild(ghost); }
+      ghost.style.transform = 'translate(' + (e.clientX + 8) + 'px,' + (e.clientY + 8) + 'px)';
+    });
+    function endDrag(e) {
+      if (!drag) return;
+      var d = drag; drag = null; if (ghost) { ghost.remove(); ghost = null; }
+      if (!d.moved) return;
+      var r = svgEl.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+      var pt = toSvg(e), hit = cellAt(pt.x, pt.y); if (hit) tryPlace(hit); else say('Soltá el cable sobre los pines de un conector.');
+      dragJust = true; setTimeout(function () { dragJust = false; }, 50);
+    }
+    var dragJust = false;
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', function () { drag = null; if (ghost) { ghost.remove(); ghost = null; } });
+    listEl.addEventListener('click', function (e) {
+      if (dragJust) return;
+      var b = e.target.closest('.wire-card'); if (!b || b.classList.contains('done')) return;
+      if (S.sel === b.dataset.k) { S.sel = null; render(); renderList(); say('Cable deseleccionado.'); return; }
+      select(b.dataset.k);
+    });
+    var helpBtn = q('.w-help');
+    helpBtn.addEventListener('click', function () {
+      var on = helpBtn.getAttribute('aria-pressed') !== 'true';
+      helpBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      helpBtn.textContent = on ? 'Ocultar nombres' : 'Mostrar nombres';
+      caseEl.classList.toggle('help', on); render();
+    });
+    caseEl.__setLand = function (on) {
+      var k = on ? 'L' : 'P'; caseEl.classList.toggle('land', on);
+      if (k !== curL) { curL = k; render(); }
+    };
+    q('.w-reset').addEventListener('click', reset);
+    reset();
+    return { destroy: function () { clearInterval(S.timer); window.removeEventListener('pointerup', endDrag); if (ghost) ghost.remove(); host.innerHTML = ''; } };
+  };
+  (function () {
+    var box = document.getElementById('game-frontal'), cur = null;
+    box.innerHTML = '<div class="seg" role="group" aria-label="Tipo de panel frontal" style="margin-bottom:10px">' +
+      '<label><input type="radio" name="fpv" value="basic" checked><span>Básico · 6 cables</span></label>' +
+      '<label><input type="radio" name="fpv" value="adv"><span>Avanzado · 10 cables</span></label></div><div class="fp-host"></div>';
+    var host = box.querySelector('.fp-host');
+    function mount(v) { if (cur) cur.destroy(); cur = FrontPanelFactory(host, null, v); }
+    box.querySelector('.seg').addEventListener('change', function (e) { mount(e.target.value); });
+    mount('basic');
+  })();
+
+
   /* ---------- modo niveles + evaluaciones ---------- */
   (function () {
     var PASS = 60, NQ = 10;
     var LV_B = [
       { id: 'cables', title: 'A cablear', mode: 'cables', variant: 'basic', par: 60,
         desc: 'Los 5 cables básicos: placa madre, procesador, placa de video y disco.', goal: 'Conectá los 5 cables en su lugar.' },
+      { id: 'frontal', title: 'Panel frontal', mode: 'frontal', variant: 'basic', par: 75,
+        desc: 'Conectá los botones de encendido y reset, las luces, el USB y el audio del frente del gabinete.', goal: 'Conectá los 6 cables del frente en la placa madre.' },
       { id: 'mini', title: 'Primer armado', mode: 'mini', par: 60,
         desc: 'Configurá una PC muy básica Intel o AMD (discos, fuente y refrigeración) y armala.', goal: 'Colocá todas las piezas en su lugar del gabinete.' },
       { id: 'placa-armado', title: 'Armá la placa madre', mode: 'placa', pmode: 'build', par: 120, conf: { gama: 'base', brand: 'amd', socket: 'AM5', chipset: 'A620', cpu: 0 },
@@ -2651,6 +3197,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
     var LV_A = [
       { id: 'cables-adv', title: 'Cableado avanzado', mode: 'cables', variant: 'adv', par: 90,
         desc: '8 cables de una PC potente: doble EPS para el procesador, dos PCIe para la placa de video y el ventilador del cooler.', goal: 'Conectá los 8 cables en su lugar.' },
+      { id: 'frontal-adv', title: 'Panel frontal completo', mode: 'frontal', variant: 'adv', par: 120,
+        desc: 'Luces con + y − sueltos, USB 3.0, USB-C y audio, sin nombres en los pines: tenés que saber la distribución estándar.', goal: 'Conectá los 10 cables del frente en la placa madre.' },
       { id: 'mini-adv', title: 'PC muy básica, sin ayuda', mode: 'mini', par: 45,
         desc: 'Configurá una PC muy básica y elegí la fuente justa sin pistas. Después armala sin ver los nombres.', goal: 'Colocá todas las piezas en su lugar del gabinete.' },
       { id: 'placa-base-adv', title: 'Placa base Intel', mode: 'placa', par: 210, conf: { gama: 'base', brand: 'intel', socket: 'LGA1851', chipset: 'H810', cpu: 0 },
@@ -2680,6 +3228,18 @@ button.btn.primary:hover { filter: brightness(1.05); }
         ['El conector EPS del procesador suele estar arriba a la izquierda de la placa madre.', true, 'Está cerca del procesador y de las fases de alimentación (VRM).'],
         ['El cable PCIe de energía de la placa de video se enchufa en la placa madre.', false, 'Se enchufa directo en la placa de video, en su borde.'],
         ['Los conectores de la PC tienen formas y trabas para que entren de una sola manera.', true, 'Por ejemplo, la forma de L del SATA evita conectarlo al revés.']
+      ],
+      frontal: [
+        ['El botón de encendido (POWER SW) no tiene polaridad.', true, 'Es un interruptor: los dos pines son iguales y se puede conectar de cualquier lado.'],
+        ['Si invertís el + y el − de la luz de encendido, se quema la placa madre.', false, 'No se quema nada: el LED simplemente no prende. Se da vuelta el conector y listo.'],
+        ['Los cables de los botones y las luces del gabinete van en el conector F_PANEL (JFP1).', true, 'Es la tira de 2 filas de pines en la parte de abajo de la placa.'],
+        ['El conector de audio frontal y el USB 2.0 tienen la guía (el pin que falta) en el mismo lugar.', false, 'El audio tiene tapado el pin 8 y el USB 2.0 el pin 10; por eso no se pueden confundir.'],
+        ['El conector USB 3.0 frontal tiene 19 pines y una carcasa con muesca.', true, 'La muesca obliga a enchufarlo de una sola manera.'],
+        ['El cable de color de una luz LED del frente es el positivo (+).', true, 'El blanco o negro suele ser el negativo (−).'],
+        ['Si el botón del gabinete no enciende la PC, puede ser que POWER SW esté en otros pines.', true, 'Es una de las fallas más comunes al terminar de armar.'],
+        ['El USB-C del frente se conecta en el mismo conector que el USB 2.0.', false, 'Usa un conector propio, chico y rectangular (Key-A o tipo E).'],
+        ['El conector RGB de 12 V se puede usar para el audio frontal.', false, 'Son conectores totalmente distintos; enchufar mal uno de 12 V puede quemar algo.'],
+        ['El pin 1 de un conector se suele marcar con un triángulo o un cuadrado en la serigrafía.', true, 'Sirve para orientar el conector y seguir el manual.']
       ],
       mini: [
         ['Una PC sin placa de video puede mostrar imagen si el procesador tiene gráficos integrados.', true, 'El monitor se conecta a la salida de video de la placa madre y el procesador genera la imagen.'],
@@ -2832,6 +3392,22 @@ button.btn.primary:hover { filter: brightness(1.05); }
         ['¿Cuánta potencia puede darle la ranura PCIe x16 a una placa de video, sin cables extra?', ['Hasta 75 W', 'Hasta 25 W', 'Hasta 300 W', 'Hasta 600 W'], 'Por eso las placas que consumen más necesitan cables PCIe desde la fuente.'],
         ['Si a un disco le conectás solo el cable SATA de datos, ¿qué pasa?', ['No enciende: le falta la energía', 'Funciona igual', 'Funciona, pero más lento', 'Se quema la placa madre'], 'El disco necesita los dos cables: energía (de la fuente) y datos (a la placa).']
       ],
+      frontal: [
+        ['La PC está armada, pero al apretar el botón del gabinete no prende. ¿Qué revisás primero?', ['Que POWER SW esté en los pines PWR del panel frontal', 'Que el audio frontal esté conectado', 'Que la luz HDD LED esté al revés', 'Que haya un USB conectado adelante'], 'El botón solo funciona si sus dos cables están en los pines PWR.'],
+        ['¿Cuál de estos cables del frente tiene polaridad (+ y −)?', ['POWER LED', 'POWER SW', 'RESET SW', 'Ninguno'], 'Las luces son LED: tienen polaridad. Los botones no.'],
+        ['¿Qué pasa si conectás la luz POWER LED al revés?', ['No prende, pero no se rompe nada', 'Se quema la placa madre', 'La PC no enciende', 'Se apaga el monitor'], 'Un LED invertido simplemente no deja pasar la corriente.'],
+        ['¿Dónde se conecta el cable HD AUDIO del gabinete?', ['En el conector de audio frontal, abajo a la izquierda de la placa', 'En el panel trasero', 'En el conector F_PANEL', 'En la placa de video'], 'El audio frontal tiene su propio conector de 9 pines con guía en el pin 8.'],
+        ['El USB 2.0 del frente y el audio frontal tienen 9 pines. ¿Cómo se distinguen?', ['Por el pin que falta (la guía): el 10 en USB y el 8 en audio', 'Por el color del cable', 'No se distinguen', 'Por el largo del cable'], 'La guía impide enchufarlos en el lugar equivocado.'],
+        ['¿Qué botón del frente reinicia la PC?', ['RESET SW', 'POWER SW', 'HDD LED', 'POWER LED'], 'El reset reinicia; muchos gabinetes nuevos ya no lo traen.']
+      ],
+      'frontal-adv': [
+        ['En el F_PANEL estándar, ¿qué pines están en la fila de abajo, empezando por el pin 1?', ['HDD+, HDD−, GND, RST y NC', 'PLED+, PLED−, PWR y GND', 'USB y audio', '+12 V y tierra'], 'Fila de los pines impares: 1 HDD+, 3 HDD−, 5 GND, 7 RST, 9 NC.'],
+        ['¿Qué pin del F_PANEL no tiene función (NC)?', ['El pin 9', 'El pin 1', 'El pin 6', 'El pin 2'], 'El 9 es +5 V sin uso y el 10 directamente no existe: es la guía.'],
+        ['¿Cuántos pines tiene el conector USB 3.0 frontal?', ['19', '9', '24', '4'], 'Va en un conector grande con carcasa y muesca.'],
+        ['Los puertos USB-C del frente no andan y el cable USB-C está sin conectar. ¿Qué hace falta?', ['Que la placa tenga el conector USB-C frontal (Key-A) y enchufarlo ahí', 'Conectarlo al USB 2.0', 'Conectarlo al audio', 'Conectarlo a la fuente'], 'Sin ese conector en la placa, el USB-C frontal no funciona.'],
+        ['¿Por qué es peligroso enchufar un cable del frente en el conector JRGB de 12 V?', ['Porque puede recibir 12 V y quemarse', 'Porque la PC no enciende', 'Porque se borra la BIOS', 'No es peligroso'], 'Los conectores de luces RGB de 12 V entregan tensión: ahí solo van tiras o ventiladores RGB de 12 V.'],
+        ['Tenés la luz POWER LED+ y POWER LED− en cables sueltos. ¿Cómo sabés cuál es cuál?', ['El de color es + y el blanco o negro es −; además el conector suele tener una flecha o la marca', 'No importa', 'El más largo es +', 'Se prueba con la PC desenchufada'], 'En los conectores sueltos el positivo suele ser de color y tener impreso el +.']
+      ],
       mini: [
         ['Una PC sin placa de video necesita un procesador con...', ['Gráficos integrados', 'Más de 8 núcleos', 'Caché X3D', 'Socket AM4'], 'Sin gráficos integrados el procesador no puede generar imagen.'],
         ['¿Cuál de estos procesadores trae gráficos integrados potentes?', ['Ryzen 5 8500G', 'Ryzen 5 5500', 'Ryzen 7 5700X', 'Ryzen 7 5700X3D'], 'La “G” de AMD indica gráficos integrados más potentes.'],
@@ -2945,7 +3521,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
     if (!store.evals) store.evals = { b: {}, a: {} };
     if (!store.integ) store.integ = {};
     if (store.mode) LEVELS = levelsFor(store.mode);
-    function vfBank(id) { return QUIZ[id] || QUIZ[{ 'cables-adv': 'cables', 'mini-adv': 'mini', 'placa-base-adv': 'placa-armado', 'basica-adv': 'basica', 'placa-intel-gamer': 'placa-media' }[id]] || []; }
+    function vfBank(id) { return QUIZ[id] || QUIZ[{ 'cables-adv': 'cables', 'frontal-adv': 'frontal', 'mini-adv': 'mini', 'placa-base-adv': 'placa-armado', 'basica-adv': 'basica', 'placa-intel-gamer': 'placa-media' }[id]] || []; }
     function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (_) {} }
     function M() { return store.mode; }
     function lv(i) { return (store.best[M()] || {})[LEVELS[i].id] || 0; }
@@ -2997,7 +3573,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
           (n ? '<em>Ya completaste ' + n + ' de ' + levelsFor(m).length + ' fases en este modo</em>' : '<em>Empezás desde la fase 1</em>') + '</button>';
       }
       mapEl.innerHTML = '<div class="lv-start panel"><span class="label">Nuevo juego</span><h2>Elegí cómo querés jugar</h2>' +
-        '<p>El modo Básico tiene 5 fases y el Avanzado tiene 8. En cada una armás algo y después hacés una evaluación corta de opción múltiple. Al terminar todas las fases llega la evaluación integradora, con ' + nInt() + ' preguntas.</p>' +
+        '<p>El modo Básico tiene 6 fases y el Avanzado tiene 9. En cada una armás algo y después hacés una evaluación corta de opción múltiple. Al terminar todas las fases llega la evaluación integradora, con ' + nInt() + ' preguntas.</p>' +
         '<div class="diff-opts">' +
           opt('b', 'Básico', 'En todas las fases podés usar el botón “Mostrar nombres” para ver dónde va cada pieza.') +
           opt('a', 'Avanzado', 'En todas las fases el botón “Mostrar nombres” queda bloqueado: tenés que saber dónde va todo.') +
@@ -3029,16 +3605,16 @@ button.btn.primary:hover { filter: brightness(1.05); }
         '<h1>Armá tu PC</h1>' +
         '<p class="lead">Aprendé a armar una computadora paso a paso: conectá los cables de la fuente, armá placas madre AMD e Intel y configurá desde una PC muy básica hasta una PC gamer.</p>' +
         '<ol class="w-steps">' +
-          '<li><b>01 · Fases</b>5 fases en Básico y 8 en Avanzado, que se desbloquean de a una.</li>' +
+          '<li><b>01 · Fases</b>6 fases en Básico y 9 en Avanzado, que se desbloquean de a una.</li>' +
           '<li><b>02 · Evaluaciones</b>Después de cada fase, ' + NEV + ' preguntas de opción múltiple.</li>' +
           '<li><b>03 · Integradora</b>Al final, una evaluación integradora y tu nota final.</li>' +
         '</ol>' +
         '<h2 class="w-q">¿Cómo querés jugar?</h2>' +
         '<div class="mode-cards">' +
-          card('b', 'Básico', 'Para empezar: las 5 fases más simples, con ayuda para ver dónde va cada pieza.', '<li>Cableado de 5 cables, PC muy básica, placa base y PC completa</li><li>Botón “Mostrar nombres” disponible</li><li>Integradora de 15 preguntas</li>') +
-          card('a', 'Avanzado', 'Para demostrar lo que sabés: 8 fases más difíciles, sin ayuda de nombres y con más descuento por error.', '<li>Cableado de 8 cables, PC muy básica y básica sin pistas, placas base, intermedia y gamer AMD e Intel, PC gamer</li><li class="no">Sin ayuda de nombres ni pistas de la fuente</li><li>Integradora de 20 preguntas, más difícil</li>') +
+          card('b', 'Básico', 'Para empezar: las 6 fases más simples, con ayuda para ver dónde va cada pieza.', '<li>Cableado de 5 cables, panel frontal, PC muy básica, placa base y PC completa</li><li>Botón “Mostrar nombres” disponible</li><li>Integradora de 15 preguntas</li>') +
+          card('a', 'Avanzado', 'Para demostrar lo que sabés: 9 fases más difíciles, sin ayuda de nombres y con más descuento por error.', '<li>Cableado de 8 cables, panel frontal completo, PC muy básica y básica sin pistas, placas base, intermedia y gamer AMD e Intel, PC gamer</li><li class="no">Sin ayuda de nombres ni pistas de la fuente</li><li>Integradora de 20 preguntas, más difícil</li>') +
         '</div>' +
-        '<div class="w-links"><span>¿Solo querés practicar o sos docente?</span><button type="button" class="btn" data-go="muy-basica">Práctica libre</button><button type="button" class="btn" data-go="evaluaciones">Ver evaluaciones</button></div>' +
+        '<div class="w-links"><span>¿Solo querés practicar o sos docente?</span><button type="button" class="btn" data-go="muy-basica">Práctica libre</button><button type="button" class="btn" data-go="evaluaciones">Ver evaluaciones</button><button type="button" class="btn" data-go="reparacion">Arreglá la PC</button></div>' +
       '</div>';
     }
     openWelcome = function () {
@@ -3385,6 +3961,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
       else if (L.mode === 'basica') current = mountGame(host, ext(BASIC, { onWin: done }));
       else if (L.mode === 'gamer') current = mountGame(host, ext(GAMER, { onWin: done }));
       else if (L.mode === 'cables') current = WiringFactory(host, done, L.variant);
+      else if (L.mode === 'frontal') current = FrontPanelFactory(host, done, L.variant);
       else if (L.mode === 'placa') { current = PlacaFactory(host, done, L.pmode); current.rebuild(L.conf); }
       if (M() === 'a') lockHelp(host);
     }
@@ -3587,6 +4164,212 @@ button.btn.primary:hover { filter: brightness(1.05); }
       if (b) { var pr = b.dataset.ig.split('-'); if (pr[0] === 'run') freeInteg(pr[1]); else freeIntegAnswers(pr[1]); return; }
       if (e.target.closest('.ev-back')) igHome();
     });
+    /* ---- pestaña Reparación: arreglá la PC ---- */
+    var REP_CATS = {
+      power: 'Encendido y fuente', video: 'Imagen y placa de video', boot: 'Arranque y discos', temp: 'Temperatura y ruido',
+      ram: 'Memoria RAM', soft: 'Sistema y BIOS', perif: 'Puertos, sonido y red', perf: 'Rendimiento'
+    };
+    var REP_RAW = [
+      ['power', 'b', 'Apretás el botón de encendido y no pasa nada: no se prende ninguna luz ni gira ningún ventilador. ¿Qué revisás primero?',
+        ['Que el cable de 220 V esté enchufado y la llave trasera de la fuente esté en “I”', 'Reinstalar Windows', 'Cambiar la memoria RAM', 'Actualizar el driver de video'],
+        'Si no llega energía no prende nada. Siempre se empieza por lo más simple: enchufe, zapatilla y la llave de la fuente.'],
+      ['power', 'b', 'Terminaste de armar la PC. La fuente funciona, pero el botón del gabinete no la enciende. ¿Qué está mal?',
+        ['El cable del botón (PWR_SW) no está en los pines correctos del panel frontal (F_PANEL)', 'Falta instalar Windows', 'El disco no tiene formato', 'El monitor está apagado'],
+        'El botón del gabinete solo “avisa” a la placa madre por esos dos pines. Si están en otro lugar, no enciende.'],
+      ['power', 'b', 'En tu casa hay bajones de tensión y la PC se apaga de golpe, perdiendo lo que estabas haciendo. ¿Qué solución conviene?',
+        ['Conectar la PC a una UPS (fuente de energía ininterrumpida)', 'Agregar más memoria RAM', 'Cambiar el monitor', 'Poner un disco más grande'],
+        'La UPS tiene una batería que mantiene la PC encendida unos minutos cuando se corta o baja la luz.'],
+      ['power', 'a', 'La PC se apaga sola apenas abrís un juego exigente. En el escritorio anda bien y las temperaturas son normales. ¿Cuál es la causa más probable?',
+        ['La fuente no alcanza para el consumo con carga: hay que poner una de más potencia', 'El mouse está fallando', 'Falta memoria RAM', 'El brillo del monitor está muy alto'],
+        'Con carga la placa de video y el procesador consumen mucho más. Si la fuente queda corta, su protección corta la energía.'],
+      ['power', 'a', 'Al encender, los ventiladores giran un segundo y se apaga todo enseguida. Acabás de armar la PC. ¿Qué buscás?',
+        ['Un cortocircuito: un tornillo suelto o un separador (standoff) mal puesto debajo de la placa madre', 'Una actualización de Windows', 'Un virus', 'Un cable de red cortado'],
+        'Si algo metálico toca la parte de atrás de la placa, la fuente detecta el cortocircuito y se apaga para protegerse.'],
+      ['power', 'a', 'Salió olor a quemado y un ruido fuerte de la fuente; ahora la PC no prende. ¿Qué hacés?',
+        ['Desenchufar y reemplazar la fuente, sin abrirla: sus capacitores guardan carga peligrosa', 'Abrir la fuente para soldar la pieza quemada', 'Seguir usándola hasta que se apague del todo', 'Cambiar solo el gabinete'],
+        'Una fuente quemada se reemplaza. Abrirla es peligroso aunque esté desenchufada.'],
+      ['video', 'b', 'La PC prende (giran los ventiladores), pero el monitor dice “Sin señal”. La PC tiene placa de video. ¿Qué revisás?',
+        ['Que el monitor esté conectado a la placa de video y que el cable esté firme', 'Que la fuente sea de más de 1000 W', 'Que Windows esté actualizado', 'Que el teclado esté enchufado'],
+        'Con placa de video, el monitor va conectado a ella y no a la salida de la placa madre.'],
+      ['video', 'b', 'Instalaste una placa de video nueva, no da imagen y sus ventiladores no giran. ¿Qué falta?',
+        ['Conectar los cables PCIe de energía de la fuente a la placa de video', 'Instalar el antivirus', 'Cambiar el cable de red', 'Agregar otro disco'],
+        'Las placas que consumen más de 75 W necesitan energía extra por los cables PCIe; sin ellos no arrancan.'],
+      ['video', 'b', 'Después de instalar Windows, todo se ve muy grande y borroso. ¿Cómo se arregla?',
+        ['Instalar el driver de la placa de video y elegir la resolución nativa del monitor', 'Cambiar el monitor por uno más grande', 'Agregar memoria RAM', 'Formatear el disco'],
+        'Sin el driver, Windows usa una resolución genérica. Con el driver se elige la resolución correcta.'],
+      ['video', 'a', 'Sacaste la placa de video y conectaste el monitor a la placa madre, pero sigue sin imagen. El procesador es un Ryzen 5 5500. ¿Por qué?',
+        ['El Ryzen 5 5500 no tiene gráficos integrados: necesita una placa de video', 'Falta conectar el cable SATA', 'La placa madre no tiene BIOS', 'El monitor es demasiado nuevo'],
+        'Para usar la salida de video de la placa madre, el procesador tiene que tener gráficos integrados (por ejemplo, los Ryzen “G”).'],
+      ['video', 'a', 'Al jugar aparecen rayas, puntos de colores o imagen cortada, y empeora cuando la placa de video se calienta. ¿Qué hacés?',
+        ['Revisar la temperatura de la placa de video: limpiarla, cambiar la pasta térmica o reemplazarla', 'Cambiar el cable de red', 'Agregar un disco', 'Cambiar el mouse'],
+        'Los “artefactos” en pantalla que aparecen con calor indican que la placa de video se recalienta o está fallando.'],
+      ['video', 'a', 'Tenés un monitor de 144 Hz, pero Windows lo muestra a 60 Hz. ¿Qué hacés?',
+        ['Usar un cable DisplayPort o HDMI adecuado y elegir 144 Hz en la configuración de pantalla', 'Comprar más memoria RAM', 'Cambiar la fuente', 'Bajar la resolución a 800 × 600'],
+        'Un cable viejo puede limitar la frecuencia, y Windows a veces deja 60 Hz por defecto.'],
+      ['boot', 'b', 'Al prender aparece “No bootable device” (no hay dispositivo de arranque). ¿Qué revisás?',
+        ['En la BIOS, que el disco con el sistema se detecte y esté primero en el orden de arranque', 'Que el monitor esté bien conectado', 'Que el mouse tenga pilas', 'Que la placa de video tenga cables PCIe'],
+        'La PC enciende, pero no encuentra desde qué disco arrancar el sistema operativo.'],
+      ['boot', 'b', 'Instalaste un disco SATA nuevo y no aparece ni siquiera en la BIOS. ¿Qué falta?',
+        ['Revisar que tenga los dos cables: SATA de datos (a la placa) y SATA de energía (de la fuente)', 'Instalar el driver de video', 'Desfragmentarlo', 'Agregar memoria RAM'],
+        'Un disco SATA necesita energía y datos. Si falta uno, la PC no lo ve.'],
+      ['boot', 'b', 'La PC tarda varios minutos en arrancar y en abrir programas. Tiene un disco mecánico (HDD). ¿Qué mejora más?',
+        ['Pasar el sistema operativo a un SSD', 'Cambiar el monitor', 'Poner una fuente más grande', 'Cambiar el teclado'],
+        'Un SSD es muchas veces más rápido que un disco mecánico: la PC arranca y abre todo mucho antes.'],
+      ['boot', 'a', 'Un disco nuevo aparece en la BIOS, pero no en “Este equipo” de Windows. ¿Qué hacés?',
+        ['Inicializarlo y crear una partición en Administración de discos', 'Cambiarle los cables SATA', 'Devolverlo porque está roto', 'Actualizar la BIOS'],
+        'Un disco nuevo viene vacío: hay que inicializarlo y crearle una partición con formato para que Windows le asigne una letra.'],
+      ['boot', 'a', 'El disco mecánico hace “clic-clic” repetido y la PC tarda muchísimo en abrir archivos. ¿Qué hacés?',
+        ['Hacer una copia de seguridad cuanto antes y reemplazar el disco', 'Desfragmentarlo varias veces', 'Golpearlo suavemente para que ande', 'Agregar memoria RAM'],
+        'Ese ruido indica una falla mecánica. Lo urgente es salvar los datos antes de que deje de funcionar.'],
+      ['boot', 'a', 'Instalaste un SSD M.2 en la segunda ranura M.2 y dejaron de aparecer dos discos SATA. ¿Por qué?',
+        ['Esa ranura M.2 comparte líneas con puertos SATA: hay que usar otra ranura M.2 u otros puertos SATA (según el manual)', 'El SSD está roto', 'La fuente es chica', 'Falta el driver de video'],
+        'En muchas placas, usar ciertas ranuras M.2 desactiva algunos puertos SATA. El manual lo indica.'],
+      ['boot', 'a', 'Cambiaste el modo SATA en la BIOS y ahora Windows muestra una pantalla azul “INACCESSIBLE_BOOT_DEVICE”. ¿Qué hacés?',
+        ['Volver a poner el modo SATA como estaba (AHCI) en la BIOS', 'Cambiar el disco', 'Cambiar la memoria RAM', 'Instalar otro antivirus'],
+        'Windows se instaló con un modo de disco; si se cambia en la BIOS, no encuentra el disco de arranque.'],
+      ['temp', 'b', 'La PC se apaga sola después de un rato y el procesador llega a 100 °C. ¿Qué revisás?',
+        ['El cooler: que esté bien ajustado, con pasta térmica y con el ventilador girando', 'El cable del monitor', 'La conexión a internet', 'El tamaño del disco'],
+        'Cuando el procesador se recalienta, la PC se apaga para protegerlo.'],
+      ['temp', 'b', 'Los ventiladores hacen mucho ruido y la PC está llena de polvo por dentro. ¿Qué hacés?',
+        ['Apagar, desenchufar y limpiar con aire comprimido o un pincel, sosteniendo los ventiladores', 'Echarle agua', 'Pasarle la aspiradora con la PC prendida', 'Tapar las rejillas para que no entre más polvo'],
+        'El polvo tapa el paso del aire. Se limpia con la PC desenchufada y sujetando las aspas para que no giren de más.'],
+      ['temp', 'a', 'Recién armaste la PC y el procesador llega a 95 °C sin hacer nada. ¿Qué te olvidaste, seguramente?',
+        ['Sacar el plástico protector de la base del cooler (y poner pasta térmica)', 'Instalar los drivers de sonido', 'Conectar el cable de red', 'Activar el WiFi'],
+        'Con el plástico puesto o sin pasta térmica, el calor no pasa del procesador al cooler.'],
+      ['temp', 'a', 'Al encender aparece “CPU Fan Error” y la PC se queda en la BIOS. ¿Qué hacés?',
+        ['Conectar el ventilador del cooler en el conector CPU_FAN de la placa madre', 'Cambiar la fuente', 'Reinstalar Windows', 'Sacar una memoria'],
+        'La placa vigila el conector CPU_FAN. Si ahí no hay un ventilador girando, avisa con ese error.'],
+      ['temp', 'a', 'Una PC con watercooling se recalienta y se escucha un gorgoteo; la bomba no vibra. ¿Qué revisás?',
+        ['Que la bomba esté conectada a su conector (AIO_PUMP o CPU_FAN) y funcionando; si está rota, cambiar el kit', 'El cable de red', 'Que el monitor sea de 144 Hz', 'El orden de arranque'],
+        'Si la bomba no hace circular el líquido, el radiador no puede enfriar el procesador.'],
+      ['temp', 'a', 'Una PC gamer se recalienta. Todos los ventiladores del gabinete sacan aire hacia afuera. ¿Qué cambiás?',
+        ['Poner los del frente metiendo aire fresco y dejar los de atrás y arriba sacándolo', 'Darlos vuelta a todos para que metan aire', 'Apagar los ventiladores del gabinete', 'Poner la PC dentro de un mueble cerrado'],
+        'Tiene que haber un flujo: entra aire frío por el frente y sale el caliente por atrás y por arriba.'],
+      ['ram', 'b', 'La PC prende, no da imagen y la placa hace pitidos repetidos (o se prende la luz DRAM). ¿Qué hacés?',
+        ['Sacar las memorias RAM, limpiar los contactos y volver a colocarlas hasta que hagan clic', 'Cambiar el monitor', 'Reinstalar Windows', 'Cambiar el cable de red'],
+        'Una memoria mal colocada es una de las causas más comunes de que la PC no dé imagen.'],
+      ['ram', 'b', 'La PC se pone muy lenta con varias pestañas del navegador abiertas. Tiene 4 GB de RAM. ¿Qué mejora más?',
+        ['Agregar memoria RAM (8 GB o más)', 'Cambiar el mouse', 'Poner una fuente más grande', 'Cambiar el gabinete'],
+        'Con poca RAM la PC usa el disco como memoria y se vuelve muy lenta.'],
+      ['ram', 'a', 'Pusiste 2 memorias de 16 GB, pero Windows muestra 16 GB en total. ¿Qué revisás?',
+        ['Que la segunda memoria esté bien encajada; si sigue igual, probarla en otra ranura', 'Que el disco tenga espacio', 'Que la fuente sea de 1600 W', 'Que el monitor esté en 144 Hz'],
+        'Si una memoria no está bien colocada, la placa no la reconoce y la capacidad no se suma.'],
+      ['ram', 'a', 'Después de activar el perfil EXPO/XMP de la RAM aparecen pantallas azules “MEMORY_MANAGEMENT”. ¿Qué hacés?',
+        ['Desactivar EXPO/XMP o bajar la velocidad de la memoria y probarla con un test de memoria', 'Cambiar el cable SATA', 'Formatear el disco', 'Cambiar el monitor'],
+        'El perfil sube la velocidad de la RAM; si no es estable con esa placa o procesador, aparecen errores.'],
+      ['ram', 'a', 'Pusiste 2 memorias juntas en las ranuras A1 y A2 y la PC rinde menos de lo esperado. El manual recomienda A2 y B2. ¿Qué hacés?',
+        ['Moverlas a A2 y B2 para que trabajen en doble canal', 'Dejarlas como están', 'Sacar una de las dos', 'Comprar una fuente más grande'],
+        'En las ranuras recomendadas cada memoria queda en un canal distinto y trabajan juntas, más rápido.'],
+      ['soft', 'b', 'Se abren páginas solas, aparecen publicidades y el navegador cambió de página de inicio. ¿Qué hacés?',
+        ['Pasar un antivirus y desinstalar los programas desconocidos', 'Cambiar la memoria RAM', 'Cambiar la fuente', 'Comprar otro monitor'],
+        'Son síntomas de un programa malicioso o de publicidad (adware).'],
+      ['soft', 'b', 'El disco C: está lleno y Windows no se puede actualizar. ¿Qué hacés?',
+        ['Liberar espacio: borrar temporales con el Liberador de espacio y desinstalar lo que no usás', 'Agregar memoria RAM', 'Cambiar el procesador', 'Desconectar internet'],
+        'Windows necesita espacio libre en el disco del sistema para actualizarse y funcionar bien.'],
+      ['soft', 'b', 'Un programa se colgó y no responde. ¿Cómo lo cerrás sin apagar la PC?',
+        ['Desde el Administrador de tareas (Ctrl + Shift + Esc) → Finalizar tarea', 'Desenchufando la PC', 'Sacando una memoria', 'Apretando el botón de reset de la fuente'],
+        'El Administrador de tareas permite cerrar a la fuerza un programa que no responde.'],
+      ['soft', 'b', 'La PC hace pitidos al prender y no arranca. No sabés qué significan. ¿Qué hacés?',
+        ['Buscar en el manual de la placa madre qué indica ese código de pitidos o de luces (debug LED)', 'Reinstalar Windows', 'Cambiar todas las piezas', 'Ignorarlos y seguir'],
+        'Cada placa usa códigos de pitidos o luces para indicar qué pieza falla: RAM, video, procesador o arranque.'],
+      ['soft', 'a', 'Después de instalar un driver nuevo, Windows da pantalla azul al iniciar. ¿Qué hacés?',
+        ['Entrar en Modo seguro y desinstalar o revertir ese driver (o usar Restaurar sistema)', 'Cambiar la placa madre', 'Comprar una fuente más grande', 'Sacar la pila CMOS'],
+        'En Modo seguro Windows arranca con lo mínimo, así se puede quitar el driver que falla.'],
+      ['soft', 'a', 'Cada vez que desenchufás la PC se atrasa la hora y la BIOS vuelve a la configuración de fábrica. ¿Qué cambiás?',
+        ['La pila CMOS (CR2032) de la placa madre', 'La memoria RAM', 'El disco', 'La fuente'],
+        'La pila mantiene la hora y la configuración de la BIOS cuando la PC no tiene energía.'],
+      ['soft', 'a', 'Querés instalar Windows 11 y dice que la PC no cumple los requisitos, aunque el hardware es nuevo. ¿Qué hacés?',
+        ['Activar en la BIOS el TPM (fTPM en AMD, PTT en Intel) y el Arranque seguro (Secure Boot)', 'Agregar un disco mecánico', 'Cambiar la placa de video', 'Poner memoria DDR4'],
+        'Windows 11 pide TPM 2.0 y Arranque seguro; en muchas placas vienen desactivados.'],
+      ['soft', 'a', 'Pusiste un procesador más nuevo en una placa AM5 que tenías y no arranca, aunque el socket es el mismo. ¿Qué hacés?',
+        ['Actualizar la BIOS de la placa (con el procesador viejo o con la función de actualización sin procesador)', 'Cambiar la fuente', 'Agregar otra memoria', 'Cambiar el cable del monitor'],
+        'Una BIOS vieja puede no reconocer procesadores que salieron después que la placa.'],
+      ['perif', 'b', 'El teclado USB no funciona en los puertos del frente del gabinete, pero sí atrás. ¿Qué falta?',
+        ['Conectar el cable USB del panel frontal a su conector en la placa madre', 'Cambiar el teclado', 'Instalar otro antivirus', 'Cambiar la fuente'],
+        'Los puertos del frente se conectan a la placa por un cable interno; si no está enchufado, no andan.'],
+      ['perif', 'b', 'No hay sonido en los auriculares conectados al frente del gabinete. ¿Qué revisás?',
+        ['Que el cable HD_AUDIO del gabinete esté en la placa madre y la salida correcta elegida en Windows', 'Que la fuente sea más grande', 'Que la memoria esté en doble canal', 'Que el disco sea SSD'],
+        'El audio frontal va por un cable interno a la placa, y en Windows hay que elegir el dispositivo de salida.'],
+      ['perif', 'b', 'No hay internet por cable y el puerto de red de la PC no tiene luces. ¿Qué revisás primero?',
+        ['El cable de red y el router: probar con otro cable u otro puerto del router', 'La memoria RAM', 'El cooler', 'La pasta térmica'],
+        'Si el puerto no tiene luces, no hay conexión física: casi siempre es el cable o el router.'],
+      ['perif', 'a', 'Instalaste una placa WiFi PCIe y la señal es muy mala. ¿Qué te faltó?',
+        ['Enroscar las antenas en la parte trasera de la placa WiFi', 'Conectarle un cable SATA', 'Ponerle pasta térmica', 'Conectarla a CPU_FAN'],
+        'Sin antenas, la placa WiFi casi no recibe señal.'],
+      ['perif', 'a', 'El WiFi aparece y desaparece, y en el Administrador de dispositivos la placa tiene un signo de admiración. ¿Qué hacés?',
+        ['Instalar o actualizar el driver de la placa WiFi', 'Cambiar la fuente', 'Cambiar la pila CMOS', 'Sacar la placa de video'],
+        'El signo de admiración indica un problema con el driver del dispositivo.'],
+      ['perf', 'a', 'La placa de video rinde mucho menos de lo esperado. Está en la ranura PCIe x16 de abajo. ¿Qué hacés?',
+        ['Moverla a la ranura PCIe x16 de arriba, la conectada al procesador', 'Agregar un disco', 'Bajar la resolución a 800 × 600', 'Cambiar el teclado'],
+        'La ranura de abajo suele tener menos líneas PCIe (x4), y la placa de video rinde menos.'],
+      ['perf', 'a', 'Compraste una placa de video potente, pero los juegos andan igual que antes. El monitor está conectado a la salida de la placa madre. ¿Qué hacés?',
+        ['Conectar el monitor a la salida de la placa de video', 'Agregar memoria RAM', 'Cambiar la fuente', 'Reinstalar los juegos'],
+        'Si el monitor está en la placa madre, la imagen la hacen los gráficos integrados y no la placa de video.'],
+      ['perf', 'a', 'Un procesador de 125 W baja mucho su velocidad (throttling) cuando renderiza un video. ¿Qué mejora?',
+        ['Mejorar la refrigeración (cooler más grande o watercooling) y la circulación de aire del gabinete', 'Agregar un disco mecánico', 'Usar un monitor más chico', 'Cambiar el mouse'],
+        'Cuando el procesador llega a su temperatura máxima, baja la velocidad para no dañarse.']
+    ];
+    var REP = REP_RAW.map(function (r, k) {
+      var sh = k % 4, o = r[3].slice(sh).concat(r[3].slice(0, sh));
+      return { cat: r[0], lvl: r[1], q: r[2], o: o, a: (4 - sh) % 4, why: r[4] };
+    });
+    var REP_N = { b: 12, a: 20 };
+    function repList(m) {
+      if (m === 'b') return REP.filter(function (q) { return q.lvl === 'b'; }).sort(rnd).slice(0, REP_N.b).map(withOrder);
+      var adv = REP.filter(function (q) { return q.lvl === 'a'; }).sort(rnd).slice(0, 14);
+      var bas = REP.filter(function (q) { return q.lvl === 'b'; }).sort(rnd).slice(0, REP_N.a - adv.length);
+      return adv.concat(bas).sort(rnd).map(withOrder);
+    }
+    if (!store.rep) store.rep = {};
+    var repEl = document.getElementById('rep-free'), repMode = 'b';
+    function repInfo(m) {
+      var nb = REP.filter(function (q) { return q.lvl === 'b'; }).length;
+      return m === 'a'
+        ? REP_N.a + ' fallas, la mayoría difíciles: cortocircuitos, BIOS, doble canal, líneas PCIe, Windows 11, drivers y más. Salen de un banco de ' + REP.length + '.'
+        : REP_N.b + ' fallas comunes: la PC no prende, no da imagen, no arranca, se recalienta o anda lenta. Salen de un banco de ' + nb + '.';
+    }
+    function repHome() {
+      repEl.innerHTML = '<div class="lv-top"><div><span class="label">Evaluación aparte</span><h2>Arreglá la PC</h2>' +
+        '<p>Cada pregunta describe una falla real de una computadora. Leé el síntoma y elegí la mejor solución entre 4 opciones. Las preguntas cambian cada vez y esta nota no cuenta para el juego.</p></div></div>' +
+        '<div class="lv-grid">' + ['b', 'a'].map(function (m) {
+          var best = store.rep[m];
+          return '<div class="lv-card static"><span class="lv-num">' + (m === 'a' ? 'Avanzado' : 'Básico') + '</span><h3>Reparación ' + (m === 'a' ? 'avanzada' : 'básica') + '</h3><p>' + repInfo(m) + '</p>' +
+            (best != null ? '<p style="margin:0"><b>Tu mejor nota: ' + best + '/100</b> ' + starsHtml(best) + '</p>' : '') +
+            '<div class="btns"><button type="button" class="btn primary" data-rep="run-' + m + '">Empezar</button><button type="button" class="btn" data-rep="ans-' + m + '">Ver fallas y soluciones</button></div></div>';
+        }).join('') + '</div>';
+    }
+    function repRun(m) {
+      closeModal(); freeIdx = 'rep'; repMode = m || repMode;
+      repEl.innerHTML = freeHead('Arreglá la PC · ' + (repMode === 'a' ? 'avanzado' : 'básico'), 'Diagnóstico y reparación', 'Leé cada falla y elegí la mejor solución. ' + REP_N[repMode] + ' preguntas de opción múltiple.') + '<section class="quiz panel" aria-live="polite"></section>';
+      runQuiz(repEl.querySelector('.quiz'), repList(repMode), function (ok, tot) {
+        var n = Math.round(ok / tot * 100), prev = store.rep[repMode];
+        if (prev == null || n > prev) { store.rep[repMode] = n; save(); }
+        if (n >= PASS) sfx.win();
+        showResult({ label: 'Arreglá la PC · ' + (repMode === 'a' ? 'avanzado' : 'básico'), tag: 'Evaluación aparte', n: n,
+          msg: (n >= PASS ? '¡Felicitaciones! ' : '') + 'Resolviste bien ' + ok + ' de ' + tot + ' fallas.',
+          detail: 'Esta nota no cuenta para el juego. ' + (prev != null && prev >= n ? 'Tu mejor nota sigue siendo ' + prev + '.' : 'Se guardó como tu mejor nota.'),
+          buttons: '<button type="button" class="btn primary" data-act="fqretry">Repetir</button><button type="button" class="btn" data-act="fqlist">Ver fallas y soluciones</button>' });
+      });
+      try { repEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function repAnswers(m) {
+      repMode = m || repMode;
+      var list = REP.filter(function (q) { return repMode === 'a' || q.lvl === 'b'; });
+      repEl.innerHTML = freeHead('Fallas y soluciones · ' + (repMode === 'a' ? 'avanzado' : 'básico'), 'Arreglá la PC', repInfo(repMode)) +
+        Object.keys(REP_CATS).map(function (c) {
+          var qs = list.filter(function (q) { return q.cat === c; });
+          return qs.length ? '<h3 style="font:700 18px var(--font-display);margin:10px 0 0">' + REP_CATS[c] + '</h3>' + mcAnswers(qs) : '';
+        }).join('') +
+        '<div class="btns"><button type="button" class="btn primary" data-rep="run-' + repMode + '">Empezar la evaluación</button></div>';
+      try { repEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    repEl.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-rep]');
+      if (b) { var pr = b.dataset.rep.split('-'); if (pr[0] === 'run') repRun(pr[1]); else repAnswers(pr[1]); return; }
+      if (e.target.closest('.ev-back')) repHome();
+    });
+    repHome();
+
     renderFree();
     igHome();
 
@@ -3618,8 +4401,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
       var a = b.dataset.act;
       if (a === 'igretry') integQuiz();
       else if (a === 'fqnext') freeQuiz(freeIdx + 1);
-      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else freeQuiz(freeIdx); }
-      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else renderFree(); }
+      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else if (freeIdx === 'rep') repRun(); else freeQuiz(freeIdx); }
+      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else if (freeIdx === 'rep') repAnswers(); else renderFree(); }
       else if (a === 'evnow' || a === 'evretry') quiz(curIdx);
       else if (a === 'next') play(curIdx + 1);
       else if (a === 'retry') play(curIdx);
@@ -3739,7 +4522,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
   var lastIn = {};
   function groupOf(name) { var t = document.getElementById('tab-' + name); return t ? t.dataset.group : 'juego'; }
   function show(name) {
-    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'cableado', 'evaluaciones', 'integradora'].indexOf(name) < 0) name = 'niveles';
+    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'cableado', 'frontal', 'evaluaciones', 'integradora', 'reparacion'].indexOf(name) < 0) name = 'niveles';
     if (tabLocked && name !== 'niveles') name = 'niveles';
     var g = groupOf(name); lastIn[g] = name;
     tabs.forEach(function (t) {
