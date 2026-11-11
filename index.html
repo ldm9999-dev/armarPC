@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego educativo para aprender a armar y arreglar una PC: modo básico con 6 fases y avanzado con 9, panel frontal, evaluaciones, integradora y reparación.">
+<meta name="description" content="Juego educativo para aprender a armar y arreglar una PC: modo básico con 7 fases y avanzado con 10, elegí tu PC, historia de la PC, evaluaciones e integradora.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -743,9 +743,89 @@ button.btn.primary:hover { filter: brightness(1.05); }
   .head-btns .btn { font-size: 11.5px; padding: 3px 8px; white-space: nowrap; }
   #fs-btn { display: none; }
   .brand { font-size: 19px; } .brand svg { width: 28px; height: 28px; }
-  .topbar { flex-wrap: nowrap; } .head-btns { flex-wrap: nowrap; }
+  .topbar { flex-wrap: wrap; row-gap: 6px; } .head-btns { flex-wrap: nowrap; }
 }
 
+
+/* historia */
+.wrap { grid-template-columns: minmax(0, 1fr); }
+.nav-main { max-width: 100%; }
+.hist-seg { display: flex; flex-wrap: wrap; width: auto; }
+.hist-seg span { border-left: 1px solid var(--line); }
+.hist-intro { margin: 0; max-width: 75ch; color: var(--muted); }
+.hist-chart h3 { margin: 2px 0 4px; font: 700 18px var(--font-display); }
+.hist-x { margin: 0 0 10px; }
+.hbars { display: grid; gap: 5px; }
+.hb { display: grid; grid-template-columns: 42px minmax(110px, 190px) 1fr auto; gap: 8px; align-items: center; font-size: 13px; }
+.hb-y { font: 600 12px var(--font-mono); color: var(--muted); }
+.hb-t { height: 12px; background: var(--bg); border-radius: 6px; overflow: hidden; }
+.hb-t i { display: block; height: 100%; background: var(--accent); border-radius: 6px; }
+.hb-v { font: 600 12px var(--font-mono); white-space: nowrap; text-align: right; min-width: 92px; }
+.hist-note { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
+.tline { list-style: none; margin: 0 0 0 6px; padding: 0 0 0 20px; display: grid; gap: 12px; border-left: 3px solid var(--line); }
+.tline li { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 10px; align-items: start; }
+.tline li::before { content: ""; position: absolute; left: -28.5px; top: 12px; width: 13px; height: 13px; border-radius: 50%; background: var(--accent); border: 3px solid var(--surface); }
+.tl-year { font: 700 18px var(--font-display); padding-top: 6px; }
+.tl-card { display: grid; grid-template-columns: 132px 1fr; gap: 12px; align-items: center; }
+.tl-card h3 { margin: 0; font: 700 17px var(--font-display); }
+.tl-card p { margin: 4px 0 0; font-size: 14px; }
+.tl-sp { display: inline-block; margin-top: 3px; font: 600 12px var(--font-mono); color: var(--accent); }
+.hpic { width: 132px; height: 66px; background: var(--bg); border-radius: 8px; }
+.hp-lab { font: 600 7.5px var(--font-mono); fill: var(--muted); }
+.hp-pcb { fill: #2c6a4e; } .hp-slot { fill: #11161b; } .hp-chip { fill: #1a1f25; } .hp-pin { fill: #d2a637; }
+@media (max-width: 640px) {
+  .hb { grid-template-columns: 38px 1fr auto; } .hb-t { grid-column: 1 / -1; } .hb-v { min-width: 0; }
+  .tline li { grid-template-columns: 1fr; } .tl-card { grid-template-columns: 1fr; } .hpic { width: 100%; height: 80px; }
+}
+/* elegí tu PC */
+.ch-app { display: grid; gap: 12px; min-width: 0; }
+.ch-main > *, .ch-host, #game-elegir, #game-cableado, #game-frontal { min-width: 0; }
+#game-elegir > .seg, #game-frontal > .seg, #game-cableado > .seg, .ch-row .seg { flex-wrap: wrap; }
+.ch-steps { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
+.ch-steps button { display: flex; align-items: center; gap: 6px; white-space: nowrap; border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 999px; padding: 4px 11px 4px 4px; font: 600 12.5px var(--font-body); cursor: pointer; }
+.ch-steps button b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); font: 700 12px var(--font-mono); }
+.ch-steps button.done { color: var(--ink); } .ch-steps button.done b { background: var(--ok-soft); color: var(--ok); }
+.ch-steps button.cur { border-color: var(--accent); color: var(--ink); background: var(--accent-soft); } .ch-steps button.cur b { background: var(--accent); color: #fff; }
+.ch-steps button:disabled { opacity: .5; cursor: default; }
+.ch-main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 12px; align-items: start; }
+.ch-body h2 { margin: 2px 0 6px; font: 700 22px var(--font-display); }
+.ch-help { margin: 0 0 10px; }
+.ch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 10px; }
+.ch-grid.two { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin-bottom: 10px; }
+.ch-card { position: relative; display: grid; gap: 4px; align-content: start; border: 1.5px solid var(--line); border-radius: 10px; padding: 10px; background: var(--surface); cursor: pointer; }
+.ch-card:hover { border-color: var(--muted); }
+.ch-card input { position: absolute; opacity: 0; pointer-events: none; }
+.ch-card:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent); }
+.ch-card:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ch-card .hpic { width: 100%; height: 70px; }
+.ch-card strong { font: 700 15px var(--font-display); }
+.ch-spec { margin: 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--muted); display: grid; gap: 1px; }
+.ch-spec b { color: var(--ink); }
+.ch-disk { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: center; margin-bottom: 12px; }
+.ch-disk .hpic { width: 150px; height: 76px; } .ch-disk h3 { margin: 0; font: 700 17px var(--font-display); } .ch-disk p { margin: 4px 0 0; }
+.ch-hint { color: var(--accent); font-weight: 600; }
+.ch-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 8px 0; }
+.ch-lbl { font-weight: 600; min-width: 170px; }
+.ch-qty { display: inline-flex; align-items: center; gap: 10px; } .ch-qty .btn { width: 40px; height: 36px; font-size: 18px; padding: 0; } .ch-qty strong { font: 700 22px var(--font-mono); min-width: 22px; text-align: center; }
+.ch-sub { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+.ch-nav { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; }
+.ch-side h3 { margin: 2px 0 6px; font: 700 17px var(--font-display); }
+.ch-req { margin: 0 0 12px; padding-left: 18px; font-size: 13px; display: grid; gap: 3px; }
+.ch-stats { display: flex; gap: 14px; margin-top: 10px; font: 500 12.5px var(--font-mono); color: var(--muted); } .ch-stats b { color: var(--ink); }
+.ch-res { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ch-res li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 8px 10px; border-radius: 8px; background: var(--bg); }
+.ch-res li > span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-weight: 700; color: #fff; }
+.ch-res li.ok > span { background: var(--ok); } .ch-res li.bad > span { background: var(--err); }
+.ch-res li.bad { background: color-mix(in srgb, var(--err) 10%, var(--bg)); }
+.ch-res p { margin: 2px 0 0; font-size: 13.5px; }
+.ch-boot { margin-bottom: 12px; }
+.ch-mon { background: #05080b; border: 8px solid #2b3036; border-radius: 10px; padding: 14px 16px; color: #9fe8b9; font: 500 13px var(--font-mono); }
+.ch-mon p { margin: 0 0 3px; opacity: 0; animation: fadein .3s ease-out forwards; }
+.ch-mon p:nth-child(2) { animation-delay: .2s; } .ch-mon p:nth-child(3) { animation-delay: .4s; } .ch-mon p:nth-child(4) { animation-delay: .6s; } .ch-mon p:nth-child(5) { animation-delay: .8s; } .ch-mon p:nth-child(6) { animation-delay: 1.1s; }
+.ch-mon .ch-ok { color: #fff; font-weight: 700; margin-top: 6px; }
+@media (max-width: 860px) { .ch-main { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .ch-disk { grid-template-columns: 1fr; } .ch-disk .hpic { width: 100%; } .ch-lbl { min-width: 0; width: 100%; } .ch-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .ch-mon p { animation: none; opacity: 1; } }
 
 /* panel frontal */
 .fp-case .wire-svg { touch-action: manipulation; }
@@ -829,18 +909,21 @@ button.btn.primary:hover { filter: brightness(1.05); }
     <button type="button" data-group="juego">Juego</button>
     <button type="button" data-group="practica">Práctica libre</button>
     <button type="button" data-group="eval">Evaluaciones</button>
+    <button type="button" data-group="historia">Historia</button>
   </nav>
   <nav class="tabs" role="tablist" aria-label="Apartados de la sección">
-    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>6 básico · 9 avanzado</small></button>
+    <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>7 básico · 10 avanzado</small></button>
     <button class="tab" role="tab" type="button" id="tab-muy-basica" data-tab="muy-basica" data-group="practica" aria-controls="panel-muy-basica">PC muy básica<small>a medida</small></button>
     <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" data-group="practica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" data-group="practica" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" data-group="practica" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
     <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" data-group="practica" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
+    <button class="tab" role="tab" type="button" id="tab-elegir" data-tab="elegir" data-group="practica" aria-controls="panel-elegir">Elegí tu PC<small>paso a paso</small></button>
     <button class="tab" role="tab" type="button" id="tab-frontal" data-tab="frontal" data-group="practica" aria-controls="panel-frontal">Panel frontal<small>botones, luces y USB</small></button>
     <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" data-group="eval" aria-controls="panel-evaluaciones">Por fase<small>básico y avanzado</small></button>
     <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" data-group="eval" aria-controls="panel-integradora">Integradora<small>básica y avanzada</small></button>
     <button class="tab" role="tab" type="button" id="tab-reparacion" data-tab="reparacion" data-group="eval" aria-controls="panel-reparacion">Arreglá la PC<small>fallas y soluciones</small></button>
+    <button class="tab" role="tab" type="button" id="tab-historia" data-tab="historia" data-group="historia" aria-controls="panel-historia">Historia de la PC<small>de 1981 a hoy</small></button>
   </nav>
   <p class="lock-note" id="lock-note" hidden>Mientras jugás una fase o una evaluación, las otras secciones quedan bloqueadas. Tocá “Volver a los niveles” para usarlas.</p>
 
@@ -1012,6 +1095,14 @@ button.btn.primary:hover { filter: brightness(1.05); }
 
   <section class="tabpanel" role="tabpanel" id="panel-integradora" aria-labelledby="tab-integradora" hidden>
     <div id="ig-free" style="display:grid;gap:14px"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-elegir" aria-labelledby="tab-elegir" hidden>
+    <div id="game-elegir"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-historia" aria-labelledby="tab-historia" hidden>
+    <div id="hist-free" style="display:grid;gap:14px"></div>
   </section>
 
   <section class="tabpanel" role="tabpanel" id="panel-reparacion" aria-labelledby="tab-reparacion" hidden>
@@ -3192,7 +3283,9 @@ button.btn.primary:hover { filter: brightness(1.05); }
       { id: 'placa-nombres', title: 'Poné los nombres', mode: 'placa', pmode: 'labels', par: 120, conf: { gama: 'base', brand: 'amd', socket: 'AM5', chipset: 'A620', cpu: 0 },
         desc: 'La misma placa ya armada: identificá cada parte y ponele su nombre.', goal: 'Poné el nombre de las 16 partes de la placa, incluido el procesador.' },
       { id: 'basica', title: 'PC completa', mode: 'basica', par: 120,
-        desc: 'Configurá una PC básica Intel o AMD con placa de video y WiFi, y armala respetando el orden.', goal: 'Colocá todas las piezas respetando el orden de armado.' }
+        desc: 'Configurá una PC básica Intel o AMD con placa de video y WiFi, y armala respetando el orden.', goal: 'Colocá todas las piezas respetando el orden de armado.' },
+      { id: 'elegir', title: 'Elegí tu PC', mode: 'elegir', variant: 'basic', par: 150,
+        desc: 'Último desafío: elegí paso a paso placa, procesador, discos, memorias y fuente para el pedido de una PC de escuela. Al final se verifica todo.', goal: 'Armá la PC del pedido y verificá que funcione.' }
     ];
     var LV_A = [
       { id: 'cables-adv', title: 'Cableado avanzado', mode: 'cables', variant: 'adv', par: 90,
@@ -3211,8 +3304,10 @@ button.btn.primary:hover { filter: brightness(1.05); }
         desc: 'Placa gamer X870E con 3 ranuras M.2, 2 PCIe x16, doble EPS y un Ryzen 7 9850X3D.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
       { id: 'placa-intel-gamer', title: 'Placa gamer Intel', mode: 'placa', par: 300, conf: { gama: 'gamer', brand: 'intel', socket: 'LGA1851', chipset: 'Z890', cpu: 1 },
         desc: 'Placa gamer Z890 con socket LGA 1851 y un Core Ultra 9 285K de 24 núcleos.', goal: 'Paso 1: armá la placa. Paso 2: poné el nombre de cada parte.' },
-      { id: 'gamer', title: 'Desafío final: PC gamer', mode: 'gamer', par: 240,
-        desc: 'Configurá tu PC gamer: marca, discos, placas de video, refrigeración y la fuente justa. Después armala.', goal: 'Armá la PC gamer completa.' }
+      { id: 'gamer', title: 'Armá la PC gamer', mode: 'gamer', par: 240,
+        desc: 'Configurá tu PC gamer: marca, discos, placas de video, refrigeración y la fuente justa. Después armala.', goal: 'Armá la PC gamer completa.' },
+      { id: 'elegir-adv', title: 'Elegí tu PC gamer', mode: 'elegir', variant: 'adv', par: 240,
+        desc: 'Último desafío: elegí cada pieza para una PC gamer y de streaming, sin ver sockets ni pistas. Al final se verifica todo.', goal: 'Armá la PC del pedido y verificá que funcione.' }
     ];
     var LEVELS = LV_B;
     function levelsFor(m) { return m === 'a' ? LV_A : LV_B; }
@@ -3228,6 +3323,18 @@ button.btn.primary:hover { filter: brightness(1.05); }
         ['El conector EPS del procesador suele estar arriba a la izquierda de la placa madre.', true, 'Está cerca del procesador y de las fases de alimentación (VRM).'],
         ['El cable PCIe de energía de la placa de video se enchufa en la placa madre.', false, 'Se enchufa directo en la placa de video, en su borde.'],
         ['Los conectores de la PC tienen formas y trabas para que entren de una sola manera.', true, 'Por ejemplo, la forma de L del SATA evita conectarlo al revés.']
+      ],
+      elegir: [
+        ['Un procesador AM5 entra en una placa con socket LGA 1851.', false, 'AM5 es de AMD y LGA 1851 de Intel: el socket tiene que coincidir.'],
+        ['Un Core i5-14400F necesita placa de video para dar imagen.', true, 'La F indica que no tiene gráficos integrados.'],
+        ['Las memorias DDR4 entran en una placa DDR5 si se empujan fuerte.', false, 'La muesca está en otro lugar: nunca hay que forzarlas.'],
+        ['Los discos mecánicos y los SSD SATA comparten los puertos SATA de la placa.', true, 'Cada uno usa un puerto SATA.'],
+        ['Una tarjeta SSD PCIe x4 entra en una ranura PCIe x1.', false, 'Necesita una ranura x4 o x16 libre.'],
+        ['Con 3 memorias iguales la RAM trabaja en doble canal.', false, 'El doble canal es con 2 o 4 memorias iguales.'],
+        ['La fuente se calcula sumando el consumo de todo y agregando un 30 % de margen.', true, 'Y se elige la más chica que supere ese número.'],
+        ['Si la placa tiene 1 ranura M.2, se pueden poner 2 discos M.2.', false, 'Cada disco M.2 necesita su propia ranura.'],
+        ['El Ryzen 5 8600G tiene gráficos integrados.', true, 'La G de AMD indica gráficos integrados.'],
+        ['Una fuente demasiado grande siempre es la mejor opción.', false, 'Es más cara y trabaja casi sin carga; conviene la justa.']
       ],
       frontal: [
         ['El botón de encendido (POWER SW) no tiene polaridad.', true, 'Es un interruptor: los dos pines son iguales y se puede conectar de cualquier lado.'],
@@ -3392,6 +3499,22 @@ button.btn.primary:hover { filter: brightness(1.05); }
         ['¿Cuánta potencia puede darle la ranura PCIe x16 a una placa de video, sin cables extra?', ['Hasta 75 W', 'Hasta 25 W', 'Hasta 300 W', 'Hasta 600 W'], 'Por eso las placas que consumen más necesitan cables PCIe desde la fuente.'],
         ['Si a un disco le conectás solo el cable SATA de datos, ¿qué pasa?', ['No enciende: le falta la energía', 'Funciona igual', 'Funciona, pero más lento', 'Se quema la placa madre'], 'El disco necesita los dos cables: energía (de la fuente) y datos (a la placa).']
       ],
+      elegir: [
+        ['Elegiste una placa AMD A620M (AM5). ¿Qué procesador entra?', ['Ryzen 5 8600G', 'Ryzen 5 5600G', 'Core i3-14100', 'Core Ultra 5 245K'], 'El 8600G es AM5; el 5600G es AM4 y los Intel usan LGA.'],
+        ['Una PC con un Core i5-14400F y sin placa de video, ¿qué hace al encender?', ['Enciende pero no da imagen', 'Funciona normal', 'No enciende nada', 'Se quema la placa'], 'La F indica que no tiene gráficos integrados.'],
+        ['La placa tiene 4 puertos SATA. ¿Cuántos discos SATA podés conectar en total?', ['4, sumando mecánicos y SSD SATA', '4 mecánicos y 4 SSD', 'Solo 2', 'Ilimitados'], 'Mecánicos y SSD SATA comparten los mismos puertos.'],
+        ['Querés 16 GB en doble canal. ¿Qué elegís?', ['2 memorias de 8 GB', '1 memoria de 16 GB', '4 memorias de 8 GB', '3 memorias de 4 GB'], 'Dos iguales que suman 16 GB.'],
+        ['Una PC consume 137 W. ¿Qué fuente corresponde?', ['450 W', '650 W', '850 W', '1000 W'], '137 × 1,3 = 178 W: alcanza la más chica.'],
+        ['¿Dónde va un disco M.2 NVMe?', ['En una ranura M.2 de la placa, sin cables', 'En un puerto SATA', 'En la fuente', 'En una ranura de memoria'], 'Recibe energía y datos por la ranura.']
+      ],
+      'elegir-adv': [
+        ['Una PC tiene: placa 60 W, procesador 120 W, placa de video 250 W, 2 memorias (10 W), 2 M.2 (14 W) y ventiladores (15 W). ¿Qué fuente corresponde?', ['650 W', '550 W', '750 W', '850 W'], '469 W × 1,3 = 610 W: la más chica que alcanza es la de 650 W.'],
+        ['¿Qué procesador NO tiene gráficos integrados?', ['Core Ultra 7 265KF', 'Core Ultra 9 285K', 'Ryzen 7 9800X3D', 'Ryzen 5 8600G'], 'La F en Intel indica que no tiene gráficos.'],
+        ['Tenés una placa con 2 ranuras PCIe x16 y 1 x4, y una placa de video. ¿Cuántas tarjetas SSD PCIe podés agregar?', ['2', '1', '3', 'Ninguna'], 'Queda una x16 libre y la x4.'],
+        ['Una placa Z790 (DDR4) y memorias DDR5: ¿qué pasa?', ['No entran: la muesca es distinta', 'Funcionan más lento', 'Funcionan normal', 'Funcionan solo de a una'], 'El tipo de memoria lo define la placa.'],
+        ['El pedido es 4 TB con Windows en NVMe y entre 2 y 5 discos. ¿Qué cumple?', ['1 M.2 de 2 TB + 1 HDD de 2 TB', '1 HDD de 4 TB', '5 SSD SATA de 1 TB y 1 M.2', '1 M.2 de 4 TB solo'], 'Son 2 discos, 4 TB y Windows en el M.2.'],
+        ['¿Por qué no conviene una fuente de 1600 W para una PC que necesita 650 W?', ['Es más cara y trabaja casi sin carga, con menos eficiencia', 'Quema la placa', 'No entra en el gabinete', 'No tiene cables SATA'], 'Se elige la justa con el 30 % de margen.']
+      ],
       frontal: [
         ['La PC está armada, pero al apretar el botón del gabinete no prende. ¿Qué revisás primero?', ['Que POWER SW esté en los pines PWR del panel frontal', 'Que el audio frontal esté conectado', 'Que la luz HDD LED esté al revés', 'Que haya un USB conectado adelante'], 'El botón solo funciona si sus dos cables están en los pines PWR.'],
         ['¿Cuál de estos cables del frente tiene polaridad (+ y −)?', ['POWER LED', 'POWER SW', 'RESET SW', 'Ninguno'], 'Las luces son LED: tienen polaridad. Los botones no.'],
@@ -3521,7 +3644,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
     if (!store.evals) store.evals = { b: {}, a: {} };
     if (!store.integ) store.integ = {};
     if (store.mode) LEVELS = levelsFor(store.mode);
-    function vfBank(id) { return QUIZ[id] || QUIZ[{ 'cables-adv': 'cables', 'frontal-adv': 'frontal', 'mini-adv': 'mini', 'placa-base-adv': 'placa-armado', 'basica-adv': 'basica', 'placa-intel-gamer': 'placa-media' }[id]] || []; }
+    function vfBank(id) { return QUIZ[id] || QUIZ[{ 'cables-adv': 'cables', 'frontal-adv': 'frontal', 'elegir-adv': 'elegir', 'mini-adv': 'mini', 'placa-base-adv': 'placa-armado', 'basica-adv': 'basica', 'placa-intel-gamer': 'placa-media' }[id]] || []; }
     function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (_) {} }
     function M() { return store.mode; }
     function lv(i) { return (store.best[M()] || {})[LEVELS[i].id] || 0; }
@@ -3573,7 +3696,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
           (n ? '<em>Ya completaste ' + n + ' de ' + levelsFor(m).length + ' fases en este modo</em>' : '<em>Empezás desde la fase 1</em>') + '</button>';
       }
       mapEl.innerHTML = '<div class="lv-start panel"><span class="label">Nuevo juego</span><h2>Elegí cómo querés jugar</h2>' +
-        '<p>El modo Básico tiene 6 fases y el Avanzado tiene 9. En cada una armás algo y después hacés una evaluación corta de opción múltiple. Al terminar todas las fases llega la evaluación integradora, con ' + nInt() + ' preguntas.</p>' +
+        '<p>El modo Básico tiene 7 fases y el Avanzado tiene 10. En cada una armás algo y después hacés una evaluación corta de opción múltiple. Al terminar todas las fases llega la evaluación integradora, con ' + nInt() + ' preguntas.</p>' +
         '<div class="diff-opts">' +
           opt('b', 'Básico', 'En todas las fases podés usar el botón “Mostrar nombres” para ver dónde va cada pieza.') +
           opt('a', 'Avanzado', 'En todas las fases el botón “Mostrar nombres” queda bloqueado: tenés que saber dónde va todo.') +
@@ -3605,16 +3728,16 @@ button.btn.primary:hover { filter: brightness(1.05); }
         '<h1>Armá tu PC</h1>' +
         '<p class="lead">Aprendé a armar una computadora paso a paso: conectá los cables de la fuente, armá placas madre AMD e Intel y configurá desde una PC muy básica hasta una PC gamer.</p>' +
         '<ol class="w-steps">' +
-          '<li><b>01 · Fases</b>6 fases en Básico y 9 en Avanzado, que se desbloquean de a una.</li>' +
+          '<li><b>01 · Fases</b>7 fases en Básico y 10 en Avanzado, que se desbloquean de a una.</li>' +
           '<li><b>02 · Evaluaciones</b>Después de cada fase, ' + NEV + ' preguntas de opción múltiple.</li>' +
           '<li><b>03 · Integradora</b>Al final, una evaluación integradora y tu nota final.</li>' +
         '</ol>' +
         '<h2 class="w-q">¿Cómo querés jugar?</h2>' +
         '<div class="mode-cards">' +
-          card('b', 'Básico', 'Para empezar: las 6 fases más simples, con ayuda para ver dónde va cada pieza.', '<li>Cableado de 5 cables, panel frontal, PC muy básica, placa base y PC completa</li><li>Botón “Mostrar nombres” disponible</li><li>Integradora de 15 preguntas</li>') +
-          card('a', 'Avanzado', 'Para demostrar lo que sabés: 9 fases más difíciles, sin ayuda de nombres y con más descuento por error.', '<li>Cableado de 8 cables, panel frontal completo, PC muy básica y básica sin pistas, placas base, intermedia y gamer AMD e Intel, PC gamer</li><li class="no">Sin ayuda de nombres ni pistas de la fuente</li><li>Integradora de 20 preguntas, más difícil</li>') +
+          card('b', 'Básico', 'Para empezar: las 7 fases más simples, con ayuda para ver dónde va cada pieza.', '<li>Cableado, panel frontal, PC muy básica, placa base, PC completa y, al final, elegir tu PC paso a paso</li><li>Botón “Mostrar nombres” disponible</li><li>Integradora de 15 preguntas</li>') +
+          card('a', 'Avanzado', 'Para demostrar lo que sabés: 10 fases más difíciles, sin ayuda de nombres y con más descuento por error.', '<li>Cableado de 8 cables, panel frontal completo, PCs sin pistas, placas base, intermedia y gamer, PC gamer y, al final, elegir tu PC gamer</li><li class="no">Sin ayuda de nombres ni pistas de la fuente</li><li>Integradora de 20 preguntas, más difícil</li>') +
         '</div>' +
-        '<div class="w-links"><span>¿Solo querés practicar o sos docente?</span><button type="button" class="btn" data-go="muy-basica">Práctica libre</button><button type="button" class="btn" data-go="evaluaciones">Ver evaluaciones</button><button type="button" class="btn" data-go="reparacion">Arreglá la PC</button></div>' +
+        '<div class="w-links"><span>¿Solo querés practicar o sos docente?</span><button type="button" class="btn" data-go="muy-basica">Práctica libre</button><button type="button" class="btn" data-go="evaluaciones">Ver evaluaciones</button><button type="button" class="btn" data-go="reparacion">Arreglá la PC</button><button type="button" class="btn" data-go="historia">Historia de la PC</button></div>' +
       '</div>';
     }
     openWelcome = function () {
@@ -3962,6 +4085,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
       else if (L.mode === 'gamer') current = mountGame(host, ext(GAMER, { onWin: done }));
       else if (L.mode === 'cables') current = WiringFactory(host, done, L.variant);
       else if (L.mode === 'frontal') current = FrontPanelFactory(host, done, L.variant);
+      else if (L.mode === 'elegir') current = ChooseFactory(host, done, L.variant);
       else if (L.mode === 'placa') { current = PlacaFactory(host, done, L.pmode); current.rebuild(L.conf); }
       if (M() === 'a') lockHelp(host);
     }
@@ -4370,6 +4494,426 @@ button.btn.primary:hover { filter: brightness(1.05); }
     });
     repHome();
 
+    /* ---- pestaña Historia ---- */
+    function hpic(p) {
+      var t = p[0], o = '', L = function (txt, y) { return '<text x="60" y="' + (y || 57) + '" text-anchor="middle" class="hp-lab">' + txt + '</text>'; };
+      if (t === 'board') {
+        var w = p[1], h = p[2];
+        o = '<rect x="' + (60 - w / 2) + '" y="' + (24 - h / 2) + '" width="' + w + '" height="' + h + '" rx="2" class="hp-pcb"/>';
+        for (var i = 0; i < (p[4] || 0); i++) o += '<rect x="' + (60 - w / 2 + 6) + '" y="' + (24 - h / 2 + h * .55 + i * 4) + '" width="' + (w * .6) + '" height="2" class="hp-slot"/>';
+        o += '<rect x="' + (60 - w / 2 + w * .5) + '" y="' + (24 - h / 2 + 5) + '" width="9" height="9" class="hp-chip"/>' + L(p[3]);
+      } else if (t === 'slot') {
+        o = '<rect x="' + (60 - p[2] / 2) + '" y="20" width="' + p[2] + '" height="9" rx="1.5" fill="' + p[1] + '" stroke="#0b0d10" stroke-width=".8"/><line x1="' + (62 - p[2] / 2) + '" y1="24.5" x2="' + (58 + p[2] / 2) + '" y2="24.5" stroke="#d2a637" stroke-dasharray="1 1.2"/>' + L(p[3]);
+      } else if (t === 'cpu') {
+        var k = p[1];
+        if (k === 'dip') { o = '<rect x="30" y="16" width="60" height="18" rx="2" class="hp-chip"/>'; for (var d = 0; d < 12; d++) o += '<rect x="' + (33 + d * 4.6) + '" y="12" width="2" height="4" class="hp-pin"/><rect x="' + (33 + d * 4.6) + '" y="34" width="2" height="4" class="hp-pin"/>'; }
+        else if (k === 'slot') o = '<rect x="22" y="8" width="76" height="30" rx="3" fill="#2b3036"/><rect x="26" y="38" width="68" height="4" class="hp-pin"/><rect x="34" y="14" width="22" height="16" rx="2" fill="#5a6470"/>';
+        else { o = '<rect x="38" y="6" width="44" height="36" rx="3" fill="#2c6a4e"/><rect x="44" y="11" width="32" height="26" rx="2" fill="#c3cad1"/>'; if (k === 'pga') for (var q = 0; q < 7; q++) o += '<circle cx="' + (41 + q * 6.3) + '" cy="44" r="1" class="hp-pin"/>'; }
+        o += L(p[2]);
+      } else if (t === 'ram') {
+        var len = p[1], n = p[2], x0 = 60 - len / 2;
+        o = '<rect x="' + x0 + '" y="10" width="' + len + '" height="26" rx="1.5" fill="#2c6a4e"/><rect x="' + x0 + '" y="32" width="' + len + '" height="5" class="hp-pin"/>';
+        for (var c = 0; c < n; c++) o += '<rect x="' + (x0 + 4 + c * (len - 8) / n) + '" y="14" width="' + ((len - 8) / n - 3) + '" height="13" class="hp-chip"/>';
+        (p[3] || []).forEach(function (f) { o += '<rect x="' + (x0 + len * f - 1.5) + '" y="31" width="3" height="7" fill="var(--surface)"/>'; });
+        if (p[5]) o += '<rect x="' + (x0 + len * .45) + '" y="28" width="6" height="3" fill="#5a6470"/>';
+        o += L(p[4]);
+      } else if (t === 'disk') {
+        var f = p[1];
+        if (f === 'big') o = '<rect x="20" y="4" width="80" height="40" rx="3" fill="#7d868f"/><circle cx="50" cy="24" r="16" fill="#aeb6be"/><circle cx="50" cy="24" r="3" fill="#5a6470"/>';
+        else if (f === 'floppy') o = '<rect x="42" y="6" width="36" height="38" rx="2" fill="#2b3036"/><rect x="50" y="6" width="20" height="13" fill="#aeb6be"/><rect x="47" y="27" width="26" height="15" fill="#e8e3d6"/>';
+        else if (f === 'hdd') o = '<rect x="36" y="4" width="48" height="40" rx="3" fill="#aeb6be"/><circle cx="58" cy="22" r="14" fill="#7d868f"/><path d="M76 38 L62 24" stroke="#1d2126" stroke-width="3"/>';
+        else if (f === 'ssd') o = '<rect x="38" y="8" width="44" height="34" rx="3" fill="#1d2126"/><rect x="44" y="13" width="32" height="16" fill="#c3cad1"/>';
+        else if (f === 'm2') o = '<rect x="16" y="18" width="88" height="14" rx="1.5" fill="#1d4f3a"/><rect x="16" y="18" width="5" height="14" class="hp-pin"/><rect x="28" y="20" width="16" height="10" class="hp-chip"/><rect x="50" y="20" width="18" height="10" class="hp-chip"/><rect x="74" y="20" width="18" height="10" class="hp-chip"/>';
+        else if (f === 'card') o = '<rect x="22" y="8" width="76" height="28" rx="2" fill="#1d2126"/><rect x="18" y="6" width="4" height="36" fill="#aeb6be"/><rect x="40" y="36" width="30" height="5" class="hp-pin"/>';
+        o += L(p[2]);
+      } else if (t === 'gpu') {
+        o = '<rect x="18" y="8" width="84" height' + '="28" rx="3" fill="' + (p[1] ? '#2b3036' : '#2c6a4e') + '"/><rect x="14" y="6" width="4" height="34" fill="#aeb6be"/><rect x="30" y="36" width="40" height="5" class="hp-pin"/>';
+        for (var g = 0; g < (p[1] || 0); g++) o += '<circle cx="' + (40 + g * 22) + '" cy="22" r="9" fill="#1a1e23" stroke="#5a6470"/>';
+        if (!p[1]) o += '<rect x="34" y="14" width="18" height="14" class="hp-chip"/>';
+        o += L(p[2]);
+      } else if (t === 'psu') {
+        o = '<rect x="26" y="6" width="68" height="36" rx="3" fill="#5a6470"/><circle cx="48" cy="24" r="12" fill="#1a1e23"/><rect x="66" y="14" width="22" height="20" rx="2" fill="#2b3036"/>';
+        for (var r = 0; r < p[1]; r++) o += '<rect x="' + (68 + (r % 4) * 5) + '" y="' + (16 + Math.floor(r / 4) * 5) + '" width="3.5" height="3.5" class="hp-pin"/>';
+        o += L(p[2]);
+      }
+      return '<svg viewBox="0 0 120 60" class="hpic" aria-hidden="true">' + o + '</svg>';
+    }
+    var HIST = {
+      placa: { name: 'Placas madre', unit: 'MB/s', chartT: 'Velocidad de la ranura más rápida para placas de expansión',
+        intro: 'La placa madre une todo. Con los años cambiaron su tamaño (formato), las ranuras para placas y la velocidad con la que pasan los datos.',
+        chart: [[1981, 'ISA 8 bits', 1], [1984, 'ISA 16 bits', 8], [1993, 'PCI', 133], [2002, 'AGP 8x', 2133], [2004, 'PCIe 1.0 x16', 4000], [2007, 'PCIe 2.0 x16', 8000], [2011, 'PCIe 3.0 x16', 15754], [2019, 'PCIe 4.0 x16', 31508], [2022, 'PCIe 5.0 x16', 63015], [2026, 'PCIe 6.0 x16 (servidores)', 121000]],
+        items: [
+          [1981, 'IBM PC 5150', 'Bus ISA de 8 bits · ~1 MB/s', 'La primera PC de IBM: un procesador 8088, 5 ranuras ISA de 8 bits y entre 16 y 256 KB de memoria soldada en la placa. Casi todo (video, disco, puertos) iba en placas aparte.', ['board', 70, 34, 'IBM PC · 1981', 4]],
+          [1984, 'IBM PC/AT y el formato AT', 'ISA de 16 bits a 8 MHz · ~8 MB/s', 'El formato AT fijó el tamaño de las placas por más de 10 años. Los puertos venían en chapitas sueltas conectadas con cables.', ['board', 76, 36, 'Formato AT', 5]],
+          [1992, 'Ranura PCI', '32 bits a 33 MHz · 133 MB/s', 'Reemplazó al ISA. Las placas se configuran solas (Plug and Play): ya no había que mover “jumpers” a mano.', ['slot', '#f3f4f6', 60, 'Ranura PCI (blanca)']],
+          [1995, 'Formato ATX', 'El formato que se sigue usando', 'Intel lo creó en 1995: panel trasero de puertos integrado, fuente que se prende desde la placa y mejor circulación de aire. En 1997 llegó el micro-ATX, más chico, y en 2001 el Mini-ITX.', ['board', 56, 44, 'ATX · 30,5 × 24,4 cm', 3]],
+          [1997, 'Ranura AGP', '266 MB/s (1x) → 2,1 GB/s (8x, 2002)', 'Una ranura especial solo para la placa de video, porque el PCI ya era lento para los juegos en 3D.', ['slot', '#7c4a2a', 52, 'Ranura AGP (marrón)']],
+          [2004, 'PCI Express (PCIe)', 'PCIe 1.0 x16 · 4 GB/s', 'Reemplazó al PCI y al AGP. Usa “carriles” (x1, x4, x16): cuantos más carriles, más velocidad. La x16 quedó para la placa de video.', ['slot', '#1a1f25', 74, 'PCIe x16']],
+          [2008, 'Memoria y video en el procesador', 'Northbridge y southbridge → un solo chipset', 'El controlador de memoria (AMD en 2003, Intel en 2008) y después los gráficos pasaron al procesador. La placa quedó con un solo chipset. Desde 2011 la BIOS se reemplazó por UEFI, con mouse y discos de más de 2 TB.', ['board', 56, 44, 'Un solo chipset', 2]],
+          [2015, 'Ranuras M.2 en la placa', 'Discos sin cables', 'Las placas empezaron a traer ranuras M.2 para discos NVMe que van directo a la placa, sin cable de datos ni de energía.', ['disk', 'm2', 'Ranura M.2']],
+          [2019, 'PCIe 4.0', 'x16 · ~32 GB/s', 'Duplicó la velocidad del PCIe 3.0 (2010). Llegó primero con los Ryzen 3000 y las placas X570.', ['slot', '#1a1f25', 74, 'PCIe 4.0']],
+          [2022, 'PCIe 5.0 y DDR5', 'x16 · ~64 GB/s', 'Las placas AM5 (AMD) y LGA 1700/1851 (Intel) traen PCIe 5.0, memorias DDR5, USB4, WiFi 7 y red de 2,5 a 10 Gb/s.', ['board', 56, 44, 'Placa actual', 3]],
+          [2026, 'PCIe 6.0 (servidores)', 'x16 · ~128 GB/s', 'Ya se usa en centros de datos. En las PC de escritorio se espera para dentro de unos años.', ['slot', '#1a1f25', 74, 'PCIe 6.0']]
+        ] },
+      cpu: { name: 'Procesadores', unit: 'MHz', chartT: 'Frecuencia máxima de un núcleo',
+        intro: 'El procesador pasó de 4,77 MHz y un solo núcleo a más de 5.000 MHz y hasta 24 núcleos. También cambió cómo se coloca: de chips con patitas a zócalos con miles de contactos.',
+        chart: [[1981, '8088', 4.77], [1984, '80286', 6], [1985, '80386', 16], [1989, '80486', 25], [1993, 'Pentium', 66], [2000, 'Athlon', 1000], [2004, 'Pentium 4', 3800], [2006, 'Core 2 Duo (2 núcleos)', 2930], [2017, 'Ryzen 7 1800X (8 núcleos)', 4000], [2024, 'Core i9-14900KS (24 núcleos)', 6200], [2025, 'Ryzen 9 9950X3D (16 núcleos)', 5700]],
+        items: [
+          [1981, 'Intel 8088', '4,77 MHz · 1 núcleo · 29.000 transistores', 'El procesador de la primera IBM PC. Un chip con 40 patitas (DIP).', ['cpu', 'dip', 'Chip DIP de 40 patas']],
+          [1985, 'Intel 80386', '16 a 33 MHz · 32 bits', 'El primer procesador de 32 bits de las PC, la base de todo lo que vino después.', ['cpu', 'pga', '80386 (PGA)']],
+          [1989, 'Intel 80486', '25 a 100 MHz', 'Trajo la memoria caché y el coprocesador matemático dentro del chip.', ['cpu', 'pga', '80486']],
+          [1993, 'Pentium', '60 a 200 MHz', 'Muy popular en los 90. AMD y Cyrix fabricaban procesadores compatibles para el mismo zócalo (Socket 7).', ['cpu', 'pga', 'Pentium']],
+          [1997, 'Procesadores en cartucho', 'Pentium II y Athlon · 233 MHz a 1 GHz', 'Se insertaban parados en una ranura (Slot 1 / Slot A). En el año 2000 el AMD Athlon fue el primero en llegar a 1 GHz.', ['cpu', 'slot', 'Cartucho Slot 1']],
+          [2004, 'Pentium 4 y el zócalo LGA', 'Hasta 3,8 GHz', 'Subir los MHz generaba mucho calor. Con el LGA 775 los pines pasaron del procesador al zócalo.', ['cpu', 'lga', 'LGA 775']],
+          [2006, 'Doble núcleo', 'Core 2 Duo · Athlon 64 X2', 'En lugar de seguir subiendo la frecuencia, se pusieron dos procesadores (núcleos) en un mismo chip.', ['cpu', 'lga', '2 núcleos']],
+          [2011, 'Gráficos integrados', 'Core i3/i5/i7 · AMD APU', 'El procesador empezó a traer gráficos adentro: una PC ya podía mostrar imagen sin placa de video.', ['cpu', 'lga', 'CPU + GPU']],
+          [2017, 'AMD Ryzen', '8 núcleos y 16 hilos en PC comunes', 'Con el socket AM4, los Ryzen hicieron que tener muchos núcleos fuera normal y barato.', ['cpu', 'pga', 'Ryzen AM4']],
+          [2021, 'Núcleos híbridos', 'Núcleos de rendimiento (P) y de eficiencia (E)', 'Intel mezcló núcleos grandes y chicos, como en los celulares. En 2024 un Core i9 llegó a 6,2 GHz.', ['cpu', 'lga', 'LGA 1700']],
+          [2025, 'Hoy: AM5 y LGA 1851', 'Hasta 16–24 núcleos · más de 5,5 GHz', 'Ryzen 9000 (con caché 3D para juegos) y Core Ultra 200S, que suman una NPU para tareas de inteligencia artificial.', ['cpu', 'lga', 'AM5 · LGA 1851']]
+        ] },
+      ram: { name: 'Memoria RAM', unit: 'MB/s', chartT: 'Velocidad de un módulo de memoria',
+        intro: 'La memoria pasó de chips sueltos de pocos KB a módulos de 64 GB. Cada generación cambió la cantidad de pines y la posición de la muesca, para que no se puedan mezclar.',
+        chart: [[1987, 'SIMM 30 pines', 20], [1993, 'SIMM 72 pines FPM', 176], [1995, 'EDO', 264], [1998, 'SDRAM PC100', 800], [1999, 'SDRAM PC133', 1066], [2003, 'DDR-400', 3200], [2006, 'DDR2-800', 6400], [2010, 'DDR3-1600', 12800], [2017, 'DDR4-3200', 25600], [2022, 'DDR5-6000', 48000], [2025, 'DDR5-8000 (CUDIMM)', 64000]],
+        items: [
+          [1981, 'Chips DIP en la placa', '16 a 64 KB · máximo 640 KB útiles', 'La primera PC traía la memoria en chips sueltos, soldados o en zócalos de la placa.', ['ram', 70, 0, [], 'Chips sueltos']],
+          [1987, 'SIMM de 30 pines', '256 KB a 4 MB · ~20 MB/s', 'Las primeras “plaquitas” de memoria. Eran de 8 bits: había que poner 4 iguales en un 386.', ['ram', 54, 3, [], 'SIMM 30 pines']],
+          [1993, 'SIMM de 72 pines (FPM y EDO)', '4 a 32 MB · hasta ~260 MB/s', 'De 32 bits. En los Pentium se ponían de a pares. La EDO (1995) era un poco más rápida.', ['ram', 72, 4, [.5], 'SIMM 72 pines']],
+          [1996, 'SDRAM DIMM de 168 pines', 'PC66 / PC100 / PC133 · hasta 1 GB/s', 'Memoria de 64 bits sincronizada con el procesador. Tenía dos muescas.', ['ram', 96, 8, [.18, .6], 'SDRAM · 2 muescas']],
+          [2000, 'DDR (184 pines)', 'DDR-400 · 3,2 GB/s · 2,5 V', 'DDR = “doble tasa de datos”: pasa datos dos veces por cada ciclo del reloj. Una sola muesca.', ['ram', 96, 8, [.55], 'DDR · 184 pines']],
+          [2003, 'DDR2 (240 pines)', 'DDR2-800 · 6,4 GB/s · 1,8 V', 'Más velocidad y menos consumo. La muesca cambió de lugar.', ['ram', 96, 8, [.52], 'DDR2 · 240 pines']],
+          [2007, 'DDR3 (240 pines)', 'DDR3-1600 · 12,8 GB/s · 1,5 V', 'Misma cantidad de pines que DDR2, pero con la muesca en otro lugar: no entran en la misma ranura.', ['ram', 96, 8, [.38], 'DDR3 · 240 pines']],
+          [2014, 'DDR4 (288 pines)', 'DDR4-3200 · 25,6 GB/s · 1,2 V', 'El borde de contactos es un poco curvo. Hasta 32 GB por módulo en PC comunes.', ['ram', 100, 8, [.47], 'DDR4 · 288 pines']],
+          [2021, 'DDR5 (288 pines)', 'DDR5-6000 · 48 GB/s · 1,1 V', 'Trae su propio regulador de energía (PMIC) en el módulo y dos subcanales por memoria. Hasta 64 GB por módulo.', ['ram', 100, 8, [.42], 'DDR5 · con PMIC', true]],
+          [2024, 'DDR5 CUDIMM y CAMM2', 'DDR5-8000 o más · 64 GB/s', 'Las CUDIMM traen un chip de reloj propio para llegar más rápido. En las notebooks aparece CAMM2, una memoria plana que se atornilla.', ['ram', 100, 8, [.42], 'CUDIMM', true]]
+        ] },
+      disco: { name: 'Discos', unit: 'MB/s', chartT: 'Velocidad de lectura de los discos más rápidos de cada época',
+        intro: 'Del disquete y el disco de 5 MB al SSD NVMe que lee más de 14.000 MB/s. Primero mejoraron los discos que giran; después llegaron los de estado sólido, sin partes móviles.',
+        chart: [[1980, 'ST-506', 0.625], [1986, 'IDE / ATA', 3.3], [2002, 'Ultra ATA/133', 133], [2003, 'SATA I', 150], [2010, 'SSD SATA III', 550], [2015, 'NVMe PCIe 3.0', 2500], [2018, 'NVMe PCIe 3.0', 3500], [2020, 'NVMe PCIe 4.0', 7400], [2024, 'NVMe PCIe 5.0', 14900], [2026, 'NVMe PCIe 6.0 (servidores)', 28000]],
+        items: [
+          [1956, 'IBM 350 RAMAC (antes de la PC)', '5 MB · casi una tonelada', 'El primer disco rígido de la historia: 50 discos de 60 cm. Se alquilaba por mes.', ['disk', 'big', 'IBM 350 · 5 MB']],
+          [1976, 'Disquetes', '5,25": 360 KB a 1,2 MB · 3,5" (1987): 1,44 MB', 'Las primeras PC arrancaban desde disquetes. El de 3,5" se usó hasta mediados de los 2000.', ['disk', 'floppy', 'Disquete 3,5"']],
+          [1980, 'Seagate ST-506', '5 MB · ~0,6 MB/s', 'El primer disco rígido de 5,25" para computadoras personales. En 1983 la IBM PC XT ya traía un disco de 10 MB.', ['disk', 'hdd', 'ST-506 · 5 MB']],
+          [1986, 'IDE / ATA', '3 a 16 MB/s · cable plano de 40 hilos', 'La controladora pasó a estar dentro del disco. Se conectaban dos discos por cable (maestro y esclavo).', ['disk', 'hdd', 'IDE · 40 pines']],
+          [2002, 'Ultra ATA/133', '133 MB/s · cable de 80 hilos', 'El último y más rápido de los IDE. Los discos de 3,5" giraban a 7200 rpm.', ['disk', 'hdd', 'ATA/133']],
+          [2003, 'SATA', '150 → 300 (2004) → 600 MB/s (2009)', 'Cable fino de 7 pines, un disco por cable. En 2007 salió el primer disco de 1 TB.', ['disk', 'hdd', 'SATA']],
+          [2008, 'SSD SATA', '~250 → 550 MB/s · sin partes móviles', 'Discos con chips de memoria flash: arrancan Windows en segundos y no les afectan los golpes.', ['disk', 'ssd', 'SSD 2,5"']],
+          [2015, 'M.2 NVMe y tarjetas SSD PCIe', 'PCIe 3.0 x4 · hasta ~3,5 GB/s', 'El disco va directo a las líneas PCIe: en una ranura M.2 o en una tarjeta en una ranura PCI Express.', ['disk', 'card', 'SSD en tarjeta PCIe']],
+          [2019, 'NVMe PCIe 4.0', 'hasta ~7,4 GB/s', 'El doble que PCIe 3.0. Muchos traen disipador.', ['disk', 'm2', 'M.2 2280']],
+          [2023, 'NVMe PCIe 5.0', 'hasta ~14,9 GB/s', 'Los más rápidos para PC de hoy. Necesitan un buen disipador.', ['disk', 'm2', 'M.2 PCIe 5.0']],
+          [2026, 'Hoy en los centros de datos', 'Discos HAMR de 44 TB · SSD PCIe 6.0 de ~28 GB/s', 'Los discos que giran siguen creciendo en capacidad (Seagate entrega discos HAMR de 44 TB). Los SSD PCIe 6.0 ya están en servidores y se esperan en las PC desde 2027.', ['disk', 'hdd', 'HAMR · 44 TB']]
+        ] },
+      video: { name: 'Placas de video', unit: 'GB/s', chartT: 'Velocidad de la memoria de video',
+        intro: 'Al principio la placa de video solo mostraba letras. Hoy es la pieza más potente (y que más consume) de una PC gamer.',
+        chart: [[1996, 'Voodoo', 0.8], [1999, 'GeForce 256', 2.6], [2002, 'Radeon 9700', 19.8], [2006, 'GeForce 8800 GTX', 86], [2010, 'Radeon HD 5870', 154], [2016, 'GeForce GTX 1080', 320], [2018, 'RTX 2080 Ti', 616], [2022, 'RTX 4090', 1008], [2025, 'RTX 5090', 1792]],
+        items: [
+          [1981, 'MDA y CGA', 'Texto y hasta 4 colores', 'Las placas de la IBM PC: MDA solo mostraba letras verdes; CGA, gráficos simples de 320 × 200.', ['gpu', 0, 'CGA · 1981']],
+          [1987, 'VGA', '640 × 480 · 256 colores', 'Con VGA nació el conector azul de 15 pines, que se usó durante más de 25 años.', ['gpu', 0, 'VGA']],
+          [1996, '3dfx Voodoo', 'Aceleradora 3D', 'Una placa extra solo para juegos en 3D: cambió los videojuegos de PC.', ['gpu', 0, 'Voodoo']],
+          [1999, 'GeForce 256', 'La “primera GPU” · AGP', 'NVIDIA la presentó como la primera GPU: calculaba la geometría y las luces del 3D sin ayuda del procesador.', ['gpu', 1, 'GeForce 256']],
+          [2006, 'GeForce 8800 y el cálculo en GPU', '86 GB/s de memoria', 'Las GPU empezaron a usarse para cálculos científicos (CUDA, 2007) y, años después, para la inteligencia artificial.', ['gpu', 2, 'GeForce 8800']],
+          [2018, 'RTX: trazado de rayos', 'Luces y reflejos en tiempo real', 'Las GeForce RTX sumaron núcleos para el trazado de rayos y para IA (DLSS).', ['gpu', 2, 'RTX 20']],
+          [2022, 'Conector 12VHPWR', '16 pines · hasta 600 W', 'Las placas más potentes empezaron a usar un solo conector grande en lugar de varios de 8 pines.', ['gpu', 3, 'RTX 40']],
+          [2025, 'Hoy: RTX 50 y Radeon RX 9000', 'Hasta 32 GB de GDDR7 · ~1,8 TB/s', 'La GeForce RTX 5090 consume unos 575 W: necesita una fuente muy grande.', ['gpu', 3, 'RTX 5090']]
+        ] },
+      fuente: { name: 'Fuentes', unit: 'W', chartT: 'Potencia de una fuente típica de PC potente',
+        intro: 'Las fuentes pasaron de 63 W con una llave de encendido a 1600 W modulares, con conectores especiales para el procesador y la placa de video.',
+        chart: [[1981, 'IBM PC', 63.5], [1984, 'IBM PC/AT', 192], [1995, 'ATX', 250], [2004, 'ATX 2.0', 450], [2010, 'Gamer 2010', 850], [2022, 'ATX 3.0', 1000], [2025, 'Gamer 2025', 1600]],
+        items: [
+          [1981, 'Fuente de la IBM PC', '63,5 W', 'Tenía una llave grande que cortaba la corriente de verdad.', ['psu', 0, '63,5 W']],
+          [1984, 'Fuente AT', 'Conectores P8 y P9', 'Dos conectores parecidos para la placa: si se invertían, se quemaba. La regla era “negro con negro”.', ['psu', 6, 'P8 + P9']],
+          [1995, 'Fuente ATX', '20 pines · encendido desde la placa', 'Un solo conector de 20 pines. La PC se prende con el botón del gabinete y Windows la puede apagar sola.', ['psu', 8, 'ATX 20 pines']],
+          [2000, 'ATX12V: conector del procesador', '4 pines de 12 V (luego EPS de 8)', 'Los procesadores empezaron a necesitar un cable propio de 12 V, el antepasado del EPS.', ['psu', 4, 'P4 / EPS']],
+          [2003, 'ATX 2.0: 24 pines', '24 pines · SATA · PCIe', 'El conector de la placa pasó a 24 pines y aparecieron los cables SATA y PCIe (6 pines en 2004, 8 pines en 2007).', ['psu', 12, '24 pines']],
+          [2004, 'Certificación 80 PLUS', '80 % de eficiencia o más', 'Mide cuánta energía se pierde como calor. Después vinieron Bronze, Gold, Platinum y Titanium.', ['psu', 0, '80 PLUS']],
+          [2022, 'ATX 3.0 y 12VHPWR', 'Hasta 600 W por un conector', 'Fuentes preparadas para los picos de consumo de las placas de video. En 2023, ATX 3.1 con el conector 12V-2x6, más seguro.', ['psu', 16, '12VHPWR']],
+          [2025, 'Hoy', '450 a 1600 W · modulares · Gold y Platinum', 'Cables modulares (se enchufan solo los que se usan) y ventiladores que se frenan cuando hay poca carga.', ['psu', 8, 'Modular']]
+        ] }
+    };
+    var HIST_Q = [
+      ['¿En qué año salió la IBM PC, la primera PC de IBM?', ['1981', '1971', '1995', '2001'], 'La IBM PC 5150 salió en agosto de 1981.'],
+      ['¿Qué procesador usaba la primera IBM PC?', ['Intel 8088 a 4,77 MHz', 'Pentium a 60 MHz', 'Intel 80486', 'AMD Athlon'], 'Un procesador de 4,77 MHz y un solo núcleo.'],
+      ['¿Qué formato de placa madre creó Intel en 1995 y se sigue usando?', ['ATX', 'AT', 'ISA', 'VGA'], 'ATX integró el panel trasero y el encendido desde la placa.'],
+      ['¿Qué ranura reemplazó al PCI y al AGP?', ['PCI Express', 'ISA', 'SATA', 'M.2'], 'PCIe llegó en 2004 y usa carriles (x1, x4, x16).'],
+      ['¿Para qué se creó la ranura AGP en 1997?', ['Solo para la placa de video', 'Para la memoria RAM', 'Para el disco', 'Para la fuente'], 'El PCI era lento para los gráficos 3D.'],
+      ['¿Qué significa “DDR” en las memorias?', ['Doble tasa de datos: dos datos por ciclo de reloj', 'Disco de respaldo', 'Doble disco rígido', 'Datos de video'], 'Por eso una DDR-400 trabaja con un reloj de 200 MHz.'],
+      ['¿Por qué una memoria DDR4 no entra en una ranura DDR5?', ['La muesca está en otro lugar', 'Es más larga', 'Tiene menos pines', 'Es de otro color'], 'Las dos tienen 288 pines, pero la muesca está en distinto lugar.'],
+      ['¿Qué tiene la memoria DDR5 que no tenían las anteriores?', ['Su propio regulador de energía (PMIC)', 'Disipador obligatorio', 'Un disco adentro', 'Cable propio'], 'El PMIC regula la energía en el mismo módulo.'],
+      ['¿Cuánto guardaba el primer disco rígido para PC (Seagate ST-506, 1980)?', ['5 MB', '5 GB', '1,44 MB', '500 MB'], 'Hoy hay discos de 44 TB: unas 9 millones de veces más.'],
+      ['¿Qué cable de discos reemplazó SATA en 2003?', ['El cable plano IDE / ATA', 'El cable USB', 'El cable de red', 'El cable VGA'], 'El IDE era un cable plano de 40 u 80 hilos.'],
+      ['¿Cuál es la velocidad máxima de SATA III?', ['600 MB/s', '133 MB/s', '7.400 MB/s', '14.900 MB/s'], 'Por eso un SSD SATA no pasa de unos 550 MB/s.'],
+      ['¿Qué disco es más rápido?', ['SSD NVMe PCIe 5.0', 'SSD SATA', 'Disco IDE', 'Disco mecánico SATA'], 'Hasta unos 14.900 MB/s.'],
+      ['¿Qué procesador fue el primero en llegar a 1 GHz, en el año 2000?', ['AMD Athlon', 'Intel 8088', 'Pentium 4', 'Ryzen 7'], 'Ganó la “carrera del GHz” por poco a Intel.'],
+      ['¿Por qué desde 2005 se pusieron varios núcleos en lugar de seguir subiendo los GHz?', ['Porque subir la frecuencia generaba demasiado calor', 'Porque era más barato', 'Porque lo pedía Windows', 'Porque los discos eran lentos'], 'El Pentium 4 llegó a 3,8 GHz y se calentaba mucho.'],
+      ['¿Qué placa de video se presentó como la “primera GPU” en 1999?', ['GeForce 256', '3dfx Voodoo', 'RTX 5090', 'VGA'], 'Calculaba la geometría y las luces sin el procesador.'],
+      ['¿Qué conector de la fuente apareció con ATX en 1995?', ['El de 20 pines para la placa', 'El de 24 pines', 'El 12VHPWR', 'El P8 y P9'], 'Después creció a 24 pines (ATX 2.0, 2003).'],
+      ['¿Qué mide la certificación 80 PLUS de una fuente?', ['Su eficiencia: cuánta energía no se pierde como calor', 'Su potencia máxima', 'Su tamaño', 'Su ruido'], 'Gold, Platinum y Titanium son más eficientes.'],
+      ['¿Qué pasó con los pines del procesador con el LGA 775 (2004)?', ['Pasaron al zócalo de la placa', 'Desaparecieron', 'Se hicieron más largos', 'Pasaron a la fuente'], 'Los procesadores LGA tienen contactos planos.']
+    ].map(function (r, k) { var sh = k % 4; return { q: r[0], o: r[1].slice(sh).concat(r[1].slice(0, sh)), a: (4 - sh) % 4, why: r[2] }; });
+
+    var histEl = document.getElementById('hist-free'), histCat = 'placa';
+    function nfmt(v) { return v >= 1000 ? Math.round(v).toLocaleString('es-AR') : v < 10 ? String(v).replace('.', ',') : String(Math.round(v)); }
+    function histRender() {
+      var C = HIST[histCat], ch = C.chart, lo = Math.log10(ch.reduce(function (m, r) { return Math.min(m, r[2]); }, 1e9)), hi = Math.log10(ch.reduce(function (m, r) { return Math.max(m, r[2]); }, 0));
+      var first = ch[0], last = ch.reduce(function (m, r) { return r[2] > m[2] ? r : m; }, ch[0]), times = last[2] / first[2];
+      histEl.innerHTML = '<div class="lv-top"><div><span class="label">Historia de la PC</span><h2>De 1981 a hoy</h2>' +
+          '<p>Cómo fueron cambiando las piezas de la computadora de escritorio y sus velocidades, desde la primera IBM PC hasta las PC actuales.</p></div>' +
+          '<button type="button" class="btn primary" data-hq="1">Hacer el cuestionario de historia</button></div>' +
+        '<div class="seg hist-seg" role="tablist" aria-label="Categoría">' + Object.keys(HIST).map(function (k) {
+          return '<label><input type="radio" name="hcat" value="' + k + '"' + (k === histCat ? ' checked' : '') + '><span>' + HIST[k].name + '</span></label>'; }).join('') + '</div>' +
+        '<p class="hist-intro">' + C.intro + '</p>' +
+        '<section class="panel hist-chart"><span class="label">Cómo cambió la velocidad</span><h3>' + C.chartT + '</h3>' +
+          '<p class="hist-x">De <b>' + nfmt(first[2]) + ' ' + C.unit + '</b> (' + first[1] + ', ' + first[0] + ') a <b>' + nfmt(last[2]) + ' ' + C.unit + '</b> (' + last[1] + ', ' + last[0] + '): unas <b>' + nfmt(Math.round(times)) + ' veces</b> más.</p>' +
+          '<div class="hbars">' + ch.map(function (r) {
+            var pct = 6 + 94 * (Math.log10(r[2]) - lo) / ((hi - lo) || 1);
+            return '<div class="hb"><span class="hb-y">' + r[0] + '</span><span class="hb-n">' + r[1] + '</span><span class="hb-t"><i style="width:' + pct.toFixed(1) + '%"></i></span><span class="hb-v">' + nfmt(r[2]) + ' ' + C.unit + '</span></div>';
+          }).join('') + '</div>' +
+          '<p class="hist-note">Escala logarítmica: cada salto de la barra es unas 10 veces más.</p></section>' +
+        '<ol class="tline">' + C.items.map(function (it) {
+          return '<li><span class="tl-year">' + it[0] + '</span><div class="tl-card panel">' + hpic(it[4]) + '<div><h3>' + it[1] + '</h3><span class="tl-sp">' + it[2] + '</span><p>' + it[3] + '</p></div></div></li>';
+        }).join('') + '</ol>';
+    }
+    function histQuiz() {
+      closeModal(); freeIdx = 'hist';
+      histEl.innerHTML = freeHead('Historia de la PC · cuestionario', 'De 1981 a hoy', '10 preguntas de opción múltiple sobre la evolución de las piezas.') + '<section class="quiz panel" aria-live="polite"></section>';
+      runQuiz(histEl.querySelector('.quiz'), HIST_Q.slice().sort(rnd).slice(0, 10).map(withOrder), function (ok, tot) {
+        var n = Math.round(ok / tot * 100); if (n >= PASS) sfx.win();
+        showResult({ label: 'Historia de la PC', tag: 'Cuestionario', n: n, msg: (n >= PASS ? '¡Muy bien! ' : '') + 'Respondiste bien ' + ok + ' de ' + tot + ' preguntas.',
+          detail: 'Esta nota no cuenta para el juego.', buttons: '<button type="button" class="btn primary" data-act="fqretry">Repetir</button><button type="button" class="btn" data-act="fqlist">Volver a la historia</button>' });
+      });
+      try { histEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    histEl.addEventListener('change', function (e) { if (e.target.name === 'hcat') { histCat = e.target.value; histRender(); } });
+    histEl.addEventListener('click', function (e) { if (e.target.closest('[data-hq]')) histQuiz(); else if (e.target.closest('.ev-back')) histRender(); });
+    histRender();
+
+    /* ---- Elegí tu PC: armado paso a paso con verificación ---- */
+    var CH = {
+      boards: [
+        { id: 'a620', brand: 'amd', name: 'AMD A620M', socket: 'AM5', fmt: 'Micro-ATX', ddr: 'DDR5', ram: 2, m2: 1, sata: 4, x16: 1, x4: 0, w: 40 },
+        { id: 'b550', brand: 'amd', name: 'AMD B550M', socket: 'AM4', fmt: 'Micro-ATX', ddr: 'DDR4', ram: 4, m2: 2, sata: 4, x16: 1, x4: 1, w: 40 },
+        { id: 'b650', brand: 'amd', name: 'AMD B650', socket: 'AM5', fmt: 'ATX', ddr: 'DDR5', ram: 4, m2: 2, sata: 4, x16: 1, x4: 1, w: 50 },
+        { id: 'x870e', brand: 'amd', name: 'AMD X870E gamer', socket: 'AM5', fmt: 'ATX', ddr: 'DDR5', ram: 4, m2: 4, sata: 4, x16: 2, x4: 1, w: 60, adv: 1 },
+        { id: 'h610', brand: 'intel', name: 'Intel H610M', socket: 'LGA 1700', fmt: 'Micro-ATX', ddr: 'DDR4', ram: 2, m2: 1, sata: 4, x16: 1, x4: 0, w: 40 },
+        { id: 'b860', brand: 'intel', name: 'Intel B860M', socket: 'LGA 1851', fmt: 'Micro-ATX', ddr: 'DDR5', ram: 4, m2: 2, sata: 4, x16: 1, x4: 1, w: 45 },
+        { id: 'z790', brand: 'intel', name: 'Intel Z790 (DDR4)', socket: 'LGA 1700', fmt: 'ATX', ddr: 'DDR4', ram: 4, m2: 3, sata: 6, x16: 1, x4: 2, w: 55, adv: 1 },
+        { id: 'z890', brand: 'intel', name: 'Intel Z890 gamer', socket: 'LGA 1851', fmt: 'ATX', ddr: 'DDR5', ram: 4, m2: 4, sata: 4, x16: 2, x4: 1, w: 60, adv: 1 }
+      ],
+      cpus: [
+        { id: 'r5600g', name: 'Ryzen 5 5600G', brand: 'amd', socket: 'AM4', c: 6, t: 12, w: 65, ig: true },
+        { id: 'r5700x', name: 'Ryzen 7 5700X', brand: 'amd', socket: 'AM4', c: 8, t: 16, w: 65, ig: false },
+        { id: 'r8600g', name: 'Ryzen 5 8600G', brand: 'amd', socket: 'AM5', c: 6, t: 12, w: 65, ig: true },
+        { id: 'r9600', name: 'Ryzen 5 9600', brand: 'amd', socket: 'AM5', c: 6, t: 12, w: 65, ig: true },
+        { id: 'r9800', name: 'Ryzen 7 9800X3D', brand: 'amd', socket: 'AM5', c: 8, t: 16, w: 120, ig: true, adv: 1 },
+        { id: 'r9950', name: 'Ryzen 9 9950X', brand: 'amd', socket: 'AM5', c: 16, t: 32, w: 170, ig: true, adv: 1 },
+        { id: 'i3', name: 'Core i3-14100', brand: 'intel', socket: 'LGA 1700', c: 4, t: 8, w: 60, ig: true },
+        { id: 'i5f', name: 'Core i5-14400F', brand: 'intel', socket: 'LGA 1700', c: 10, t: 16, w: 65, ig: false },
+        { id: 'u5', name: 'Core Ultra 5 245K', brand: 'intel', socket: 'LGA 1851', c: 14, t: 14, w: 125, ig: true },
+        { id: 'u7f', name: 'Core Ultra 7 265KF', brand: 'intel', socket: 'LGA 1851', c: 20, t: 20, w: 125, ig: false, adv: 1 },
+        { id: 'u9', name: 'Core Ultra 9 285K', brand: 'intel', socket: 'LGA 1851', c: 24, t: 24, w: 125, ig: true, adv: 1 }
+      ],
+      gpus: [
+        { id: 'none', name: 'Sin placa de video', sub: 'Usa los gráficos del procesador', w: 0, gb: 0 },
+        { id: '5060', name: 'GeForce RTX 5060', sub: '8 GB GDDR7', w: 145, gb: 8 },
+        { id: '9060', name: 'Radeon RX 9060 XT', sub: '16 GB GDDR6', w: 160, gb: 16 },
+        { id: '5070', name: 'GeForce RTX 5070', sub: '12 GB GDDR7', w: 250, gb: 12 },
+        { id: '9070', name: 'Radeon RX 9070 XT', sub: '16 GB GDDR6', w: 304, gb: 16, adv: 1 },
+        { id: '5090', name: 'GeForce RTX 5090', sub: '32 GB GDDR7', w: 575, gb: 32, adv: 1 }
+      ],
+      disks: {
+        hdd: { name: 'Discos rígidos mecánicos (HDD)', short: 'HDD', max: 4, caps: [1, 2, 4, 8], w: 8, bus: 'SATA', pic: ['disk', 'hdd', 'HDD 3,5" · 7200 rpm'],
+          info: 'Discos que giran. Dan mucho espacio barato, pero son lentos (unos 200 MB/s). Usan un puerto SATA de la placa cada uno.' },
+        ssd: { name: 'Discos de estado sólido SATA (SSD)', short: 'SSD SATA', max: 4, caps: [0.5, 1, 2], w: 3, bus: 'SATA', pic: ['disk', 'ssd', 'SSD 2,5" · SATA'],
+          info: 'Sin partes móviles, hasta unos 550 MB/s. También usan un puerto SATA cada uno.' },
+        m2: { name: 'Discos M.2 NVMe', short: 'M.2', max: 4, caps: [0.5, 1, 2, 4], w: 7, bus: 'M.2', pic: ['disk', 'm2', 'M.2 2280 · NVMe'],
+          info: 'Van directo en una ranura M.2 de la placa, sin cables. De 3.500 a 14.900 MB/s según la generación.' },
+        card: { name: 'Discos PCI Express (tarjeta)', short: 'SSD PCIe', max: 2, caps: [1, 2], w: 10, bus: 'PCIe', pic: ['disk', 'card', 'SSD en tarjeta PCIe x4'],
+          info: 'Un SSD NVMe en forma de tarjeta: se coloca en una ranura PCI Express x4 o x16 libre (no en una x1).' }
+      },
+      psus: [450, 550, 650, 750, 850, 1000, 1200, 1300, 1600]
+    };
+    var CH_REQ = {
+      basic: { title: 'Pedido: una PC para la escuela', items: [
+        'Placa madre y procesador compatibles.',
+        'Sin placa de video: la imagen la tienen que dar los gráficos del procesador.',
+        'Entre 1 y 2 discos, y al menos uno tiene que ser un SSD (SATA o M.2) para instalar Windows.',
+        '16 GB de memoria RAM en doble canal (2 o 4 memorias iguales).',
+        'La fuente justa: que alcance, pero que no sobre.'] },
+      adv: { title: 'Pedido: una PC gamer y para hacer streaming', items: [
+        'Placa madre ATX y procesador compatibles.',
+        'Procesador de 8 núcleos o más.',
+        'Placa de video con 12 GB de memoria o más.',
+        'Entre 2 y 5 discos, con 4 TB o más en total, y Windows en un disco NVMe (M.2 o tarjeta PCIe).',
+        '32 GB o más de memoria DDR5 en doble canal (2 o 4 memorias iguales).',
+        'La fuente justa: que alcance, pero que no sobre.'] }
+    };
+    var CH_STEPS = [['board', 'Placa madre'], ['cpu', 'Procesador'], ['gpu', 'Placa de video'], ['hdd', 'Discos mecánicos'], ['ssd', 'SSD SATA'], ['m2', 'Discos M.2'], ['card', 'Disco PCI Express'], ['ram', 'Memorias'], ['psu', 'Fuente'], ['check', 'Verificar']];
+
+    function ChooseFactory(host, onComplete, variant) {
+      var ADV = variant === 'adv', REQ = CH_REQ[ADV ? 'adv' : 'basic'];
+      var boards = CH.boards.filter(function (b) { return ADV || !b.adv; }), cpus = CH.cpus.filter(function (c) { return ADV || !c.adv; }), gpus = CH.gpus.filter(function (g) { return ADV || !g.adv; });
+      var S, timer = null;
+      function find(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return null; }
+      function tb(n) { return n < 1 ? (n * 1000) + ' GB' : String(n).replace('.', ',') + ' TB'; }
+      function reset() {
+        clearInterval(timer); timer = null;
+        S = { step: 0, seen: 0, board: null, cpu: null, gpu: 'none', d: { hdd: [0, 2], ssd: [0, 1], m2: [0, 1], card: [0, 1] }, ramT: null, ramN: 2, ramGB: 8, psu: 0, errors: 0, tries: 0, t0: null, ok: false };
+        render();
+      }
+      function start() { if (S.t0) return; S.t0 = Date.now(); timer = setInterval(function () { var e = host.querySelector('.ch-time'); if (e) e.textContent = fmt(Math.floor((Date.now() - S.t0) / 1000)); }, 500); }
+      function consumption() {
+        var b = find(CH.boards, S.board), c = find(CH.cpus, S.cpu), g = find(CH.gpus, S.gpu);
+        return (b ? b.w : 45) + (c ? c.w : 65) + (g ? g.w : 0) + S.ramN * 5 + S.d.hdd[0] * 8 + S.d.ssd[0] * 3 + S.d.m2[0] * 7 + S.d.card[0] * 10 + 15;
+      }
+      function needTier() { var n = Math.ceil(consumption() * 1.3); for (var i = 0; i < CH.psus.length; i++) if (CH.psus[i] >= n) return CH.psus[i]; return 1600; }
+      function diskCount() { return S.d.hdd[0] + S.d.ssd[0] + S.d.m2[0] + S.d.card[0]; }
+      function storage() { return S.d.hdd[0] * S.d.hdd[1] + S.d.ssd[0] * S.d.ssd[1] + S.d.m2[0] * S.d.m2[1] + S.d.card[0] * S.d.card[1]; }
+
+      function checks() {
+        var b = find(CH.boards, S.board), c = find(CH.cpus, S.cpu), g = find(CH.gpus, S.gpu), out = [];
+        function add(ok, title, okMsg, badMsg) { out.push({ ok: ok, t: title, m: ok ? okMsg : badMsg }); }
+        add(c.socket === b.socket, 'Procesador y placa madre', 'El ' + c.name + ' entra en la placa ' + b.name + ' (socket ' + b.socket + ').',
+          ADV ? 'El ' + c.name + ' no entra en la placa ' + b.name + ': no son del mismo socket.' : 'El ' + c.name + ' usa socket ' + c.socket + ' y la placa ' + b.name + ' es ' + b.socket + ': no entra.');
+        add(S.gpu !== 'none' || c.ig, 'Imagen en el monitor', S.gpu !== 'none' ? 'La imagen la da la ' + g.name + '.' : 'El ' + c.name + ' tiene gráficos integrados: el monitor va en la placa madre.',
+          'El ' + c.name + ' no tiene gráficos integrados' + (ADV ? '' : ' (la F o KF del nombre lo indica, igual que los Ryzen sin “G” de AM4)') + ' y no elegiste placa de video: la PC no daría imagen.');
+        add(S.ramT === b.ddr, 'Tipo de memoria', 'Las memorias ' + S.ramT + ' coinciden con la placa.',
+          'Elegiste memorias ' + S.ramT + ', pero la placa ' + b.name + ' usa ' + (ADV ? 'otro tipo' : b.ddr) + ': la muesca está en otro lugar y no entran.');
+        add(S.ramN <= b.ram, 'Cantidad de memorias', 'Hay ranuras para las ' + S.ramN + ' memorias.', 'Pusiste ' + S.ramN + ' memorias y la placa tiene solo ' + b.ram + ' ranuras.');
+        add(S.ramN % 2 === 0, 'Doble canal', 'Con ' + S.ramN + ' memorias iguales la RAM trabaja en doble canal.', 'Con ' + S.ramN + ' memoria' + (S.ramN === 1 ? '' : 's') + ' no hay doble canal: tienen que ser 2 o 4 iguales.');
+        add(S.d.m2[0] <= b.m2, 'Ranuras M.2', S.d.m2[0] ? (S.d.m2[0] === 1 ? 'El M.2 entra' : 'Los ' + S.d.m2[0] + ' M.2 entran') + ' en ' + (b.m2 === 1 ? 'la ranura M.2.' : 'las ' + b.m2 + ' ranuras.') : 'No usás ranuras M.2.', 'Pusiste ' + S.d.m2[0] + ' discos M.2 y la placa tiene ' + (ADV ? 'menos ranuras M.2' : 'solo ' + b.m2 + ' ranura' + (b.m2 > 1 ? 's' : '') + ' M.2') + '.');
+        var sata = S.d.hdd[0] + S.d.ssd[0];
+        add(sata <= b.sata, 'Puertos SATA', sata ? (sata === 1 ? 'El disco SATA entra' : 'Los ' + sata + ' discos SATA entran') + ' en los ' + b.sata + ' puertos.' : 'No usás puertos SATA.', 'Tenés ' + sata + ' discos SATA (mecánicos + SSD) y la placa tiene ' + (ADV ? 'menos puertos' : 'solo ' + b.sata + ' puertos SATA') + '.');
+        var gUse = S.gpu !== 'none' ? 1 : 0, free = (b.x16 - gUse) + b.x4;
+        add(S.d.card[0] <= free, 'Ranuras PCI Express', S.d.card[0] ? 'La' + (S.d.card[0] > 1 ? 's tarjetas SSD tienen' : ' tarjeta SSD tiene') + ' ranura PCIe libre.' : 'Las ranuras PCIe alcanzan.',
+          'No hay ranuras PCIe x4 o x16 libres para ' + S.d.card[0] + ' tarjeta' + (S.d.card[0] > 1 ? 's' : '') + ' SSD' + (gUse ? ' (la placa de video ya usa una x16)' : '') + '.');
+        var n = diskCount(), nvme = S.d.m2[0] + S.d.card[0], fast = S.d.ssd[0] + nvme, st = storage();
+        if (!n) add(false, 'Discos', '', 'No elegiste ningún disco: la PC no tiene dónde instalar Windows.');
+        else if (ADV) add(n >= 2 && n <= 5 && st >= 4 && nvme >= 1, 'Discos del pedido', 'Tenés ' + n + ' discos, ' + tb(st) + ' en total y Windows en un NVMe.',
+          n < 2 ? 'Te faltan discos: el pedido es de 2 a 5 discos.' : n > 5 ? 'Pusiste discos de más: el pedido es de 2 a 5.' : st < 4 ? 'Te falta espacio: hay ' + tb(st) + ' y el pedido es de 4 TB o más.' : 'Windows tiene que ir en un disco NVMe (M.2 o tarjeta PCIe).');
+        else add(n <= 2 && fast >= 1, 'Discos del pedido', 'Tenés ' + n + ' disco' + (n > 1 ? 's' : '') + ' con un SSD para Windows.',
+          n > 2 ? 'Pusiste discos de más: el pedido es de 1 o 2 discos.' : 'Hace falta al menos un SSD (SATA o M.2) para Windows; un disco mecánico solo sería muy lento.');
+        var tot = S.ramN * S.ramGB;
+        if (ADV) add(tot >= 32 && S.ramT === 'DDR5', 'Memoria del pedido', 'Tenés ' + tot + ' GB de DDR5.', tot < 32 ? 'Te falta memoria: hay ' + tot + ' GB y el pedido es de 32 GB o más.' : 'El pedido es de memoria DDR5.');
+        else add(tot === 16, 'Memoria del pedido', 'Tenés 16 GB.', 'Hay ' + tot + ' GB: el pedido es de 16 GB' + (tot > 16 ? ' (pusiste de más).' : ' (te falta).'));
+        if (ADV) {
+          add(c.c >= 8, 'Procesador del pedido', 'El ' + c.name + ' tiene ' + c.c + ' núcleos.', 'El ' + c.name + ' tiene ' + c.c + ' núcleos y el pedido es de 8 o más.');
+          add(g && g.gb >= 12, 'Placa de video del pedido', g && g.gb ? 'La ' + g.name + ' tiene ' + g.gb + ' GB.' : '', S.gpu === 'none' ? 'Una PC gamer necesita placa de video.' : 'La ' + g.name + ' tiene ' + g.gb + ' GB y el pedido es de 12 GB o más.');
+          add(b.fmt === 'ATX', 'Formato de la placa', 'La placa es ATX.', 'El pedido es una placa ATX y la ' + b.name + ' es ' + b.fmt + '.');
+        } else add(S.gpu === 'none', 'Placa de video', 'Sin placa de video, como pide el pedido.', 'El pedido es sin placa de video: es una PC para la escuela y los gráficos del procesador alcanzan.');
+        var cons = consumption(), need = Math.ceil(cons * 1.3), best = needTier();
+        add(S.psu === best, 'Fuente de alimentación', 'La fuente de ' + S.psu + ' W es la justa: la PC consume unos ' + cons + ' W y con el 30 % de margen necesita ' + need + ' W.',
+          S.psu < need ? 'La fuente de ' + S.psu + ' W no alcanza: la PC consume unos ' + cons + ' W y con el 30 % de margen necesita ' + need + ' W.' + (ADV ? '' : ' La recomendada es la de ' + best + ' W.')
+                       : 'La fuente de ' + S.psu + ' W es demasiado grande: la PC consume unos ' + cons + ' W' + (ADV ? '.' : ' y con el 30 % de margen alcanza con la de ' + best + ' W.'));
+        return out;
+      }
+
+      function card(name, val, cur, inner) {
+        return '<label class="ch-card"><input type="radio" name="' + name + '" value="' + val + '"' + (String(cur) === String(val) ? ' checked' : '') + '>' + inner + '</label>';
+      }
+      function stepBody() {
+        var k = CH_STEPS[S.step][0], b = find(CH.boards, S.board), o = '';
+        if (k === 'board') {
+          o = '<p class="ch-help">Elegí la placa madre. De ella depende qué procesador, qué memorias y cuántos discos podés poner.</p><div class="ch-grid">' + boards.map(function (x) {
+            return card('ch-board', x.id, S.board, hpic(['board', x.fmt === 'ATX' ? 56 : 46, x.fmt === 'ATX' ? 44 : 38, x.brand === 'amd' ? 'AMD' : 'Intel', x.x16 + x.x4]) + '<strong>' + x.name + '</strong>' +
+              '<ul class="ch-spec"><li>Socket <b>' + x.socket + '</b></li><li>' + x.fmt + '</li><li>' + x.ram + ' ranuras ' + x.ddr + '</li><li>' + x.m2 + ' M.2 · ' + x.sata + ' SATA</li><li>' + x.x16 + ' PCIe x16' + (x.x4 ? ' · ' + x.x4 + ' PCIe x4' : '') + '</li></ul>');
+          }).join('') + '</div>';
+        } else if (k === 'cpu') {
+          o = '<p class="ch-help">Elegí el procesador para la placa ' + (b ? '<b>' + b.name + '</b>' + (ADV ? '' : ' (socket ' + b.socket + ')') : '') + '. ' + (ADV ? 'En modo avanzado no se muestra el socket: tenés que saber cuál entra.' : 'Fijate que el socket coincida.') + '</p><div class="ch-grid">' + cpus.map(function (x) {
+            return card('ch-cpu', x.id, S.cpu, hpic(['cpu', x.brand === 'amd' && x.socket === 'AM4' ? 'pga' : 'lga', x.brand === 'amd' ? 'AMD' : 'Intel']) + '<strong>' + x.name + '</strong>' +
+              '<ul class="ch-spec">' + (ADV ? '' : '<li>Socket <b>' + x.socket + '</b></li>') + '<li>' + x.c + ' núcleos / ' + x.t + ' hilos</li><li>' + x.w + ' W</li>' + (ADV ? '' : '<li>' + (x.ig ? 'Con gráficos integrados' : '<b>Sin</b> gráficos integrados') + '</li>') + '</ul>');
+          }).join('') + '</div>';
+        } else if (k === 'gpu') {
+          o = '<p class="ch-help">¿La PC necesita placa de video? Si el procesador no tiene gráficos integrados, sí o sí.</p><div class="ch-grid">' + gpus.map(function (x) {
+            return card('ch-gpu', x.id, S.gpu, hpic(x.id === 'none' ? ['cpu', 'lga', 'Gráficos del CPU'] : ['gpu', x.w > 300 ? 3 : 2, x.gb + ' GB']) + '<strong>' + x.name + '</strong><ul class="ch-spec"><li>' + x.sub + '</li>' + (x.w ? '<li>' + x.w + ' W</li>' : '') + '</ul>');
+          }).join('') + '</div>';
+        } else if (CH.disks[k]) {
+          var D = CH.disks[k], v = S.d[k];
+          o = '<div class="ch-disk">' + hpic(D.pic) + '<div><h3>' + D.name + '</h3><p>' + D.info + '</p>' +
+            (!ADV && b ? '<p class="ch-hint">Tu placa tiene ' + (D.bus === 'SATA' ? b.sata + ' puertos SATA (para mecánicos y SSD SATA juntos)' : D.bus === 'M.2' ? b.m2 + ' ranuras M.2' : b.x16 + ' PCIe x16 y ' + b.x4 + ' PCIe x4') + '.</p>' : '') + '</div></div>' +
+            '<div class="ch-row"><span class="ch-lbl">¿Cuántos?</span><div class="ch-qty"><button type="button" class="btn" data-q="-1" aria-label="Uno menos">−</button><strong>' + v[0] + '</strong><button type="button" class="btn" data-q="1" aria-label="Uno más">+</button></div><span class="ch-sub">0 a ' + D.max + '</span></div>' +
+            '<div class="ch-row"><span class="ch-lbl">Capacidad de cada uno</span><div class="seg">' + D.caps.map(function (c) { return '<label><input type="radio" name="ch-cap" value="' + c + '"' + (v[1] === c ? ' checked' : '') + '><span>' + tb(c) + '</span></label>'; }).join('') + '</div></div>' +
+            '<p class="ch-sub">Discos elegidos hasta ahora: ' + diskCount() + ' · ' + tb(storage()) + ' en total.</p>';
+        } else if (k === 'ram') {
+          o = '<p class="ch-help">Elegí el tipo de memoria, cuántas y de qué capacidad. ' + (ADV ? '' : 'Mirá la muesca: DDR4 y DDR5 no son intercambiables.') + '</p><div class="ch-grid two">' +
+            card('ch-ramt', 'DDR4', S.ramT, hpic(['ram', 100, 8, [.47], 'DDR4 · 288 pines']) + '<strong>DDR4</strong><ul class="ch-spec"><li>Hasta 3200 MT/s</li><li>1,2 V</li></ul>') +
+            card('ch-ramt', 'DDR5', S.ramT, hpic(['ram', 100, 8, [.42], 'DDR5 · 288 pines', true]) + '<strong>DDR5</strong><ul class="ch-spec"><li>6000 MT/s o más</li><li>1,1 V · con PMIC</li></ul>') + '</div>' +
+            '<div class="ch-row"><span class="ch-lbl">¿Cuántas memorias?</span><div class="seg">' + [1, 2, 3, 4].map(function (n) { return '<label><input type="radio" name="ch-ramn" value="' + n + '"' + (S.ramN === n ? ' checked' : '') + '><span>' + n + '</span></label>'; }).join('') + '</div></div>' +
+            '<div class="ch-row"><span class="ch-lbl">Capacidad de cada una</span><div class="seg">' + [4, 8, 16, 32].concat(ADV ? [48] : []).map(function (n) { return '<label><input type="radio" name="ch-ramgb" value="' + n + '"' + (S.ramGB === n ? ' checked' : '') + '><span>' + n + ' GB</span></label>'; }).join('') + '</div></div>' +
+            '<p class="ch-sub">Total: <b>' + (S.ramN * S.ramGB) + ' GB</b></p>';
+        } else if (k === 'psu') {
+          o = '<p class="ch-help">Elegí la fuente. Tiene que alcanzar para todo lo que pusiste, con un 30 % de margen, pero sin sobrar.' + (ADV ? '' : ' Sumá lo que consume cada pieza (lo viste en cada paso).') + '</p><div class="ch-grid">' + CH.psus.map(function (w) {
+            return card('ch-psu', w, S.psu, hpic(['psu', 8, w + ' W']) + '<strong>' + w + ' W</strong><ul class="ch-spec"><li>' + (w >= 1000 ? '80 PLUS Platinum' : w >= 650 ? '80 PLUS Gold' : '80 PLUS Bronze') + '</li></ul>');
+          }).join('') + '</div>';
+        } else {
+          var res = S.res || [];
+          o = res.length ? '<ul class="ch-res">' + res.map(function (r) { return '<li class="' + (r.ok ? 'ok' : 'bad') + '"><span>' + (r.ok ? '✓' : '✗') + '</span><div><b>' + r.t + '</b><p>' + r.m + '</p></div></li>'; }).join('') + '</ul>' : '<p class="ch-help">Revisá el resumen y tocá <b>Verificar la PC</b>.</p>';
+          if (S.ok) o = '<div class="ch-boot"><div class="ch-mon"><p>Arrancando…</p><p>CPU: ' + find(CH.cpus, S.cpu).name + '</p><p>Memoria: ' + (S.ramN * S.ramGB) + ' GB ' + S.ramT + ' · doble canal</p><p>Discos: ' + diskCount() + ' · ' + tb(storage()) + '</p><p>Video: ' + find(CH.gpus, S.gpu).name + '</p><p class="ch-ok">¡La PC funciona! Windows arrancó.</p></div></div>' + o;
+        }
+        return o;
+      }
+      function summary() {
+        var b = find(CH.boards, S.board), c = find(CH.cpus, S.cpu), g = find(CH.gpus, S.gpu);
+        var rows = [['Placa', b ? b.name : '—'], ['Procesador', c ? c.name : '—'], ['Video', g ? g.name : '—']];
+        ['hdd', 'ssd', 'm2', 'card'].forEach(function (k) { if (S.d[k][0]) rows.push([CH.disks[k].short, S.d[k][0] + ' × ' + tb(S.d[k][1])]); });
+        rows.push(['Memoria', S.ramT ? S.ramN + ' × ' + S.ramGB + ' GB ' + S.ramT : '—'], ['Fuente', S.psu ? S.psu + ' W' : '—']);
+        return '<section class="panel ch-side"><span class="label">' + REQ.title.split(':')[0] + '</span><h3>' + REQ.title.split(': ')[1].replace(/^./, function (m) { return m.toUpperCase(); }) + '</h3><ul class="ch-req">' + REQ.items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' +
+          '<span class="label">Tu PC</span><dl class="psum">' + rows.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('') + '</dl>' +
+          '<div class="ch-stats"><span>Errores <b>' + S.errors + '</b></span><span>Tiempo <b class="ch-time">' + (S.t0 ? fmt(Math.floor((Date.now() - S.t0) / 1000)) : '00:00') + '</b></span></div></section>';
+      }
+      function canNext() {
+        var k = CH_STEPS[S.step][0];
+        if (k === 'board') return !!S.board; if (k === 'cpu') return !!S.cpu; if (k === 'ram') return !!S.ramT; if (k === 'psu') return !!S.psu; return true;
+      }
+      function render() {
+        var k = CH_STEPS[S.step][0], last = k === 'check';
+        host.innerHTML = '<div class="ch-app">' +
+          '<ol class="ch-steps">' + CH_STEPS.map(function (s, i) { return '<li><button type="button" data-go="' + i + '" class="' + (i === S.step ? 'cur' : i <= S.seen ? 'done' : '') + '"' + (i > S.seen ? ' disabled' : '') + '><b>' + (i + 1) + '</b><span>' + s[1] + '</span></button></li>'; }).join('') + '</ol>' +
+          '<div class="ch-main"><section class="panel ch-body"><span class="label">Paso ' + (S.step + 1) + ' de ' + CH_STEPS.length + '</span><h2>' + CH_STEPS[S.step][1] + '</h2>' + stepBody() +
+            '<div class="ch-nav"><button type="button" class="btn ch-prev"' + (S.step === 0 || S.ok ? ' disabled' : '') + '>← Anterior</button>' +
+            (last ? (S.ok ? (onComplete ? '' : '<button type="button" class="btn primary ch-again">Armar otra PC</button>') : '<button type="button" class="btn primary ch-verify">Verificar la PC</button>')
+                  : '<button type="button" class="btn primary ch-next"' + (canNext() ? '' : ' disabled') + '>Siguiente →</button>') + '</div>' +
+            (!canNext() && !last ? '<p class="ch-sub">Elegí una opción para seguir.</p>' : '') + '</section>' + summary() + '</div></div>';
+      }
+      function goStep(i) { S.step = i; S.seen = Math.max(S.seen, i); render(); try { host.querySelector('.ch-body').scrollIntoView({ block: 'nearest' }); } catch (_) {} }
+      host.addEventListener('change', function (e) {
+        var t = e.target, v = t.value; start();
+        if (t.name === 'ch-board') S.board = v; else if (t.name === 'ch-cpu') S.cpu = v; else if (t.name === 'ch-gpu') S.gpu = v;
+        else if (t.name === 'ch-ramt') S.ramT = v; else if (t.name === 'ch-ramn') S.ramN = +v; else if (t.name === 'ch-ramgb') S.ramGB = +v;
+        else if (t.name === 'ch-psu') S.psu = +v; else if (t.name === 'ch-cap') S.d[CH_STEPS[S.step][0]][1] = +v; else return;
+        S.res = null; render();
+      });
+      host.addEventListener('click', function (e) {
+        var b = e.target.closest('button'); if (!b || b.disabled) return;
+        if (b.dataset.q) { var k = CH_STEPS[S.step][0], D = CH.disks[k]; start(); S.d[k][0] = Math.max(0, Math.min(D.max, S.d[k][0] + (+b.dataset.q))); S.res = null; render(); }
+        else if (b.dataset.go != null) goStep(+b.dataset.go);
+        else if (b.classList.contains('ch-next')) goStep(S.step + 1);
+        else if (b.classList.contains('ch-prev')) goStep(S.step - 1);
+        else if (b.classList.contains('ch-again')) reset();
+        else if (b.classList.contains('ch-verify')) {
+          start(); S.tries++;
+          if (!S.board || !S.cpu || !S.ramT || !S.psu) { S.res = [{ ok: false, t: 'Faltan pasos', m: 'Elegí placa, procesador, memorias y fuente antes de verificar.' }]; render(); return; }
+          S.res = checks();
+          var bad = S.res.filter(function (r) { return !r.ok; }).length;
+          if (bad) { S.errors += Math.min(3, bad); sfx.error(); render(); return; }
+          S.ok = true; clearInterval(timer); sfx.win(); render();
+          var secs = Math.floor((Date.now() - S.t0) / 1000);
+          if (onComplete) setTimeout(function () { onComplete({ errors: S.errors, secs: secs }); }, 1600);
+        }
+      });
+      reset();
+      return { destroy: function () { clearInterval(timer); host.innerHTML = ''; } };
+    }
+    (function () {
+      var box = document.getElementById('game-elegir'), cur = null;
+      box.innerHTML = '<div class="seg" role="group" aria-label="Nivel" style="margin-bottom:10px">' +
+        '<label><input type="radio" name="chv" value="basic" checked><span>Básico · PC para la escuela</span></label>' +
+        '<label><input type="radio" name="chv" value="adv"><span>Avanzado · PC gamer</span></label></div><div class="ch-host"></div>';
+      var h = box.querySelector('.ch-host');
+      function mount(v) { if (cur) cur.destroy(); var nh = h.cloneNode(false); h.parentNode.replaceChild(nh, h); h = nh; cur = ChooseFactory(h, null, v); }
+      box.querySelector('.seg').addEventListener('change', function (e) { if (e.target.name === 'chv') mount(e.target.value); });
+      mount('basic');
+    })();
+
+
     renderFree();
     igHome();
 
@@ -4401,8 +4945,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
       var a = b.dataset.act;
       if (a === 'igretry') integQuiz();
       else if (a === 'fqnext') freeQuiz(freeIdx + 1);
-      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else if (freeIdx === 'rep') repRun(); else freeQuiz(freeIdx); }
-      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else if (freeIdx === 'rep') repAnswers(); else renderFree(); }
+      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else if (freeIdx === 'hist') histQuiz(); else if (freeIdx === 'rep') repRun(); else freeQuiz(freeIdx); }
+      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else if (freeIdx === 'hist') histRender(); else if (freeIdx === 'rep') repAnswers(); else renderFree(); }
       else if (a === 'evnow' || a === 'evretry') quiz(curIdx);
       else if (a === 'next') play(curIdx + 1);
       else if (a === 'retry') play(curIdx);
@@ -4522,7 +5066,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
   var lastIn = {};
   function groupOf(name) { var t = document.getElementById('tab-' + name); return t ? t.dataset.group : 'juego'; }
   function show(name) {
-    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'cableado', 'frontal', 'evaluaciones', 'integradora', 'reparacion'].indexOf(name) < 0) name = 'niveles';
+    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'cableado', 'frontal', 'elegir', 'evaluaciones', 'integradora', 'reparacion', 'historia'].indexOf(name) < 0) name = 'niveles';
     if (tabLocked && name !== 'niveles') name = 'niveles';
     var g = groupOf(name); lastIn[g] = name;
     tabs.forEach(function (t) {
@@ -4541,7 +5085,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
   mainBtns.forEach(function (b) {
     b.addEventListener('click', function () {
       var g = b.dataset.group;
-      go(lastIn[g] || (g === 'juego' ? 'niveles' : g === 'practica' ? 'muy-basica' : 'evaluaciones'));
+      go(lastIn[g] || (g === 'juego' ? 'niveles' : (document.querySelector('.tab[data-group="' + g + '"]') || { dataset: { tab: 'niveles' } }).dataset.tab));
     });
   });
   window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
