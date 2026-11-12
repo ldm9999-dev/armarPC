@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego educativo para aprender a armar y arreglar una PC: modo básico y avanzado, elegí tu PC, historia de la PC con fotos reales, juegos y evaluaciones.">
+<meta name="description" content="Juego educativo para aprender a armar y arreglar una PC: modo básico y avanzado, elegí tu PC, 10 niveles de reparación, historia de la PC con fotos reales, juegos y evaluaciones.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -957,6 +957,20 @@ body.lb-on { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .lb-img { transition: none; } }
 @media (max-width: 640px) { .lb .lb-title { flex-basis: 100%; white-space: normal; font-size: 15px; } .lb .lb-btns { margin-left: auto; } .lb .lb-b { min-width: 38px; height: 38px; } }
 
+/* niveles de reparación */
+.rep-lv-head { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: start; }
+.rep-lv-head h3 { margin: 2px 0 4px; font: 700 19px var(--font-display); } .rep-lv-head p { margin: 0; color: var(--muted); }
+.rep-lv-grid { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.rep-lv { display: grid; gap: 5px; align-content: start; padding: 12px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); }
+.rep-lv.done { border-color: var(--ok); } .rep-lv.locked { opacity: .55; }
+.rl-top { display: flex; align-items: center; gap: 10px; }
+.rl-top b { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; font: 700 15px var(--font-mono); flex: none; }
+.rep-lv.done .rl-top b { background: var(--ok); }
+.rl-dif { flex: 1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; } .rl-dif i { display: block; height: 100%; background: linear-gradient(90deg, var(--ok), var(--accent), var(--err)); }
+.rep-lv strong { font: 700 16px var(--font-display); } .rl-desc { font-size: 13px; color: var(--muted); } .rl-best { font: 600 12px var(--font-mono); color: var(--accent); }
+.rep-lv .btns { margin-top: 4px; }
+.rep-sub { margin: 6px 0 0; font: 700 18px var(--font-display); }
+
 /* panel frontal */
 .fp-case .wire-svg { touch-action: manipulation; }
 .fp-silk { fill: none; stroke: #e8efe9; stroke-width: 1.2; opacity: .55; }
@@ -1052,7 +1066,7 @@ body.lb-on { overflow: hidden; }
     <button class="tab" role="tab" type="button" id="tab-frontal" data-tab="frontal" data-group="practica" aria-controls="panel-frontal">Panel frontal<small>botones, luces y USB</small></button>
     <button class="tab" role="tab" type="button" id="tab-evaluaciones" data-tab="evaluaciones" data-group="eval" aria-controls="panel-evaluaciones">Por fase<small>básico y avanzado</small></button>
     <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" data-group="eval" aria-controls="panel-integradora">Integradora<small>básica y avanzada</small></button>
-    <button class="tab" role="tab" type="button" id="tab-reparacion" data-tab="reparacion" data-group="eval" aria-controls="panel-reparacion">Arreglá la PC<small>fallas y soluciones</small></button>
+    <button class="tab" role="tab" type="button" id="tab-reparacion" data-tab="reparacion" data-group="eval" aria-controls="panel-reparacion">Arreglá la PC<small>10 niveles</small></button>
     <button class="tab" role="tab" type="button" id="tab-historia" data-tab="historia" data-group="historia" aria-controls="panel-historia">Historia de la PC<small>de 1981 a hoy</small></button>
   </nav>
   <p class="lock-note" id="lock-note" hidden>Mientras jugás una fase o una evaluación, las otras secciones quedan bloqueadas. Tocá “Volver a los niveles” para usarlas.</p>
@@ -3855,7 +3869,7 @@ body.lb-on { overflow: hidden; }
       }
       var TDESC = { 'muy-basica': 'Armá una PC simple: elegís marca, discos y fuente.', basica: 'PC completa con placa de video y WiFi.', gamer: 'Varias memorias, discos y placas de video.', placa: 'Armá placas madre base, intermedia y gamer.',
         cableado: 'Conectá los cables de la fuente a cada pieza.', elegir: 'Elegí cada pieza y verificá que sea compatible.', frontal: 'Botones, luces, USB y audio del gabinete.',
-        evaluaciones: 'Las evaluaciones de cada fase, para practicar.', integradora: 'La evaluación final de cada modo.', reparacion: 'Fallas reales de una PC y cómo resolverlas.', historia: 'De la IBM PC de 1981 a hoy, con fotos reales.' };
+        evaluaciones: 'Las evaluaciones de cada fase, para practicar.', integradora: 'La evaluación final de cada modo.', reparacion: '10 niveles de fallas reales y cómo resolverlas.', historia: 'De la IBM PC de 1981 a hoy, con fotos reales.' };
       function tiles(group) {
         return '<div class="w-tiles">' + [].slice.call(document.querySelectorAll('.tab[data-group="' + group + '"]')).map(function (t) {
           var sm = t.querySelector('small'), name = t.childNodes[0].textContent.trim();
@@ -4598,9 +4612,171 @@ body.lb-on { overflow: hidden; }
         ? REP_N.a + ' fallas, la mayoría difíciles: cortocircuitos, BIOS, doble canal, líneas PCIe, Windows 11, drivers y más. Salen de un banco de ' + REP.length + '.'
         : REP_N.b + ' fallas comunes: la PC no prende, no da imagen, no arranca, se recalienta o anda lenta. Salen de un banco de ' + nb + '.';
     }
+    /* ---- niveles de Arreglá la PC (1 a 10) ---- */
+    var REP_LV_RAW = {
+      3: ['Primer diagnóstico', 'Luces de la placa, pitidos, configuración mínima y cuidados antes de tocar.', [
+        ['La placa tiene luces de diagnóstico (CPU, DRAM, VGA, BOOT) y queda prendida la de VGA. ¿Qué revisás?', ['La placa de video: que esté bien colocada, con sus cables PCIe y el monitor conectado a ella', 'El disco', 'El teclado', 'La conexión a internet'], 'Cada luz indica qué parte falló al arrancar: VGA es la de video.'],
+        ['Queda prendida la luz BOOT de la placa. ¿Qué significa?', ['Que no encuentra desde qué disco arrancar', 'Que falta la memoria', 'Que el procesador está quemado', 'Que la fuente es chica'], 'Se revisa el disco del sistema y el orden de arranque en la BIOS.'],
+        ['Pusiste un procesador nuevo en una placa AM5 vieja y queda prendida la luz CPU. ¿Qué hacés?', ['Actualizar la BIOS (por ejemplo con BIOS Flashback)', 'Cambiar el disco', 'Cambiar el gabinete', 'Bajar la resolución'], 'La BIOS vieja no reconoce procesadores que salieron después de la placa.'],
+        ['PC nueva con DDR5: al primer encendido queda varios minutos con pantalla negra y la luz DRAM. ¿Qué hacés?', ['Esperar: es el entrenamiento de memoria del primer arranque', 'Desenchufarla enseguida', 'Cambiar la fuente', 'Sacar el procesador'], 'Las placas DDR5 prueban la memoria la primera vez y puede tardar.'],
+        ['El manual dice que 1 pitido largo y 3 cortos es un error de video. ¿Qué revisás primero?', ['La placa de video y su conexión', 'El mouse', 'La pila CMOS', 'Los parlantes'], 'Los códigos cambian según la placa: siempre se consulta su manual.'],
+        ['¿Qué es armar la PC en “configuración mínima” para diagnosticar?', ['Dejar solo placa, procesador con cooler, una memoria y fuente, e ir agregando piezas', 'Sacar todos los tornillos', 'Usar la PC sin cooler', 'Instalar Windows mínimo'], 'Si arranca así, se van sumando piezas hasta encontrar la que falla.'],
+        ['No da imagen. Probaste otro monitor y otro cable, y sigue igual. ¿Siguiente paso?', ['Probar con una sola memoria, en la ranura que indica el manual', 'Formatear el disco', 'Cambiar el mouse', 'Comprar otro monitor'], 'La memoria es una de las causas más comunes de “no da imagen”.'],
+        ['La placa tiene un visor de dos dígitos que muestra un código y se detiene. ¿Dónde buscás qué significa?', ['En el manual de la placa', 'En el manual del monitor', 'En la caja del mouse', 'En el papel de la fuente'], 'Cada fabricante tiene su tabla de códigos POST.'],
+        ['Después de un overclock, la PC se reinicia sola en bucle y no llega a Windows. ¿Qué hacés?', ['Borrar la CMOS (Clear CMOS) para volver a los valores de fábrica', 'Cambiar el gabinete', 'Comprar más RAM', 'Desinstalar Windows'], 'Con la CMOS borrada, la BIOS arranca con valores seguros.'],
+        ['¿Cuál es la forma más segura de saber si una fuente enciende y da las tensiones correctas, fuera de la PC?', ['Con un probador de fuentes', 'Tocando los cables', 'Mojándola', 'Abriéndola enchufada'], 'El probador muestra 12 V, 5 V y 3,3 V sin riesgo.'],
+        ['¿Por qué hay que descargarse antes de tocar las piezas?', ['La electricidad estática puede dañar los chips', 'Para que la PC ande más rápido', 'Para no ensuciar', 'No hace falta'], 'Se toca algo metálico del gabinete o se usa una pulsera antiestática.'],
+        ['Los ventiladores giran, no hay imagen ni pitidos y la placa no tiene luces de diagnóstico. ¿Qué ayuda a saber qué falla?', ['Conectar un parlantito (speaker) en el conector de la placa para oír los pitidos', 'Cambiar el teclado', 'Desconectar internet', 'Subir el volumen de Windows'], 'Sin speaker, la placa “habla” pero nadie la escucha.']
+      ]],
+      4: ['Energía y fuente', 'Tensiones, cables, protecciones y cuidados con la energía.', [
+        ['¿Qué tensiones principales entrega una fuente ATX a la PC?', ['12 V, 5 V y 3,3 V', '220 V y 110 V', 'Solo 5 V', '48 V'], 'La mayor parte de la potencia va por los 12 V.'],
+        ['Con un multímetro medís la línea de 12 V y da 11,1 V con la PC funcionando. ¿Qué significa?', ['Está fuera de tolerancia (±5 %, de 11,4 a 12,6 V): la fuente está fallando', 'Es normal', 'Es mejor porque consume menos', 'Hay que subir el brillo'], 'Una tensión baja puede causar reinicios y cuelgues.'],
+        ['En los cables de la fuente, ¿qué color es cada tensión?', ['Amarillo 12 V, rojo 5 V, naranja 3,3 V y negro tierra', 'Rojo 12 V, amarillo 5 V y verde tierra', 'Todos son de 12 V', 'Azul 12 V y blanco 5 V'], 'Es el código de colores estándar ATX.'],
+        ['¿Para qué sirve el cable verde (PS_ON) del conector de 24 pines?', ['La placa lo une a tierra para encender la fuente', 'Es la tierra', 'Lleva 12 V', 'Es para el ventilador'], 'Así funciona el botón de encendido en ATX.'],
+        ['Ves capacitores hinchados o con la tapa abombada en la placa madre. ¿Qué hacés?', ['Reemplazar la placa o llevarla a un técnico que cambie los capacitores', 'Apretarlos', 'Ignorarlo', 'Ponerles pasta térmica'], 'Causan reinicios y cuelgues, y empeoran con el tiempo.'],
+        ['La fuente hace “clic” y se apaga al instante cada vez que la encendés. ¿Qué hacés?', ['Desconectar todo y probar sumando piezas de a una para encontrar el cortocircuito', 'Seguir intentando hasta que arranque', 'Ponerle más pasta térmica', 'Cambiar el monitor'], 'Es la protección contra cortocircuito o sobrecarga actuando.'],
+        ['¿Por qué no conviene usar adaptadores Molex a SATA baratos de plástico moldeado?', ['Pueden hacer cortocircuito e incendiarse', 'Hacen el disco más lento', 'No entran', 'Gastan más luz'], 'Mejor usar los cables SATA propios de la fuente.'],
+        ['¿Se pueden usar los cables modulares de una fuente en otra de otra marca?', ['No: el orden de los pines cambia y pueden quemar las piezas', 'Sí, siempre', 'Sí, si son del mismo color', 'Solo los de SATA'], 'Cada fuente modular usa solo sus propios cables.'],
+        ['El conector 12VHPWR de la placa de video se derritió. ¿Cuál es la causa más común?', ['No estaba enchufado hasta el fondo o el cable estaba muy doblado cerca del conector', 'Mucha memoria RAM', 'El disco lleno', 'El monitor'], 'Se reemplaza el cable y se enchufa hasta escuchar el clic.'],
+        ['¿Para qué sirve la línea de 5 V de reposo (cable violeta, 5VSB)?', ['Mantiene alimentados el encendido y algunos USB con la PC apagada', 'Alimenta la placa de video', 'Es la tierra', 'Es para el disco'], 'Por eso se puede cargar el celular con la PC apagada.'],
+        ['La PC se apaga en picos de uso de la placa de video, aunque el consumo promedio está bien. ¿Qué conviene?', ['Una fuente ATX 3.x preparada para picos, o con más potencia', 'Más memoria', 'Un disco más grande', 'Menos ventiladores'], 'Las placas modernas tienen picos de consumo muy cortos y altos.'],
+        ['Además de la batería, ¿qué hace una UPS “interactiva” (line-interactive)?', ['Regula la tensión cuando sube o baja', 'Hace más rápida la PC', 'Enfría la fuente', 'Agrega memoria'], 'Corrige los bajones sin pasar a batería.']
+      ]],
+      5: ['Temperatura y rendimiento', 'Programas para medir, pasta térmica, circulación de aire y throttling.', [
+        ['¿Con qué programa ves las temperaturas de la PC?', ['HWiNFO o HWMonitor', 'El Bloc de notas', 'Paint', 'El explorador de archivos'], 'Muestran temperaturas, tensiones y velocidad de ventiladores.'],
+        ['Un Ryzen 9 7950X llega a 95 °C en un render, pero no pierde rendimiento. ¿Qué pasa?', ['Es su temperatura de trabajo prevista: está diseñado para llegar ahí', 'Está por quemarse', 'El disco falla', 'La RAM es mala'], 'Esos procesadores suben hasta su límite a propósito para rendir más.'],
+        ['¿Cuánta pasta térmica se pone en un procesador?', ['Una gota del tamaño de una arveja en el centro', 'Todo el pomo', 'Nada', 'Solo en los bordes'], 'La presión del cooler la reparte.'],
+        ['¿Cómo se limpia la pasta térmica vieja?', ['Con alcohol isopropílico y un paño sin pelusa', 'Con agua', 'Con lija', 'Con un cuchillo'], 'Antes de poner la nueva, la superficie tiene que quedar limpia.'],
+        ['¿Qué es el “throttling”?', ['Cuando el procesador o la placa de video bajan su velocidad para no recalentarse', 'Un tipo de cable', 'Un virus', 'Una memoria rápida'], 'Se nota como caídas de rendimiento después de un rato.'],
+        ['La placa de video marca 70 °C en el núcleo, pero 105 °C en el “hotspot”. ¿Qué indica?', ['Mal contacto del disipador o pasta térmica seca', 'Que todo está perfecto', 'Que falta RAM', 'Que el monitor es lento'], 'Una diferencia tan grande pide mantenimiento.'],
+        ['¿Qué ventaja tiene la presión de aire positiva (entra más aire del que sale)?', ['Entra menos polvo por las rendijas si las entradas tienen filtro', 'Hace más ruido', 'Calienta más', 'Ninguna'], 'El aire entra por los filtros y sale por las rendijas.'],
+        ['Un SSD NVMe PCIe 5.0 baja mucho su velocidad después de copiar archivos un rato. ¿Qué le falta?', ['Un disipador', 'Un cable SATA', 'Más RAM', 'Un ventilador de 5 V'], 'Estos discos se calientan y se frenan para protegerse.'],
+        ['En los juegos, los FPS caen tras 10 minutos. El procesador está a 98 °C y la placa de video a 70 °C. ¿Qué mejorás?', ['La refrigeración del procesador', 'La placa de video', 'El monitor', 'El mouse'], 'El procesador está haciendo throttling.'],
+        ['¿Dónde no conviene que quede la bomba de un watercooling AIO?', ['En el punto más alto del circuito, porque junta el aire y hace ruido', 'Abajo del radiador', 'Sobre el procesador', 'En cualquier lado da igual'], 'El aire sube al punto más alto: mejor que sea el radiador.'],
+        ['¿Para qué sirve la curva de ventiladores en la BIOS?', ['Para que giren más rápido solo cuando sube la temperatura', 'Para cambiar el color', 'Para apagar la PC', 'Para la red'], 'Así la PC es silenciosa en reposo y fresca en carga.'],
+        ['El procesador está al 100 % sin hacer nada. ¿Qué revisás primero?', ['El Administrador de tareas, para ver qué programa lo usa', 'La pasta térmica', 'El monitor', 'La fuente'], 'Puede ser un programa trabado o un virus.']
+      ]],
+      6: ['Discos y datos', 'Salud de los discos, particiones, copias de seguridad y recuperación.', [
+        ['CrystalDiskInfo marca un disco en “Precaución”. ¿Qué hacés?', ['Hacer una copia de seguridad y planear reemplazarlo', 'Nada', 'Formatearlo varias veces', 'Desfragmentarlo'], 'Lee el autodiagnóstico SMART del disco.'],
+        ['¿Para qué sirve el comando chkdsk?', ['Revisa y repara errores del sistema de archivos', 'Limpia virus', 'Sube la velocidad de la red', 'Actualiza la BIOS'], 'Se usa cuando aparecen carpetas o archivos dañados.'],
+        ['¿Qué estilo de partición se necesita para arrancar en UEFI y usar discos de más de 2 TB?', ['GPT', 'MBR', 'FAT12', 'IDE'], 'MBR solo maneja hasta 2 TB.'],
+        ['Un disco de 4 TB aparece como de 2 TB. ¿Por qué?', ['Está inicializado como MBR: hay que pasarlo a GPT', 'Está roto', 'Le falta un cable', 'Es un disco falso siempre'], 'Convertirlo borra los datos si no se usa una herramienta especial.'],
+        ['¿Qué dice la regla 3-2-1 de las copias de seguridad?', ['3 copias, en 2 medios distintos y 1 fuera de casa', '3 discos, 2 PCs y 1 pendrive', '3 días, 2 horas, 1 minuto', 'Solo una copia alcanza'], 'Así un solo accidente no te hace perder todo.'],
+        ['Borraste un archivo importante de un disco mecánico. ¿Qué hacés?', ['Dejar de usar ese disco y recuperar con un programa, guardando en otro disco', 'Seguir usando el disco normalmente', 'Desfragmentarlo', 'Formatearlo'], 'Usarlo puede pisar el archivo borrado.'],
+        ['¿Por qué es mucho más difícil recuperar archivos borrados de un SSD?', ['Por el comando TRIM, que borra los bloques liberados', 'Porque no tiene archivos', 'Porque gira muy rápido', 'Es igual de fácil'], 'Por eso las copias de seguridad son tan importantes.'],
+        ['Querés pasar Windows de un disco mecánico a un SSD sin reinstalar. ¿Qué usás?', ['Un programa de clonación y después arrancás desde el SSD', 'Copiar y pegar la carpeta Windows', 'El cable IDE', 'La pila CMOS'], 'La clonación copia todo, incluso lo que hace falta para arrancar.'],
+        ['¿Hay que desfragmentar un SSD?', ['No: Windows lo “optimiza” con TRIM; la desfragmentación es para discos mecánicos', 'Sí, todos los días', 'Sí, una vez por hora', 'Solo si es M.2'], 'Desfragmentar un SSD solo lo desgasta.'],
+        ['Un disco externo USB suena, pero no aparece en “Este equipo”. ¿Qué probás?', ['Otro cable o puerto, y en Administración de discos asignarle una letra', 'Golpearlo', 'Abrirlo', 'Cambiar el monitor'], 'A veces el disco está bien y solo le falta letra.'],
+        ['Un SSD lleno al 99 % se puso lento. ¿Qué conviene?', ['Dejarle espacio libre (un 10 a 20 %)', 'Llenarlo más', 'Desfragmentarlo', 'Bajarle el voltaje'], 'El SSD necesita espacio libre para trabajar bien.'],
+        ['¿Qué es RAID 1?', ['Dos discos con los mismos datos (espejo); no reemplaza la copia de seguridad', 'Un disco más rápido', 'Un tipo de cable', 'Una memoria RAM'], 'Si se borra un archivo, se borra en los dos.']
+      ]],
+      7: ['Windows y software', 'Herramientas de reparación de Windows, drivers, inicio y seguridad.', [
+        ['¿Qué hace el comando sfc /scannow?', ['Revisa y repara archivos dañados de Windows', 'Formatea el disco', 'Cambia la contraseña', 'Actualiza la BIOS'], 'Se ejecuta en la consola como administrador.'],
+        ['sfc no puede reparar los archivos. ¿Qué comando conviene ejecutar antes?', ['DISM /Online /Cleanup-Image /RestoreHealth', 'format C:', 'ping', 'ipconfig'], 'DISM repara la imagen de Windows que usa sfc.'],
+        ['Cambiaste una placa de video NVIDIA por una AMD y hay fallas. ¿Qué hacés?', ['Borrar los drivers viejos con DDU en modo seguro e instalar los nuevos', 'Cambiar el monitor', 'Agregar RAM', 'Desinstalar Windows'], 'Los restos del driver anterior causan conflictos.'],
+        ['Windows tarda mucho en arrancar por la cantidad de programas. ¿Dónde lo arreglás?', ['En el Administrador de tareas, pestaña Inicio, desactivando programas', 'En la BIOS', 'En el monitor', 'Abriendo la PC'], 'Muchos programas se abren solos sin que haga falta.'],
+        ['¿Dónde ves el historial de errores y reinicios inesperados de Windows?', ['En el Visor de eventos o el Monitor de confiabilidad', 'En Paint', 'En la Papelera', 'En el escritorio'], 'Ahí quedan los errores con fecha y hora.'],
+        ['Windows no arranca después de una actualización. ¿Qué hacés?', ['Entrar al entorno de recuperación y desinstalar la actualización o restaurar el sistema', 'Cambiar el disco', 'Comprar otra PC', 'Sacar la memoria'], 'El entorno de recuperación aparece tras varios arranques fallidos.'],
+        ['¿Qué hace “Restaurar sistema”?', ['Vuelve la configuración y los programas a un punto anterior, sin borrar tus documentos', 'Borra todo', 'Formatea el disco', 'Actualiza la BIOS'], 'Sirve si el problema empezó después de un cambio.'],
+        ['Un ransomware cifró tus archivos y pide dinero. ¿Qué hacés?', ['Desconectar la PC de la red, no pagar y recuperar desde una copia de seguridad', 'Pagar enseguida', 'Reiniciar muchas veces', 'Compartir los archivos'], 'Pagar no garantiza recuperar nada.'],
+        ['Un programa desconocido pide permiso de administrador. ¿Qué hacés?', ['No aceptar si no sabés qué es', 'Aceptar siempre', 'Desactivar el antivirus', 'Darle la contraseña'], 'Ese aviso (UAC) protege el sistema.'],
+        ['¿Con qué herramienta probás si la memoria RAM tiene errores?', ['MemTest86 o el Diagnóstico de memoria de Windows', 'El Bloc de notas', 'La calculadora', 'El navegador'], 'Se dejan correr varias pasadas.'],
+        ['Después de actualizar el driver de video, un juego se cierra solo. ¿Qué probás?', ['Volver a la versión anterior del driver', 'Cambiar el mouse', 'Desfragmentar', 'Agregar un disco'], 'Los drivers nuevos a veces traen errores.'],
+        ['Cambiaste la placa madre y Windows dice que no está activado. ¿Qué hacés?', ['Usar el solucionador de activación con la cuenta Microsoft vinculada', 'Reinstalar los juegos', 'Cambiar la RAM', 'Desconectar el monitor'], 'La licencia digital está asociada a la placa anterior.']
+      ]],
+      8: ['Redes e internet', 'Direcciones IP, DNS, cables, WiFi y comandos de red.', [
+        ['¿Qué comando muestra la IP, la puerta de enlace y los DNS de la PC?', ['ipconfig', 'chkdsk', 'sfc', 'format'], 'Con ipconfig /all se ve todo el detalle.'],
+        ['La PC tiene una IP 169.254.x.x y no hay internet. ¿Qué significa?', ['No recibió dirección del router (DHCP): revisar cable o router y hacer ipconfig /renew', 'Todo está bien', 'El monitor falla', 'La RAM es poca'], 'Es una dirección automática que Windows se pone cuando nadie le da una.'],
+        ['ping 8.8.8.8 responde, pero las páginas no cargan. ¿Qué falla?', ['El DNS: cambiarlo o hacer ipconfig /flushdns', 'El cable de red', 'La fuente', 'La placa de video'], 'Hay conexión, pero no se traducen los nombres de las páginas.'],
+        ['La placa tiene red de 2,5 Gb/s, pero conecta a 100 Mb/s. ¿Qué revisás?', ['El cable: puede estar dañado o ser de categoría vieja; usar Cat5e o Cat6', 'La RAM', 'El cooler', 'La BIOS'], 'Un par de cables cortado limita la velocidad.'],
+        ['Lejos del router, el WiFi anda muy lento. ¿Qué banda llega más lejos?', ['2,4 GHz', '5 GHz', '6 GHz', 'Todas igual'], 'Las bandas de 5 y 6 GHz son más rápidas, pero de menor alcance.'],
+        ['Aparece “conflicto de dirección IP”. ¿Qué pasó?', ['Dos equipos tienen la misma IP: usar DHCP o cambiar una', 'El cable es corto', 'Falta memoria', 'El disco está lleno'], 'Cada equipo de la red necesita su propia IP.'],
+        ['¿Qué es la puerta de enlace?', ['La IP del router, por donde se sale a internet', 'Un puerto USB', 'Un programa', 'Una pieza de la fuente'], 'Suele ser algo como 192.168.0.1.'],
+        ['Con un cable no hay luces en el puerto de red; con otro, sí. ¿Qué era?', ['El primer cable estaba roto', 'La placa de red', 'El router', 'Windows'], 'Probar con otro cable es lo primero.'],
+        ['¿Qué comando muestra por qué equipos pasa la conexión hasta un sitio?', ['tracert', 'ipconfig', 'chkdsk', 'dir'], 'Ayuda a ver dónde se corta.'],
+        ['Todos los dispositivos de la casa dicen “Sin internet”. ¿Qué hacés?', ['Reiniciar el router y, si sigue, consultar al proveedor', 'Formatear la PC', 'Cambiar la RAM', 'Comprar otra placa de red'], 'Si falla en todos, el problema no es la PC.'],
+        ['¿Qué seguridad conviene usar en el WiFi?', ['WPA3 (o WPA2 con AES)', 'WEP', 'Sin contraseña', 'La misma clave de siempre en todos lados'], 'WEP se rompe en minutos.'],
+        ['¿Qué suele tener mejor señal en una PC de escritorio?', ['Una placa WiFi PCIe con antenas', 'Un adaptador USB chiquito atrás', 'Bluetooth', 'El cable HDMI'], 'Las antenas externas reciben mejor.']
+      ]],
+      9: ['BIOS, UEFI y arranque', 'Opciones de la BIOS, actualizaciones, Secure Boot y arranque desde pendrive.', [
+        ['¿Qué es el CSM en la BIOS?', ['Un modo de compatibilidad para arrancar sistemas viejos (Legacy)', 'Un tipo de memoria', 'Un ventilador', 'Una ranura'], 'Windows 11 arranca en UEFI sin CSM.'],
+        ['Un pendrive con un sistema viejo no arranca por Secure Boot. ¿Qué hacés?', ['Desactivar Secure Boot solo mientras lo usás, o usar un pendrive firmado', 'Cambiar la placa', 'Romper el pendrive', 'Sacar la RAM'], 'Secure Boot bloquea sistemas no firmados.'],
+        ['¿Cómo se borra la CMOS?', ['Con el botón o jumper Clear CMOS, o sacando la pila unos minutos con la PC desenchufada', 'Formateando el disco', 'Desde Paint', 'Apretando F5'], 'Vuelve la BIOS a los valores de fábrica.'],
+        ['¿Qué permite BIOS Flashback?', ['Actualizar la BIOS desde un pendrive, incluso sin procesador ni memoria', 'Ver fotos', 'Hacer overclock', 'Conectar WiFi'], 'Ideal cuando el procesador es más nuevo que la BIOS.'],
+        ['¿Por qué no conviene actualizar la BIOS si hay cortes de luz?', ['Si se corta en el medio, la placa puede quedar sin arrancar', 'Porque tarda una semana', 'Porque borra los juegos', 'No pasa nada'], 'Conviene una UPS o hacerlo en un momento seguro.'],
+        ['¿Qué hace activar XMP o EXPO?', ['Pone la RAM a la velocidad que anuncia el fabricante', 'Apaga la RAM', 'Sube el volumen', 'Activa el WiFi'], 'Si queda inestable, se baja la velocidad.'],
+        ['¿Qué es Resizable BAR (o Smart Access Memory)?', ['Permite al procesador usar toda la memoria de video de una vez y mejora algunos juegos', 'Un tipo de disco', 'Un cable', 'Un ventilador'], 'Necesita UEFI y suele activarse junto con “Above 4G”.'],
+        ['Hay dos discos con Windows y arranca el equivocado. ¿Qué cambiás en la BIOS?', ['El orden de arranque: “Windows Boot Manager” del disco correcto primero', 'La velocidad de la RAM', 'Los ventiladores', 'El idioma'], 'Cada disco tiene su propio gestor de arranque.'],
+        ['El pendrive para instalar Windows no aparece en el menú de arranque. ¿Qué probás?', ['Crearlo de nuevo en modo GPT/UEFI (por ejemplo con Rufus) y probar otro puerto USB', 'Cambiar el monitor', 'Sacar la pila', 'Poner más pasta'], 'Un pendrive Legacy no aparece si la PC arranca solo en UEFI.'],
+        ['¿Qué es fTPM o PTT en la BIOS?', ['El TPM incluido en el procesador, necesario para Windows 11', 'Un ventilador', 'Una ranura M.2', 'Una memoria'], 'fTPM en AMD, PTT en Intel.'],
+        ['Querés usar máquinas virtuales y no funcionan. ¿Qué activás en la BIOS?', ['La virtualización (SVM en AMD, VT-x en Intel)', 'El CSM', 'El Clear CMOS', 'El Fast Boot'], 'Muchas placas la traen apagada.'],
+        ['Con “Fast Boot” no llegás a tocar la tecla para entrar a la BIOS. ¿Cómo entrás?', ['Desde Windows: Shift + Reiniciar → Opciones avanzadas → Configuración de firmware UEFI', 'Desenchufando el monitor', 'Sacando el disco', 'No se puede'], 'Windows reinicia directo en la BIOS.']
+      ]],
+      10: ['Casos difíciles', 'Fallas con varios síntomas: hay que pensar como técnico.', [
+        ['La PC se reinicia sola al azar, sin pantalla azul, y más cuando hace calor. Temperaturas normales. ¿Qué probás primero?', ['Otra fuente que sepas que anda bien', 'Otro mouse', 'Otro monitor', 'Reinstalar los juegos'], 'Los reinicios sin error suelen venir de la energía.'],
+        ['Aparecen pantallas azules con códigos distintos cada vez. ¿Qué sospechás primero?', ['La memoria RAM: probarla con MemTest86 y de a un módulo', 'El teclado', 'El monitor', 'Los parlantes'], 'Errores variados y al azar apuntan a la RAM.'],
+        ['En los juegos la imagen se corta y vuelve, con el aviso “el driver de video dejó de responder”. ¿Primer paso?', ['Reinstalar el driver limpio (DDU) y quitar cualquier overclock de la placa de video', 'Cambiar el disco', 'Formatear', 'Comprar más RAM'], 'Después se revisan temperatura y fuente.'],
+        ['Los dispositivos USB se desconectan y reconectan solos. ¿Qué probás?', ['Usar los puertos de atrás y desactivar la suspensión selectiva de USB', 'Cambiar la pasta térmica', 'Desfragmentar', 'Cambiar el monitor'], 'Los puertos del frente y el ahorro de energía suelen causarlo.'],
+        ['PC recién armada: enciende un segundo y se apaga, sin luces. ¿Cómo encontrás el problema?', ['Armarla fuera del gabinete sobre una superficie aislante para descartar un cortocircuito', 'Seguir prendiéndola', 'Agregar más ventiladores', 'Instalar Windows'], 'Si así anda, el problema estaba en el montaje.'],
+        ['La placa de video hace un chillido agudo con muchos FPS. ¿Qué es?', ['“Coil whine”: es normal; se reduce limitando los FPS', 'Que se va a quemar', 'Un virus', 'Falta RAM'], 'Las bobinas vibran con mucha carga.'],
+        ['Al tocar el gabinete sentís una pequeña descarga. ¿Qué revisás?', ['Que el enchufe de la casa tenga conexión a tierra (con un electricista)', 'La RAM', 'El disco', 'El monitor'], 'Sin tierra, las fuentes dejan una tensión en el gabinete.'],
+        ['Después de limpiar la PC por dentro, no da imagen. ¿Qué hacés?', ['Volver a colocar bien la RAM y la placa de video, y revisar los cables', 'Cambiar el procesador', 'Comprar otra placa', 'Formatear'], 'Algo se movió durante la limpieza.'],
+        ['Windows tarda mucho en arrancar solo cuando hay un disco externo conectado. ¿Por qué?', ['La PC intenta arrancar primero desde ese disco: cambiar el orden de arranque', 'El disco externo es lento', 'Falta RAM', 'El monitor falla'], 'La BIOS lo revisa antes que el disco interno.'],
+        ['En un juego la placa de video está al 40 % y un núcleo del procesador al 100 %. ¿Qué pasa?', ['El procesador limita el rendimiento (cuello de botella)', 'La placa de video está rota', 'Falta disco', 'El monitor es lento'], 'La placa de video espera al procesador.'],
+        ['Agregaste 2 memorias DDR5 más (4 en total) y ya no arranca con EXPO. ¿Qué hacés?', ['Bajar la velocidad de la memoria: con 4 módulos DDR5 cuesta más llegar a la velocidad alta', 'Sacar el procesador', 'Cambiar el disco', 'Desactivar el USB'], 'Más módulos cargan más el controlador de memoria.'],
+        ['Antes de llevar la PC a reparar, ¿qué conviene anotar?', ['Qué falla, cuándo pasa, los códigos de error y qué cambiaste últimamente', 'El color del gabinete', 'La marca del mouse', 'Nada'], 'Un buen informe acelera mucho el diagnóstico.']
+      ]]
+    };
+    function repLvList(n) {
+      if (n === 1) return REP.filter(function (q) { return q.lvl === 'b'; }).sort(rnd).slice(0, 12).map(withOrder);
+      if (n === 2) return REP.filter(function (q) { return q.lvl === 'a'; }).sort(rnd).slice(0, 12).map(withOrder);
+      return REP_LV_RAW[n][2].map(function (r, k) { var sh = k % 4; return { q: r[0], o: r[1].slice(sh).concat(r[1].slice(0, sh)), a: (4 - sh) % 4, why: r[2] }; }).sort(rnd).map(withOrder);
+    }
+    function repLvInfo(n) {
+      if (n === 1) return ['Fallas comunes', 'El juego de siempre: la PC no prende, no da imagen, no arranca, se calienta o anda lenta.'];
+      if (n === 2) return ['Fallas avanzadas', 'Cortocircuitos, BIOS, doble canal, líneas PCIe, drivers y Windows 11.'];
+      return [REP_LV_RAW[n][0], REP_LV_RAW[n][1]];
+    }
+    if (!store.repLv) store.repLv = {};
+    function repLvOpen(n) { return n === 1 || store.repAll || (store.repLv[n - 1] != null && store.repLv[n - 1] >= PASS); }
+    function repLvRun(n) {
+      closeModal(); freeIdx = 'replv:' + n; var info = repLvInfo(n);
+      repEl.innerHTML = freeHead('Arreglá la PC · Nivel ' + n + ' de 10', info[0], '12 fallas para resolver. Dificultad ' + n + ' de 10.') + '<section class="quiz panel" aria-live="polite"></section>';
+      runQuiz(repEl.querySelector('.quiz'), repLvList(n), function (ok, tot) {
+        var g = Math.round(ok / tot * 100), prev = store.repLv[n];
+        if (prev == null || g > prev) { store.repLv[n] = g; save(); }
+        var pass = g >= PASS; if (pass) sfx.win();
+        showResult({ label: 'Arreglá la PC · Nivel ' + n, tag: info[0], n: g,
+          msg: (pass ? '¡Nivel aprobado! ' : 'Necesitás 60 para pasar al siguiente nivel. ') + 'Resolviste bien ' + ok + ' de ' + tot + ' fallas.',
+          detail: n < 10 ? (pass ? 'Se desbloqueó el nivel ' + (n + 1) + '.' : '') : (pass ? '¡Terminaste los 10 niveles de reparación!' : ''),
+          buttons: (pass && n < 10 ? '<button type="button" class="btn primary" data-act="replvnext">Nivel ' + (n + 1) + ' →</button>' : '') +
+            '<button type="button" class="btn' + (pass && n < 10 ? '' : ' primary') + '" data-act="fqretry">Repetir nivel</button><button type="button" class="btn" data-act="fqlist">Ver los niveles</button>' });
+      });
+      try { repEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function repLvAnswers(n) {
+      var info = repLvInfo(n), list = n === 1 ? REP.filter(function (q) { return q.lvl === 'b'; }) : n === 2 ? REP.filter(function (q) { return q.lvl === 'a'; }) : repLvList(n);
+      repEl.innerHTML = freeHead('Nivel ' + n + ' · fallas y soluciones', info[0], info[1]) + mcAnswers(list) +
+        '<div class="btns"><button type="button" class="btn primary" data-replv="' + n + '">Jugar el nivel ' + n + '</button></div>';
+      try { repEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+    function repLevelsHtml() {
+      var done = 0; for (var k = 1; k <= 10; k++) if (store.repLv[k] != null && store.repLv[k] >= PASS) done++;
+      return '<section class="panel rep-levels"><div class="rep-lv-head"><div><span class="label">Niveles</span><h3>De las fallas más simples a los casos más difíciles</h3><p>' + done + ' de 10 niveles aprobados. Cada nivel tiene 12 fallas y se desbloquea al aprobar el anterior con 60 o más.</p></div>' +
+        (store.repAll ? '' : '<button type="button" class="btn" data-repall="1" title="Para docentes">Desbloquear todos</button>') + '</div><ol class="rep-lv-grid">' +
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (n) {
+          var info = repLvInfo(n), open = repLvOpen(n), best = store.repLv[n];
+          return '<li class="rep-lv' + (open ? '' : ' locked') + (best != null && best >= PASS ? ' done' : '') + '"><div class="rl-top"><b>' + n + '</b><span class="rl-dif" aria-label="Dificultad ' + n + ' de 10"><i style="width:' + (n * 10) + '%"></i></span></div>' +
+            '<strong>' + info[0] + '</strong><span class="rl-desc">' + info[1] + '</span>' +
+            '<span class="rl-best">' + (best != null ? 'Mejor nota: ' + best + '/100' : open ? 'Sin jugar' : '🔒 Aprobá el nivel ' + (n - 1)) + '</span>' +
+            '<div class="btns">' + (open ? '<button type="button" class="btn primary" data-replv="' + n + '">' + (best != null ? 'Repetir' : 'Jugar') + '</button><button type="button" class="btn" data-replvans="' + n + '">Ver respuestas</button>' : '<button type="button" class="btn" disabled>Bloqueado</button>') + '</div></li>';
+        }).join('') + '</ol></section>';
+    }
+
     function repHome() {
       repEl.innerHTML = '<div class="lv-top"><div><span class="label">Evaluación aparte</span><h2>Arreglá la PC</h2>' +
-        '<p>Cada pregunta describe una falla real de una computadora. Leé el síntoma y elegí la mejor solución entre 4 opciones. Las preguntas cambian cada vez y esta nota no cuenta para el juego.</p></div></div>' +
+        '<p>Cada pregunta describe una falla real de una computadora. Leé el síntoma y elegí la mejor solución entre 4 opciones. Estas notas no cuentan para el juego principal.</p></div></div>' +
+        repLevelsHtml() + '<h3 class="rep-sub">Práctica libre (sin niveles)</h3>' +
         '<div class="lv-grid">' + ['b', 'a'].map(function (m) {
           var best = store.rep[m];
           return '<div class="lv-card static"><span class="lv-num">' + (m === 'a' ? 'Avanzado' : 'Básico') + '</span><h3>Reparación ' + (m === 'a' ? 'avanzada' : 'básica') + '</h3><p>' + repInfo(m) + '</p>' +
@@ -4636,6 +4812,9 @@ body.lb-on { overflow: hidden; }
     repEl.addEventListener('click', function (e) {
       var b = e.target.closest('[data-rep]');
       if (b) { var pr = b.dataset.rep.split('-'); if (pr[0] === 'run') repRun(pr[1]); else repAnswers(pr[1]); return; }
+      var lb = e.target.closest('[data-replv]'); if (lb) { repLvRun(+lb.dataset.replv); return; }
+      var la = e.target.closest('[data-replvans]'); if (la) { repLvAnswers(+la.dataset.replvans); return; }
+      if (e.target.closest('[data-repall]')) { store.repAll = true; save(); repHome(); return; }
       if (e.target.closest('.ev-back')) repHome();
     });
     repHome();
@@ -5689,9 +5868,10 @@ body.lb-on { overflow: hidden; }
       if (a === 'igretry') integQuiz();
       else if (a === 'fqnext') freeQuiz(freeIdx + 1);
       else if (a === 'hqgo') { histEval(freeIdx.slice(4)); }
+      else if (a === 'replvnext') { repLvRun(+freeIdx.split(':')[1] + 1); }
       else if (a === 'hqnext') { closeModal(); histCat = b.dataset.next; histRender(); try { histEl.scrollIntoView({ block: 'start' }); } catch (_) {} }
-      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else if (/^hq:/.test(freeIdx)) histEval(freeIdx.slice(3)); else if (/^evo:/.test(freeIdx)) { closeModal(); evoPlay(freeIdx.slice(4)); } else if (freeIdx === 'hist') histQuiz(); else if (freeIdx === 'rep') repRun(); else freeQuiz(freeIdx); }
-      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else if (freeIdx === 'hist' || /^evo:/.test(freeIdx) || /^hq:/.test(freeIdx)) histRender(); else if (freeIdx === 'rep') repAnswers(); else renderFree(); }
+      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else if (/^replv:/.test(freeIdx)) repLvRun(+freeIdx.split(':')[1]); else if (/^hq:/.test(freeIdx)) histEval(freeIdx.slice(3)); else if (/^evo:/.test(freeIdx)) { closeModal(); evoPlay(freeIdx.slice(4)); } else if (freeIdx === 'hist') histQuiz(); else if (freeIdx === 'rep') repRun(); else freeQuiz(freeIdx); }
+      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else if (/^replv:/.test(freeIdx)) { repHome(); try { repEl.scrollIntoView({ block: 'start' }); } catch (_) {} } else if (freeIdx === 'hist' || /^evo:/.test(freeIdx) || /^hq:/.test(freeIdx)) histRender(); else if (freeIdx === 'rep') repAnswers(); else renderFree(); }
       else if (a === 'evnow' || a === 'evretry') quiz(curIdx);
       else if (a === 'next') play(curIdx + 1);
       else if (a === 'retry') play(curIdx);
