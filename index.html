@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Juego educativo para aprender a armar y arreglar una PC: modo básico con 7 fases y avanzado con 10, elegí tu PC, historia de la PC, evaluaciones e integradora.">
+<meta name="description" content="Juego educativo para aprender a armar y arreglar una PC: modo básico y avanzado, elegí tu PC, historia de la PC con fotos reales y juegos de evolución, evaluaciones e integradora.">
 <style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
 <title>Armá tu PC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -826,6 +826,52 @@ button.btn.primary:hover { filter: brightness(1.05); }
 @media (max-width: 860px) { .ch-main { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .ch-disk { grid-template-columns: 1fr; } .ch-disk .hpic { width: 100%; } .ch-lbl { min-width: 0; width: 100%; } .ch-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
 @media (prefers-reduced-motion: reduce) { .ch-mon p { animation: none; opacity: 1; } }
+
+/* fotos reales y juegos de historia */
+.ph { margin: 0; position: relative; }
+.ph-strip { display: flex; gap: 6px; }
+.ph-strip img { flex: 1 1 0; min-width: 0; height: 120px; object-fit: cover; border-radius: 8px; background: var(--bg); }
+.ph .ph-fb { display: none; }
+.ph.nophoto .ph-fb { display: block; } .ph.nophoto .ph-strip, .ph.nophoto figcaption { display: none; }
+.ph figcaption { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.ph figcaption a { color: inherit; }
+.tl-card { grid-template-columns: 220px 1fr; }
+.tl-ph .ph-strip img { height: 130px; }
+.evo-home h3 { margin: 2px 0 4px; font: 700 18px var(--font-display); } .evo-home p { margin: 0 0 10px; }
+.evo-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.evo-card { text-align: left; display: grid; gap: 3px; padding: 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; font: inherit; }
+.evo-card:hover { border-color: var(--accent); }
+.evo-card strong { font: 700 16px var(--font-display); } .evo-card span { font-size: 13px; color: var(--muted); } .evo-card em { font: 600 12px var(--font-mono); color: var(--accent); font-style: normal; }
+.evo-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.evo-prog { font: 600 13px var(--font-mono); color: var(--muted); }
+.evo-steps { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; flex-wrap: wrap; }
+.evo-steps li { font: 700 12px var(--font-mono); padding: 4px 9px; border-radius: 999px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.evo-steps li.done { color: var(--ok); border-color: var(--ok); } .evo-steps li.cur { background: var(--accent); color: #fff; border-color: var(--accent); }
+.evo-intro { display: grid; grid-template-columns: 300px 1fr; gap: 14px; align-items: center; }
+.evo-intro h2 { margin: 2px 0 4px; font: 700 22px var(--font-display); } .evo-intro p { margin: 0 0 4px; }
+.evo-ph .ph-strip img { height: 170px; }
+.evo-play { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 12px; align-items: start; }
+.evo-board { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px; }
+.evo-svg { display: block; width: 100%; height: auto; max-height: 64vh; margin: 0 auto; }
+.evo-board { display: grid; place-items: center; }
+.et { cursor: pointer; } .et-hit { fill: transparent; stroke: transparent; stroke-width: 2; }
+.evo-board.picking .et:not(.filled) .et-hit { stroke: var(--accent); stroke-dasharray: 6 4; fill: rgba(255,255,255,.04); }
+.et:hover .et-hit { fill: rgba(255,255,255,.08); }
+.et-lab { font: 600 12px var(--font-mono); fill: #f2f4f6; paint-order: stroke; stroke: #0b2a1d; stroke-width: 3px; }
+.et-bay { font: 600 12px var(--font-mono); fill: #cfd6dd; }
+.et-fill rect { fill: rgba(46,160,90,.82); stroke: #8be7b1; stroke-width: 2; }
+.et-ok { font: 700 12px var(--font-body); fill: #fff; }
+.evo-tray .evo-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.evo-part { display: grid; gap: 2px; text-align: left; padding: 8px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; font: inherit; }
+.evo-part .hpic { width: 100%; height: 56px; background: var(--surface); }
+.evo-part strong { font: 700 13.5px var(--font-display); } .evo-part span { font-size: 12px; color: var(--muted); }
+.evo-part.sel { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent); }
+.evo-msg { margin: 0; }
+.evo-quiz h3 { margin: 4px 0 10px; font: 700 19px var(--font-display); }
+.evo-why { margin: 10px 0 0; }
+.evo-done h3 { margin: 0 0 4px; font: 700 20px var(--font-display); }
+@media (max-width: 900px) { .evo-play { grid-template-columns: 1fr; } .evo-intro { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .tl-card { grid-template-columns: 1fr; } .ph-strip img, .tl-ph .ph-strip img { height: 150px; } }
 
 /* panel frontal */
 .fp-case .wire-svg { touch-action: manipulation; }
@@ -4650,14 +4696,432 @@ button.btn.primary:hover { filter: brightness(1.05); }
       ['¿Qué pasó con los pines del procesador con el LGA 775 (2004)?', ['Pasaron al zócalo de la placa', 'Desaparecieron', 'Se hicieron más largos', 'Pasaron a la fuente'], 'Los procesadores LGA tienen contactos planos.']
     ].map(function (r, k) { var sh = k % 4; return { q: r[0], o: r[1].slice(sh).concat(r[1].slice(0, sh)), a: (4 - sh) % 4, why: r[2] }; });
 
+    /* ---- fotos reales (Wikimedia Commons) para la línea de tiempo ---- */
+    var PH = {
+      placa: [['IBM_PC_Motherboard_(1981).jpg'], ['Original_AT_motherboard.jpg'], ['Pci-slots.jpg'], ['MSI_MS-6119_BX2_ATX_Motherboard.jpg', 'ATX_Formate.jpg'], ['AGP_and_PCI_slots_at_ECS_P4VMM2_motherboard.JPG'], ['PCI_und_PCIe_Slots.jpg'], ['Motherboard_2005.JPG'], ['M.2_connector_on_a_computer_motherboard.jpg'], ['PCie_lanes.jpg'], ['AM5_Socket_Open.jpg'], []],
+      cpu: [['Intel_P8088.jpg'], ['Intel_80386_IV_die.JPG'], ['Intel_80486DX2_top.jpg'], ['KL_Intel_Pentium_P5.jpg'], ['Pentium_II_400_and_Slot_1_Motherboard.jpg', 'Pentium_II_front.jpg'], ['Ic-photo-Intel--RK80531PC021G0K--(Pentium-4-CPU)-.JPG', 'LGA_775_CPU_Socket.jpg', 'Socket_478.jpg'], ['Intel_Core_2_Duo_E7300_CPU.jpg'], [], ['AMD_Ryzen_7_1800X.jpg', 'Socket_AM4.jpg'], ['Intel_CPU_Core_i7_12700K_Alder_Lake_top.jpg', '2023_Podstawka_LGA_1700.jpg'], ['AM5_Socket_Open.jpg']],
+      ram: [['IBM_PC_Motherboard_(1981).jpg'], ['30_pin_SIMM_-_1Mo_-_taken_from_an_Atari_STE.jpg'], ['Edoram.jpg', 'SIMM_30_68_72.png'], ['Sdr_sdram.jpg', '168_pin_and_184_pin_DIMM.jpg'], ['DDR-SDRAM-Module.jpg'], ['PC2-6400U-666_2GB.jpg', 'Notch_position_between_DDR_and_DDR2.jpg'], ['2015_Pamięć_DDR3_1GB.jpg'], ['RAM_Module_(SDRAM-DDR4).jpg'], ['DDR5_SDRAM_IMGP6304_smial_wp.jpg'], ['DDR5_SDRAM_(with_scale)_IMGP6298_smial_wp.jpg']],
+      disco: [['IBM_350_RAMAC.jpg'], ['Floppy_disks_-_8_inch,_5.25_inch,_3.5_inch_(17361863025).jpg'], ['Seagate_Technology_ST-506.png'], ['Early_90s_Hard_Disk_Drive.jpg'], ['200_Gb_7200_rpm_Western_digital_ide_hard_drive.jpg'], ['Serial_ATA_hard_disk.jpg', 'SATA_cable.jpg'], ['2015_Złącza_SATA_w_dysku_SSD.jpg'], ['MSATA_SATA_M.2_NVMeSSD.jpg'], ['M.2_connector_on_a_computer_motherboard.jpg'], [], ['Seagate,_Ironwolf,_NAS,_Harddrive.jpg']],
+      video: [['IBM_Color_Graphics_Adapter.jpg'], ['IBM_VGA_graphics_card.jpg'], ['KL_Diamond_Monster3D_Voodoo_1.jpg'], ['VisionTek_GeForce_256.jpg'], ['NVIDIA_GeForce_8800_GTX_Board.jpg'], [], ['Nvidia_12VHPWR_adapter.jpg'], ['Asus_Strix_RTX_4090_operational.jpg']],
+      fuente: [[], [], ['ATX_PS_ATX_connector.jpg'], ['ATX_Power_connectors_24pin_8pin_4pin_PSU.jpg'], ['24-pin_ATX_power_plug_from_a_Seasonic_PSU_20131105.jpg', 'ATX_Power_connectors_24pin_8pin_4pin_Motherboard.jpg'], ['Power_Supply_ATX-450PNF.jpg'], ['Nvidia_12VHPWR_adapter,_output_side.jpg'], ['ATX_power_supply_interior.jpg']]
+    };
+    var PHU = {"168_pin_and_184_pin_DIMM.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/168_pin_and_184_pin_DIMM.jpg/500px-168_pin_and_184_pin_DIMM.jpg", "200_Gb_7200_rpm_Western_digital_ide_hard_drive.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/200_Gb_7200_rpm_Western_digital_ide_hard_drive.jpg/500px-200_Gb_7200_rpm_Western_digital_ide_hard_drive.jpg", "2015_Pamięć_DDR3_1GB.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/2015_Pami%C4%99%C4%87_DDR3_1GB.jpg/500px-2015_Pami%C4%99%C4%87_DDR3_1GB.jpg", "2015_Złącza_SATA_w_dysku_SSD.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/2015_Z%C5%82%C4%85cza_SATA_w_dysku_SSD.jpg/500px-2015_Z%C5%82%C4%85cza_SATA_w_dysku_SSD.jpg", "2023_Podstawka_LGA_1700.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/2023_Podstawka_LGA_1700.jpg/500px-2023_Podstawka_LGA_1700.jpg", "24-pin_ATX_power_plug_from_a_Seasonic_PSU_20131105.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/24-pin_ATX_power_plug_from_a_Seasonic_PSU_20131105.jpg/500px-24-pin_ATX_power_plug_from_a_Seasonic_PSU_20131105.jpg", "30_pin_SIMM_-_1Mo_-_taken_from_an_Atari_STE.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/30_pin_SIMM_-_1Mo_-_taken_from_an_Atari_STE.jpg/500px-30_pin_SIMM_-_1Mo_-_taken_from_an_Atari_STE.jpg", "AGP_and_PCI_slots_at_ECS_P4VMM2_motherboard.JPG": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AGP_and_PCI_slots_at_ECS_P4VMM2_motherboard.JPG/500px-AGP_and_PCI_slots_at_ECS_P4VMM2_motherboard.JPG", "AM5_Socket_Open.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/AM5_Socket_Open.jpg/500px-AM5_Socket_Open.jpg", "AMD_Ryzen_7_1800X.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/AMD_Ryzen_7_1800X.jpg/500px-AMD_Ryzen_7_1800X.jpg", "ATX_Formate.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/ATX_Formate.jpg/500px-ATX_Formate.jpg", "ATX_PS_ATX_connector.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/ATX_PS_ATX_connector.jpg/500px-ATX_PS_ATX_connector.jpg", "ATX_Power_connectors_24pin_8pin_4pin_Motherboard.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/ATX_Power_connectors_24pin_8pin_4pin_Motherboard.jpg/500px-ATX_Power_connectors_24pin_8pin_4pin_Motherboard.jpg", "ATX_Power_connectors_24pin_8pin_4pin_PSU.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/ATX_Power_connectors_24pin_8pin_4pin_PSU.jpg/500px-ATX_Power_connectors_24pin_8pin_4pin_PSU.jpg", "ATX_power_supply_interior.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/ATX_power_supply_interior.jpg/500px-ATX_power_supply_interior.jpg", "Asus_Strix_RTX_4090_operational.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Asus_Strix_RTX_4090_operational.jpg/500px-Asus_Strix_RTX_4090_operational.jpg", "DDR-SDRAM-Module.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/DDR-SDRAM-Module.jpg/500px-DDR-SDRAM-Module.jpg", "DDR5_SDRAM_(with_scale)_IMGP6298_smial_wp.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/DDR5_SDRAM_(with_scale)_IMGP6298_smial_wp.jpg/500px-DDR5_SDRAM_(with_scale)_IMGP6298_smial_wp.jpg", "DDR5_SDRAM_IMGP6304_smial_wp.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/DDR5_SDRAM_IMGP6304_smial_wp.jpg/500px-DDR5_SDRAM_IMGP6304_smial_wp.jpg", "Early_90s_Hard_Disk_Drive.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Early_90s_Hard_Disk_Drive.jpg/500px-Early_90s_Hard_Disk_Drive.jpg", "Edoram.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Edoram.jpg/500px-Edoram.jpg", "Floppy_disks_-_8_inch,_5.25_inch,_3.5_inch_(17361863025).jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Floppy_disks_-_8_inch,_5.25_inch,_3.5_inch_(17361863025).jpg/500px-Floppy_disks_-_8_inch,_5.25_inch,_3.5_inch_(17361863025).jpg", "IBM_350_RAMAC.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/IBM_350_RAMAC.jpg/500px-IBM_350_RAMAC.jpg", "IBM_Color_Graphics_Adapter.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IBM_Color_Graphics_Adapter.jpg/500px-IBM_Color_Graphics_Adapter.jpg", "IBM_PC_Motherboard_(1981).jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/IBM_PC_Motherboard_(1981).jpg/500px-IBM_PC_Motherboard_(1981).jpg", "IBM_VGA_graphics_card.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/IBM_VGA_graphics_card.jpg/500px-IBM_VGA_graphics_card.jpg", "Ic-photo-Intel--RK80531PC021G0K--(Pentium-4-CPU)-.JPG": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Ic-photo-Intel--RK80531PC021G0K--(Pentium-4-CPU)-.JPG/500px-Ic-photo-Intel--RK80531PC021G0K--(Pentium-4-CPU)-.JPG", "Intel_80386_IV_die.JPG": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Intel_80386_IV_die.JPG/500px-Intel_80386_IV_die.JPG", "Intel_80486DX2_top.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Intel_80486DX2_top.jpg/500px-Intel_80486DX2_top.jpg", "Intel_CPU_Core_i7_12700K_Alder_Lake_top.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Intel_CPU_Core_i7_12700K_Alder_Lake_top.jpg/500px-Intel_CPU_Core_i7_12700K_Alder_Lake_top.jpg", "Intel_Core_2_Duo_E7300_CPU.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Intel_Core_2_Duo_E7300_CPU.jpg/500px-Intel_Core_2_Duo_E7300_CPU.jpg", "Intel_P8088.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Intel_P8088.jpg/500px-Intel_P8088.jpg", "KL_Diamond_Monster3D_Voodoo_1.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/KL_Diamond_Monster3D_Voodoo_1.jpg/500px-KL_Diamond_Monster3D_Voodoo_1.jpg", "KL_Intel_Pentium_P5.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/KL_Intel_Pentium_P5.jpg/500px-KL_Intel_Pentium_P5.jpg", "LGA_775_CPU_Socket.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/LGA_775_CPU_Socket.jpg/500px-LGA_775_CPU_Socket.jpg", "M.2_connector_on_a_computer_motherboard.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/M.2_connector_on_a_computer_motherboard.jpg/500px-M.2_connector_on_a_computer_motherboard.jpg", "MSATA_SATA_M.2_NVMeSSD.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/MSATA_SATA_M.2_NVMeSSD.jpg/500px-MSATA_SATA_M.2_NVMeSSD.jpg", "MSI_MS-6119_BX2_ATX_Motherboard.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/MSI_MS-6119_BX2_ATX_Motherboard.jpg/500px-MSI_MS-6119_BX2_ATX_Motherboard.jpg", "Motherboard_2005.JPG": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Motherboard_2005.JPG/500px-Motherboard_2005.JPG", "NVIDIA_GeForce_8800_GTX_Board.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/NVIDIA_GeForce_8800_GTX_Board.jpg/500px-NVIDIA_GeForce_8800_GTX_Board.jpg", "Notch_position_between_DDR_and_DDR2.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Notch_position_between_DDR_and_DDR2.jpg/500px-Notch_position_between_DDR_and_DDR2.jpg", "Nvidia_12VHPWR_adapter,_output_side.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Nvidia_12VHPWR_adapter,_output_side.jpg/500px-Nvidia_12VHPWR_adapter,_output_side.jpg", "Nvidia_12VHPWR_adapter.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Nvidia_12VHPWR_adapter.jpg/500px-Nvidia_12VHPWR_adapter.jpg", "Original_AT_motherboard.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Original_AT_motherboard.jpg/500px-Original_AT_motherboard.jpg", "PC2-6400U-666_2GB.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/PC2-6400U-666_2GB.jpg/500px-PC2-6400U-666_2GB.jpg", "PCI_und_PCIe_Slots.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/PCI_und_PCIe_Slots.jpg/500px-PCI_und_PCIe_Slots.jpg", "PCie_lanes.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/PCie_lanes.jpg/500px-PCie_lanes.jpg", "Pci-slots.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Pci-slots.jpg/500px-Pci-slots.jpg", "Pentium_II_400_and_Slot_1_Motherboard.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Pentium_II_400_and_Slot_1_Motherboard.jpg/500px-Pentium_II_400_and_Slot_1_Motherboard.jpg", "Pentium_II_front.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Pentium_II_front.jpg/500px-Pentium_II_front.jpg", "Power_Supply_ATX-450PNF.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Power_Supply_ATX-450PNF.jpg/500px-Power_Supply_ATX-450PNF.jpg", "RAM_Module_(SDRAM-DDR4).jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/RAM_Module_(SDRAM-DDR4).jpg/500px-RAM_Module_(SDRAM-DDR4).jpg", "SATA_cable.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/SATA_cable.jpg/500px-SATA_cable.jpg", "SIMM_30_68_72.png": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/SIMM_30_68_72.png/500px-SIMM_30_68_72.png", "Sdr_sdram.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Sdr_sdram.jpg/500px-Sdr_sdram.jpg", "Seagate,_Ironwolf,_NAS,_Harddrive.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Seagate,_Ironwolf,_NAS,_Harddrive.jpg/500px-Seagate,_Ironwolf,_NAS,_Harddrive.jpg", "Seagate_Technology_ST-506.png": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Seagate_Technology_ST-506.png/500px-Seagate_Technology_ST-506.png", "Serial_ATA_hard_disk.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Serial_ATA_hard_disk.jpg/500px-Serial_ATA_hard_disk.jpg", "Socket_478.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Socket_478.jpg/500px-Socket_478.jpg", "Socket_AM4.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Socket_AM4.jpg/500px-Socket_AM4.jpg", "VisionTek_GeForce_256.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/VisionTek_GeForce_256.jpg/500px-VisionTek_GeForce_256.jpg"};
+    function phUrl(f) { return PHU[f] || ('https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(f) + '?width=500'); }
+    function phPage(f) { return 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(f); }
+    function photoHtml(files, fallback, cls) {
+      if (!files || !files.length) return '<figure class="ph ' + (cls || '') + ' nophoto">' + fallback + '</figure>';
+      return '<figure class="ph ' + (cls || '') + '"><div class="ph-strip">' + files.map(function (f) {
+        return '<img loading="lazy" decoding="async" data-f="' + f + '" src="' + phUrl(f) + '" alt="Foto real: ' + f.replace(/_/g, ' ').replace(/\.[a-z]+$/i, '') + '">';
+      }).join('') + '</div><div class="ph-fb">' + fallback + '</div><figcaption>Foto' + (files.length > 1 ? 's' : '') + ': ' + files.map(function (f, i) { return '<a href="' + phPage(f) + '" target="_blank" rel="noopener">Wikimedia Commons' + (files.length > 1 ? ' ' + (i + 1) : '') + '</a>'; }).join(' · ') + '</figcaption></figure>';
+    }
+    // si una foto no carga (sin internet o bloqueada), se muestra el dibujo
+    document.addEventListener('error', function (e) {
+      var im = e.target; if (!im || im.tagName !== 'IMG' || !im.closest('.ph')) return;
+      if (im.dataset.f && !im.dataset.tried) { im.dataset.tried = '1'; im.src = 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(im.dataset.f) + '?width=500'; return; }
+      var st = im.parentNode; im.remove();
+      if (st && !st.querySelector('img')) { var fg = st.closest('.ph'); if (fg) fg.classList.add('nophoto'); }
+    }, true);
+    setInterval(function () {
+      document.querySelectorAll('.ph:not(.nophoto)').forEach(function (fg) { var st = fg.querySelector('.ph-strip'); if (st && !st.querySelector('img')) fg.classList.add('nophoto'); });
+    }, 1500);
+
+    /* ---- juegos de evolución: dibujos de piezas y encastres ---- */
+    var NOTCH = { simm30: [], simm72: [.5], sdram: [.18, .6], ddr: [.55], ddr2: [.52], ddr3: [.38], ddr4: [.47], ddr5: [.42] };
+    var SLOTC = { isa8: ['#1b1e22', 260, 'ISA 8 bits'], isa16: ['#1b1e22', 330, 'ISA 16 bits'], pci: ['#eceae4', 200, 'PCI'], agp: ['#7c4a2a', 180, 'AGP'], pcie16: ['#15181c', 300, 'PCIe x16'], pcie4: ['#15181c', 120, 'PCIe x4'], pcie1: ['#15181c', 70, 'PCIe x1'], m2: ['#0f1215', 170, 'M.2'] };
+    var PINS = { p8: [1, 6, 'P8'], p9: [1, 6, 'P9'], atx20: [2, 10, 'ATX 20'], atx24: [2, 12, 'ATX 24'], atx12v: [2, 2, 'ATX12V 4'], eps8: [2, 4, 'EPS 8'], pcie6: [2, 3, 'PCIe 6'], pcie8: [2, 4, 'PCIe 8'], hpwr: [2, 6, '12VHPWR'], ide40: [2, 20, 'IDE 40'], fdd34: [2, 17, 'Disquetera 34'], st506: [2, 17, 'ST-506'], molex: [1, 4, 'Molex'], sata: [1, 7, 'SATA'], satapow: [1, 15, 'SATA energía'], vga15: [3, 5, 'VGA'], fpanel: [2, 5, 'F_PANEL'] };
+    function evoPart(k, label) {
+      var o = '', L = function (t) { return '<text x="60" y="57" text-anchor="middle" class="hp-lab">' + t + '</text>'; };
+      if (NOTCH[k]) {
+        var len = k === 'simm30' ? 60 : k === 'simm72' ? 80 : 100, x0 = 60 - len / 2;
+        o = '<rect x="' + x0 + '" y="10" width="' + len + '" height="26" rx="1.5" fill="#2c6a4e"/><rect x="' + x0 + '" y="32" width="' + len + '" height="5" class="hp-pin"/>';
+        var n = k === 'simm30' ? 3 : k === 'simm72' ? 4 : 8;
+        for (var c = 0; c < n; c++) o += '<rect x="' + (x0 + 4 + c * (len - 8) / n) + '" y="14" width="' + ((len - 8) / n - 3) + '" height="13" class="hp-chip"/>';
+        NOTCH[k].forEach(function (f) { o += '<rect x="' + (x0 + len * f - 2) + '" y="31" width="4" height="7" fill="var(--surface)"/>'; });
+        if (k === 'ddr5') o += '<rect x="' + (x0 + len * .47) + '" y="28" width="6" height="3" fill="#5a6470"/>';
+        return wrap(o + L(label));
+      }
+      if (k === 'dipram') { for (var r = 0; r < 2; r++) for (var c2 = 0; c2 < 6; c2++) o += '<rect x="' + (18 + c2 * 15) + '" y="' + (10 + r * 18) + '' + '" width="11" height="13" class="hp-chip"/>'; return wrap(o + L(label)); }
+      if (k === 'dip40' || k === 'pga' || k === 'slotcart' || k === 'lga' || k === 'lgaam5' || k === 'pgaam4') return hpic(['cpu', k === 'dip40' ? 'dip' : k === 'slotcart' ? 'slot' : k === 'pga' || k === 'pgaam4' ? 'pga' : 'lga', label]);
+      if (k === 'card8' || k === 'card16' || k === 'cardpci' || k === 'cardagp' || k === 'cardpcie' || k === 'gpubig') {
+        var fans = k === 'gpubig' ? 3 : k === 'cardpcie' ? 1 : 0, edge = k === 'card8' ? [30, 36] : k === 'card16' ? [22, 60] : k === 'cardpci' ? [44, 30] : k === 'cardagp' ? [46, 26] : [30, 48];
+        o = '<rect x="16" y="6" width="88" height="30" rx="2" fill="' + (fans ? '#2b3036' : '#2c6a4e') + '"/><rect x="12" y="4" width="4" height="36" fill="#aeb6be"/><rect x="' + edge[0] + '" y="36" width="' + edge[1] + '" height="5" class="hp-pin"/>';
+        if (k === 'card16') o += '<rect x="' + (edge[0] + 34) + '" y="36" width="3" height="5" fill="var(--surface)"/>';
+        for (var g = 0; g < fans; g++) o += '<circle cx="' + (38 + g * 24) + '" cy="21" r="10" fill="#1a1e23" stroke="#5a6470"/>';
+        if (!fans) o += '<rect x="30" y="12" width="16" height="14" class="hp-chip"/><rect x="54" y="14" width="10" height="10" class="hp-chip"/>';
+        return wrap(o + L(label));
+      }
+      if (k === 'hdd525' || k === 'hdd35' || k === 'fdd' || k === 'ssd25' || k === 'nvme' || k === 'pciessd') return hpic(['disk', { hdd525: 'hdd', hdd35: 'hdd', fdd: 'floppy', ssd25: 'ssd', nvme: 'm2', pciessd: 'card' }[k], label]);
+      if (PINS[k]) {
+        var P = PINS[k], rows = P[0], cols = P[1], s = Math.min(8, 86 / cols), w = cols * s + 6, h = rows * s + 6, x = 60 - w / 2;
+        o = '<path d="M60 ' + (12 + h) + ' C60 46 40 40 20 48" stroke="#e1b12c" stroke-width="3" fill="none"/><path d="M62 ' + (12 + h) + ' C62 48 44 44 26 52" stroke="#1a1e23" stroke-width="3" fill="none"/>';
+        o += '<rect x="' + x + '" y="10" width="' + w + '" height="' + h + '" rx="2" fill="' + (k === 'sata' ? '#c93a3a' : k === 'ide40' || k === 'fdd34' || k === 'st506' ? '#9aa3ad' : '#f2f2ee') + '" stroke="#5a6470" stroke-width=".8"/>';
+        for (var rr = 0; rr < rows; rr++) for (var cc = 0; cc < cols; cc++) o += '<rect x="' + (x + 3 + cc * s + s * .15) + '" y="' + (13 + rr * s + s * .15) + '" width="' + (s * .7) + '" height="' + (s * .7) + '" rx="' + (k === 'molex' ? s * .35 : .6) + '" fill="#2b3036"/>';
+        return wrap(o + L(label));
+      }
+      if (k.indexOf('badge') === 0) {
+        var col = { badge80: '#f2f2ee', badgeB: '#b0703a', badgeS: '#c3cad1', badgeG: '#d8b13a', badgeP: '#8fa3b5', badgeT: '#55606b' }[k];
+        o = '<circle cx="60" cy="24" r="20" fill="' + col + '" stroke="#2b3036" stroke-width="1.5"/><text x="60" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1e23">80 PLUS</text><text x="60" y="33" text-anchor="middle" font-size="7" font-weight="700" fill="#1a1e23">' + label.replace('80 PLUS ', '') + '</text>';
+        return wrap(o);
+      }
+      return wrap(L(label));
+      function wrap(x) { return '<svg viewBox="0 0 120 60" class="hpic" aria-hidden="true">' + x + '</svg>'; }
+    }
+    function evoTarget(t, fill) {
+      var k = t.k, x = t.x, y = t.y, w = t.w, h = t.h, o = '<g class="et' + (fill ? ' filled' : '') + '" data-t="' + t.i + '">';
+      o += '<rect class="et-hit" x="' + (x - 6) + '" y="' + (y - 6) + '" width="' + (w + 12) + '" height="' + (h + 12) + '" rx="6"/>';
+      if (NOTCH[k] || k === 'dipram') {
+        o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="2" fill="' + (k === 'simm30' || k === 'simm72' ? '#e8e3d6' : '#1b1e22') + '" stroke="#0b0d10"/>';
+        if (k === 'dipram') { o = '<g class="et' + (fill ? ' filled' : '') + '" data-t="' + t.i + '"><rect class="et-hit" x="' + (x - 6) + '" y="' + (y - 6) + '" width="' + (w + 12) + '" height="' + (h + 12) + '" rx="6"/>'; for (var a = 0; a < 4; a++) for (var b2 = 0; b2 < 9; b2++) o += '<rect x="' + (x + a * (w / 4) + 2) + '" y="' + (y + b2 * (h / 9) + 2) + '" width="' + (w / 4 - 5) + '" height="' + (h / 9 - 5) + '" fill="#1b1e22" stroke="#e8e3d6" stroke-width=".6"/>'; }
+        else {
+          o += '<rect x="' + (x + w / 2 - 2) + '" y="' + (y + 4) + '" width="4" height="' + (h - 8) + '" fill="#050608"/>';
+          NOTCH[k].forEach(function (f) { o += '<rect x="' + (x + w / 2 - 4) + '" y="' + (y + 4 + (h - 8) * f - 2) + '" width="8" height="5" fill="#d2a637"/>'; });
+          o += '<rect x="' + (x - 2) + '" y="' + (y - 7) + '" width="' + (w + 4) + '" height="7" rx="1.5" fill="#e8e3d6"/><rect x="' + (x - 2) + '" y="' + (y + h) + '" width="' + (w + 4) + '" height="7" rx="1.5" fill="#e8e3d6"/>';
+        }
+      } else if (SLOTC[k]) {
+        var c = SLOTC[k];
+        o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="2" fill="' + c[0] + '" stroke="#0b0d10"/><rect x="' + (x + 4) + '" y="' + (y + h / 2 - 2) + '" width="' + (w - 8) + '" height="4" fill="#050608"/>';
+        if (k === 'isa16') o += '<rect x="' + (x + w * .62) + '" y="' + y + '" width="5" height="' + h + '" fill="var(--pcb)"/>';
+        if (k === 'pci') o += '<rect x="' + (x + w * .78) + '" y="' + y + '" width="4" height="' + h + '" fill="var(--pcb)"/>';
+        if (k === 'agp') o += '<rect x="' + (x + w * .25) + '" y="' + y + '" width="4" height="' + h + '" fill="var(--pcb)"/>';
+        if (k.indexOf('pcie') === 0) o += '<rect x="' + (x + 24) + '" y="' + y + '" width="4" height="' + h + '" fill="var(--pcb)"/><rect x="' + (x + w - 2) + '" y="' + (y - 2) + '" width="9" height="' + (h + 4) + '" rx="2" fill="#e8e3d6"/>';
+        if (k === 'm2') o += '<circle cx="' + (x + w + 26) + '" cy="' + (y + h / 2) + '" r="5" fill="#c3cad1"/><rect x="' + (x + w) + '" y="' + (y + h / 2 - 1) + '" width="22" height="2" fill="#e8efe9" opacity=".5"/>';
+      } else if (k === 'dip40' || k === 'pga' || k === 'pgaam4' || k === 'lga' || k === 'lgaam5' || k === 'slotcart') {
+        if (k === 'slotcart') o += '<rect x="' + x + '" y="' + (y + h / 2 - 10) + '" width="' + w + '" height="20" rx="2" fill="#1b1e22"/><rect x="' + (x + 6) + '" y="' + (y + h / 2 - 2) + '" width="' + (w - 12) + '" height="4" fill="#050608"/>';
+        else if (k === 'dip40') { o += '<rect x="' + (x + w * .2) + '" y="' + y + '" width="' + (w * .6) + '" height="' + h + '" rx="2" fill="#1b1e22"/>'; for (var d = 0; d < 20; d++) o += '<circle cx="' + (x + w * .3) + '" cy="' + (y + 5 + d * (h - 10) / 19) + '" r="1.6" fill="#d2a637"/><circle cx="' + (x + w * .7) + '" cy="' + (y + 5 + d * (h - 10) / 19) + '" r="1.6" fill="#d2a637"/>'; }
+        else {
+          var pinsOnBoard = k === 'lga' || k === 'lgaam5';
+          o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="3" fill="' + (pinsOnBoard ? '#2b3036' : '#e8e3d6') + '" stroke="#0b0d10"/>';
+          for (var i = 0; i < 9; i++) for (var j = 0; j < 9; j++) if (!(i > 2 && i < 6 && j > 2 && j < 6 && k !== 'pga')) o += '<circle cx="' + (x + 12 + i * (w - 24) / 8) + '" cy="' + (y + 12 + j * (h - 24) / 8) + '" r="' + (pinsOnBoard ? 1.8 : 1.4) + '" fill="' + (pinsOnBoard ? '#d2a637' : '#3a3f45') + '"/>';
+          o += '<rect x="' + (x + w + 3) + '" y="' + (y + 6) + '" width="4" height="' + (h - 12) + '" rx="2" fill="#aeb6be"/>';
+          o += '<path d="M' + (x + 4) + ' ' + (y + 4) + ' l10 0 l-10 10 Z" fill="#d2a637"/>';
+        }
+      } else if (PINS[k]) {
+        var P = PINS[k], s = Math.min(w / P[1], h / P[0]);
+        o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="2" fill="' + (k === 'sata' || k === 'satapow' ? '#15181c' : k === 'molex' ? '#f2f2ee' : '#15181c') + '" stroke="#0b0d10"/>';
+        for (var r = 0; r < P[0]; r++) for (var c3 = 0; c3 < P[1]; c3++) o += '<rect x="' + (x + c3 * (w / P[1]) + w / P[1] * .25) + '" y="' + (y + r * (h / P[0]) + h / P[0] * .25) + '" width="' + (w / P[1] * .5) + '" height="' + (h / P[0] * .5) + '" rx="' + (k === 'molex' ? 2 : .5) + '" fill="#d2a637"/>';
+      } else if (k.indexOf('bay') === 0) {
+        o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="4" fill="#3a424c" stroke="#59626d" stroke-dasharray="5 3"/><text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 4) + '" text-anchor="middle" class="et-bay">Bahía ' + (k === 'bay525' ? '5,25"' : k === 'bay35' ? '3,5"' : '2,5"') + '</text>';
+      } else if (k === 'eff') {
+        o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="6" fill="#5a6470"/><circle cx="' + (x + w / 2) + '" cy="' + (y + h / 2) + '" r="26" fill="none" stroke="#e8efe9" stroke-dasharray="4 3"/>';
+      }
+      var lab = t.label;
+      if (t.side) o += '<text class="et-lab" text-anchor="middle" transform="translate(' + (x + w + 16) + ' ' + (y + h / 2) + ') rotate(-90)">' + lab + '</text>';
+      else o += '<text class="et-lab" x="' + (x + w / 2) + '" y="' + (t.labBelow ? y + h + 18 : y - 10) + '" text-anchor="middle">' + lab + '</text>';
+      if (fill) o += '<g class="et-fill"><rect x="' + (x - 3) + '" y="' + (y - 3) + '" width="' + (w + 6) + '" height="' + (h + 6) + '" rx="4"/><text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 4) + '" text-anchor="middle" class="et-ok">✓ ' + fill + '</text></g>';
+      return o + '</g>';
+    }
+    function psuDeco(S0) {
+      var at = S0.y < 1995, o = '<g class="psu-deco">';
+      o += '<path d="M200 170 C250 170 250 120 296 110 M200 180 C255 180 260 200 296 200 M200 190 C250 200 250 280 296 290" stroke="#1a1e23" stroke-width="9" fill="none" stroke-linecap="round"/>';
+      o += '<path d="M200 170 C250 170 250 120 296 110 M200 180 C255 180 260 200 296 200 M200 190 C250 200 250 280 296 290" stroke="#e1b12c" stroke-width="3" fill="none" stroke-dasharray="10 6"/>';
+      o += '<rect x="24" y="96" width="176" height="160" rx="8" fill="#5a6470" stroke="#2b3036" stroke-width="2"/><rect x="34" y="106" width="156" height="140" rx="5" fill="#6d7782"/>';
+      o += '<circle cx="104" cy="176" r="56" fill="#1a1e23"/>';
+      for (var i = 0; i < 6; i++) o += '<circle cx="104" cy="176" r="' + (10 + i * 8) + '" fill="none" stroke="#4a525c" stroke-width="2"/>';
+      o += '<path d="M104 120 V232 M48 176 H160" stroke="#4a525c" stroke-width="2"/>';
+      o += at ? '<rect x="40" y="226" width="34" height="16" rx="3" fill="#c93a3a"/><text x="57" y="238" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">I/O</text>' : '<rect x="150" y="226" width="34" height="18" rx="3" fill="#e8e3d6"/><text x="167" y="239" text-anchor="middle" font-size="8" font-weight="700" fill="#1a1e23">80+</text>';
+      o += '<text x="112" y="86" text-anchor="middle" class="et-lab">' + (at ? 'Fuente AT' : S0.y < 2003 ? 'Fuente ATX' : S0.y < 2020 ? 'Fuente ATX 2.0' : 'Fuente ATX 3.1 modular') + '</text>';
+      return o + '</g>';
+    }
+    function evoLayout(T) {
+      var hasBay = T.some(function (t) { return t.k.indexOf('bay') === 0; }), L = hasBay ? 210 : 30, n = { cpu: 0, ram: 0, exp: 0, right: 0, bay: 0, tag: 0 }, ry = 30;
+      var allRight = T.every(function (t) { return t.role === 'right'; }), ncpu = T.filter(function (t) { return t.role === 'cpu'; }).length, nram = T.filter(function (t) { return t.role === 'ram'; }).length;
+      T.forEach(function (t, i) {
+        t.i = i;
+        var r = t.role;
+        if (r === 'cpu') { t.x = L + 10 + n.cpu * 150; t.y = 34; t.w = t.k === 'slotcart' ? 130 : t.k === 'dip40' ? 70 : 116; t.h = t.k === 'dip40' ? 150 : 116; n.cpu++; }
+        else if (r === 'ram') {
+          var simm = t.k === 'simm30' || t.k === 'simm72', solo = !ncpu && !T.some(function (z) { return z.role === 'exp' || z.role === 'right'; });
+          t.w = t.k === 'dipram' ? 110 : solo ? 28 : 22; t.h = t.k === 'dipram' ? 150 : solo ? (simm ? 220 : 280) : simm ? 140 : 190;
+          t.x = solo ? 300 - (nram * 90) / 2 + n.ram * 90 + 20 : L + (ncpu ? ncpu * 150 + 20 : 10) + n.ram * 46; t.y = solo ? 40 : 34; t.side = t.k !== 'dipram'; n.ram++; }
+        else if (r === 'exp') { var c = SLOTC[t.k]; t.w = c[1]; t.h = 18; t.x = L + 10; t.y = (ncpu || nram ? 250 : 60) + n.exp * 40; t.labBelow = false; n.exp++; }
+        else if (r === 'right' && allRight) { var P2 = PINS[t.k], pt = P2[1] > 12 ? 13 : 17; t.w = P2[1] * pt; t.h = P2[0] * pt; t.x = 300; t.y = ry + 24; ry = t.y + t.h + 22; n.right++; }
+        else if (r === 'right') { var P = PINS[t.k]; t.w = Math.min(130, P[1] * 11); t.h = P[0] * 11; t.x = 600 - 30 - t.w; t.y = ry + 16; ry = t.y + t.h + 16; n.right++; }
+        else if (r === 'bay') { t.x = 20; t.y = 34 + n.bay * 150; t.w = 170; t.h = 120; t.labBelow = false; n.bay++; }
+        else if (r === 'tag') { t.x = 30 + n.tag * 190; t.y = 90; t.w = 160; t.h = 110; t.labBelow = true; n.tag++; }
+      });
+      return T;
+    }
+    /* ---- contenido de los juegos ---- */
+    function S(y, t, txt, hi, T, P, Q) { return { y: y, t: t, txt: txt, hi: hi, T: T.map(function (a) { return { k: a[0], role: a[1], acc: [].concat(a[2]), label: a[3] }; }), P: P.map(function (a) { return { id: a[0], k: a[1], name: a[2], sub: a[3], why: a[4] }; }), Q: Q }; }
+    var EVO = {
+      placa: { title: 'Armá la placa madre de cada época', stages: [
+        S(1981, 'IBM PC', 'La primera PC: procesador en un chip de 40 patas, memoria en chips sueltos y placas en ranuras ISA de 8 bits.', 0,
+          [['dip40', 'cpu', '8088', 'Zócalo DIP 40'], ['dipram', 'ram', 'dipram', 'Zócalos de memoria'], ['isa8', 'exp', 'cga', 'Ranura ISA 8 bits']],
+          [['8088', 'dip40', 'Intel 8088', '4,77 MHz'], ['dipram', 'dipram', 'Chips de memoria', '64 KB'], ['cga', 'card8', 'Placa de video CGA', 'ISA 8 bits'], ['pent', 'pga', 'Pentium', 'Socket 7', 'El Pentium es de 1993 y va en un zócalo cuadrado (Socket 7), no en uno DIP.'], ['ddr4', 'ddr4', 'Memoria DDR4', '288 pines', 'Las memorias en módulos llegaron años después; en 1981 eran chips sueltos.']],
+          [['¿Qué ranuras de expansión tenía la IBM PC?', ['ISA de 8 bits', 'PCI', 'AGP', 'PCI Express'], 'El bus ISA de 8 bits movía alrededor de 1 MB/s.'],
+           ['¿Cómo venía la memoria RAM en la IBM PC?', ['En chips sueltos sobre la placa', 'En módulos DDR', 'Dentro del procesador', 'En el disco rígido'], 'Recién en 1987 se popularizaron los módulos SIMM.']]),
+        S(1995, 'Pentium, PCI y ATX', 'Llegan las ranuras PCI blancas, las memorias SIMM de 72 pines y el formato ATX con su conector de 20 pines.', 3,
+          [['pga', 'cpu', 'pent', 'Socket 7'], ['simm72', 'ram', ['s72a', 's72b'], 'SIMM 1'], ['simm72', 'ram', ['s72a', 's72b'], 'SIMM 2'], ['pci', 'exp', 'pcicard', 'Ranura PCI'], ['atx20', 'right', 'atx20', 'Energía ATX']],
+          [['pent', 'pga', 'Intel Pentium', '133 MHz · Socket 7'], ['s72a', 'simm72', 'SIMM 72 pines', '16 MB EDO'], ['s72b', 'simm72', 'SIMM 72 pines', '16 MB EDO'], ['pcicard', 'cardpci', 'Placa de sonido PCI', '32 bits · 133 MB/s'], ['atx20', 'atx20', 'Conector ATX', '20 pines'],
+           ['s30', 'simm30', 'SIMM 30 pines', '1 MB', 'Es un SIMM de 30 pines: es más corto y no entra en una ranura de 72.'], ['agpc', 'cardagp', 'Placa de video AGP', '1997', 'La ranura AGP marrón recién aparece en 1997.']],
+          [['¿Por qué en un Pentium los SIMM de 72 pines se ponían de a dos?', ['Porque el Pentium lee 64 bits y cada SIMM da 32', 'Por estética', 'Porque uno es de video', 'Porque si no, no enciende la fuente'], 'Dos SIMM de 32 bits completan el banco de 64 bits.'],
+           ['¿Qué trajo el formato ATX?', ['Panel trasero integrado y encendido desde la placa', 'Ranuras AGP', 'Memoria DDR', 'Discos SATA'], 'Con ATX, Windows puede apagar la PC solo.'],
+           ['¿Qué velocidad tenía el bus PCI?', ['133 MB/s', '1 MB/s', '4 GB/s', '64 GB/s'], '32 bits a 33 MHz.']]),
+        S(2002, 'AGP, DDR e IDE', 'La placa de video tiene su propia ranura AGP; las memorias son DDR de 184 pines y los discos usan cables IDE.', 4,
+          [['pga', 'cpu', 'p4', 'Socket 478'], ['ddr', 'ram', ['ddra', 'ddrb'], 'DIMM 1 (DDR)'], ['ddr', 'ram', ['ddra', 'ddrb'], 'DIMM 2 (DDR)'], ['agp', 'exp', 'gf', 'Ranura AGP'], ['ide40', 'right', 'ide', 'Conector IDE']],
+          [['p4', 'pga', 'Pentium 4', 'Socket 478'], ['ddra', 'ddr', 'DDR-400', '512 MB'], ['ddrb', 'ddr', 'DDR-400', '512 MB'], ['gf', 'cardagp', 'GeForce 4', 'AGP 8x'], ['ide', 'ide40', 'Cable IDE', '40 pines'],
+           ['sdr', 'sdram', 'SDRAM PC133', '168 pines', 'La SDRAM tiene dos muescas: no coincide con la ranura DDR, que tiene una sola.'], ['pcie', 'cardpcie', 'Placa PCIe', '2004', 'Las placas PCI Express llegaron en 2004; esta placa tiene AGP.'], ['sata', 'sata', 'Cable SATA', '7 pines', 'En 2002 los discos usaban IDE; SATA llegó en 2003.']],
+          [['¿Para qué servía la ranura AGP?', ['Solo para la placa de video', 'Para la memoria', 'Para el sonido', 'Para la red'], 'Tenía mucha más velocidad que el PCI.'],
+           ['¿Cuántas muescas tiene una memoria DDR?', ['Una', 'Dos', 'Ninguna', 'Cuatro'], 'La SDRAM anterior tenía dos.']]),
+        S(2008, 'PCI Express, SATA y DDR2', 'El AGP y el PCI dejan lugar al PCI Express. Los discos pasan a SATA y la fuente tiene 24 pines.', 5,
+          [['lga', 'cpu', 'c2d', 'LGA 775'], ['ddr2', 'ram', ['d2a', 'd2b'], 'DIMM 1 (DDR2)'], ['ddr2', 'ram', ['d2a', 'd2b'], 'DIMM 2 (DDR2)'], ['pcie16', 'exp', 'gf8', 'PCIe x16'], ['atx24', 'right', 'atx24', 'Energía ATX'], ['sata', 'right', 'sata', 'Puerto SATA']],
+          [['c2d', 'lga', 'Core 2 Duo', 'LGA 775'], ['d2a', 'ddr2', 'DDR2-800', '2 GB'], ['d2b', 'ddr2', 'DDR2-800', '2 GB'], ['gf8', 'cardpcie', 'GeForce 8800', 'PCIe x16'], ['atx24', 'atx24', 'Conector ATX', '24 pines'], ['sata', 'sata', 'Cable SATA', 'datos'],
+           ['d3', 'ddr3', 'DDR3', '240 pines', 'La DDR3 tiene los mismos 240 pines que la DDR2, pero la muesca está en otro lugar.'], ['agp2', 'cardagp', 'Placa AGP', 'AGP 8x', 'Esta placa ya no tiene AGP: usa PCI Express.']],
+          [['¿Qué reemplazó el PCI Express?', ['Al PCI y al AGP', 'A la memoria RAM', 'Al cable SATA', 'A la fuente'], 'PCIe usa carriles: x1, x4, x16.'],
+           ['¿Por qué el LGA 775 fue un cambio importante?', ['Los pines pasaron del procesador al zócalo', 'Fue el primer procesador doble núcleo', 'Usaba cartucho', 'No necesitaba cooler'], 'Desde entonces Intel usa LGA.']]),
+        S(2024, 'Placa actual AM5', 'Socket LGA de AMD, memorias DDR5, discos M.2 directo en la placa, PCIe 5.0 y el conector EPS de 8 pines.', 9,
+          [['lgaam5', 'cpu', 'r9', 'AM5'], ['ddr5', 'ram', ['d5a', 'd5b'], 'DIMM A2 (DDR5)'], ['ddr5', 'ram', ['d5a', 'd5b'], 'DIMM B2 (DDR5)'], ['pcie16', 'exp', 'rtx', 'PCIe 5.0 x16'], ['m2', 'exp', 'nvme', 'M.2'], ['eps8', 'right', 'eps', 'CPU_PWR'], ['atx24', 'right', 'atx24b', 'ATX 24']],
+          [['r9', 'lgaam5', 'Ryzen 7 9800X3D', 'AM5'], ['d5a', 'ddr5', 'DDR5-6000', '16 GB'], ['d5b', 'ddr5', 'DDR5-6000', '16 GB'], ['rtx', 'gpubig', 'GeForce RTX 5070', 'PCIe 5.0'], ['nvme', 'nvme', 'SSD M.2 NVMe', 'PCIe 5.0'], ['eps', 'eps8', 'EPS', '8 pines'], ['atx24b', 'atx24', 'Conector ATX', '24 pines'],
+           ['d4', 'ddr4', 'DDR4', '288 pines', 'DDR4 y DDR5 tienen 288 pines, pero la muesca está en otro lugar: no entra.'], ['r5', 'pgaam4', 'Ryzen 5 5600', 'AM4', 'El Ryzen 5 5600 es AM4 (con pines). No entra en AM5.']],
+          [['¿Qué tiene de nuevo el socket AM5 respecto de AM4?', ['Es LGA: los pines están en el zócalo', 'Usa cartucho', 'Usa DDR4', 'No necesita cooler'], 'AM4 era PGA, con los pines en el procesador.'],
+           ['¿Dónde va un SSD NVMe en una placa actual?', ['En una ranura M.2, sin cables', 'En un cable IDE', 'En una ranura AGP', 'En un puerto SATA'], 'Recibe datos y energía por la ranura.']])
+      ] },
+      cpu: { title: 'Cada procesador en su socket', stages: [
+        S(1981, '8088 y 80386', 'Los primeros procesadores iban en zócalos DIP de dos filas o en zócalos cuadrados con muchos agujeros (PGA).', 0,
+          [['dip40', 'cpu', '8088', 'DIP 40 (IBM PC)'], ['pga', 'cpu', '386', 'PGA 132 (80386)']],
+          [['8088', 'dip40', 'Intel 8088', '4,77 MHz · 1981'], ['386', 'pga', 'Intel 80386', '16–33 MHz · 1985'], ['p2', 'slotcart', 'Pentium II', 'Slot 1 · 1997', 'El Pentium II viene en cartucho y va parado en una ranura (Slot 1).'], ['c2', 'lga', 'Core 2 Duo', 'LGA 775', 'El Core 2 Duo es de 2006 y no tiene pines: va en un zócalo LGA.']],
+          [['¿Cuántos núcleos tenía el 8088?', ['1', '2', '4', '8'], 'Recién en 2005-2006 llegaron los procesadores de doble núcleo.'],
+           ['¿Qué fue importante del 80386?', ['Fue el primer procesador de 32 bits de las PC', 'Tenía gráficos integrados', 'Venía en cartucho', 'Fue el primero de 1 GHz'], 'Era de 1985.']]),
+        S(1997, 'Socket 7 y Slot 1', 'El Pentium usaba un zócalo cuadrado (Socket 7, también para AMD K6). El Pentium II pasó a un cartucho en una ranura.', 4,
+          [['pga', 'cpu', 'pent', 'Socket 7'], ['slotcart', 'cpu', 'p2', 'Slot 1']],
+          [['pent', 'pga', 'Pentium MMX', '233 MHz'], ['p2', 'slotcart', 'Pentium II', '400 MHz · cartucho'], ['8088', 'dip40', 'Intel 8088', '1981', 'El 8088 es un chip DIP de dos filas de patas: no entra en ningún zócalo de 1997.'], ['r7', 'pgaam4', 'Ryzen 7 1800X', 'AM4', 'El Ryzen es de 2017 y va en el socket AM4.']],
+          [['¿Por qué el Pentium II venía en cartucho?', ['Para poner la memoria caché al lado del procesador', 'Porque era más barato', 'Para no usar cooler', 'Para usar AGP'], 'La caché L2 iba en el mismo cartucho.'],
+           ['¿Qué procesador fue el primero en llegar a 1 GHz, en el año 2000?', ['AMD Athlon', 'Intel 8088', 'Pentium MMX', 'Core i9'], 'El Athlon también venía en cartucho (Slot A) al principio.']]),
+        S(2006, 'Socket 478 y LGA 775', 'El Pentium 4 usó el Socket 478 (con pines en el procesador). Con el LGA 775 los pines pasaron al zócalo.', 5,
+          [['pga', 'cpu', 'p4', 'Socket 478'], ['lga', 'cpu', 'c2', 'LGA 775']],
+          [['p4', 'pga', 'Pentium 4', '3 GHz · 478 pines'], ['c2', 'lga', 'Core 2 Duo E7300', '2 núcleos · LGA 775'], ['p2', 'slotcart', 'Pentium II', 'Slot 1', 'El Pentium II es un cartucho para Slot 1.'], ['i7', 'lga', 'Core i7-12700K', 'LGA 1700', 'Es LGA, pero de otro tamaño (1700 contactos): no entra en un LGA 775.']],
+          [['¿Por qué se pasó a varios núcleos en lugar de subir más los GHz?', ['Subir la frecuencia generaba demasiado calor', 'Era más barato', 'Lo pedía Windows', 'Por los discos'], 'El Pentium 4 llegó a 3,8 GHz y calentaba mucho.'],
+           ['En un zócalo LGA, ¿dónde están los pines?', ['En el zócalo de la placa', 'En el procesador', 'En el cooler', 'No tiene'], 'El procesador tiene contactos planos.']]),
+        S(2021, 'AM4 y LGA 1700', 'AMD Ryzen usó AM4 (pines en el procesador) durante 5 generaciones. Intel pasó al LGA 1700 con núcleos híbridos.', 8,
+          [['pgaam4', 'cpu', 'r7', 'AM4'], ['lga', 'cpu', 'i7', 'LGA 1700']],
+          [['r7', 'pgaam4', 'Ryzen 7 1800X', '8 núcleos · AM4'], ['i7', 'lga', 'Core i7-12700K', '12 núcleos · LGA 1700'], ['r9k', 'lgaam5', 'Ryzen 7 9800X3D', 'AM5', 'Es AM5 (LGA, sin pines): no entra en AM4.'], ['c2', 'lga', 'Core 2 Duo', 'LGA 775', 'Es LGA 775: más chico y con otra muesca que el LGA 1700.']],
+          [['¿Qué son los núcleos P y E de Intel?', ['Núcleos de rendimiento y de eficiencia', 'Núcleos de video y de sonido', 'Núcleos de disco', 'Pines y contactos'], 'Llegaron con la 12.ª generación (2021).'],
+           ['¿Cuántos núcleos trajo el Ryzen 7 1800X en 2017?', ['8', '2', '4', '24'], 'Con 16 hilos.']]),
+        S(2025, 'AM5 y LGA 1851', 'Los procesadores actuales: Ryzen 9000 en AM5 y Core Ultra 200S en LGA 1851, con hasta 16–24 núcleos.', 10,
+          [['lgaam5', 'cpu', 'r9k', 'AM5'], ['lga', 'cpu', 'u9', 'LGA 1851']],
+          [['r9k', 'lgaam5', 'Ryzen 7 9800X3D', '8 núcleos · AM5'], ['u9', 'lga', 'Core Ultra 9 285K', '24 núcleos · LGA 1851'], ['r5', 'pgaam4', 'Ryzen 5 5600', 'AM4', 'Es AM4, con pines: no entra en AM5.'], ['i7', 'lga', 'Core i7-12700K', 'LGA 1700', 'LGA 1700 y LGA 1851 tienen el mismo tamaño, pero distinta muesca y distintos contactos: no son compatibles.']],
+          [['¿Qué agregaron los Core Ultra 200S para la inteligencia artificial?', ['Una NPU', 'Una disquetera', 'Una ranura AGP', 'Más pines de memoria'], 'La NPU acelera tareas de IA.'],
+           ['¿Qué significa “X3D” en un Ryzen?', ['Tiene caché 3D extra, ideal para juegos', 'Tiene 3 núcleos', 'Es para 3 monitores', 'Usa DDR3'], 'La caché apilada mejora mucho los juegos.']])
+      ] },
+      ram: { title: 'Cada memoria en su ranura', stages: [
+        S(1987, 'SIMM de 30 pines', 'Las primeras memorias en módulo. Se colocaban inclinadas y se levantaban hasta que trababan.', 1,
+          [['simm30', 'ram', ['a', 'b'], 'SIMM 1'], ['simm30', 'ram', ['a', 'b'], 'SIMM 2']],
+          [['a', 'simm30', 'SIMM 30 pines', '1 MB'], ['b', 'simm30', 'SIMM 30 pines', '1 MB'], ['x', 'simm72', 'SIMM 72 pines', '16 MB', 'Es un SIMM de 72 pines: es más largo y tiene una muesca en el medio.'], ['y', 'ddr', 'DDR', '184 pines', 'La DDR es del año 2000 y mucho más larga.']],
+          [['¿Cuántos bits tenía un SIMM de 30 pines?', ['8 bits', '64 bits', '32 bits', '128 bits'], 'En un 386 había que poner 4 iguales.'],
+           ['¿Cuánta memoria tenía un SIMM de 30 pines típico?', ['Entre 256 KB y 4 MB', 'Entre 8 y 16 GB', '64 GB', '1 TB'], 'Hoy un módulo tiene hasta 64 GB.']]),
+        S(1995, 'SIMM de 72 pines (EDO)', 'Más largos, de 32 bits y con una muesca en el centro. En los Pentium iban de a pares.', 2,
+          [['simm72', 'ram', ['a', 'b'], 'Banco 0 · SIMM 1'], ['simm72', 'ram', ['a', 'b'], 'Banco 0 · SIMM 2']],
+          [['a', 'simm72', 'SIMM 72 pines EDO', '16 MB'], ['b', 'simm72', 'SIMM 72 pines EDO', '16 MB'], ['x', 'simm30', 'SIMM 30 pines', '1 MB', 'Es un SIMM de 30 pines: es corto y no tiene la muesca central.'], ['y', 'sdram', 'SDRAM', '168 pines', 'La SDRAM es un DIMM de 168 pines con dos muescas.']],
+          [['¿Qué significa EDO?', ['Extended Data Out: una RAM un poco más rápida que la FPM', 'Disco externo', 'Memoria de video', 'Un tipo de cable'], 'Llegó en 1995.'],
+           ['¿Por qué iban de a dos en un Pentium?', ['El Pentium usa 64 bits y cada SIMM da 32', 'Por el color', 'Para el sonido', 'Porque una es de repuesto'], 'Dos de 32 completan 64 bits.']]),
+        S(1998, 'SDRAM de 168 pines', 'El DIMM de 64 bits sincronizado con el procesador. Tiene dos muescas y se mide en PC66, PC100 y PC133.', 3,
+          [['sdram', 'ram', ['a', 'b'], 'DIMM 1'], ['sdram', 'ram', ['a', 'b'], 'DIMM 2']],
+          [['a', 'sdram', 'SDRAM PC100', '128 MB'], ['b', 'sdram', 'SDRAM PC133', '128 MB'], ['x', 'ddr', 'DDR-400', '184 pines', 'La DDR tiene una sola muesca: no coincide con las dos de la ranura SDRAM.'], ['y', 'simm72', 'SIMM 72', '16 MB', 'Un SIMM de 72 pines es más corto y va inclinado.']],
+          [['¿Cuál es la velocidad de una SDRAM PC133?', ['Unos 1.066 MB/s', '20 MB/s', '64.000 MB/s', '3.200 MB/s'], '64 bits × 133 MHz.'],
+           ['¿Cuántas muescas tiene un DIMM SDRAM?', ['Dos', 'Una', 'Ninguna', 'Tres'], 'Las DDR posteriores tienen una.']]),
+        S(2005, 'DDR y DDR2', 'Una sola muesca, pero en distinto lugar: una placa DDR no acepta DDR2 y viceversa.', 5,
+          [['ddr', 'ram', 'a', 'Placa vieja: DDR'], ['ddr2', 'ram', 'b', 'Placa nueva: DDR2']],
+          [['a', 'ddr', 'DDR-400', '184 pines · 2,5 V'], ['b', 'ddr2', 'DDR2-800', '240 pines · 1,8 V'], ['x', 'ddr3', 'DDR3-1600', '240 pines', 'La DDR3 tiene 240 pines como la DDR2, pero la muesca está más a la izquierda.'], ['y', 'sdram', 'SDRAM', '168 pines', 'La SDRAM tiene dos muescas.']],
+          [['¿Qué significa DDR?', ['Doble tasa de datos: dos datos por ciclo de reloj', 'Disco doble rígido', 'Datos de red', 'Doble ranura'], 'Por eso una DDR-400 usa un reloj de 200 MHz.'],
+           ['¿Qué ventaja tuvo la DDR2 sobre la DDR?', ['Más velocidad y menos voltaje (1,8 V)', 'Más pines de video', 'Venía con disco', 'Era de 8 bits'], 'Hasta 6,4 GB/s en DDR2-800.']]),
+        S(2015, 'DDR3 y DDR4', 'La DDR3 (240 pines, 1,5 V) y la DDR4 (288 pines, 1,2 V, borde curvo) dominaron más de 10 años.', 7,
+          [['ddr3', 'ram', 'a', 'Placa 2010: DDR3'], ['ddr4', 'ram', ['b', 'c'], 'Placa 2017: DDR4 A2'], ['ddr4', 'ram', ['b', 'c'], 'Placa 2017: DDR4 B2']],
+          [['a', 'ddr3', 'DDR3-1600', '8 GB'], ['b', 'ddr4', 'DDR4-3200', '16 GB'], ['c', 'ddr4', 'DDR4-3200', '16 GB'], ['x', 'ddr5', 'DDR5-6000', '288 pines', 'La DDR5 tiene 288 pines como la DDR4, pero la muesca está en otro lugar.'], ['y', 'ddr2', 'DDR2', '240 pines', 'La DDR2 tiene la muesca en otro lugar que la DDR3.']],
+          [['¿Cuál es la velocidad de una DDR4-3200?', ['25,6 GB/s', '1 GB/s', '64 GB/s', '133 MB/s'], '3200 millones de transferencias × 8 bytes.'],
+           ['Con 2 memorias en una placa de 4 ranuras, ¿dónde van?', ['En A2 y B2, para el doble canal', 'En A1 y A2, juntas', 'Da igual', 'En B1 y B2'], 'Así cada una queda en un canal distinto.']]),
+        S(2024, 'DDR5', 'Trae su propio regulador de energía (PMIC), dos subcanales por módulo y velocidades de 6000 a 8000 MT/s.', 8,
+          [['ddr5', 'ram', ['a', 'b'], 'DDR5 A2'], ['ddr5', 'ram', ['a', 'b'], 'DDR5 B2']],
+          [['a', 'ddr5', 'DDR5-6000', '16 GB · PMIC'], ['b', 'ddr5', 'DDR5-6000', '16 GB · PMIC'], ['x', 'ddr4', 'DDR4-3200', '16 GB', 'La DDR4 no entra: la muesca está en otro lugar.'], ['y', 'ddr3', 'DDR3', '8 GB', 'La DDR3 tiene 240 pines y otra muesca.']],
+          [['¿Qué es el PMIC de una DDR5?', ['Un regulador de energía en la misma memoria', 'Un disipador', 'Un chip de video', 'Una batería'], 'Antes la regulación estaba en la placa madre.'],
+           ['¿Cuál es la velocidad de una DDR5-6000?', ['48 GB/s', '6 GB/s', '600 MB/s', '1 GB/s'], '6000 MT/s × 8 bytes.'],
+           ['¿Qué es CAMM2?', ['Un formato de memoria plana para notebooks', 'Un tipo de disco', 'Una placa de video', 'Un cable'], 'Se atornilla en lugar de insertarse.']])
+      ] },
+      disco: { title: 'Conectá cada disco de su época', stages: [
+        S(1983, 'Disquetera y ST-506', 'La IBM PC XT traía disquetera de 5,25" y un disco rígido de 10 MB con cables planos anchos.', 2,
+          [['bay525', 'bay', ['fdd', 'st'], 'Bahía superior'], ['bay525', 'bay', ['fdd', 'st'], 'Bahía inferior'], ['fdd34', 'right', 'cfdd', 'Disquetera (34)'], ['st506', 'right', 'cst', 'Controladora ST-506']],
+          [['fdd', 'fdd', 'Disquetera 5,25"', '360 KB'], ['st', 'hdd525', 'Disco ST-506', '10 MB'], ['cfdd', 'fdd34', 'Cable de disquetera', '34 hilos'], ['cst', 'st506', 'Cable de control', '34 hilos'],
+           ['ssd', 'ssd25', 'SSD SATA', '2008', 'Los SSD llegaron 25 años después.'], ['sata', 'sata', 'Cable SATA', '2003', 'SATA es de 2003; en 1983 los discos usaban cables planos.']],
+          [['¿Cuánto guardaba el disco de la IBM PC XT?', ['10 MB', '10 GB', '1,44 MB', '500 MB'], 'Hoy hay discos de más de 40 TB.'],
+           ['¿Cuánto guardaba un disquete de 5,25" de doble densidad?', ['360 KB', '1,44 MB', '700 MB', '4,7 GB'], 'El de 3,5" llegó a 1,44 MB.']]),
+        S(1995, 'Discos IDE', 'La controladora pasa dentro del disco. Un cable plano de 40 pines y la energía por un conector Molex de 4 pines.', 3,
+          [['bay35', 'bay', 'hdd', 'Bahía 3,5"'], ['ide40', 'right', 'ide', 'Conector IDE (placa)'], ['molex', 'right', 'mx', 'Energía del disco']],
+          [['hdd', 'hdd35', 'Disco IDE', '1,2 GB'], ['ide', 'ide40', 'Cable IDE', '40 pines'], ['mx', 'molex', 'Molex', '4 pines'],
+           ['sp', 'satapow', 'Energía SATA', '15 pines', 'El conector de energía SATA llegó con los discos SATA; los IDE usaban Molex.'], ['m2', 'nvme', 'SSD M.2', '2015', 'Los M.2 llegaron mucho después.']],
+          [['¿Cuántos discos se podían poner en un mismo cable IDE?', ['Dos (maestro y esclavo)', 'Uno', 'Cuatro', 'Ocho'], 'Se elegía con un “jumper”.'],
+           ['¿Qué velocidad alcanzó el último IDE (ATA/133)?', ['133 MB/s', '600 MB/s', '14.900 MB/s', '1 MB/s'], 'Con cable de 80 hilos.']]),
+        S(2005, 'Discos SATA', 'Un cable fino de 7 pines para datos y uno de 15 pines para energía. Un disco por cable.', 5,
+          [['bay35', 'bay', 'hdd', 'Bahía 3,5"'], ['sata', 'right', 'sd', 'Puerto SATA (placa)'], ['satapow', 'right', 'sp', 'Energía del disco']],
+          [['hdd', 'hdd35', 'Disco SATA', '250 GB · 7200 rpm'], ['sd', 'sata', 'Cable SATA', 'datos · 7 pines'], ['sp', 'satapow', 'Energía SATA', '15 pines'],
+           ['ide', 'ide40', 'Cable IDE', '40 pines', 'Un disco SATA no tiene conector IDE.'], ['mx', 'molex', 'Molex', '4 pines', 'Los discos SATA usan el conector de energía SATA de 15 pines.']],
+          [['¿Cuál es la velocidad máxima de SATA III?', ['600 MB/s', '133 MB/s', '7.400 MB/s', '1 GB/s'], 'Por eso un SSD SATA llega a unos 550 MB/s.'],
+           ['¿En qué año salió el primer disco de 1 TB?', ['2007', '1995', '1983', '2020'], 'Lo presentó Hitachi.']]),
+        S(2012, 'SSD SATA', 'Sin partes móviles: chips de memoria flash. Mismo cable que un disco SATA, pero mucho más rápido.', 6,
+          [['bay25', 'bay', 'ssd', 'Bahía 2,5"'], ['sata', 'right', 'sd', 'Puerto SATA (placa)'], ['satapow', 'right', 'sp', 'Energía SATA']],
+          [['ssd', 'ssd25', 'SSD SATA', '500 GB · 550 MB/s'], ['sd', 'sata', 'Cable SATA', 'datos'], ['sp', 'satapow', 'Energía SATA', '15 pines'],
+           ['hdd', 'hdd525', 'Disco 5,25"', 'ST-506', 'Ese disco es de los 80 y es enorme para una bahía de 2,5".'], ['ide', 'ide40', 'Cable IDE', '40 pines', 'Los SSD SATA usan cable SATA.']],
+          [['¿Por qué un SSD es más rápido que un disco mecánico?', ['No tiene partes que giran: lee chips de memoria flash', 'Gira más rápido', 'Tiene más platos', 'Usa cable IDE'], 'También aguanta mejor los golpes.'],
+           ['¿Qué velocidad tiene un SSD SATA?', ['Unos 550 MB/s', 'Unos 14.000 MB/s', 'Unos 5 MB/s', 'Unos 50 GB/s'], 'El límite es el propio SATA.']]),
+        S(2024, 'M.2 NVMe y tarjeta PCIe', 'El disco va directo a las líneas PCI Express: en una ranura M.2 o en una tarjeta en una ranura PCIe.', 7,
+          [['m2', 'exp', 'nv', 'Ranura M.2'], ['pcie4', 'exp', 'card', 'Ranura PCIe x4']],
+          [['nv', 'nvme', 'SSD M.2 NVMe', 'PCIe 5.0 · 14.900 MB/s'], ['card', 'pciessd', 'SSD en tarjeta PCIe', 'PCIe 4.0 x4'],
+           ['ssd', 'ssd25', 'SSD SATA 2,5"', '550 MB/s', 'Un SSD de 2,5" va en una bahía con cable SATA, no en la placa.'], ['sd', 'sata', 'Cable SATA', 'datos', 'Los NVMe no usan cables.']],
+          [['¿Qué velocidad alcanza un SSD NVMe PCIe 5.0?', ['Hasta unos 14.900 MB/s', '550 MB/s', '133 MB/s', '1 GB/s'], 'Casi 27 veces un SSD SATA.'],
+           ['¿Qué necesita un M.2 NVMe para funcionar?', ['Solo la ranura M.2 (da energía y datos)', 'Cable SATA y Molex', 'Cable IDE', 'Una fuente aparte'], 'Se sujeta con un tornillito.'],
+           ['¿Qué capacidad tienen los discos rígidos más grandes de 2026?', ['Unos 44 TB', '10 MB', '1 TB', '500 GB'], 'Usan la tecnología HAMR.']])
+      ] },
+      video: { title: 'Cada placa de video en su ranura', stages: [
+        S(1981, 'CGA en ISA', 'La placa de video de la IBM PC iba en una ranura ISA de 8 bits y mostraba 4 colores.', 0,
+          [['isa8', 'exp', 'cga', 'Ranura ISA 8 bits']],
+          [['cga', 'card8', 'IBM CGA', '4 colores'], ['vdo', 'cardpci', 'Voodoo', 'PCI · 1996', 'La Voodoo es PCI y de 1996.'], ['rtx', 'gpubig', 'RTX 4090', 'PCIe', 'Una RTX es PCI Express: 40 años más nueva.']],
+          [['¿Cuántos colores mostraba la CGA en gráficos?', ['4', '256', '16 millones', '2'], 'En 320 × 200.'],
+           ['¿Qué mostraba la placa MDA?', ['Solo texto', 'Video 3D', 'Fotos', 'Películas'], 'Letras verdes o ámbar.']]),
+        S(1987, 'VGA en ISA 16 bits', 'VGA: 640 × 480 y el conector azul de 15 pines que se usó más de 25 años.', 1,
+          [['isa16', 'exp', 'vga', 'Ranura ISA 16 bits'], ['vga15', 'right', 'cab', 'Salida al monitor']],
+          [['vga', 'card16', 'Placa VGA', 'ISA 16 bits'], ['cab', 'vga15', 'Cable VGA', '15 pines'], ['hd', 'atx12v', 'Conector de 4 pines', 'energía', 'Ese es un conector de energía, no de video.'], ['agp', 'cardagp', 'Placa AGP', '1997', 'AGP llegó 10 años después.']],
+          [['¿Qué resolución tenía VGA?', ['640 × 480', '3840 × 2160', '320 × 200 con 4 colores', '1920 × 1080'], 'Con 16 colores (o 256 en 320 × 200).'],
+           ['¿Cuántos pines tiene el conector VGA?', ['15', '9', '24', '40'], 'En tres filas.']]),
+        S(1996, 'Voodoo en PCI', 'La primera aceleradora 3D popular. Iba en una ranura PCI blanca, al lado de la placa de video común.', 2,
+          [['pci', 'exp', 'vdo', 'Ranura PCI']],
+          [['vdo', 'cardpci', '3dfx Voodoo', 'PCI · 4 MB'], ['cga', 'card8', 'CGA', 'ISA 8 bits', 'La CGA es ISA de 8 bits.'], ['gf', 'cardagp', 'GeForce 256', 'AGP', 'La GeForce 256 usa la ranura AGP marrón.']],
+          [['¿Qué hacía la Voodoo?', ['Aceleraba los juegos en 3D', 'Guardaba archivos', 'Daba sonido', 'Conectaba a internet'], 'Necesitaba otra placa para el 2D.'],
+           ['¿De qué color eran las ranuras PCI?', ['Blancas', 'Marrones', 'Negras con traba', 'Azules'], 'La AGP era marrón.']]),
+        S(1999, 'GeForce 256 en AGP', 'La “primera GPU”: calculaba la geometría y las luces del 3D. Usaba la ranura AGP marrón.', 3,
+          [['agp', 'exp', 'gf', 'Ranura AGP'], ['pci', 'exp', 'snd', 'Ranura PCI']],
+          [['gf', 'cardagp', 'GeForce 256', 'AGP 4x'], ['snd', 'cardpci', 'Placa de sonido', 'PCI'], ['g8', 'cardpcie', 'GeForce 8800', 'PCIe', 'La 8800 es PCI Express, de 2006.']],
+          [['¿Por qué se la llamó “primera GPU”?', ['Hacía la geometría y la iluminación sin el procesador', 'Fue la primera con ventilador', 'Fue la primera con HDMI', 'Era la más barata'], 'T&L por hardware.'],
+           ['¿Qué velocidad tenía AGP 8x?', ['Unos 2,1 GB/s', '133 MB/s', '64 GB/s', '1 MB/s'], 'Cuatro veces el PCI de 64 bits.']]),
+        S(2006, 'GeForce 8800 en PCIe', 'PCI Express x16 y energía extra desde la fuente con cables PCIe de 6 pines.', 4,
+          [['pcie16', 'exp', 'g8', 'PCIe x16'], ['pcie6', 'right', ['p1', 'p2'], 'Energía 1'], ['pcie6', 'right', ['p1', 'p2'], 'Energía 2']],
+          [['g8', 'cardpcie', 'GeForce 8800 GTX', '768 MB'], ['p1', 'pcie6', 'Cable PCIe', '6 pines'], ['p2', 'pcie6', 'Cable PCIe', '6 pines'], ['gf', 'cardagp', 'GeForce 256', 'AGP', 'Es AGP: no entra en PCI Express.'], ['e', 'eps8', 'EPS', '8 pines', 'El EPS es para el procesador, no para la placa de video.']],
+          [['¿Cuánta energía entrega la ranura PCIe x16 sola?', ['75 W', '600 W', '10 W', '300 W'], 'Por eso las placas potentes necesitan cables extra.'],
+           ['¿Para qué más se empezaron a usar las GPU desde 2007?', ['Para cálculos científicos y luego inteligencia artificial', 'Para guardar archivos', 'Para conectarse a internet', 'Para imprimir'], 'Con CUDA.']]),
+        S(2025, 'RTX en PCIe 5.0 y 12V-2x6', 'Las placas actuales usan un solo conector de 16 pines que entrega hasta 600 W.', 6,
+          [['pcie16', 'exp', 'rtx', 'PCIe 5.0 x16'], ['hpwr', 'right', 'h', '12V-2x6 (placa de video)']],
+          [['rtx', 'gpubig', 'GeForce RTX 5090', '32 GB GDDR7 · 575 W'], ['h', 'hpwr', 'Cable 12V-2x6', '16 pines · 600 W'], ['p1', 'pcie6', 'PCIe 6 pines', '75 W', 'Un cable de 6 pines entrega 75 W: muy poco para una RTX 5090.'], ['vga', 'card16', 'VGA', 'ISA', 'Es una placa ISA de 1987.']],
+          [['¿Cuánto consume una RTX 5090?', ['Unos 575 W', 'Unos 75 W', 'Unos 10 W', 'Unos 2.000 W'], 'Necesita una fuente de 1000 W o más.'],
+           ['¿Qué hay que cuidar con el conector 12V-2x6?', ['Que entre hasta el fondo, sin doblar el cable pegado al conector', 'Ponerle pasta térmica', 'Pintarlo', 'Que quede flojo'], 'Un conector a medias puede recalentarse.']])
+      ] },
+      fuente: { title: 'Conectá la fuente de cada época', stages: [
+        S(1984, 'Fuente AT: P8 y P9', 'Dos conectores parecidos de 6 pines. Los cables negros de los dos tenían que quedar juntos en el centro.', 1,
+          [['p8', 'right', 'p8', 'Placa: P8 (izquierda)'], ['p9', 'right', 'p9', 'Placa: P9 (derecha)'], ['molex', 'right', 'mx', 'Disco rígido']],
+          [['p8', 'p8', 'Conector P8', 'naranja, rojo, amarillo…'], ['p9', 'p9', 'Conector P9', '…negro, blanco, rojo'], ['mx', 'molex', 'Molex', '4 pines'], ['a20', 'atx20', 'ATX 20 pines', '1995', 'El conector ATX llegó en 1995; esta placa es AT.']],
+          [['¿Cuál era la regla para conectar P8 y P9?', ['Negro con negro, en el centro', 'Rojo con rojo, en las puntas', 'Da igual el orden', 'Uno arriba del otro'], 'Si se invertían, se quemaba la placa.'],
+           ['¿Cómo se apagaba una PC AT?', ['Con una llave que cortaba la corriente', 'Desde Windows', 'Con el teclado', 'Sola'], 'El apagado por software llegó con ATX.']]),
+        S(1995, 'Fuente ATX: 20 pines', 'Un solo conector de 20 pines con traba: no se puede poner al revés. La placa enciende la fuente.', 2,
+          [['atx20', 'right', 'a20', 'Placa: ATX'], ['molex', 'right', 'mx', 'Disco IDE'], ['fdd34', 'right', 'no', 'Disquetera (datos)']],
+          [['a20', 'atx20', 'ATX', '20 pines'], ['mx', 'molex', 'Molex', '4 pines'], ['no', 'fdd34', 'Cable de disquetera', '34 hilos'], ['p8', 'p8', 'P8', 'AT', 'P8 es de las fuentes AT viejas.']],
+          [['¿Qué permitió el ATX?', ['Prender con el botón y apagar desde Windows', 'Usar AGP', 'Usar SATA', 'Tener 24 pines'], 'Gracias a la línea de standby de 5 V.'],
+           ['¿Por qué el conector ATX no se puede poner al revés?', ['Tiene traba y pines con formas distintas', 'Es redondo', 'Es magnético', 'Tiene colores'], 'Pines cuadrados y redondeados.']]),
+        S(2005, 'ATX 2.0: 24 + 4 pines', 'El conector de la placa pasa a 24 pines, el procesador tiene su ATX12V de 4 pines y los discos su energía SATA.', 4,
+          [['atx24', 'right', 'a24', 'Placa: ATX 24'], ['atx12v', 'right', 'c4', 'Procesador'], ['satapow', 'right', 'sp', 'Disco SATA']],
+          [['a24', 'atx24', 'ATX', '24 pines'], ['c4', 'atx12v', 'ATX12V', '4 pines'], ['sp', 'satapow', 'Energía SATA', '15 pines'], ['p9', 'p9', 'P9', 'AT', 'Es un conector AT.'], ['hp', 'hpwr', '12VHPWR', '2022', 'Es de 2022, para placas de video.']],
+          [['¿Por qué apareció el conector de 4 pines para el procesador?', ['Los procesadores necesitaban más energía de 12 V', 'Para el ventilador', 'Para el sonido', 'Para el disco'], 'Empezó con el Pentium 4.'],
+           ['¿Qué mide la certificación 80 PLUS?', ['La eficiencia de la fuente', 'El tamaño', 'El ruido', 'La cantidad de cables'], 'Cuánta energía no se pierde como calor.']]),
+        S(2024, 'Fuente actual: ATX 3.1', 'ATX 24, EPS de 8 pines (uno o dos) y el 12V-2x6 de 16 pines para la placa de video.', 6,
+          [['atx24', 'right', 'a24', 'Placa: ATX 24'], ['eps8', 'right', ['e1', 'e2'], 'CPU_PWR1'], ['eps8', 'right', ['e1', 'e2'], 'CPU_PWR2'], ['hpwr', 'right', 'h', 'Placa de video']],
+          [['a24', 'atx24', 'ATX', '24 pines'], ['e1', 'eps8', 'EPS', '8 pines'], ['e2', 'eps8', 'EPS', '8 pines'], ['h', 'hpwr', '12V-2x6', '16 pines · 600 W'], ['pc', 'pcie8', 'PCIe 8 pines', 'placa de video', 'El PCIe de 8 pines parece un EPS, pero tiene otras posiciones: no va en CPU_PWR.'], ['a20', 'atx20', 'ATX 20', '1995', 'La placa actual necesita los 24 pines.']],
+          [['¿Por qué no hay que confundir EPS y PCIe de 8 pines?', ['Tienen el 12 V y la tierra en distintas posiciones', 'Son iguales', 'Uno es de datos', 'Uno es de 5 V'], 'Forzarlo puede dañar la placa o la fuente.'],
+           ['¿Qué es una fuente modular?', ['Una fuente donde se enchufan solo los cables que se usan', 'Una fuente sin ventilador', 'Una fuente con batería', 'Una fuente externa'], 'Ordena mejor el gabinete.']]),
+        S(2026, 'Certificaciones 80 PLUS', 'Cuanto más alta la certificación, menos energía se pierde como calor. Eficiencias al 50 % de carga (230 V internos).', 5,
+          [['eff', 'tag', 'B', '85 %'], ['eff', 'tag', 'G', '90 %'], ['eff', 'tag', 'T', '94 %']],
+          [['B', 'badgeB', '80 PLUS Bronze', '85 %'], ['G', 'badgeG', '80 PLUS Gold', '90 %'], ['T', 'badgeT', '80 PLUS Titanium', '94 %'], ['S', 'badgeS', '80 PLUS Silver', '88 %', 'Silver es 88 %.'], ['P', 'badgeP', '80 PLUS Platinum', '92 %', 'Platinum es 92 %.']],
+          [['¿Qué certificación es más eficiente?', ['Titanium', 'Bronze', 'Silver', 'Gold'], 'El orden es: 80 PLUS, Bronze, Silver, Gold, Platinum, Titanium.'],
+           ['Una fuente Gold entrega 450 W a la PC con un 90 % de eficiencia. ¿Cuánto toma de la pared?', ['500 W', '450 W', '405 W', '900 W'], '450 / 0,9 = 500 W: 50 W se pierden como calor.'],
+           ['¿Qué ventaja tiene una fuente más eficiente?', ['Gasta menos luz y calienta menos', 'Tiene más cables', 'Es más grande', 'Hace más ruido'], 'También suele durar más.']])
+      ] }
+    };
+    var EVO_ICON = { placa: 'Placas madre', cpu: 'Procesadores y sockets', ram: 'Memoria RAM', disco: 'Discos', video: 'Placas de video', fuente: 'Fuentes' };
+    if (!store.evo) store.evo = {};
+
+    function evoHome() {
+      return '<section class="panel evo-home"><span class="label">Juegos de la historia</span><h3>Recorré la evolución jugando</h3>' +
+        '<p>En cada época armás la pieza en su encastre, respondés 2 o 3 preguntas y pasás a la siguiente.</p><div class="evo-cards">' +
+        Object.keys(EVO).map(function (k) {
+          var best = store.evo[k];
+          return '<button type="button" class="evo-card" data-evo="' + k + '"><strong>' + EVO_ICON[k] + '</strong><span>' + EVO[k].title + ' · ' + EVO[k].stages.length + ' épocas</span>' + (best != null ? '<em>Mejor nota: ' + best + '/100</em>' : '<em>Jugar →</em>') + '</button>';
+        }).join('') + '</div></section>';
+    }
+    function evoPlay(cat) {
+      var G = EVO[cat], order = [], st = 0, sel = null, placed = {}, errs = 0, qWrong = 0, qi = 0, phase = 'build', T, msg = '', msgK = '', t0 = Date.now();
+      function cur() { return G.stages[st]; }
+      function setup() { T = evoLayout(cur().T.map(function (t) { return { k: t.k, role: t.role, acc: t.acc, label: t.label }; })); placed = {}; sel = null; phase = 'build'; qi = 0; order = cur().P.slice().sort(rnd); msg = 'Elegí una pieza y tocá dónde va.'; msgK = ''; }
+      function partById(id) { var P = cur().P; for (var i = 0; i < P.length; i++) if (P[i].id === id) return P[i]; return null; }
+      function usedIds() { return Object.keys(placed).map(function (k) { return placed[k]; }); }
+      function draw() {
+        var S0 = cur(), hi = HIST[cat].items[S0.hi], ph = (PH[cat] || [])[S0.hi];
+        var head = '<div class="evo-top"><button type="button" class="btn ev-back">← Volver a la historia</button><span class="evo-prog">' + EVO_ICON[cat] + ' · Época ' + (st + 1) + ' de ' + G.stages.length + ' · Errores ' + errs + '</span></div>' +
+          '<ol class="evo-steps">' + G.stages.map(function (s, i) { return '<li class="' + (i < st ? 'done' : i === st ? 'cur' : '') + '">' + s.y + '</li>'; }).join('') + '</ol>';
+        var intro = '<section class="panel evo-intro">' + photoHtml(ph, hi ? hpic(hi[4]) : '', 'evo-ph') + '<div><span class="label">' + S0.y + '</span><h2>' + S0.t + '</h2><p>' + S0.txt + '</p>' + (hi ? '<p class="tl-sp">' + hi[2] + '</p>' : '') + '</div></section>';
+        var body;
+        if (phase === 'build') {
+          var svg = '<svg viewBox="0 0 600 ' + (T.some(function (t) { return t.role === 'bay'; }) ? 340 : 360) + '" class="evo-svg" role="img" aria-label="Placa para armar"><rect width="600" height="360" class="f-pcb" rx="8"/>' +
+            (T.every(function (t) { return t.role === 'right'; }) ? psuDeco(S0) : '') +
+            T.map(function (t) { var p = placed[t.i] ? partById(placed[t.i]) : null; return evoTarget(t, p ? p.name : '') + (sel && !placed[t.i] ? '' : ''); }).join('') + '</svg>';
+          var used = usedIds();
+          body = '<div class="evo-play"><div class="evo-board' + (sel ? ' picking' : '') + '">' + svg + '</div><section class="panel evo-tray"><span class="label">Piezas de distintas épocas</span><p class="ch-sub">No todas van: algunas son de otros años.</p><div class="evo-parts">' +
+            order.map(function (p) { var u = used.indexOf(p.id) >= 0; return u ? '' : '<button type="button" class="evo-part' + (sel === p.id ? ' sel' : '') + '" data-p="' + p.id + '">' + evoPart(p.k, p.name) + '<strong>' + p.name + '</strong><span>' + p.sub + '</span></button>'; }).join('') +
+            '</div></section></div><p class="status evo-msg ' + msgK + '" role="status">' + msg + '</p>';
+        } else if (phase === 'quiz') {
+          var q = cur().Q[qi], qord = q.ord || (q.ord = [0, 1, 2, 3].sort(rnd));
+          body = '<section class="panel evo-quiz"><span class="label">Pregunta ' + (qi + 1) + ' de ' + cur().Q.length + '</span><h3>' + q[0] + '</h3><div class="q-opts mc">' +
+            qord.map(function (o) { return '<button type="button" class="q-btn mc" data-o="' + o + '">' + q[1][o] + '</button>'; }).join('') + '</div><p class="evo-why" hidden></p><div class="btns"><button type="button" class="btn primary evo-qnext" hidden>Seguir</button></div></section>';
+        } else {
+          var last = st === G.stages.length - 1;
+          body = '<section class="panel evo-done"><h3>¡Época ' + cur().y + ' completa!</h3><p>' + (last ? 'Terminaste toda la evolución.' : 'Seguí con la próxima época: ' + G.stages[st + 1].y + ' · ' + G.stages[st + 1].t + '.') + '</p><div class="btns"><button type="button" class="btn primary evo-next">' + (last ? 'Ver mi nota' : 'Siguiente época →') + '</button></div></section>';
+        }
+        histEl.innerHTML = head + intro + body;
+      }
+      function finish() {
+        var n = Math.max(0, Math.round(100 - errs * 4 - qWrong * 8)), prev = store.evo[cat];
+        if (prev == null || n > prev) { store.evo[cat] = n; save(); }
+        if (n >= PASS) sfx.win();
+        freeIdx = 'evo:' + cat;
+        showResult({ label: EVO_ICON[cat] + ' · historia', tag: 'Juego de la historia', n: n,
+          msg: 'Recorriste ' + G.stages.length + ' épocas con ' + errs + ' ' + (errs === 1 ? 'error' : 'errores') + ' al armar y ' + qWrong + ' respuesta' + (qWrong === 1 ? '' : 's') + ' incorrecta' + (qWrong === 1 ? '' : 's') + '.',
+          detail: 'Tiempo: ' + fmt(Math.floor((Date.now() - t0) / 1000)) + '. Esta nota no cuenta para el juego principal.',
+          buttons: '<button type="button" class="btn primary" data-act="fqretry">Jugar de nuevo</button><button type="button" class="btn" data-act="fqlist">Volver a la historia</button>' });
+      }
+      function tryPlace(ti) {
+        var t = T[ti]; if (!t || placed[ti]) return;
+        if (!sel) { msg = 'Primero elegí una pieza.'; msgK = 'warn'; draw(); return; }
+        var p = partById(sel);
+        if (t.acc.indexOf(sel) >= 0) {
+          placed[ti] = sel; sel = null; msg = '¡Bien! ' + p.name + ' en ' + t.label + '.'; msgK = 'ok';
+          if (Object.keys(placed).length === T.length) { phase = 'quiz'; sfx.win(); }
+        } else {
+          errs++; sfx.error(); msgK = 'err';
+          msg = p.why || ('Ese no es su lugar: ' + t.label + ' es para otra pieza.');
+        }
+        draw();
+      }
+      histEl.onclick = function (e) {
+        var b;
+        if (e.target.closest('.ev-back')) { histEl.onclick = null; histRender(); return; }
+        if ((b = e.target.closest('.evo-part'))) { sel = sel === b.dataset.p ? null : b.dataset.p; msg = sel ? 'Elegiste ' + partById(sel).name + '. Ahora tocá dónde va.' : ''; msgK = ''; draw(); return; }
+        if ((b = e.target.closest('.et'))) { tryPlace(+b.dataset.t); return; }
+        if ((b = e.target.closest('.q-btn')) && !b.disabled) {
+          var q = cur().Q[qi], ok = +b.dataset.o === 0;
+          histEl.querySelectorAll('.q-btn').forEach(function (x) { x.disabled = true; if (+x.dataset.o === 0) x.classList.add('right'); });
+          if (!ok) { b.classList.add('wrong'); qWrong++; sfx.error(); }
+          var w = histEl.querySelector('.evo-why'); w.hidden = false; w.innerHTML = '<b>' + (ok ? '¡Correcto!' : 'No era esa.') + '</b> ' + q[2];
+          histEl.querySelector('.evo-qnext').hidden = false; return;
+        }
+        if (e.target.closest('.evo-qnext')) { qi++; if (qi >= cur().Q.length) phase = 'done'; draw(); return; }
+        if (e.target.closest('.evo-next')) { if (st === G.stages.length - 1) { finish(); return; } st++; setup(); draw(); try { histEl.scrollIntoView({ block: 'start' }); } catch (_) {} }
+      };
+      setup(); draw();
+      try { histEl.scrollIntoView({ block: 'start' }); } catch (_) {}
+    }
+
     var histEl = document.getElementById('hist-free'), histCat = 'placa';
     function nfmt(v) { return v >= 1000 ? Math.round(v).toLocaleString('es-AR') : v < 10 ? String(v).replace('.', ',') : String(Math.round(v)); }
     function histRender() {
+      histEl.onclick = null;
       var C = HIST[histCat], ch = C.chart, lo = Math.log10(ch.reduce(function (m, r) { return Math.min(m, r[2]); }, 1e9)), hi = Math.log10(ch.reduce(function (m, r) { return Math.max(m, r[2]); }, 0));
       var first = ch[0], last = ch.reduce(function (m, r) { return r[2] > m[2] ? r : m; }, ch[0]), times = last[2] / first[2];
       histEl.innerHTML = '<div class="lv-top"><div><span class="label">Historia de la PC</span><h2>De 1981 a hoy</h2>' +
           '<p>Cómo fueron cambiando las piezas de la computadora de escritorio y sus velocidades, desde la primera IBM PC hasta las PC actuales.</p></div>' +
-          '<button type="button" class="btn primary" data-hq="1">Hacer el cuestionario de historia</button></div>' +
+          '<button type="button" class="btn primary" data-hq="1">Hacer el cuestionario de historia</button></div>' + evoHome() +
         '<div class="seg hist-seg" role="tablist" aria-label="Categoría">' + Object.keys(HIST).map(function (k) {
           return '<label><input type="radio" name="hcat" value="' + k + '"' + (k === histCat ? ' checked' : '') + '><span>' + HIST[k].name + '</span></label>'; }).join('') + '</div>' +
         '<p class="hist-intro">' + C.intro + '</p>' +
@@ -4668,8 +5132,9 @@ button.btn.primary:hover { filter: brightness(1.05); }
             return '<div class="hb"><span class="hb-y">' + r[0] + '</span><span class="hb-n">' + r[1] + '</span><span class="hb-t"><i style="width:' + pct.toFixed(1) + '%"></i></span><span class="hb-v">' + nfmt(r[2]) + ' ' + C.unit + '</span></div>';
           }).join('') + '</div>' +
           '<p class="hist-note">Escala logarítmica: cada salto de la barra es unas 10 veces más.</p></section>' +
-        '<ol class="tline">' + C.items.map(function (it) {
-          return '<li><span class="tl-year">' + it[0] + '</span><div class="tl-card panel">' + hpic(it[4]) + '<div><h3>' + it[1] + '</h3><span class="tl-sp">' + it[2] + '</span><p>' + it[3] + '</p></div></div></li>';
+        '<div class="btns"><button type="button" class="btn primary" data-evo="' + histCat + '">Jugar: ' + EVO[histCat].title.toLowerCase() + '</button></div>' +
+        '<ol class="tline">' + C.items.map(function (it, ix) {
+          return '<li><span class="tl-year">' + it[0] + '</span><div class="tl-card panel">' + photoHtml((PH[histCat] || [])[ix], hpic(it[4]), 'tl-ph') + '<div><h3>' + it[1] + '</h3><span class="tl-sp">' + it[2] + '</span><p>' + it[3] + '</p></div></div></li>';
         }).join('') + '</ol>';
     }
     function histQuiz() {
@@ -4683,7 +5148,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
       try { histEl.scrollIntoView({ block: 'start' }); } catch (_) {}
     }
     histEl.addEventListener('change', function (e) { if (e.target.name === 'hcat') { histCat = e.target.value; histRender(); } });
-    histEl.addEventListener('click', function (e) { if (e.target.closest('[data-hq]')) histQuiz(); else if (e.target.closest('.ev-back')) histRender(); });
+    histEl.addEventListener('click', function (e) { var ev = e.target.closest('[data-evo]'); if (ev) { evoPlay(ev.dataset.evo); return; } if (histEl.onclick) return; if (e.target.closest('[data-hq]')) histQuiz(); else if (e.target.closest('.ev-back')) histRender(); });
     histRender();
 
     /* ---- Elegí tu PC: armado paso a paso con verificación ---- */
@@ -4945,8 +5410,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
       var a = b.dataset.act;
       if (a === 'igretry') integQuiz();
       else if (a === 'fqnext') freeQuiz(freeIdx + 1);
-      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else if (freeIdx === 'hist') histQuiz(); else if (freeIdx === 'rep') repRun(); else freeQuiz(freeIdx); }
-      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else if (freeIdx === 'hist') histRender(); else if (freeIdx === 'rep') repAnswers(); else renderFree(); }
+      else if (a === 'fqretry') { if (freeIdx === 'ig') freeInteg(); else if (/^evo:/.test(freeIdx)) { closeModal(); evoPlay(freeIdx.slice(4)); } else if (freeIdx === 'hist') histQuiz(); else if (freeIdx === 'rep') repRun(); else freeQuiz(freeIdx); }
+      else if (a === 'fqlist') { closeModal(); if (freeIdx === 'ig') freeIntegAnswers(); else if (freeIdx === 'hist' || /^evo:/.test(freeIdx)) histRender(); else if (freeIdx === 'rep') repAnswers(); else renderFree(); }
       else if (a === 'evnow' || a === 'evretry') quiz(curIdx);
       else if (a === 'next') play(curIdx + 1);
       else if (a === 'retry') play(curIdx);
