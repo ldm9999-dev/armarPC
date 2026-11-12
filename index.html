@@ -747,6 +747,30 @@ button.btn.primary:hover { filter: brightness(1.05); }
 }
 
 
+/* bienvenida con pestañas */
+.welcome { place-items: start center; padding-block: 24px 40px; }
+.welcome-inner { max-width: 1040px; gap: 16px; }
+.w-head .w-brand { align-items: center; }
+.w-head h1 { font: 700 clamp(32px, 5vw, 46px)/1.05 var(--font-display); margin: 0; }
+.w-head .lead { margin: 2px 0 0; font-size: 16px; }
+.w-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.w-tab { flex: none; font: 600 15px var(--font-body); color: var(--muted); background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 14px; cursor: pointer; }
+.w-tab:hover { color: var(--ink); }
+.w-tab.on { color: var(--ink); border-bottom-color: var(--accent); }
+.w-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.w-panel { display: grid; gap: 14px; }
+.w-sub { margin: 0; color: var(--muted); }
+.w-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.w-steps li { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+.w-steps li b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); flex: none; }
+.w-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.w-tile { display: grid; gap: 4px; align-content: start; text-align: left; padding: 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit; transition: border-color .15s, transform .15s; }
+.w-tile:hover { border-color: var(--accent); transform: translateY(-2px); }
+.w-tile strong { font: 700 17px var(--font-display); } .w-tile span { font-size: 13.5px; color: var(--muted); } .w-tile b { font: 700 13px var(--font-display); color: var(--accent); margin-top: 4px; }
+.w-tile.game { border-style: dashed; }
+@media (max-width: 640px) { .w-tab { padding: 9px 8px; font-size: 14px; } .w-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mode-cards { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .w-tile { transition: none; } .w-tile:hover { transform: none; } }
+
 /* historia */
 .wrap { grid-template-columns: minmax(0, 1fr); }
 .nav-main { max-width: 100%; }
@@ -872,6 +896,27 @@ button.btn.primary:hover { filter: brightness(1.05); }
 .evo-done h3 { margin: 0 0 4px; font: 700 20px var(--font-display); }
 @media (max-width: 900px) { .evo-play { grid-template-columns: 1fr; } .evo-intro { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .tline li { grid-template-columns: minmax(0, 1fr); } .tl-card { grid-template-columns: minmax(0, 1fr); } .tl-card > * { min-width: 0; } .ph-strip img, .tl-ph .ph-strip img { height: 150px; } }
+
+.ch-h3 { margin: 16px 0 4px; font: 700 17px var(--font-display); }
+.ch-grid.certs { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.ch-resbtn { all: unset; display: grid; grid-template-columns: 26px 1fr; gap: 8px; width: 100%; cursor: pointer; box-sizing: border-box; }
+.ch-resbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+.ch-res li:has(.ch-resbtn) { padding: 0; display: block; } .ch-res li .ch-resbtn { padding: 8px 10px; }
+.ch-res li .ch-resbtn > span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-weight: 700; color: #fff; background: var(--err); }
+.ch-res li:has(.ch-resbtn):hover { box-shadow: 0 0 0 2px var(--err) inset; }
+.ch-fix { display: inline-block; margin-top: 4px; font: 700 13px var(--font-display); font-style: normal; color: var(--accent); }
+
+.psu-today h3 { margin: 12px 0 4px; font: 700 18px var(--font-display); } .psu-today h3:first-of-type { margin-top: 2px; } .psu-today > p { margin: 0 0 10px; }
+.psu-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.psu-card { display: grid; gap: 3px; align-content: start; padding: 10px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); }
+.psu-pic { display: grid; grid-template-columns: 2fr 1fr; gap: 4px; } .psu-pic .hpic { width: 100%; height: 60px; background: var(--surface); }
+.psu-card strong { font: 700 20px var(--font-display); } .psu-cert { font: 700 12px var(--font-mono); color: var(--accent); }
+.psu-card p { margin: 2px 0 0; font-size: 13px; } .psu-conn { color: var(--muted); font-size: 12px !important; }
+.cert-table { display: grid; gap: 4px; }
+.ct-row { display: grid; grid-template-columns: minmax(140px, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 8px; align-items: center; padding: 6px 10px; border-radius: 8px; background: var(--bg); font-size: 14px; }
+.ct-h { background: none; font: 600 12px var(--font-mono); color: var(--muted); }
+.ct-name { display: flex; align-items: center; gap: 8px; font-weight: 700; } .ct-name .hpic { width: 54px; height: 28px; background: none; }
+@media (max-width: 560px) { .ct-row { grid-template-columns: 1.3fr repeat(3, minmax(0, 1fr)); font-size: 12.5px; gap: 4px; padding: 6px; } .ct-name .hpic { display: none; } }
 
 /* panel frontal */
 .fp-case .wire-svg { touch-action: manipulation; }
@@ -3769,21 +3814,35 @@ button.btn.primary:hover { filter: brightness(1.05); }
           '<p>' + desc + '</p><ul>' + feats + '</ul>' +
           '<div class="mc-cta"><span>' + (n ? n + ' de ' + levelsFor(m).length + ' fases completas · ' : '') + cta + '</span><b>' + (n ? 'Continuar →' : 'Empezar →') + '</b></div></button>';
       }
-      welcomeEl.innerHTML = '<div class="welcome-inner">' +
-        '<div class="w-brand"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" rx="4" fill="var(--accent)"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--surface)"/><g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"><path d="M14 3v4M20 3v4M26 3v4M14 33v4M20 33v4M26 33v4M3 14h4M3 20h4M3 26h4M33 14h4M33 20h4M33 26h4"/></g></svg><span class="label">Juego educativo de hardware</span></div>' +
-        '<h1>Armá tu PC</h1>' +
-        '<p class="lead">Aprendé a armar una computadora paso a paso: conectá los cables de la fuente, armá placas madre AMD e Intel y configurá desde una PC muy básica hasta una PC gamer.</p>' +
-        '<ol class="w-steps">' +
-          '<li><b>01 · Fases</b>7 fases en Básico y 10 en Avanzado, que se desbloquean de a una.</li>' +
-          '<li><b>02 · Evaluaciones</b>Después de cada fase, ' + NEV + ' preguntas de opción múltiple.</li>' +
-          '<li><b>03 · Integradora</b>Al final, una evaluación integradora y tu nota final.</li>' +
-        '</ol>' +
-        '<h2 class="w-q">¿Cómo querés jugar?</h2>' +
+      var TDESC = { 'muy-basica': 'Armá una PC simple: elegís marca, discos y fuente.', basica: 'PC completa con placa de video y WiFi.', gamer: 'Varias memorias, discos y placas de video.', placa: 'Armá placas madre base, intermedia y gamer.',
+        cableado: 'Conectá los cables de la fuente a cada pieza.', elegir: 'Elegí cada pieza y verificá que sea compatible.', frontal: 'Botones, luces, USB y audio del gabinete.',
+        evaluaciones: 'Las evaluaciones de cada fase, para practicar.', integradora: 'La evaluación final de cada modo.', reparacion: 'Fallas reales de una PC y cómo resolverlas.', historia: 'De la IBM PC de 1981 a hoy, con fotos reales.' };
+      function tiles(group) {
+        return '<div class="w-tiles">' + [].slice.call(document.querySelectorAll('.tab[data-group="' + group + '"]')).map(function (t) {
+          var sm = t.querySelector('small'), name = t.childNodes[0].textContent.trim();
+          return '<button type="button" class="w-tile" data-go="' + t.dataset.tab + '"><strong>' + name + '</strong><span>' + (TDESC[t.dataset.tab] || (sm ? sm.textContent : '')) + '</span><b>Abrir →</b></button>';
+        }).join('') + '</div>';
+      }
+      var wt = welcomeEl._wt || 'jugar';
+      var TABS = [['jugar', 'Jugar'], ['practica', 'Práctica libre'], ['eval', 'Evaluaciones'], ['historia', 'Historia']];
+      var panel;
+      if (wt === 'jugar') panel =
+        '<p class="w-sub">Elegí un modo. Las fases se desbloquean de a una; después de cada fase hay una evaluación de ' + NEV + ' preguntas y al final, la integradora.</p>' +
         '<div class="mode-cards">' +
-          card('b', 'Básico', 'Para empezar: las 7 fases más simples, con ayuda para ver dónde va cada pieza.', '<li>Cableado, panel frontal, PC muy básica, placa base, PC completa y, al final, elegir tu PC paso a paso</li><li>Botón “Mostrar nombres” disponible</li><li>Integradora de 15 preguntas</li>') +
-          card('a', 'Avanzado', 'Para demostrar lo que sabés: 10 fases más difíciles, sin ayuda de nombres y con más descuento por error.', '<li>Cableado de 8 cables, panel frontal completo, PCs sin pistas, placas base, intermedia y gamer, PC gamer y, al final, elegir tu PC gamer</li><li class="no">Sin ayuda de nombres ni pistas de la fuente</li><li>Integradora de 20 preguntas, más difícil</li>') +
+          card('b', 'Básico', '7 fases con ayuda para ver dónde va cada pieza.', '<li>Cableado, panel frontal, PCs y placa base</li><li>Al final: elegí tu PC paso a paso</li><li>Botón “Mostrar nombres”</li><li>Integradora de 15 preguntas</li>') +
+          card('a', 'Avanzado', '10 fases más difíciles y con más descuento por error.', '<li>Cableado de 8 cables y panel frontal completo</li><li>Placas intermedia y gamer, PC gamer</li><li class="no">Sin nombres ni pistas</li><li>Integradora de 20 preguntas</li>') +
         '</div>' +
-        '<div class="w-links"><span>¿Solo querés practicar o sos docente?</span><button type="button" class="btn" data-go="muy-basica">Práctica libre</button><button type="button" class="btn" data-go="evaluaciones">Ver evaluaciones</button><button type="button" class="btn" data-go="reparacion">Arreglá la PC</button><button type="button" class="btn" data-go="historia">Historia de la PC</button></div>' +
+        '<ol class="w-steps"><li><b>1</b><span>Jugá la fase</span></li><li><b>2</b><span>Aprobá su evaluación</span></li><li><b>3</b><span>Desbloqueá la siguiente</span></li><li><b>4</b><span>Hacé la integradora</span></li></ol>';
+      else if (wt === 'practica') panel = '<p class="w-sub">Practicá sin notas ni fases: abrí cualquier juego cuando quieras.</p>' + tiles('practica');
+      else if (wt === 'eval') panel = '<p class="w-sub">Todas las evaluaciones, para practicar o para que el docente las revise.</p>' + tiles('eval');
+      else panel = '<p class="w-sub">La evolución de cada pieza, con fotos reales, gráficos de velocidad y un juego por categoría.</p><div class="w-tiles">' +
+        Object.keys(HIST).map(function (k) { return '<button type="button" class="w-tile" data-go="historia" data-hcat="' + k + '"><strong>' + HIST[k].name + '</strong><span>' + HIST[k].items.length + ' etapas · ' + HIST[k].items[0][0] + ' a ' + HIST[k].items[HIST[k].items.length - 1][0] + '</span><b>Ver historia →</b></button>'; }).join('') +
+        Object.keys(EVO).map(function (k) { return '<button type="button" class="w-tile game" data-go="historia" data-evo="' + k + '"><strong>Juego: ' + EVO_ICON[k] + '</strong><span>' + EVO[k].title + '</span><b>Jugar →</b></button>'; }).join('') + '</div>';
+      welcomeEl.innerHTML = '<div class="welcome-inner">' +
+        '<header class="w-head"><div class="w-brand"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" rx="4" fill="var(--accent)"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--surface)"/><g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"><path d="M14 3v4M20 3v4M26 3v4M14 33v4M20 33v4M26 33v4M3 14h4M3 20h4M3 26h4M33 14h4M33 20h4M33 26h4"/></g></svg>' +
+          '<div><h1>Armá tu PC</h1><p class="lead">Aprendé a armar, elegir y arreglar una computadora.</p></div></div></header>' +
+        '<nav class="w-tabs" role="tablist" aria-label="Secciones">' + TABS.map(function (t) { return '<button type="button" role="tab" class="w-tab' + (t[0] === wt ? ' on' : '') + '" aria-selected="' + (t[0] === wt) + '" data-wt="' + t[0] + '">' + t[1] + '</button>'; }).join('') + '</nav>' +
+        '<section class="w-panel" role="tabpanel">' + panel + '</section>' +
       '</div>';
     }
     openWelcome = function () {
@@ -3794,13 +3853,15 @@ button.btn.primary:hover { filter: brightness(1.05); }
     };
     function closeWelcome() { welcomeEl.hidden = true; wrapEl.hidden = false; fitAll(); }
     welcomeEl.addEventListener('click', function (e) {
-      var m = e.target.closest('[data-mode]'), g = e.target.closest('[data-go]');
+      var m = e.target.closest('[data-mode]'), g = e.target.closest('[data-go]'), t = e.target.closest('.w-tab');
+      if (t) { welcomeEl._wt = t.dataset.wt; renderWelcome(); var nt = welcomeEl.querySelector('.w-tab.on'); if (nt) nt.focus(); return; }
       if (m) {
         store.mode = m.dataset.mode; LEVELS = levelsFor(store.mode); save(); closeWelcome();
         show('niveles'); try { history.replaceState(null, '', '#niveles'); } catch (_) {}
         backToMap();
       } else if (g) {
         closeWelcome(); show(g.dataset.go); try { history.replaceState(null, '', '#' + g.dataset.go); } catch (_) {}
+        if (g.dataset.hcat) { histCat = g.dataset.hcat; histRender(); } else if (g.dataset.evo) evoPlay(g.dataset.evo);
       }
     });
     function updateChip() {
@@ -5115,6 +5176,29 @@ button.btn.primary:hover { filter: brightness(1.05); }
       try { histEl.scrollIntoView({ block: 'start' }); } catch (_) {}
     }
 
+    var PSU_TODAY = [
+      [300, 'badge80', '80 PLUS', 'Fuente chica (formato SFX o TFX) para PC de oficina muy compactas, sin placa de video.', '24 pines · 1 EPS de 4 pines · 2 SATA'],
+      [450, 'badgeB', '80 PLUS Bronze', 'PC de escuela u oficina con gráficos integrados, o con una placa de video chica sin cables extra.', '24 pines · 1 EPS 4+4 · 1 PCIe 6+2 · 4 SATA'],
+      [550, 'badgeB', '80 PLUS Bronze', 'PC hogareña con una placa de video de entrada (como una RTX 5060).', '24 pines · 1 EPS 4+4 · 2 PCIe 6+2 · 5 SATA'],
+      [650, 'badgeG', '80 PLUS Gold', 'PC gamer media: placa de video de 12–16 GB y procesador de 6 a 8 núcleos.', '24 pines · 1 EPS 4+4 · 2 PCIe 6+2 · 6 SATA · semimodular'],
+      [750, 'badgeG', '80 PLUS Gold', 'PC gamer con placa de video potente (como una RX 9070 XT). Muchas ya son ATX 3.1.', '24 pines · 2 EPS · 3 PCIe 6+2 o 12V-2x6 · modular'],
+      [850, 'badgeG', '80 PLUS Gold', 'PC gamer de alta gama (como una RTX 5080) con margen para más discos.', '24 pines · 2 EPS · 12V-2x6 · 8 SATA · modular'],
+      [1000, 'badgeP', '80 PLUS Platinum', 'Lo mínimo que se recomienda para una RTX 5090 con un procesador potente.', '24 pines · 2 EPS · 12V-2x6 · 3 PCIe 6+2 · modular'],
+      [1200, 'badgeP', '80 PLUS Platinum', 'Estaciones de trabajo para video y 3D, con muchos discos.', '24 pines · 2 EPS · 2 × 12V-2x6 · modular'],
+      [1600, 'badgeT', '80 PLUS Titanium', 'Workstations con dos placas de video. Es lo máximo que entrega un enchufe hogareño con holgura.', '24 pines · 2 EPS · 2 × 12V-2x6 · 6 PCIe · modular']
+    ];
+    var CERT_TABLE = [['80 PLUS', 'badge80', 80, 80, 80], ['Bronze', 'badgeB', 82, 85, 82], ['Silver', 'badgeS', 85, 88, 85], ['Gold', 'badgeG', 87, 90, 87], ['Platinum', 'badgeP', 90, 92, 89], ['Titanium', 'badgeT', 92, 94, 90]];
+    function psuToday() {
+      return '<section class="panel psu-today"><span class="label">Fuentes certificadas de hoy</span><h3>De la más chica a la más grande</h3>' +
+        '<p>Todas se enchufan a los 220 V de la red y entregan 12 V, 5 V y 3,3 V a la PC. Lo que cambia es la <b>potencia</b> (cuántos watts pueden entregar) y la <b>certificación</b> (cuánta energía aprovechan).</p>' +
+        '<div class="psu-row">' + PSU_TODAY.map(function (f) {
+          return '<article class="psu-card"><div class="psu-pic">' + hpic(['psu', 8, f[0] + ' W']) + evoPart(f[1], f[2]) + '</div><strong>' + f[0] + ' W</strong><span class="psu-cert">' + f[2] + '</span><p>' + f[3] + '</p><p class="psu-conn">' + f[4] + '</p></article>';
+        }).join('') + '</div>' +
+        '<h3>Las certificaciones 80 PLUS</h3><p>Eficiencia según cuánto se le exige a la fuente (porcentaje de su potencia máxima). En Argentina, con 220 V, rinden un poco más.</p>' +
+        '<div class="cert-table" role="table"><div class="ct-row ct-h" role="row"><span role="columnheader">Certificación</span><span role="columnheader">20 % de carga</span><span role="columnheader">50 % de carga</span><span role="columnheader">100 % de carga</span></div>' +
+        CERT_TABLE.map(function (c) { return '<div class="ct-row" role="row"><span role="cell" class="ct-name">' + evoPart(c[1], '80 PLUS ' + c[0]) + c[0] + '</span><span role="cell">' + c[2] + ' %</span><span role="cell"><b>' + c[3] + ' %</b></span><span role="cell">' + c[4] + ' %</span></div>'; }).join('') +
+        '</div><p class="hist-note">Ejemplo: una PC que usa 450 W con una fuente Gold (90 %) toma 500 W de la pared; con una 80 PLUS común (80 %), 563 W. La diferencia se pierde como calor.</p></section>';
+    }
     var histEl = document.getElementById('hist-free'), histCat = 'placa';
     function nfmt(v) { return v >= 1000 ? Math.round(v).toLocaleString('es-AR') : v < 10 ? String(v).replace('.', ',') : String(Math.round(v)); }
     function histRender() {
@@ -5133,7 +5217,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
             var pct = 6 + 94 * (Math.log10(r[2]) - lo) / ((hi - lo) || 1);
             return '<div class="hb"><span class="hb-y">' + r[0] + '</span><span class="hb-n">' + r[1] + '</span><span class="hb-t"><i style="width:' + pct.toFixed(1) + '%"></i></span><span class="hb-v">' + nfmt(r[2]) + ' ' + C.unit + '</span></div>';
           }).join('') + '</div>' +
-          '<p class="hist-note">Escala logarítmica: cada salto de la barra es unas 10 veces más.</p></section>' +
+          '<p class="hist-note">Escala logarítmica: cada salto de la barra es unas 10 veces más.</p></section>' + (histCat === 'fuente' ? psuToday() : '') +
         '<div class="btns"><button type="button" class="btn primary" data-evo="' + histCat + '">Jugar: ' + EVO[histCat].title.toLowerCase() + '</button></div>' +
         '<ol class="tline">' + C.items.map(function (it, ix) {
           return '<li><span class="tl-year">' + it[0] + '</span><div class="tl-card panel">' + photoHtml((PH[histCat] || [])[ix], hpic(it[4]), 'tl-ph') + '<div><h3>' + it[1] + '</h3><span class="tl-sp">' + it[2] + '</span><p>' + it[3] + '</p></div></div></li>';
@@ -5196,7 +5280,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
         card: { name: 'Discos PCI Express (tarjeta)', short: 'SSD PCIe', max: 2, caps: [1, 2], w: 10, bus: 'PCIe', pic: ['disk', 'card', 'SSD en tarjeta PCIe x4'],
           info: 'Un SSD NVMe en forma de tarjeta: se coloca en una ranura PCI Express x4 o x16 libre (no en una x1).' }
       },
-      psus: [450, 550, 650, 750, 850, 1000, 1200, 1300, 1600]
+      psus: [450, 550, 650, 750, 850, 1000, 1200, 1300, 1600],
+      certs: [['w', '80 PLUS', 80, 'badge80'], ['b', 'Bronze', 85, 'badgeB'], ['s', 'Silver', 88, 'badgeS'], ['g', 'Gold', 90, 'badgeG'], ['p', 'Platinum', 92, 'badgeP'], ['t', 'Titanium', 94, 'badgeT']]
     };
     var CH_REQ = {
       basic: { title: 'Pedido: una PC para la escuela', items: [
@@ -5204,14 +5289,14 @@ button.btn.primary:hover { filter: brightness(1.05); }
         'Sin placa de video: la imagen la tienen que dar los gráficos del procesador.',
         'Entre 1 y 2 discos, y al menos uno tiene que ser un SSD (SATA o M.2) para instalar Windows.',
         '16 GB de memoria RAM en doble canal (2 o 4 memorias iguales).',
-        'La fuente justa: que alcance, pero que no sobre.'] },
+        'La fuente justa (que alcance, pero que no sobre), certificada 80 PLUS Bronze, Silver o Gold.'] },
       adv: { title: 'Pedido: una PC gamer y para hacer streaming', items: [
         'Placa madre ATX y procesador compatibles.',
         'Procesador de 8 núcleos o más.',
         'Placa de video con 12 GB de memoria o más.',
         'Entre 2 y 5 discos, con 4 TB o más en total, y Windows en un disco NVMe (M.2 o tarjeta PCIe).',
         '32 GB o más de memoria DDR5 en doble canal (2 o 4 memorias iguales).',
-        'La fuente justa: que alcance, pero que no sobre.'] }
+        'La fuente justa (que alcance, pero que no sobre), certificada 80 PLUS Gold o superior.'] }
     };
     var CH_STEPS = [['board', 'Placa madre'], ['cpu', 'Procesador'], ['gpu', 'Placa de video'], ['hdd', 'Discos mecánicos'], ['ssd', 'SSD SATA'], ['m2', 'Discos M.2'], ['card', 'Disco PCI Express'], ['ram', 'Memorias'], ['psu', 'Fuente'], ['check', 'Verificar']];
 
@@ -5223,7 +5308,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
       function tb(n) { return n < 1 ? (n * 1000) + ' GB' : String(n).replace('.', ',') + ' TB'; }
       function reset() {
         clearInterval(timer); timer = null;
-        S = { step: 0, seen: 0, board: null, cpu: null, gpu: 'none', d: { hdd: [0, 2], ssd: [0, 1], m2: [0, 1], card: [0, 1] }, ramT: null, ramN: 2, ramGB: 8, psu: 0, errors: 0, tries: 0, t0: null, ok: false };
+        S = { step: 0, seen: 0, board: null, cpu: null, gpu: 'none', d: { hdd: [0, 2], ssd: [0, 1], m2: [0, 1], card: [0, 1] }, ramT: null, ramN: 2, ramGB: 8, psu: 0, cert: null, errors: 0, tries: 0, t0: null, ok: false };
         render();
       }
       function start() { if (S.t0) return; S.t0 = Date.now(); timer = setInterval(function () { var e = host.querySelector('.ch-time'); if (e) e.textContent = fmt(Math.floor((Date.now() - S.t0) / 1000)); }, 500); }
@@ -5237,7 +5322,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
 
       function checks() {
         var b = find(CH.boards, S.board), c = find(CH.cpus, S.cpu), g = find(CH.gpus, S.gpu), out = [];
-        function add(ok, title, okMsg, badMsg) { out.push({ ok: ok, t: title, m: ok ? okMsg : badMsg }); }
+        var GO = { 'Procesador y placa madre': 1, 'Imagen en el monitor': 2, 'Tipo de memoria': 7, 'Cantidad de memorias': 7, 'Doble canal': 7, 'Ranuras M.2': 5, 'Puertos SATA': 3, 'Ranuras PCI Express': 6, 'Discos': 3, 'Discos del pedido': 3, 'Memoria del pedido': 7, 'Procesador del pedido': 1, 'Placa de video del pedido': 2, 'Formato de la placa': 0, 'Placa de video': 2, 'Fuente de alimentación': 8, 'Certificación de la fuente': 8 };
+        function add(ok, title, okMsg, badMsg) { out.push({ ok: ok, t: title, m: ok ? okMsg : badMsg, go: GO[title] }); }
         add(c.socket === b.socket, 'Procesador y placa madre', 'El ' + c.name + ' entra en la placa ' + b.name + ' (socket ' + b.socket + ').',
           ADV ? 'El ' + c.name + ' no entra en la placa ' + b.name + ': no son del mismo socket.' : 'El ' + c.name + ' usa socket ' + c.socket + ' y la placa ' + b.name + ' es ' + b.socket + ': no entra.');
         add(S.gpu !== 'none' || c.ig, 'Imagen en el monitor', S.gpu !== 'none' ? 'La imagen la da la ' + g.name + '.' : 'El ' + c.name + ' tiene gráficos integrados: el monitor va en la placa madre.',
@@ -5270,6 +5356,10 @@ button.btn.primary:hover { filter: brightness(1.05); }
         add(S.psu === best, 'Fuente de alimentación', 'La fuente de ' + S.psu + ' W es la justa: la PC consume unos ' + cons + ' W y con el 30 % de margen necesita ' + need + ' W.',
           S.psu < need ? 'La fuente de ' + S.psu + ' W no alcanza: la PC consume unos ' + cons + ' W y con el 30 % de margen necesita ' + need + ' W.' + (ADV ? '' : ' La recomendada es la de ' + best + ' W.')
                        : 'La fuente de ' + S.psu + ' W es demasiado grande: la PC consume unos ' + cons + ' W' + (ADV ? '.' : ' y con el 30 % de margen alcanza con la de ' + best + ' W.'));
+        var ci = 'wbsgpt'.indexOf(S.cert), cn = (CH.certs[ci] || [])[1], ce = (CH.certs[ci] || [])[2];
+        if (ADV) add(ci >= 3, 'Certificación de la fuente', 'La 80 PLUS ' + cn + ' (' + ce + ' % de eficiencia) es ideal para una PC que está prendida muchas horas.', 'La 80 PLUS ' + cn + ' (' + ce + ' %) no alcanza: el pedido es Gold o superior, porque una PC gamer consume mucho y muchas horas.');
+        else add(ci >= 1 && ci <= 3, 'Certificación de la fuente', 'La 80 PLUS ' + cn + ' (' + ce + ' % de eficiencia) está bien para una PC de escuela.',
+          ci < 1 ? 'La 80 PLUS común (80 %) no cumple el pedido: tiene que ser Bronze, Silver o Gold.' : 'La 80 PLUS ' + cn + ' es de las más caras: para una PC de escuela alcanza con Bronze, Silver o Gold.');
         return out;
       }
 
@@ -5309,11 +5399,16 @@ button.btn.primary:hover { filter: brightness(1.05); }
         } else if (k === 'psu') {
           o = '<p class="ch-help">Elegí la fuente. Tiene que alcanzar para todo lo que pusiste, con un 30 % de margen, pero sin sobrar.' + (ADV ? '' : ' Sumá lo que consume cada pieza (lo viste en cada paso).') + '</p><div class="ch-grid">' + CH.psus.map(function (w) {
             return card('ch-psu', w, S.psu, hpic(['psu', 8, w + ' W']) + '<strong>' + w + ' W</strong><ul class="ch-spec"><li>' + (w >= 1000 ? '80 PLUS Platinum' : w >= 650 ? '80 PLUS Gold' : '80 PLUS Bronze') + '</li></ul>');
-          }).join('') + '</div>';
+          }).join('') + '</div>' +
+            '<h3 class="ch-h3">Certificación 80 PLUS</h3><p class="ch-help">Indica cuánta energía aprovecha la fuente (eficiencia al 50 % de carga). Cuanto más alta, menos se pierde en calor y menos luz se gasta, pero es más cara.</p><div class="ch-grid certs">' +
+            CH.certs.map(function (c) { return card('ch-cert', c[0], S.cert, evoPart(c[3], '80 PLUS ' + c[1]) + '<strong>' + c[1] + '</strong><ul class="ch-spec"><li>' + c[2] + ' % de eficiencia</li><li>' + Math.round(100 - c[2]) + ' W perdidos cada 100 W</li></ul>'); }).join('') + '</div>';
         } else {
           var res = S.res || [];
-          o = res.length ? '<ul class="ch-res">' + res.map(function (r) { return '<li class="' + (r.ok ? 'ok' : 'bad') + '"><span>' + (r.ok ? '✓' : '✗') + '</span><div><b>' + r.t + '</b><p>' + r.m + '</p></div></li>'; }).join('') + '</ul>' : '<p class="ch-help">Revisá el resumen y tocá <b>Verificar la PC</b>.</p>';
-          if (S.ok) o = '<div class="ch-boot"><div class="ch-mon"><p>Arrancando…</p><p>CPU: ' + find(CH.cpus, S.cpu).name + '</p><p>Memoria: ' + (S.ramN * S.ramGB) + ' GB ' + S.ramT + ' · doble canal</p><p>Discos: ' + diskCount() + ' · ' + tb(storage()) + '</p><p>Video: ' + find(CH.gpus, S.gpu).name + '</p><p class="ch-ok">¡La PC funciona! Windows arrancó.</p></div></div>' + o;
+          var bads = res.filter(function (r) { return !r.ok; }).length;
+          o = res.length ? (bads ? '<p class="ch-help"><b>' + bads + ' problema' + (bads > 1 ? 's' : '') + '.</b> Tocá cada uno para ir al paso donde se corrige.</p>' : '') + '<ul class="ch-res">' + res.map(function (r) {
+            var inner = '<span>' + (r.ok ? '✓' : '✗') + '</span><div><b>' + r.t + '</b><p>' + r.m + '</p>' + (!r.ok && r.go != null ? '<em class="ch-fix">Corregir en el paso ' + (r.go + 1) + ': ' + CH_STEPS[r.go][1] + ' →</em>' : '') + '</div>';
+            return '<li class="' + (r.ok ? 'ok' : 'bad') + '">' + (!r.ok && r.go != null ? '<button type="button" class="ch-resbtn" data-go="' + r.go + '">' + inner + '</button>' : inner) + '</li>'; }).join('') + '</ul>' : '<p class="ch-help">Revisá el resumen y tocá <b>Verificar la PC</b>.</p>';
+          if (S.ok) o = '<div class="ch-boot"><div class="ch-mon"><p>Arrancando…</p><p>CPU: ' + find(CH.cpus, S.cpu).name + '</p><p>Memoria: ' + (S.ramN * S.ramGB) + ' GB ' + S.ramT + ' · doble canal</p><p>Discos: ' + diskCount() + ' · ' + tb(storage()) + '</p><p>Video: ' + find(CH.gpus, S.gpu).name + '</p><p>Fuente: ' + S.psu + ' W 80 PLUS ' + CH.certs['wbsgpt'.indexOf(S.cert)][1] + '</p><p class="ch-ok">¡La PC funciona! Windows arrancó.</p></div></div>' + o;
         }
         return o;
       }
@@ -5321,14 +5416,14 @@ button.btn.primary:hover { filter: brightness(1.05); }
         var b = find(CH.boards, S.board), c = find(CH.cpus, S.cpu), g = find(CH.gpus, S.gpu);
         var rows = [['Placa', b ? b.name : '—'], ['Procesador', c ? c.name : '—'], ['Video', g ? g.name : '—']];
         ['hdd', 'ssd', 'm2', 'card'].forEach(function (k) { if (S.d[k][0]) rows.push([CH.disks[k].short, S.d[k][0] + ' × ' + tb(S.d[k][1])]); });
-        rows.push(['Memoria', S.ramT ? S.ramN + ' × ' + S.ramGB + ' GB ' + S.ramT : '—'], ['Fuente', S.psu ? S.psu + ' W' : '—']);
+        rows.push(['Memoria', S.ramT ? S.ramN + ' × ' + S.ramGB + ' GB ' + S.ramT : '—'], ['Fuente', S.psu ? S.psu + ' W' + (S.cert ? ' · ' + CH.certs['wbsgpt'.indexOf(S.cert)][1] : '') : '—']);
         return '<section class="panel ch-side"><span class="label">' + REQ.title.split(':')[0] + '</span><h3>' + REQ.title.split(': ')[1].replace(/^./, function (m) { return m.toUpperCase(); }) + '</h3><ul class="ch-req">' + REQ.items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' +
           '<span class="label">Tu PC</span><dl class="psum">' + rows.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('') + '</dl>' +
           '<div class="ch-stats"><span>Errores <b>' + S.errors + '</b></span><span>Tiempo <b class="ch-time">' + (S.t0 ? fmt(Math.floor((Date.now() - S.t0) / 1000)) : '00:00') + '</b></span></div></section>';
       }
       function canNext() {
         var k = CH_STEPS[S.step][0];
-        if (k === 'board') return !!S.board; if (k === 'cpu') return !!S.cpu; if (k === 'ram') return !!S.ramT; if (k === 'psu') return !!S.psu; return true;
+        if (k === 'board') return !!S.board; if (k === 'cpu') return !!S.cpu; if (k === 'ram') return !!S.ramT; if (k === 'psu') return !!S.psu && !!S.cert; return true;
       }
       function render() {
         var k = CH_STEPS[S.step][0], last = k === 'check';
@@ -5345,7 +5440,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
         var t = e.target, v = t.value; start();
         if (t.name === 'ch-board') S.board = v; else if (t.name === 'ch-cpu') S.cpu = v; else if (t.name === 'ch-gpu') S.gpu = v;
         else if (t.name === 'ch-ramt') S.ramT = v; else if (t.name === 'ch-ramn') S.ramN = +v; else if (t.name === 'ch-ramgb') S.ramGB = +v;
-        else if (t.name === 'ch-psu') S.psu = +v; else if (t.name === 'ch-cap') S.d[CH_STEPS[S.step][0]][1] = +v; else return;
+        else if (t.name === 'ch-psu') S.psu = +v; else if (t.name === 'ch-cert') S.cert = v; else if (t.name === 'ch-cap') S.d[CH_STEPS[S.step][0]][1] = +v; else return;
         S.res = null; render();
       });
       host.addEventListener('click', function (e) {
@@ -5357,7 +5452,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
         else if (b.classList.contains('ch-again')) reset();
         else if (b.classList.contains('ch-verify')) {
           start(); S.tries++;
-          if (!S.board || !S.cpu || !S.ramT || !S.psu) { S.res = [{ ok: false, t: 'Faltan pasos', m: 'Elegí placa, procesador, memorias y fuente antes de verificar.' }]; render(); return; }
+          if (!S.board || !S.cpu || !S.ramT || !S.psu || !S.cert) { S.res = [{ ok: false, t: 'Faltan pasos', m: 'Elegí placa, procesador, memorias, fuente y certificación antes de verificar.' }]; render(); return; }
           S.res = checks();
           var bad = S.res.filter(function (r) { return !r.ok; }).length;
           if (bad) { S.errors += Math.min(3, bad); sfx.error(); render(); return; }
