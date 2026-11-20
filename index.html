@@ -882,6 +882,48 @@ button.btn.primary:hover { filter: brightness(1.05); }
 .et { cursor: pointer; } .et-hit { fill: transparent; stroke: transparent; stroke-width: 2; }
 .evo-board.picking .et:not(.filled) .et-hit { stroke: var(--accent); stroke-dasharray: 6 4; fill: rgba(255,255,255,.04); }
 .et:hover .et-hit { fill: rgba(255,255,255,.08); }
+.case.psuin { background: #9aa4ae; border-color: #59626d; }
+.fi-intro { margin-bottom: 12px; } .fi-intro h2 { margin: 2px 0 6px; font: 700 20px var(--font-display); } .fi-intro p { margin: 0 0 6px; }
+.fi-warn { padding: 8px 10px; border-radius: 8px; background: rgba(194,65,45,.12); border-left: 4px solid var(--err); }
+.res-head { margin-bottom: 12px; } .res-head h2 { margin: 2px 0 6px; font: 700 22px var(--font-display); } .res-head p { margin: 0 0 10px; }
+.res-nav { display: flex; flex-wrap: wrap; gap: 6px; }
+.res-grid2 { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+@media (max-width: 860px) { .res-grid2 { grid-template-columns: minmax(0, 1fr); } }
+.res-sec h3 { margin: 4px 0 8px; font: 700 18px var(--font-display); }
+.res-svg { display: block; width: 100%; max-width: 520px; height: auto; margin: 4px auto; }
+.res-svg .res-lab { font: 600 10px var(--font-mono); fill: var(--muted); }
+.res-svg .rb[data-band] { cursor: pointer; } .res-svg .rb.sel rect:first-child { stroke: var(--accent); stroke-width: 3; stroke-dasharray: none; }
+.res-svg .rb[data-band]:focus-visible { outline: none; } .res-svg .rb[data-band]:focus-visible rect:first-child { stroke: var(--accent); stroke-width: 3; }
+.res-steps { margin: 8px 0; padding-left: 20px; display: grid; gap: 5px; line-height: 1.45; }
+.res-note { margin: 8px 0 0; font-size: 14px; color: var(--muted); } .res-note b { color: var(--ink); }
+.res-tablewrap { overflow-x: auto; }
+.res-table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.res-table th, .res-table td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.res-table th { font: 600 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.res-table i, .res-sw i { display: inline-block; width: 18px; height: 18px; border-radius: 4px; vertical-align: -4px; margin-right: 6px; border: 1px solid rgba(0,0,0,.35); }
+.res-table i.none { background: repeating-linear-gradient(45deg, transparent 0 3px, var(--line) 3px 6px); }
+.res-pick { margin: 6px 0; font: 600 13px var(--font-mono); color: var(--accent); }
+.res-pal { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 6px; }
+.res-sw { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 6px; align-items: center; text-align: left; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); cursor: pointer; font: inherit; }
+.res-sw i { grid-row: 1 / 3; margin: 0; width: 22px; height: 22px; } .res-sw span { font-weight: 600; font-size: 13.5px; } .res-sw small { font: 11px var(--font-mono); color: var(--muted); }
+.res-sw:hover { border-color: var(--muted); } .res-sw.on { border-color: var(--accent); background: var(--accent-soft); }
+.res-nb { margin-bottom: 6px; }
+.res-big-val { margin: 4px 0; font: 700 34px var(--font-display); } .res-big-val span { font-size: 18px; color: var(--muted); margin-left: 4px; }
+.res-out p { margin: 4px 0; } .res-out hr { border: 0; border-top: 1px solid var(--line); margin: 14px 0; } .res-wait { color: var(--muted); }
+.res-form { display: grid; gap: 8px; } .res-form .field { display: grid; gap: 3px; } .res-form label { font-weight: 600; font-size: 14px; }
+.res-form input, .res-form select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); min-width: 0; }
+.res-msg { min-height: 1.4em; margin: 8px 0 0; }
+.res-game { max-width: 820px; margin: 0 auto; } .res-game .btns { margin-top: 10px; } .res-sub { margin: 2px 0 10px; color: var(--muted); }
+.res-hud { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 14px; font: 13px var(--font-mono); color: var(--muted); margin-bottom: 6px; } .res-hud b { color: var(--ink); }
+.res-q { font-size: 17px; margin: 8px 0; }
+.res-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .res-opts .btn { font-size: 17px; padding: 12px; }
+.res-opts .btn.ok { border-color: var(--ok); background: var(--ok-soft); } .res-opts .btn.bad { border-color: var(--err); background: rgba(194,65,45,.14); }
+.res-fb { margin: 10px 0; min-height: 1.4em; } .res-fb.ok { color: var(--ok); } .res-fb.err { color: var(--err); } .res-fb b { color: var(--ink); }
+.res-measure { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 12px; align-items: center; }
+.res-meter { width: 100%; max-width: 190px; height: auto; justify-self: center; }
+@media (max-width: 560px) { .res-measure { grid-template-columns: minmax(0, 1fr); } .res-opts { grid-template-columns: minmax(0, 1fr); } .res-big-val { font-size: 28px; } }
+.res-end { text-align: center; padding: 10px 0; } .res-end .btns { justify-content: center; }
+.res-tri { width: 100%; max-width: 220px; display: block; margin: 0 auto; color: var(--ink); }
 .howto { padding: 0; overflow: hidden; border: 2px solid var(--accent); }
 .howto.ack { border-width: 1px; border-color: var(--line); }
 .howto summary { display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; list-style: none; }
@@ -1095,6 +1137,7 @@ body.lb-on { overflow: hidden; }
     <button type="button" data-group="eval">Evaluaciones</button>
     <button type="button" data-group="reparar">Reparar PC</button>
     <button type="button" data-group="historia">Historia</button>
+    <button type="button" data-group="electronica">Electrónica</button>
   </nav>
   <nav class="tabs" role="tablist" aria-label="Apartados de la sección">
     <button class="tab" role="tab" type="button" id="tab-niveles" data-tab="niveles" data-group="juego" aria-controls="panel-niveles">Niveles<small>7 básico · 10 avanzado</small></button>
@@ -1102,6 +1145,7 @@ body.lb-on { overflow: hidden; }
     <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" data-group="practica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" data-group="practica" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" data-group="practica" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
+    <button class="tab" role="tab" type="button" id="tab-fuente-int" data-tab="fuente-int" data-group="practica" aria-controls="panel-fuente-int">Fuente por dentro<small>16 componentes</small></button>
     <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" data-group="practica" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
     <button class="tab" role="tab" type="button" id="tab-elegir" data-tab="elegir" data-group="practica" aria-controls="panel-elegir">Elegí tu PC<small>paso a paso</small></button>
     <button class="tab" role="tab" type="button" id="tab-frontal" data-tab="frontal" data-group="practica" aria-controls="panel-frontal">Panel frontal<small>botones, luces y USB</small></button>
@@ -1109,6 +1153,7 @@ body.lb-on { overflow: hidden; }
     <button class="tab" role="tab" type="button" id="tab-integradora" data-tab="integradora" data-group="eval" aria-controls="panel-integradora">Integradora<small>básica y avanzada</small></button>
     <button class="tab" role="tab" type="button" id="tab-reparacion" data-tab="reparacion" data-group="reparar" aria-controls="panel-reparacion">Fallas y soluciones<small>10 niveles</small></button>
     <button class="tab" role="tab" type="button" id="tab-historia" data-tab="historia" data-group="historia" aria-controls="panel-historia">Historia de la PC<small>de 1981 a hoy</small></button>
+    <button class="tab" role="tab" type="button" id="tab-resistencias" data-tab="resistencias" data-group="electronica" aria-controls="panel-resistencias">Resistencias<small>colores, calculadora y juegos</small></button>
   </nav>
   <p class="lock-note" id="lock-note" hidden>Mientras jugás una fase o una evaluación, las otras secciones quedan bloqueadas. Tocá “Volver a los niveles” para usarlas.</p>
 
@@ -1264,6 +1309,20 @@ body.lb-on { overflow: hidden; }
       </div>
     </section>
     <div id="game-placa"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-fuente-int" aria-labelledby="tab-fuente-int" hidden>
+    <section class="panel fi-intro">
+      <span class="label">Fuente de alimentación por dentro</span>
+      <h2>¿Qué hay adentro de una fuente?</h2>
+      <p>La fuente toma los 220 V de alterna del enchufe y los convierte en 12 V, 5 V y 3,3 V de continua, estables y limpios, para la PC. Primero armala colocando cada componente en su lugar; después ponele el nombre a cada uno.</p>
+      <p class="fi-warn"><b>Atención:</b> nunca abras una fuente real. Adentro hay capacitores que pueden guardar más de 300 V aunque esté desenchufada. Este juego es para conocerla sin riesgo.</p>
+    </section>
+    <div id="game-fuente-int"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-resistencias" aria-labelledby="tab-resistencias" hidden>
+    <div id="res-root"></div>
   </section>
 
   <section class="tabpanel" role="tabpanel" id="panel-cableado" aria-labelledby="tab-cableado" hidden>
@@ -1717,11 +1776,38 @@ body.lb-on { overflow: hidden; }
         'Fijate que todo sea <b>compatible</b>: el socket del procesador, el tipo de memoria y los puertos que tiene la placa.',
         'La fuente tiene que alcanzar para todo, con un 30 % de margen, pero sin sobrar demasiado.',
         'Al final tocá <b>Verificar</b>. Si algo está mal, tocá el error y te lleva al paso para corregirlo.'] };
+    if (key === 'fuente') return { t: 'Armá la fuente por dentro y nombrá sus partes', s: [
+        'Elegí un componente de la <b>bandeja</b>: tocalo o arrastralo.',
+        'Llevalo a su lugar adentro de la fuente. Arriba está la parte de atrás (donde entra la corriente) y abajo, el frente con los conectores.',
+        'A la izquierda va el <b>lado primario</b> (alta tensión, 220 V) y a la derecha el <b>lado secundario</b> (12 V, 5 V y 3,3 V). El transformador está en el medio, separando los dos lados.',
+        'Si va ahí, queda colocado y ves para qué sirve. Si no, suma un <b>error</b> y te da una pista.',
+        'Cuando esté armada, elegí cada <b>nombre</b> de la lista y tocá el componente que corresponde.'],
+      tip: 'Si te trabás, tocá “Mostrar nombres”. Importante: nunca abras una fuente real: el capacitor principal puede guardar cientos de voltios aunque esté desenchufada.' };
+    if (key === 'res-leer') return { t: 'Leé la resistencia', s: [
+        'Mirá la resistencia: tiene bandas de colores. La banda que está más separada (dorada o plateada) es la <b>tolerancia</b>: ponela a la derecha.',
+        'Las primeras bandas son los <b>dígitos</b>; la anteúltima es el <b>multiplicador</b> (cuántos ceros se agregan).',
+        'Elegí el valor correcto entre las 4 opciones.',
+        'Son 10 resistencias. Cada error suma y al final ves tu nota.'],
+      tip: 'Usá la tabla de colores de arriba si no te acordás de algún color.' };
+    if (key === 'res-armar') return { t: 'Armá la resistencia', s: [
+        'Leé el pedido: el valor en ohms (Ω) y la tolerancia.',
+        'Tocá una <b>banda</b> de la resistencia para elegirla y después tocá un <b>color</b> de la paleta.',
+        'Completá todas las bandas: dígitos, multiplicador y tolerancia.',
+        'Tocá <b>Comprobar</b>. Si está mal, te dice qué banda revisar.'],
+      tip: 'Ejemplo: 4,7 kΩ = 4700 Ω → amarillo (4), violeta (7), rojo (×100) y dorado (±5 %).' };
+    if (key === 'res-medir') return { t: '¿Pasa el control?', s: [
+        'Leé el valor de la resistencia por sus colores y su <b>tolerancia</b>.',
+        'Mirá lo que marca el <b>multímetro</b> al medirla.',
+        'Calculá el rango permitido: valor − tolerancia hasta valor + tolerancia.',
+        'Si la medición está adentro del rango, tocá <b>Sí, está bien</b>; si no, <b>No, está fuera de tolerancia</b>.'],
+      tip: 'Ejemplo: 1 kΩ ±5 % → de 950 Ω a 1050 Ω. Una medición de 1030 Ω está bien; 1100 Ω no.' };
     if (key === 'placa-nombres') return { t: 'Nombrá las partes de la placa', s: [
         'La placa madre ya está armada.',
         'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.',
         'Llevalo a la <b>parte de la placa</b> que corresponde, o tocá esa parte.',
         'Si es correcto, el nombre queda puesto. Si no, suma un <b>error</b>.'] };
+    if (key === 'fuente-armar') return { t: 'Armá la fuente por dentro', s: htDef('fuente').s.slice(0, 4), tip: htDef('fuente').tip };
+    if (key === 'fuente-nombres') return { t: 'Nombrá las partes de la fuente', s: ['La fuente ya está armada.', 'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.', 'Llevalo al componente que corresponde, o tocalo.', 'Si es correcto, el nombre queda puesto. Si no, suma un <b>error</b>.'] };
     if (key === 'placa' || key === 'placa-armar') return { t: key === 'placa' ? 'Armá la placa madre y nombrá sus partes' : 'Armá la placa madre', s: [
         'Elegí una pieza de la <b>bandeja</b>: tocala o arrastrala.',
         'Llevala a su lugar de la placa: el procesador en su <b>socket</b>, las memorias en sus <b>ranuras</b>, el disco M.2 en su ranura, y así.',
@@ -2661,8 +2747,9 @@ body.lb-on { overflow: hidden; }
     }
 
     /* ---- juego ---- */
-    function PlacaGame(host, onComplete, mode) {
+    function PlacaGame(host, onComplete, mode, builder) {
     var api = null, L = null, panel = null, CFG = null;
+    function TX(k, d) { return CFG && CFG.lbl && CFG.lbl[k] != null ? CFG.lbl[k] : d; }
     function q(sel) { return host.querySelector(sel); }
     function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
     function types() { var o = []; CFG.slots.forEach(function (s) { if (o.indexOf(s.type) < 0) o.push(s.type); }); return o; }
@@ -2692,9 +2779,9 @@ body.lb-on { overflow: hidden; }
         keys.map(function (k) { return '<button type="button" class="chip" data-k="' + k + '">' + esc(P[k].name) + '</button>'; }).join('') + '</div>';
       q('.app').appendChild(panel);
       hudLabels();
-      api.say((mode === 'labels' ? 'La placa ya está armada. ' : 'Paso 2 de 2: ') + 'Arrastrá cada nombre hasta su parte en la placa, o tocá un nombre y después la parte.');
+      api.say((mode === 'labels' ? TX('built', 'La placa ya está armada.') + ' ' : 'Paso 2 de 2: ') + 'Arrastrá cada nombre hasta su parte ' + TX('on', 'en la placa') + ', o tocá un nombre y después la parte.');
       q('.js-info').classList.remove('win');
-      q('.js-info').innerHTML = '<span class="label">Ficha técnica</span><h2>Ponele nombre a cada parte</h2><p>' + (mode === 'labels' ? 'La placa ya está armada.' : 'Ya armaste la placa.') + ' Ahora identificá cada parte: cuando aciertes, el nombre queda pegado en la placa y acá vas a ver para qué sirve.</p><p class="spec">El socket se toca en su borde; el procesador, en el centro.</p>';
+      q('.js-info').innerHTML = '<span class="label">Ficha técnica</span><h2>Ponele nombre a cada parte</h2><p>' + (mode === 'labels' ? TX('built', 'La placa ya está armada.') : TX('done', 'Ya armaste la placa.')) + ' Ahora identificá cada parte: cuando aciertes, el nombre queda pegado ' + TX('on', 'en la placa') + ' y acá vas a ver para qué sirve.</p><p class="spec">' + TX('tip', 'El socket se toca en su borde; el procesador, en el centro.') + '</p>';
       bindChips();
     }
     function stopLabels() {
@@ -2741,10 +2828,10 @@ body.lb-on { overflow: hidden; }
       var secs = Math.floor((Date.now() - L.t0) / 1000);
       api.caseEl.classList.add('powered');
       sfx.win();
-      api.say('¡Placa madre completa y con todos sus nombres!', 'ok');
+      api.say(TX('win', '¡Placa madre completa y con todos sus nombres!'), 'ok');
       var info = q('.js-info'); info.classList.add('win');
-      info.innerHTML = '<span class="label">Resultado</span><h2>¡Placa identificada!</h2><p>Pusiste los ' + types().length + ' nombres en <strong>' + fmt(secs) + '</strong> con <strong>' + L.errors + '</strong> ' + (L.errors === 1 ? 'error' : 'errores') + '.</p>' +
-        '<p class="spec">' + (L.errors === 0 ? 'Perfecto: reconocés todas las partes.' : 'Probá de nuevo para hacerlo sin errores.') + ' También podés cambiar la gama o la marca arriba y armar otra placa.</p>' +
+      info.innerHTML = '<span class="label">Resultado</span><h2>' + TX('title', '¡Placa identificada!') + '</h2><p>Pusiste los ' + types().length + ' nombres en <strong>' + fmt(secs) + '</strong> con <strong>' + L.errors + '</strong> ' + (L.errors === 1 ? 'error' : 'errores') + '.</p>' +
+        '<p class="spec">' + (L.errors === 0 ? 'Perfecto: reconocés todas las partes.' : 'Probá de nuevo para hacerlo sin errores.') + ' ' + TX('more', 'También podés cambiar la gama o la marca arriba y armar otra placa.') + '</p>' +
         '<button class="btn js-again2" type="button">Jugar de nuevo</button>';
       info.querySelector('.js-again2').addEventListener('click', function () { api.reset(); });
       if (onComplete) onComplete({ errors: L.p1.errors + L.errors, secs: L.p1.secs + secs });
@@ -2781,7 +2868,7 @@ body.lb-on { overflow: hidden; }
         d.g.remove(); d.el.dataset.dragged = '1'; setTimeout(function () { delete d.el.dataset.dragged; }, 50);
         if (cancel) return;
         var i = slotAt(e.clientX, e.clientY);
-        if (i == null) { api.say('Soltá el nombre encima de una parte de la placa.'); return; }
+        if (i == null) { api.say('Soltá el nombre encima de una parte ' + TX('of', 'de la placa') + '.'); return; }
         tryLabel(d.k, i);
       }
       panel.addEventListener('pointerup', function (e) { end(e, false); });
@@ -2790,7 +2877,7 @@ body.lb-on { overflow: hidden; }
         var c = e.target.closest('.chip'); if (!c || c.dataset.dragged || c.classList.contains('used')) return;
         if (L.sel === c.dataset.k) { chipSel(null); api.say('Nombre deseleccionado.'); return; }
         chipSel(c.dataset.k);
-        api.say('Elegiste “' + P[c.dataset.k].name + '”. Ahora tocá la parte de la placa que corresponde.');
+        api.say('Elegiste “' + P[c.dataset.k].name + '”. Ahora tocá la parte ' + TX('of', 'de la placa') + ' que corresponde.');
       });
     }
     host.addEventListener('click', function (e) {
@@ -2804,10 +2891,10 @@ body.lb-on { overflow: hidden; }
       stopLabels();
       if (api) api.destroy();
       api = null;
-      CFG = buildCfg(cf);
+      CFG = (builder || buildCfg)(cf);
       if (mode === 'build') {
-        CFG.winMsg = '¡Placa madre armada!';
-        CFG.start = 'Colocá cada parte en su lugar de la placa, incluido el procesador en su socket.';
+        CFG.winMsg = TX('buildWin', '¡Placa madre armada!');
+        CFG.start = TX('buildStart', 'Colocá cada parte en su lugar de la placa, incluido el procesador en su socket.');
         CFG.onWin = function (res) { if (onComplete) onComplete(res); };
         CFG.onReset = function () {};
       } else {
@@ -2818,7 +2905,7 @@ body.lb-on { overflow: hidden; }
         };
       }
       if (notice) CFG.notice = notice;
-      CFG.howto = mode === 'build' ? 'placa-armar' : mode === 'labels' ? 'placa-nombres' : 'placa';
+      var hp = CFG.htKey || 'placa'; CFG.howto = mode === 'build' ? hp + '-armar' : mode === 'labels' ? hp + '-nombres' : hp;
       api = mountGame(host, CFG);
       if (mode === 'labels') { api.fillAll(); startLabels(); }
     }
@@ -4015,7 +4102,7 @@ body.lb-on { overflow: hidden; }
           '<div class="mc-cta"><span>' + (n ? n + ' de ' + levelsFor(m).length + ' fases completas · ' : '') + cta + '</span><b>' + (n ? 'Continuar →' : 'Empezar →') + '</b></div></button>';
       }
       var TDESC = { 'muy-basica': 'Armá una PC simple: elegís marca, discos y fuente.', basica: 'PC completa con placa de video y WiFi.', gamer: 'Varias memorias, discos y placas de video.', placa: 'Armá placas madre base, intermedia y gamer.',
-        cableado: 'Conectá los cables de la fuente a cada pieza.', elegir: 'Elegí cada pieza y verificá que sea compatible.', frontal: 'Botones, luces, USB y audio del gabinete.',
+        cableado: 'Conectá los cables de la fuente a cada pieza.', 'fuente-int': 'Armá una fuente por dentro y nombrá sus componentes.', elegir: 'Elegí cada pieza y verificá que sea compatible.', frontal: 'Botones, luces, USB y audio del gabinete.',
         evaluaciones: 'Las evaluaciones de cada fase, para practicar.', integradora: 'La evaluación final de cada modo.', reparacion: '10 niveles de fallas reales y cómo resolverlas.', historia: 'De la IBM PC de 1981 a hoy, con fotos reales.' };
       function tiles(group) {
         return '<div class="w-tiles">' + [].slice.call(document.querySelectorAll('.tab[data-group="' + group + '"]')).map(function (t) {
@@ -4024,7 +4111,7 @@ body.lb-on { overflow: hidden; }
         }).join('') + '</div>';
       }
       var wt = welcomeEl._wt || 'jugar';
-      var TABS = [['jugar', 'Jugar'], ['practica', 'Práctica libre'], ['eval', 'Evaluaciones'], ['reparar', 'Reparar PC'], ['historia', 'Historia']];
+      var TABS = [['jugar', 'Jugar'], ['practica', 'Práctica libre'], ['eval', 'Evaluaciones'], ['reparar', 'Reparar PC'], ['historia', 'Historia'], ['electronica', 'Electrónica']];
       var panel;
       if (wt === 'jugar') panel =
         '<p class="w-sub">Elegí un modo. Las fases se desbloquean de a una; después de cada fase hay una evaluación de ' + NEV + ' preguntas y al final, la integradora.</p>' +
@@ -4038,6 +4125,8 @@ body.lb-on { overflow: hidden; }
       else if (wt === 'reparar') panel = '<p class="w-sub">Diagnosticá y resolvé fallas reales de una PC: 10 niveles de 12 fallas, de lo más simple a los casos más difíciles. Cada nivel se desbloquea al aprobar el anterior.</p><div class="w-tiles">' +
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (n) { var inf = repLvInfo(n), op = repLvOpen(n), bst = store.repLv[n];
           return '<button type="button" class="w-tile' + (op ? '' : ' locked') + '" data-go="reparacion"' + (op ? ' data-replv="' + n + '"' : '') + '><strong>Nivel ' + n + ' · ' + inf[0] + '</strong><span>' + inf[1] + '</span><b>' + (op ? (bst != null ? 'Mejor nota ' + bst + ' · Repetir →' : 'Jugar →') : '🔒 Aprobá el nivel ' + (n - 1)) + '</b></button>'; }).join('') + '</div>';
+      else if (wt === 'electronica') panel = '<p class="w-sub">Electrónica básica para entender lo que hay adentro de la PC.</p><div class="w-tiles">' +
+        [['res-intro', 'Código de colores', 'Aprendé a leer las bandas de una resistencia.'], ['res-calc', 'Calculadora de resistencias', 'De colores a ohms y de ohms a colores, de 4, 5 y 6 bandas.'], ['res-leer', 'Juego: leé la resistencia', 'Mirá los colores y elegí su valor.'], ['res-armar', 'Juego: armá la resistencia', 'Pintá las bandas para un valor pedido.'], ['res-medir', 'Juego: ¿pasa el control?', 'Compará la medición del multímetro con la tolerancia.'], ['res-ohm', 'Ley de Ohm', 'Calculá tensión, corriente o resistencia.']].map(function (t) { return '<button type="button" class="w-tile' + (t[0].indexOf('res-') === 0 && /leer|armar|medir/.test(t[0]) ? ' game' : '') + '" data-go="resistencias" data-res="' + t[0] + '"><strong>' + t[1] + '</strong><span>' + t[2] + '</span><b>Abrir →</b></button>'; }).join('') + '</div>';
       else panel = '<p class="w-sub">La evolución de cada pieza, con fotos reales, gráficos de velocidad y un juego por categoría.</p><div class="w-tiles">' +
         Object.keys(HIST).map(function (k) { return '<button type="button" class="w-tile" data-go="historia" data-hcat="' + k + '"><strong>' + HIST[k].name + '</strong><span>' + HIST[k].items.length + ' etapas · ' + HIST[k].items[0][0] + ' a ' + HIST[k].items[HIST[k].items.length - 1][0] + '</span><b>Ver historia →</b></button>'; }).join('') +
         Object.keys(EVO).map(function (k) { return '<button type="button" class="w-tile game" data-go="historia" data-evo="' + k + '"><strong>Juego: ' + EVO_ICON[k] + '</strong><span>' + EVO[k].title + '</span><b>Jugar →</b></button>'; }).join('') + '</div>';
@@ -4064,7 +4153,7 @@ body.lb-on { overflow: hidden; }
         backToMap();
       } else if (g) {
         closeWelcome(); show(g.dataset.go); try { history.replaceState(null, '', '#' + g.dataset.go); } catch (_) {}
-        if (g.dataset.hcat) { histCat = g.dataset.hcat; histRender(); } else if (g.dataset.evo) evoPlay(g.dataset.evo); else if (g.dataset.replv) repLvRun(+g.dataset.replv);
+        if (g.dataset.hcat) { histCat = g.dataset.hcat; histRender(); } else if (g.dataset.evo) evoPlay(g.dataset.evo); else if (g.dataset.replv) repLvRun(+g.dataset.replv); else if (g.dataset.res && window.resGo) window.resGo(g.dataset.res);
       }
     });
     function updateChip() {
@@ -6337,13 +6426,494 @@ body.lb-on { overflow: hidden; }
     });
   })();
 
+  /* ---------- Fuente por dentro: armar y nombrar sus componentes ---------- */
+  (function () {
+    var host = document.getElementById('game-fuente-int');
+    if (!host || !PlacaFactory) return;
+    function cyl(cx, cy, r, c, txt) {
+      return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + c + '" stroke="#0b0d10" stroke-width="1.2"/><circle cx="' + cx + '" cy="' + cy + '" r="' + (r * .78) + '" fill="#c9ced4" stroke="#7d8894"/>' +
+        '<path d="M' + (cx - r * .5) + ' ' + cy + 'h' + r + 'M' + cx + ' ' + (cy - r * .5) + 'v' + r + '" stroke="#7d8894" stroke-width="' + Math.max(1, r * .08) + '"/>' + (txt || '');
+    }
+    function toroid(cx, cy, r, c, wire) {
+      var o = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + c + '" stroke="#0b0d10"/><circle cx="' + cx + '" cy="' + cy + '" r="' + (r * .45) + '" fill="#2c6a4e" stroke="#0b0d10"/>';
+      for (var a = 0; a < 18; a++) { var t = a / 18 * Math.PI * 2, x1 = cx + Math.cos(t) * r * .45, y1 = cy + Math.sin(t) * r * .45, x2 = cx + Math.cos(t) * r, y2 = cy + Math.sin(t) * r; o += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + (wire || '#c8742b') + '" stroke-width="' + (r * .1) + '" stroke-linecap="round"/>'; }
+      return o;
+    }
+    function sinkBody(w, h, n) {
+      var o = '<rect width="' + w + '" height="' + h + '" rx="2" fill="#aeb6be" stroke="#59626d"/>';
+      for (var i = 1; i < 5; i++) o += '<rect x="' + (w * i / 5 - 1) + '" y="2" width="2" height="' + (h - 4) + '" fill="#7d8894"/>';
+      for (var j = 0; j < n; j++) o += '<rect x="' + (w * .18) + '" y="' + (8 + j * (h - 16) / n) + '" width="' + (w * .64) + '" height="' + ((h - 16) / n - 6) + '" rx="1" fill="#16191d"/><rect x="' + (w * .42) + '" y="' + (10 + j * (h - 16) / n) + '" width="' + (w * .16) + '" height="3" fill="#c3cad1"/>';
+      return o;
+    }
+    function pcb(w, h, c) { return '<rect width="' + w + '" height="' + h + '" rx="3" fill="' + (c || '#2f7a4a') + '" stroke="#174d2f" stroke-width="1.5"/>'; }
+    function ic(x, y, w, h, t) { var o = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="1" fill="#16191d"/>'; for (var i = 0; i < 4; i++) o += '<rect x="' + (x + 2 + i * (w - 4) / 3 - 1) + '" y="' + (y - 2) + '" width="2" height="2" fill="#c3cad1"/><rect x="' + (x + 2 + i * (w - 4) / 3 - 1) + '" y="' + (y + h) + '" width="2" height="2" fill="#c3cad1"/>'; return o + (t ? '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 2.5) + '" text-anchor="middle" font-size="6" fill="#d0d5da" font-family="var(--font-mono)">' + t + '</text>' : ''); }
+    var P = {
+      inlet: { name: 'Entrada de corriente (C14) e interruptor', short: 'Entrada 220 V', vb: '0 0 100 40',
+        body: '<rect width="100" height="40" rx="3" fill="#2b3036"/><path d="M10 8 h30 l4 6 v18 h-38 v-18z" fill="#16191d" stroke="#59626d"/><rect x="16" y="16" width="4" height="10" fill="#c3cad1"/><rect x="25" y="13" width="4" height="10" fill="#c3cad1"/><rect x="34" y="16" width="4" height="10" fill="#c3cad1"/>' +
+          '<rect x="60" y="8" width="26" height="24" rx="2" fill="#16191d"/><rect x="63" y="11" width="20" height="18" rx="1" fill="#c93a3a"/><text x="73" y="24" text-anchor="middle" font-size="9" fill="#fff" font-family="var(--font-mono)">I O</text>',
+        hint: 'La entrada de corriente va atrás, arriba a la izquierda: es donde se enchufa el cable de 220 V.',
+        info: 'Acá entra la corriente de la red: en Argentina, 220 V de <b>alterna</b> a 50 Hz. El conector se llama C14 (el mismo de los monitores) y el interruptor I/O corta toda la energía de la fuente.',
+        spec: '220 V CA · 50 Hz · interruptor I/O' },
+      fuse: { name: 'Fusible', short: 'Fusible', vb: '0 0 80 32',
+        body: '<rect x="4" y="8" width="72" height="16" rx="8" fill="rgba(220,235,245,.55)" stroke="#9aa6b2" stroke-width="1.5"/><rect x="4" y="7" width="14" height="18" rx="2" fill="#c3cad1" stroke="#7d8894"/><rect x="62" y="7" width="14" height="18" rx="2" fill="#c3cad1" stroke="#7d8894"/><path d="M18 16 C30 10, 40 22, 50 16 S 58 14, 62 16" stroke="#59626d" stroke-width="1.5" fill="none"/>',
+        hint: 'El fusible está atrás, al lado de la entrada de corriente.',
+        info: 'Es la primera protección. Si algo adentro hace cortocircuito, el hilo del fusible se derrite y corta la corriente, para evitar un incendio. Si un fusible se quemó, casi siempre hay otra pieza rota: no se arregla solo cambiándolo.',
+        spec: 'Por ejemplo: T 8 A 250 V (de acción lenta)' },
+      fan: { name: 'Ventilador', short: 'Ventilador', vb: '0 0 100 30',
+        body: '<rect width="100" height="30" rx="4" fill="#22272d"/><circle cx="50" cy="15" r="13" fill="#14171b" stroke="#59626d"/>' + [0, 72, 144, 216, 288].map(function (a) { return '<path d="M50 15 q8 -10 12 -2 z" fill="#59636f" transform="rotate(' + a + ' 50 15)"/>'; }).join('') + '<circle cx="50" cy="15" r="4" fill="#59626d"/>' +
+          '<path d="M10 6 v18 M16 6 v18 M22 6 v18 M78 6 v18 M84 6 v18 M90 6 v18" stroke="#59626d" stroke-width="2"/>',
+        hint: 'El ventilador va arriba a la derecha.',
+        info: 'Saca el calor de los disipadores. En las fuentes viejas iba atrás (80 mm); en las modernas va en la tapa (120 a 140 mm) y sopla sobre toda la placa. Muchas fuentes buenas lo frenan cuando hay poco consumo (modo semipasivo) para no hacer ruido.',
+        spec: '80 a 140 mm · algunas con modo semipasivo' },
+      emi: { name: 'Filtro EMI (de interferencias)', short: 'Filtro EMI', vb: '0 0 100 50',
+        body: pcb(100, 50) + toroid(20, 25, 15, '#16191d') + toroid(52, 25, 15, '#16191d') + '<rect x="72" y="8" width="22" height="14" rx="2" fill="#e8c040"/><text x="83" y="18" text-anchor="middle" font-size="7" fill="#333" font-family="var(--font-mono)">X2</text><circle cx="78" cy="36" r="6" fill="#2f6db5"/><circle cx="91" cy="36" r="6" fill="#2f6db5"/>',
+        hint: 'El filtro EMI va apenas entra la corriente, arriba a la izquierda, debajo de la entrada.',
+        info: 'Son bobinas y capacitores (los amarillos “X” y los azules “Y”) que frenan el ruido eléctrico: que la fuente no ensucie la red de la casa y que el ruido de la red no entre a la PC. También suele tener un <b>termistor NTC</b> que limita el golpe de corriente al encender.',
+        spec: 'Bobinas de modo común · capacitores X e Y · NTC' },
+      bridge: { name: 'Puente rectificador', short: 'Puente rectificador', vb: '0 0 70 44',
+        body: '<rect x="2" y="2" width="66" height="30" rx="2" fill="#aeb6be" stroke="#59626d"/><rect x="10" y="6" width="50" height="22" rx="2" fill="#16191d"/><text x="35" y="21" text-anchor="middle" font-size="8" fill="#d0d5da" font-family="var(--font-mono)">~ + − ~</text>' + [16, 28, 40, 52].map(function (x) { return '<rect x="' + x + '" y="32" width="3" height="10" fill="#c3cad1"/>'; }).join(''),
+        hint: 'El puente rectificador está arriba, entre el filtro EMI y el disipador grande de la izquierda.',
+        info: 'Tiene 4 diodos adentro y convierte la corriente <b>alterna</b> (que cambia de sentido 50 veces por segundo) en corriente <b>continua</b> pulsante. Se calienta, por eso va atornillado a un disipador.',
+        spec: '4 diodos · por ejemplo 15 A 600 V' },
+      pfc: { name: 'Bobina del PFC activo', short: 'Bobina PFC', vb: '0 0 100 80',
+        body: pcb(100, 80) + toroid(50, 40, 34, '#e8c040', '#b8661f'),
+        hint: 'La bobina del PFC es el anillo grande, a la izquierda, debajo del filtro EMI.',
+        info: 'El PFC (corrección del factor de potencia) hace que la fuente tome la corriente de la red de forma pareja y eficiente. Junto con un transistor, eleva la tensión a unos <b>380-400 V de continua</b>. Gracias al PFC activo, muchas fuentes funcionan con cualquier tensión entre 100 y 240 V.',
+        spec: 'PFC activo · eleva a ~400 V CC' },
+      bulk: { name: 'Capacitor principal (primario)', short: 'Capacitor principal', vb: '0 0 100 80',
+        body: '<ellipse cx="50" cy="40" rx="46" ry="37" fill="#1f3f7a" stroke="#0b0d10" stroke-width="2"/><ellipse cx="50" cy="40" rx="36" ry="29" fill="#c9ced4" stroke="#7d8894"/><path d="M28 40 h44 M50 22 v36" stroke="#7d8894" stroke-width="3"/><text x="50" y="74" text-anchor="middle" font-size="8" fill="#fff" font-family="var(--font-mono)">420V 470µF</text>',
+        hint: 'El capacitor principal es el cilindro grande, a la izquierda, al lado de la bobina del PFC.',
+        info: 'Guarda energía a unos <b>400 V</b> y la entrega pareja. También mantiene la PC andando unos milisegundos si hay un microcorte de luz. <b>¡Peligro!</b> Puede quedar cargado aunque la fuente esté desenchufada: por eso nunca hay que abrir una fuente.',
+        spec: '~400 V · 330 a 680 µF · 105 °C' },
+      hsprim: { name: 'Disipador primario (transistores de conmutación)', short: 'Disipador primario', vb: '0 0 24 160',
+        body: sinkBody(24, 160, 4),
+        hint: 'El disipador primario es la barra de aluminio de la izquierda del transformador.',
+        info: 'Enfría los transistores <b>MOSFET</b> que prenden y apagan la corriente decenas de miles de veces por segundo (conmutación). Por eso estas fuentes se llaman “conmutadas” y pueden usar un transformador chico.',
+        spec: 'MOSFET de conmutación y del PFC · aluminio' },
+      trafo: { name: 'Transformador principal', short: 'Transformador', vb: '0 0 90 80',
+        body: '<rect x="4" y="8" width="82" height="64" rx="3" fill="#16191d"/><rect x="18" y="4" width="54" height="72" rx="4" fill="#e8c040" stroke="#b08a20" stroke-width="1.5"/><path d="M18 22 h54 M18 40 h54 M18 58 h54" stroke="#b08a20" stroke-width="1.5"/><text x="45" y="44" text-anchor="middle" font-size="8" fill="#5a4410" font-family="var(--font-mono)">EI-35</text>',
+        hint: 'El transformador está en el medio, entre los dos disipadores.',
+        info: 'Baja la tensión (de unos 400 V a 12 V) y, sobre todo, <b>separa</b> el lado peligroso (primario) del lado que llega a la PC (secundario): no hay ningún cable que los una. Es chico porque trabaja a alta frecuencia.',
+        spec: 'Núcleo de ferrite · aislación primario/secundario' },
+      standby: { name: 'Transformador de standby (+5 VSB)', short: 'Standby 5 VSB', vb: '0 0 70 50',
+        body: pcb(70, 50) + '<rect x="12" y="8" width="46" height="34" rx="2" fill="#16191d"/><rect x="22" y="6" width="26" height="38" rx="3" fill="#e8c040" stroke="#b08a20"/><text x="35" y="28" text-anchor="middle" font-size="7" fill="#5a4410" font-family="var(--font-mono)">5VSB</text>',
+        hint: 'El transformador de standby es el más chico, debajo del transformador principal.',
+        info: 'Es una fuente chiquita dentro de la fuente que <b>siempre tiene energía</b>, aunque la PC esté apagada. Da 5 V por el cable <b>violeta</b>: así la placa madre “escucha” el botón de encendido, puede cargar el celular por USB o prender la PC por red.',
+        spec: '+5 VSB · cable violeta · 2,5 a 3 A' },
+      hssec: { name: 'Disipador secundario (rectificadores)', short: 'Disipador secundario', vb: '0 0 24 160',
+        body: sinkBody(24, 160, 3),
+        hint: 'El disipador secundario es la barra de aluminio a la derecha del transformador.',
+        info: 'Del lado de baja tensión, la corriente se vuelve a rectificar. Las fuentes eficientes (80 PLUS Gold o más) usan <b>rectificación sincrónica</b> con MOSFET, que se calientan menos que los diodos.',
+        spec: 'Rectificación del riel de 12 V' },
+      caps: { name: 'Capacitores de salida', short: 'Capacitores salida', vb: '0 0 70 56',
+        body: pcb(70, 56) + cyl(19, 18, 13, '#5b2a86') + cyl(51, 18, 13, '#5b2a86') + cyl(19, 42, 11, '#1f3f7a') + cyl(51, 42, 11, '#1f3f7a'),
+        hint: 'Los capacitores de salida están a la derecha de todo, arriba.',
+        info: 'Alisan la tensión de salida para que llegue limpia a la PC, con muy poco “ripple” (ondulación). En las fuentes buenas son japoneses y de <b>105 °C</b>; también se usan capacitores sólidos (de polímero). Un capacitor hinchado es señal de que la fuente está fallando.',
+        spec: '16 V · 105 °C · electrolíticos y de polímero' },
+      outl: { name: 'Bobina de salida', short: 'Bobina de salida', vb: '0 0 80 64',
+        body: pcb(80, 64) + toroid(40, 32, 26, '#e8e3d6', '#b8661f'),
+        hint: 'La bobina de salida es el anillo claro, a la derecha, debajo de los capacitores de salida.',
+        info: 'Trabaja junto con los capacitores: frena los cambios bruscos de corriente y termina de filtrar la salida de 12 V.',
+        spec: 'Núcleo de polvo de hierro · alambre grueso' },
+      ctrl: { name: 'Placa de control y protecciones', short: 'Control y protecciones', vb: '0 0 100 46',
+        body: pcb(100, 46, '#1f5a8a') + ic(10, 10, 26, 14, 'PWM') + ic(46, 10, 26, 14, 'PFC') + ic(10, 28, 20, 10) + ic(46, 28, 26, 10, 'SUP') + '<rect x="80" y="8" width="12" height="30" rx="2" fill="#e8e3d6"/>',
+        hint: 'La placa de control es la plaquita azul de abajo a la izquierda.',
+        info: 'Es el “cerebro” de la fuente: maneja la conmutación (PWM y PFC) y vigila que todo esté bien. Corta la fuente si hay sobretensión (OVP), baja tensión (UVP), sobrecorriente (OCP), cortocircuito (SCP) o demasiada temperatura (OTP). También manda la señal <b>Power Good</b> (cable gris) a la placa madre.',
+        spec: 'OVP · UVP · OCP · SCP · OTP · Power Good' },
+      dcdc: { name: 'Módulos DC-DC (5 V y 3,3 V)', short: 'DC-DC 5 V / 3,3 V', vb: '0 0 100 50',
+        body: pcb(100, 50) + '<rect x="8" y="10" width="16" height="16" rx="2" fill="#3a3f45"/><rect x="28" y="10" width="16" height="16" rx="2" fill="#3a3f45"/>' + ic(52, 12, 14, 10) + ic(72, 12, 14, 10) + cyl(18, 38, 8, '#5b2a86') + cyl(40, 38, 8, '#5b2a86') + '<text x="74" y="42" text-anchor="middle" font-size="7.5" fill="#e8efe9" font-family="var(--font-mono)">5V 3.3V</text>',
+        hint: 'Los módulos DC-DC están abajo, en el lado derecho (secundario).',
+        info: 'En las fuentes modernas, el transformador da solo <b>12 V</b> y estas placas chicas sacan de ahí los <b>5 V</b> y <b>3,3 V</b>. Así cada tensión se mantiene estable aunque la PC consuma mucho de una sola.',
+        spec: 'Convierten 12 V → 5 V y 3,3 V' },
+      modular: { name: 'Placa de conectores modulares', short: 'Conectores modulares', vb: '0 0 200 26',
+        body: '<rect width="200" height="26" rx="3" fill="#22272d"/>' + [['24P', 10, 40], ['CPU', 56, 22], ['CPU', 84, 22], ['PCIe', 112, 22], ['12V-2x6', 140, 28], ['SATA', 174, 20]].map(function (c) { var o = '<rect x="' + c[1] + '" y="5" width="' + c[2] + '" height="12" rx="1.5" fill="#0b0d10" stroke="#59626d"/>'; for (var i = 0; i < Math.floor(c[2] / 5); i++) o += '<rect x="' + (c[1] + 1.5 + i * 5) + '" y="7.5" width="3" height="3" fill="#59626d"/><rect x="' + (c[1] + 1.5 + i * 5) + '" y="11.5" width="3" height="3" fill="#59626d"/>'; return o + '<text x="' + (c[1] + c[2] / 2) + '" y="24" text-anchor="middle" font-size="5" fill="#cfd5db" font-family="var(--font-mono)">' + c[0] + '</text>'; }).join(''),
+        hint: 'Los conectores modulares están en el frente de la fuente: abajo de todo.',
+        info: 'Es el panel donde se enchufan los cables: 24 pines de la placa madre, CPU (EPS), PCIe o 12V-2x6 para la placa de video, SATA y Molex. En una fuente <b>modular</b> solo se conectan los cables que se usan, y el gabinete queda más ordenado.',
+        spec: '24 pines · EPS · PCIe / 12V-2x6 · SATA' }
+    };
+    Object.keys(P).forEach(function (k) { P[k].req = []; });
+    var LAY = [['inlet', 4, 1.5, 20, 8], ['fuse', 28, 2.5, 12, 5], ['fan', 64, 1.5, 32, 8],
+      ['emi', 4, 13, 24, 12], ['bridge', 31, 13, 14, 9], ['pfc', 4, 29, 22, 17.6], ['bulk', 29, 27, 18, 14.4], ['hsprim', 49, 13, 6, 40],
+      ['trafo', 58, 15, 17, 15], ['standby', 58, 36, 14, 10], ['hssec', 77, 13, 6, 40], ['caps', 85, 14, 11, 8.8], ['caps', 85, 26, 11, 8.8], ['outl', 85, 38, 12, 9.6],
+      ['ctrl', 5, 58, 26, 12], ['dcdc', 58, 58, 26, 13], ['modular', 6, 87, 88, 9]];
+    var deco = '<svg class="board-deco" viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true">' +
+      '<rect x="0" y="0" width="100" height="14" fill="#7d8894"/><rect x="0" y="107" width="100" height="18" fill="#7d8894"/>' +
+      '<rect x="2" y="14" width="96" height="93" fill="#2c6a4e" stroke="#1d4a36" stroke-width=".6"/>' +
+      '<path class="s-trace" stroke-width=".35" d="M10 30 H40 M30 36 V60 M58 34 H50 M74 34 H82 M90 58 V70 M20 72 V84 H40 M64 84 H80 M48 66 H60 M10 100 H90 M70 50 V70"/>' +
+      '<path d="M66.5 15 V106" stroke="#f2f2ee" stroke-width=".5" stroke-dasharray="2 1.5" opacity=".8"/>' +
+      '<text x="33" y="99" text-anchor="middle" font-size="1.9" fill="#e8efe9" font-family="var(--font-mono)">LADO PRIMARIO · alta tensión (220 V y 400 V)</text>' +
+      '<text x="82" y="96" text-anchor="middle" font-size="1.9" fill="#e8efe9" font-family="var(--font-mono)">LADO SECUNDARIO</text><text x="82" y="99" text-anchor="middle" font-size="1.9" fill="#e8efe9" font-family="var(--font-mono)">12 V · 5 V · 3,3 V</text>' +
+      '<text x="66.5" y="104" text-anchor="middle" font-size="1.6" fill="#f2f2ee" font-family="var(--font-mono)">aislación</text>' +
+      '<text x="50" y="12.5" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">ATRÁS (sale por el gabinete)</text><text x="50" y="123" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">FRENTE (cables hacia la PC)</text>' +
+      [[4, 17], [96, 17], [4, 104], [96, 104]].map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="1.4" fill="#c9b27a"/>'; }).join('') + '</svg>';
+    function cfg() {
+      return { key: 'fuenteint', caseClass: 'board psuin', parts: P, deco: deco, htKey: 'fuente',
+        slots: LAY.map(function (a) { return { type: a[0], x: a[1], y: a[2], w: a[3], h: a[4], z: 1 }; }),
+        winMsg: '¡Fuente armada! Ahora ponele el nombre a cada componente.',
+        caseNote: 'Fuente ATX abierta, vista desde arriba. Arriba está la parte de atrás (entrada de 220 V) y abajo el frente con los conectores.',
+        start: 'Paso 1 de 2: colocá cada componente adentro de la fuente. Después vas a ponerle el nombre a cada uno.',
+        lbl: { built: 'La fuente ya está armada.', done: 'Ya armaste la fuente.', on: 'en la fuente', of: 'de la fuente', tip: 'El lado izquierdo es el de alta tensión y el derecho el de baja tensión.',
+          win: '¡Fuente completa y con todos sus nombres!', title: '¡Fuente identificada!', more: 'Tocá “Reiniciar” para armarla otra vez.', buildWin: '¡Fuente armada!', buildStart: 'Colocá cada componente en su lugar adentro de la fuente.' } };
+    }
+    var game = PlacaFactory(host, null, undefined, cfg);
+    game.rebuild({});
+  })();
+
+  /* ---------- Electrónica: resistencias ---------- */
+  (function () {
+    var root = document.getElementById('res-root');
+    if (!root) return;
+    var C = [
+      { k: 'negro', n: 'Negro', h: '#141414', d: 0, m: 1 },
+      { k: 'marron', n: 'Marrón', h: '#7a4a24', d: 1, m: 10, t: 1, tc: 100 },
+      { k: 'rojo', n: 'Rojo', h: '#d22b2b', d: 2, m: 100, t: 2, tc: 50 },
+      { k: 'naranja', n: 'Naranja', h: '#f07c1a', d: 3, m: 1e3, tc: 15 },
+      { k: 'amarillo', n: 'Amarillo', h: '#f4d21f', d: 4, m: 1e4, tc: 25 },
+      { k: 'verde', n: 'Verde', h: '#2e9a45', d: 5, m: 1e5, t: 0.5 },
+      { k: 'azul', n: 'Azul', h: '#2a5fd0', d: 6, m: 1e6, t: 0.25, tc: 10 },
+      { k: 'violeta', n: 'Violeta', h: '#8a3fc7', d: 7, m: 1e7, t: 0.1, tc: 5 },
+      { k: 'gris', n: 'Gris', h: '#8d939a', d: 8, m: 1e8, t: 0.05 },
+      { k: 'blanco', n: 'Blanco', h: '#f5f5f2', d: 9, m: 1e9 },
+      { k: 'dorado', n: 'Dorado', h: '#c9a227', m: 0.1, t: 5 },
+      { k: 'plateado', n: 'Plateado', h: '#b9c0c7', m: 0.01, t: 10 }
+    ];
+    var BY = {}; C.forEach(function (c) { BY[c.k] = c; });
+    var E12 = [10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82];
+    var E24 = [10, 11, 12, 13, 15, 16, 18, 20, 22, 24, 27, 30, 33, 36, 39, 43, 47, 51, 56, 62, 68, 75, 82, 91];
+    var STORE_K = 'arma-tu-pc-res', best = {};
+    try { best = JSON.parse(localStorage.getItem(STORE_K) || '{}') || {}; } catch (_) { best = {}; }
+    function saveBest() { try { localStorage.setItem(STORE_K, JSON.stringify(best)); } catch (_) {} }
+    function rnd(n) { return Math.floor(Math.random() * n); }
+    function pick(a) { return a[rnd(a.length)]; }
+    function num(v, dec) { var s = (Math.round(v * Math.pow(10, dec)) / Math.pow(10, dec)).toString(); return s.replace('.', ','); }
+    function sig(v) { var a = Math.abs(v); return a >= 100 ? num(v, 0) : a >= 10 ? num(v, 1) : num(v, 2); }
+    function ohm(v) {
+      if (v >= 1e9) return sig(v / 1e9) + ' GΩ';
+      if (v >= 1e6) return sig(v / 1e6) + ' MΩ';
+      if (v >= 1e3) return sig(v / 1e3) + ' kΩ';
+      return sig(v) + ' Ω';
+    }
+    function multTxt(m) { return m >= 1e9 ? (m / 1e9) + ' G' : m >= 1e6 ? (m / 1e6) + ' M' : m >= 1e3 ? (m / 1e3) + ' k' : String(m).replace('.', ','); }
+    function tolTxt(t) { return '±' + String(t).replace('.', ',') + ' %'; }
+    /* bandas -> valor */
+    function digitsN(n) { return n === 4 ? 2 : 3; }
+    function value(b) {
+      var n = b.length, d = digitsN(n), v = 0;
+      for (var i = 0; i < d; i++) { if (!b[i] || BY[b[i]].d == null) return null; v = v * 10 + BY[b[i]].d; }
+      var m = b[d] && BY[b[d]].m; if (m == null) return null;
+      return Math.round(v * m * 1e6) / 1e6;
+    }
+    function tolOf(b) { var c = BY[b[digitsN(b.length) + 1]]; return c && c.t != null ? c.t : null; }
+    /* valor -> bandas */
+    function toBands(v, n, tolK, tcK) {
+      var d = digitsN(n);
+      if (!(v > 0)) return null;
+      var e = Math.floor(Math.log10(v)) - (d - 1), mant = Math.round(v / Math.pow(10, e));
+      if (mant >= Math.pow(10, d)) { mant = Math.round(mant / 10); e++; }
+      if (Math.abs(mant * Math.pow(10, e) - v) > v * 1e-9) return null;
+      var mk = C.filter(function (c) { return Math.abs(c.m - Math.pow(10, e)) < Math.pow(10, e) * 1e-9; })[0];
+      if (!mk) return null;
+      var ds = String(mant).split('').map(function (x) { return C[+x].k; });
+      var out = ds.concat([mk.k, tolK]); if (n === 6) out.push(tcK || 'marron');
+      return out;
+    }
+    function parseVal(t) {
+      t = String(t || '').trim().toLowerCase().replace(/\s+/g, '').replace(/ω|ohms?|Ω/g, '').replace(',', '.');
+      var m = t.match(/^(\d*)([rkmg])(\d*)$/);
+      if (m && (m[1] || m[3])) { var mult = { r: 1, k: 1e3, m: 1e6, g: 1e9 }[m[2]]; return parseFloat((m[1] || '0') + '.' + (m[3] || '0')) * mult; }
+      m = t.match(/^(\d+(?:\.\d+)?)([kmg]?)$/);
+      if (m) return parseFloat(m[1]) * ({ '': 1, k: 1e3, m: 1e6, g: 1e9 }[m[2]]);
+      return NaN;
+    }
+    /* dibujo */
+    function resSvg(b, o) {
+      o = o || {};
+      var n = b.length, five = n >= 5, body = five ? '#7fb0d8' : '#e2c99a', bodyE = five ? '#4f80a8' : '#b8996a';
+      var xs = n === 4 ? [92, 122, 152, 210] : n === 5 ? [86, 112, 138, 164, 212] : [84, 106, 128, 150, 190, 222];
+      var s = '<svg viewBox="0 0 320 110" class="res-svg' + (o.cls ? ' ' + o.cls : '') + '" role="img" aria-label="' + (o.label || 'Resistencia') + '">' +
+        '<line x1="4" y1="55" x2="316" y2="55" stroke="#9aa4ae" stroke-width="5" stroke-linecap="round"/>' +
+        '<path d="M60 30 q0 -12 14 -12 h22 q10 0 14 6 h100 q4 -6 14 -6 h22 q14 0 14 12 v50 q0 12 -14 12 h-22 q-10 0 -14 -6 h-100 q-4 6 -14 6 h-22 q-14 0 -14 -12 z" fill="' + body + '" stroke="' + bodyE + '" stroke-width="2"/>';
+      b.forEach(function (k, i) {
+        var x = xs[i], c = k ? BY[k].h : 'transparent', edge = i === 0 || i === n - 1 || (n === 6 && i === 4) ? 1 : 0;
+        var y0 = edge ? 19 : 25, h = edge ? 72 : 60;
+        s += '<g class="rb' + (o.sel === i ? ' sel' : '') + '"' + (o.edit ? ' data-band="' + i + '" tabindex="0" role="button" aria-label="Banda ' + (i + 1) + (k ? ': ' + BY[k].n : ': sin color') + '"' : '') + '>' +
+          '<rect x="' + (x - 9) + '" y="' + y0 + '" width="18" height="' + h + '" fill="' + c + '"' + (k ? '' : ' stroke="#59626d" stroke-dasharray="4 3"') + (k === 'blanco' ? ' stroke="#bbb"' : '') + '/>' +
+          (o.edit ? '<rect x="' + (x - 13) + '" y="6" width="26" height="98" fill="transparent"/>' : '') + '</g>';
+      });
+      if (o.labels) {
+        var L = n === 4 ? ['1.ª cifra', '2.ª cifra', 'Multipl.', 'Tolerancia'] : n === 5 ? ['1.ª', '2.ª', '3.ª cifra', 'Multipl.', 'Tolerancia'] : ['1.ª', '2.ª', '3.ª', 'Mult.', 'Tol.', 'Temp.'];
+        s = s.replace('viewBox="0 0 320 110"', 'viewBox="0 -18 320 150"');
+        b.forEach(function (k, i) { var up = i % 2; s += '<line x1="' + xs[i] + '" x2="' + xs[i] + '" y1="' + (up ? 18 : 92) + '" y2="' + (up ? 2 : 108) + '" stroke="var(--muted)" stroke-width="1"/><text x="' + xs[i] + '" y="' + (up ? -3 : 122) + '" text-anchor="middle" class="res-lab">' + L[i] + '</text>'; });
+      }
+      return s + '</svg>';
+    }
+    function bandColors(n, i) {
+      var d = digitsN(n);
+      if (i < d) return C.filter(function (c) { return c.d != null && !(i === 0 && c.d === 0); });
+      if (i === d) return C.filter(function (c) { return c.m != null; });
+      if (i === d + 1) return C.filter(function (c) { return c.t != null; });
+      return C.filter(function (c) { return c.tc != null; });
+    }
+    function palette(n, i, cur) {
+      return '<div class="res-pal" role="group" aria-label="Colores para la banda ' + (i + 1) + '">' + bandColors(n, i).map(function (c) {
+        var d = digitsN(n), info = i < d ? c.d : i === d ? '×' + multTxt(c.m) : i === d + 1 ? tolTxt(c.t) : c.tc + ' ppm';
+        return '<button type="button" class="res-sw' + (cur === c.k ? ' on' : '') + '" data-c="' + c.k + '"><i style="background:' + c.h + '"></i><span>' + c.n + '</span><small>' + info + '</small></button>';
+      }).join('') + '</div>';
+    }
+    /* ---------- estructura ---------- */
+    var SECS = [['res-intro', 'Código de colores'], ['res-calc', 'Calculadora'], ['res-leer', 'Juego: leé'], ['res-armar', 'Juego: armá'], ['res-medir', 'Juego: ¿pasa el control?'], ['res-ohm', 'Ley de Ohm']];
+    root.innerHTML = '<section class="panel res-head"><span class="label">Electrónica</span><h2>Resistencias</h2><p>Las resistencias están en todas las placas de la PC: limitan la corriente y reparten las tensiones. Su valor se mide en <b>ohms (Ω)</b> y, en las de patitas, se indica con <b>bandas de colores</b>.</p>' +
+      '<nav class="res-nav" aria-label="Secciones de resistencias">' + SECS.map(function (s) { return '<button type="button" class="btn" data-sec="' + s[0] + '">' + s[1] + '</button>'; }).join('') + '</nav></section>' +
+      SECS.map(function (s) { return '<section class="res-sec" id="' + s[0] + '" hidden></section>'; }).join('');
+    var cur = null;
+    function go(id) {
+      if (!document.getElementById(id)) id = 'res-intro';
+      cur = id;
+      root.querySelectorAll('.res-sec').forEach(function (s) { s.hidden = s.id !== id; });
+      root.querySelectorAll('.res-nav .btn').forEach(function (b) { var on = b.dataset.sec === id; b.classList.toggle('primary', on); b.setAttribute('aria-pressed', on); });
+      var el = document.getElementById(id);
+      if (!el.dataset.ready) { el.dataset.ready = '1'; INIT[id](el); }
+    }
+    window.resGo = function (id) { go(id); try { root.scrollIntoView({ block: 'start' }); } catch (_) {} };
+    root.querySelector('.res-nav').addEventListener('click', function (e) { var b = e.target.closest('[data-sec]'); if (b) go(b.dataset.sec); });
+
+    var INIT = {};
+    /* --- código de colores --- */
+    INIT['res-intro'] = function (el) {
+      var ex = ['amarillo', 'violeta', 'rojo', 'dorado'];
+      el.innerHTML = '<div class="res-grid2"><section class="panel"><span class="label">Cómo se lee</span><h3>Resistencia de 4 bandas</h3>' + resSvg(ex, { labels: true, label: 'Amarillo, violeta, rojo y dorado' }) +
+        '<ol class="res-steps"><li>Poné a la <b>derecha</b> la banda separada de las demás (casi siempre dorada o plateada): es la <b>tolerancia</b>.</li>' +
+        '<li>Las dos primeras bandas son <b>cifras</b>: amarillo = 4, violeta = 7 → <b>47</b>.</li>' +
+        '<li>La tercera es el <b>multiplicador</b>: rojo = ×100 → 47 × 100 = <b>4700 Ω = 4,7 kΩ</b>.</li>' +
+        '<li>La última es la <b>tolerancia</b>: dorado = ±5 %. El valor real puede estar entre 4465 Ω y 4935 Ω.</li></ol>' +
+        '<p class="res-note"><b>5 bandas:</b> son 3 cifras + multiplicador + tolerancia (más precisas, por ejemplo ±1 %). <b>6 bandas:</b> se agrega el coeficiente de temperatura (cuánto cambia el valor con el calor, en ppm/K).</p>' +
+        '<p class="res-note"><b>Unidades:</b> 1 kΩ (kiloohm) = 1000 Ω · 1 MΩ (megaohm) = 1.000.000 Ω. A veces se escribe 4K7 = 4,7 kΩ o 470R = 470 Ω.</p>' +
+        '<p class="res-note"><b>En la placa madre</b> casi todas las resistencias son SMD (diminutas, sin patitas) y tienen números en lugar de colores: <b>472</b> = 47 × 10² = 4,7 kΩ; <b>103</b> = 10 kΩ.</p></section>' +
+        '<section class="panel"><span class="label">Tabla de colores</span><div class="res-tablewrap"><table class="res-table"><thead><tr><th>Color</th><th>Cifra</th><th>Multiplicador</th><th>Tolerancia</th><th>Temp.</th></tr></thead><tbody>' +
+        C.map(function (c) { return '<tr><td><i style="background:' + c.h + '"></i>' + c.n + '</td><td>' + (c.d != null ? c.d : '—') + '</td><td>×' + multTxt(c.m) + '</td><td>' + (c.t != null ? tolTxt(c.t) : '—') + '</td><td>' + (c.tc ? c.tc + ' ppm' : '—') + '</td></tr>'; }).join('') +
+        '<tr><td><i class="none"></i>Sin banda</td><td>—</td><td>—</td><td>±20 %</td><td>—</td></tr></tbody></table></div>' +
+        '<p class="res-note">Ayuda para recordar el orden de las cifras: <b>negro 0 · marrón 1 · rojo 2 · naranja 3 · amarillo 4 · verde 5 · azul 6 · violeta 7 · gris 8 · blanco 9</b> (los colores del arcoíris van del rojo al violeta).</p>' +
+        '<div class="btns"><button type="button" class="btn primary" data-go2="res-calc">Usar la calculadora →</button><button type="button" class="btn" data-go2="res-leer">Jugar →</button></div></section></div>';
+      el.addEventListener('click', function (e) { var b = e.target.closest('[data-go2]'); if (b) go(b.dataset.go2); });
+    };
+    /* --- editor de bandas reutilizable --- */
+    function Editor(box, n, bands, onChange, opts) {
+      opts = opts || {};
+      var E = { n: n, b: bands || [], sel: 0 };
+      function draw() {
+        box.innerHTML = '<div class="res-big">' + resSvg(E.b, { edit: true, sel: E.sel, labels: true }) + '</div>' +
+          '<p class="res-pick">Banda ' + (E.sel + 1) + ' de ' + E.n + ' · ' + ['cifra', 'cifra', 'cifra'].slice(0, digitsN(E.n)).concat(['multiplicador', 'tolerancia', 'temperatura'])[E.sel] + '</p>' + palette(E.n, E.sel, E.b[E.sel]);
+      }
+      box.addEventListener('click', function (e) {
+        var bd = e.target.closest('[data-band]'); if (bd) { E.sel = +bd.dataset.band; draw(); return; }
+        var sw = e.target.closest('[data-c]'); if (!sw) return;
+        E.b[E.sel] = sw.dataset.c; if (E.sel < E.n - 1) E.sel++; draw(); onChange(E.b);
+      });
+      box.addEventListener('keydown', function (e) { var bd = e.target.closest('[data-band]'); if (bd && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); E.sel = +bd.dataset.band; draw(); } });
+      E.set = function (n2, b2) { E.n = n2; E.b = b2.slice(); E.sel = 0; draw(); };
+      E.draw = draw;
+      while (E.b.length < n) E.b.push(null);
+      draw();
+      return E;
+    }
+    /* --- calculadora --- */
+    INIT['res-calc'] = function (el) {
+      el.innerHTML = '<div class="res-grid2"><section class="panel"><span class="label">De colores a ohms</span><h3>Tocá cada banda y elegí su color</h3>' +
+        '<div class="seg res-nb" role="radiogroup" aria-label="Cantidad de bandas"><label><input type="radio" name="res-nb" value="4" checked><span>4 bandas</span></label><label><input type="radio" name="res-nb" value="5"><span>5 bandas</span></label><label><input type="radio" name="res-nb" value="6"><span>6 bandas</span></label></div>' +
+        '<div class="res-ed"></div></section>' +
+        '<section class="panel res-out" aria-live="polite"><span class="label">Resultado</span><div class="res-val"></div>' +
+        '<hr><span class="label">De ohms a colores</span><h3>Escribí un valor</h3><div class="res-form"><div class="field"><label for="res-in">Valor</label><input id="res-in" type="text" inputmode="text" placeholder="Ej.: 4k7, 220, 1M" autocomplete="off"></div>' +
+        '<div class="field"><label for="res-tol">Tolerancia</label><select id="res-tol">' + C.filter(function (c) { return c.t != null; }).map(function (c) { return '<option value="' + c.k + '"' + (c.k === 'dorado' ? ' selected' : '') + '>' + tolTxt(c.t) + ' (' + c.n.toLowerCase() + ')</option>'; }).join('') + '</select></div>' +
+        '<button type="button" class="btn primary res-conv">Mostrar colores</button></div><p class="res-msg"></p></section></div>';
+      var outEl = el.querySelector('.res-val'), msg = el.querySelector('.res-msg');
+      function show(b) {
+        var v = value(b), t = tolOf(b), n = b.length;
+        if (v == null || t == null || (n === 6 && !b[5])) { outEl.innerHTML = '<p class="res-wait">Completá todas las bandas para ver el valor.</p>'; return; }
+        var lo = v * (1 - t / 100), hi = v * (1 + t / 100), dd = digitsN(n), digs = b.slice(0, dd).map(function (k) { return BY[k].d; }).join('');
+        var e24 = E24.some(function (x) { var r = v / x; var lg = Math.log10(r); return Math.abs(lg - Math.round(lg)) < 1e-9; });
+        outEl.innerHTML = '<p class="res-big-val">' + ohm(v) + ' <span>' + tolTxt(t) + '</span></p>' +
+          '<p>' + digs + ' × ' + (BY[b[dd]].m >= 1 ? BY[b[dd]].m.toLocaleString('es-AR') : String(BY[b[dd]].m).replace('.', ',')) + ' = <b>' + v.toLocaleString('es-AR') + ' Ω</b></p>' +
+          '<p>Rango permitido: de <b>' + ohm(lo) + '</b> a <b>' + ohm(hi) + '</b></p>' +
+          (n === 6 ? '<p>Coeficiente de temperatura: <b>' + BY[b[5]].tc + ' ppm/K</b></p>' : '') +
+          '<p class="res-note">' + (e24 ? 'Es un valor comercial común (serie E24).' : 'No es un valor de la serie E24: es más difícil de conseguir (puede ser de las series E48 o E96, de precisión).') + '</p>';
+      }
+      var ed = Editor(el.querySelector('.res-ed'), 4, ['amarillo', 'violeta', 'rojo', 'dorado'], show);
+      show(ed.b);
+      el.querySelector('.res-nb').addEventListener('change', function (e) {
+        var n = +e.target.value, v = value(ed.b), t = BY[ed.b[digitsN(ed.n) + 1]] ? ed.b[digitsN(ed.n) + 1] : 'dorado';
+        if (n >= 5 && (t === 'dorado' || t === 'plateado')) t = 'marron';
+        var nb = (v && toBands(v, n, t, 'marron')) || new Array(n).fill(null);
+        ed.set(n, nb); show(ed.b);
+      });
+      function conv() {
+        var v = parseVal(el.querySelector('#res-in').value), tk = el.querySelector('#res-tol').value;
+        if (!(v > 0)) { msg.textContent = 'No entendí el valor. Probá con 470, 4,7k, 4k7 o 1M.'; return; }
+        if (v < 0.1 || v >= 1e10) { msg.textContent = 'Ese valor está fuera de lo que se puede marcar con colores (de 0,1 Ω a 9,99 GΩ).'; return; }
+        var n = +el.querySelector('input[name="res-nb"]:checked').value, b = toBands(v, n, tk, 'marron');
+        if (!b && n === 4) { b = toBands(v, 5, tk === 'dorado' || tk === 'plateado' ? 'marron' : tk, 'marron'); if (b) { n = 5; el.querySelector('input[name="res-nb"][value="5"]').checked = true; msg.textContent = 'Ese valor tiene 3 cifras: necesita 5 bandas.'; } }
+        else msg.textContent = '';
+        if (!b) { msg.textContent = 'Ese valor tiene demasiadas cifras para marcarlo con colores. Redondealo a 2 o 3 cifras.'; return; }
+        ed.set(n, b); show(ed.b);
+      }
+      el.querySelector('.res-conv').addEventListener('click', conv);
+      el.querySelector('#res-in').addEventListener('keydown', function (e) { if (e.key === 'Enter') conv(); });
+    };
+    /* --- generadores --- */
+    function randRes(five) {
+      if (five) { var a = 1 + rnd(9), b = rnd(10), c = rnd(10), mi = rnd(5); return { b: [C[a].k, C[b].k, C[c].k, C[mi].k, pick(['marron', 'marron', 'rojo'])] }; }
+      var e = pick(E24), m = pick([0, 1, 2, 3, 4, 5]);
+      return { b: [C[Math.floor(e / 10)].k, C[e % 10].k, C[m].k, pick(['dorado', 'dorado', 'dorado', 'plateado'])] };
+    }
+    function scoreHtml(id, ok, tot) {
+      var nota = Math.round(ok / tot * 100), prev = best[id];
+      if (prev == null || nota > prev) { best[id] = nota; saveBest(); }
+      var st = nota >= 90 ? 3 : nota >= 75 ? 2 : nota >= 60 ? 1 : 0, s = '';
+      for (var i = 0; i < 3; i++) s += i < st ? '★' : '<span class="off">★</span>';
+      return '<div class="res-end"><span class="label">Resultado</span><p class="res-big-val">' + nota + '<span>/100</span></p><p class="stars">' + s + '</p><p>' + ok + ' de ' + tot + ' bien. ' + (nota >= 90 ? '¡Excelente!' : nota >= 60 ? 'Bien, seguí practicando.' : 'Repasá la tabla de colores y probá de nuevo.') + '</p>' +
+        '<p class="res-note">Tu mejor nota: ' + best[id] + '</p><div class="btns"><button type="button" class="btn primary res-again">Jugar de nuevo</button><button type="button" class="btn" data-go2="res-intro">Ver la tabla de colores</button></div></div>';
+    }
+    function gameShell(el, id, title, sub) {
+      el.innerHTML = '<section class="panel res-game"><span class="label">' + title + '</span><p class="res-sub">' + sub + '</p><div class="res-host"></div></section>';
+      var h = el.querySelector('.res-host');
+      htAttach(h, id);
+      el.addEventListener('click', function (e) { var b = e.target.closest('[data-go2]'); if (b) go(b.dataset.go2); });
+      return h;
+    }
+    function hud(i, tot, ok, err) { return '<div class="res-hud"><span>Resistencia <b>' + (i + 1) + '</b> de ' + tot + '</span><span>Bien: <b>' + ok + '</b></span><span>Errores: <b>' + err + '</b></span></div>'; }
+    var TOT = 10;
+    /* --- juego: leé --- */
+    INIT['res-leer'] = function (el) {
+      var h = gameShell(el, 'res-leer', 'Juego · Leé la resistencia', 'Mirá los colores y elegí el valor correcto.'), G;
+      function start() { G = { i: 0, ok: 0, err: 0 }; round(); }
+      function opts(b) {
+        var v = value(b), n = b.length, d = digitsN(n), o = [v], cand = [v * 10, v / 10, v * 100];
+        var sw = b.slice(); var t0 = sw[0]; sw[0] = sw[1]; sw[1] = t0; if (sw[0] !== 'negro') cand.push(value(sw));
+        if (n === 4) { var asDig = (BY[b[0]].d * 100 + BY[b[1]].d * 10 + (BY[b[2]].d != null ? BY[b[2]].d : 0)); cand.push(asDig); }
+        else cand.push(value([b[0], b[1], b[3], b[2] === 'negro' ? 'negro' : b[2], b[4]].slice(0, 5)) || v * 1000);
+        cand.forEach(function (c) { c = Math.round(c * 1e6) / 1e6; if (c > 0 && o.length < 4 && o.every(function (x) { return ohm(x) !== ohm(c); })) o.push(c); });
+        while (o.length < 4) { var c2 = v * Math.pow(10, rnd(5) - 2) * pick([1, 1.5, 2.2]); if (o.every(function (x) { return ohm(x) !== ohm(c2); })) o.push(c2); }
+        return o.sort(function () { return Math.random() - .5; });
+      }
+      function round() {
+        if (G.i >= TOT) { h.innerHTML = scoreHtml('leer', G.ok, TOT); h.querySelector('.res-again').onclick = start; sfx.win(); return; }
+        var r = randRes(Math.random() < .3), v = value(r.b); G.cur = r; G.tries = 0;
+        var op = opts(r.b);
+        h.innerHTML = hud(G.i, TOT, G.ok, G.err) + '<div class="res-big">' + resSvg(r.b, { label: 'Resistencia de ' + r.b.length + ' bandas' }) + '</div>' +
+          '<p class="res-q">¿Cuánto vale esta resistencia de ' + r.b.length + ' bandas?</p><div class="res-opts">' + op.map(function (x) { return '<button type="button" class="btn res-op" data-v="' + x + '">' + ohm(x) + '</button>'; }).join('') + '</div><p class="res-fb" aria-live="polite"></p>';
+        h.querySelectorAll('.res-op').forEach(function (bt) {
+          bt.onclick = function () {
+            var ok = ohm(+bt.dataset.v) === ohm(v), fb = h.querySelector('.res-fb'), n = r.b.length, d = digitsN(n);
+            var why = r.b.slice(0, d).map(function (k) { return BY[k].n.toLowerCase() + ' = ' + BY[k].d; }).join(', ') + '; ' + BY[r.b[d]].n.toLowerCase() + ' = ×' + (BY[r.b[d]].m >= 1 ? BY[r.b[d]].m.toLocaleString('es-AR') : String(BY[r.b[d]].m).replace('.', ',')) + '; ' + BY[r.b[d + 1]].n.toLowerCase() + ' = ' + tolTxt(BY[r.b[d + 1]].t) + '.';
+            h.querySelectorAll('.res-op').forEach(function (x) { x.disabled = true; if (ohm(+x.dataset.v) === ohm(v)) x.classList.add('ok'); });
+            if (ok) { G.ok++; fb.className = 'res-fb ok'; fb.innerHTML = '¡Correcto! ' + why; }
+            else { G.err++; bt.classList.add('bad'); sfx.error(); fb.className = 'res-fb err'; fb.innerHTML = 'No. Vale <b>' + ohm(v) + ' ' + tolTxt(tolOf(r.b)) + '</b>: ' + why; }
+            fb.insertAdjacentHTML('afterend', '<button type="button" class="btn primary res-next">' + (G.i + 1 < TOT ? 'Siguiente →' : 'Ver resultado') + '</button>');
+            h.querySelector('.res-next').onclick = function () { G.i++; round(); };
+            h.querySelector('.res-hud').outerHTML = hud(G.i, TOT, G.ok, G.err);
+          };
+        });
+      }
+      start();
+    };
+    /* --- juego: armá --- */
+    INIT['res-armar'] = function (el) {
+      var h = gameShell(el, 'res-armar', 'Juego · Armá la resistencia', 'Pintá las bandas para que la resistencia tenga el valor pedido.'), G;
+      function start() { G = { i: 0, ok: 0, err: 0 }; round(); }
+      function round() {
+        if (G.i >= TOT) { h.innerHTML = scoreHtml('armar', G.ok, TOT); h.querySelector('.res-again').onclick = start; sfx.win(); return; }
+        var five = G.i >= 6 && Math.random() < .6, r = five ? randRes(true) : { b: [null, null, null, null] };
+        if (!five) { var e = pick(E12), m = pick([0, 1, 2, 3, 4, 5]); r.b = [C[Math.floor(e / 10)].k, C[e % 10].k, C[m].k, pick(['dorado', 'dorado', 'plateado'])]; }
+        G.target = r.b; G.tries = 0; G.done = false;
+        var v = value(r.b), t = tolOf(r.b), n = r.b.length;
+        h.innerHTML = hud(G.i, TOT, G.ok, G.err) + '<p class="res-q">Armá una resistencia de <b>' + ohm(v) + ' ' + tolTxt(t) + '</b> con ' + n + ' bandas.</p><div class="res-ed"></div>' +
+          '<div class="btns"><button type="button" class="btn primary res-check">Comprobar</button></div><p class="res-fb" aria-live="polite"></p>';
+        var ed = Editor(h.querySelector('.res-ed'), n, [], function () {});
+        h.querySelector('.res-check').onclick = function () {
+          if (G.done) return;
+          var fb = h.querySelector('.res-fb'), b = ed.b;
+          if (b.some(function (x) { return !x; })) { fb.className = 'res-fb'; fb.textContent = 'Te faltan bandas por pintar.'; return; }
+          var vv = value(b), tt = tolOf(b), okv = vv != null && Math.abs(vv - v) < v * 1e-9, okt = tt === t;
+          if (okv && okt) {
+            G.done = true; if (G.tries === 0) G.ok++;
+            fb.className = 'res-fb ok'; fb.innerHTML = '¡Muy bien! ' + b.map(function (k) { return BY[k].n.toLowerCase(); }).join(', ') + ' = ' + ohm(v) + ' ' + tolTxt(t) + '.';
+          } else {
+            G.tries++; G.err++; sfx.error();
+            var d = digitsN(n), hint = !okv ? (vv == null ? 'Revisá las bandas.' : 'Así como está vale ' + ohm(vv) + '. ' + (Math.abs(Math.log10(vv / v) - Math.round(Math.log10(vv / v))) < 1e-9 ? 'Las cifras están bien: revisá el <b>multiplicador</b> (banda ' + (d + 1) + ').' : 'Revisá las <b>cifras</b> (bandas 1 a ' + d + ').')) : 'El valor está bien, pero la <b>tolerancia</b> (última banda) tiene que ser ' + tolTxt(t) + '.';
+            fb.className = 'res-fb err'; fb.innerHTML = hint;
+            if (G.tries >= 2) { G.done = true; fb.innerHTML += '<br>La respuesta era: ' + G.target.map(function (k) { return BY[k].n.toLowerCase(); }).join(', ') + '.'; ed.set(n, G.target); }
+          }
+          if (G.done) { fb.insertAdjacentHTML('afterend', '<button type="button" class="btn primary res-next">' + (G.i + 1 < TOT ? 'Siguiente →' : 'Ver resultado') + '</button>'); h.querySelector('.res-next').onclick = function () { G.i++; round(); }; }
+          h.querySelector('.res-hud').outerHTML = hud(G.i, TOT, G.ok, G.err);
+        };
+      }
+      start();
+    };
+    /* --- juego: ¿pasa el control? --- */
+    function meterTxt(v) { return v >= 1e6 ? (v / 1e6).toFixed(v / 1e6 >= 100 ? 1 : v / 1e6 >= 10 ? 2 : 3) + ' MΩ' : v >= 1e3 ? (v / 1e3).toFixed(v / 1e3 >= 100 ? 1 : v / 1e3 >= 10 ? 2 : 3) + ' kΩ' : v.toFixed(v >= 100 ? 1 : 2) + ' Ω'; }
+    function meter(v) {
+      var t = meterTxt(v), _u = v >= 1e6 ? (v / 1e6).toFixed(v / 1e6 >= 100 ? 1 : v / 1e6 >= 10 ? 2 : 3) + ' MΩ' : v >= 1e3 ? (v / 1e3).toFixed(v / 1e3 >= 100 ? 1 : v / 1e3 >= 10 ? 2 : 3) + ' kΩ' : v.toFixed(v >= 100 ? 1 : 2) + ' Ω';
+      return '<svg viewBox="0 0 170 220" class="res-meter" role="img" aria-label="Multímetro: ' + t + '"><rect x="4" y="4" width="162" height="212" rx="18" fill="#e8b730" stroke="#8a6a12" stroke-width="3"/><rect x="18" y="18" width="134" height="56" rx="6" fill="#b9c7a7" stroke="#59626d"/>' +
+        '<text x="144" y="58" text-anchor="end" font-family="var(--font-mono)" font-size="24" font-weight="700" fill="#1b2416">' + t + '</text><text x="26" y="34" font-family="var(--font-mono)" font-size="9" fill="#1b2416">Ω</text>' +
+        '<circle cx="85" cy="130" r="38" fill="#2b3036"/><circle cx="85" cy="130" r="26" fill="#3a424c"/><rect x="82" y="92" width="6" height="22" rx="2" fill="#e8e8e8" transform="rotate(-30 85 130)"/><text x="40" y="102" font-size="9" fill="#2b3036" font-family="var(--font-mono)">V</text><text x="118" y="102" font-size="9" fill="#2b3036" font-family="var(--font-mono)">A</text><text x="48" y="182" font-size="10" font-weight="700" fill="#2b3036" font-family="var(--font-mono)">Ω</text>' +
+        '<circle cx="50" cy="196" r="8" fill="#141414"/><circle cx="85" cy="196" r="8" fill="#141414"/><circle cx="120" cy="196" r="8" fill="#c93a3a"/></svg>';
+    }
+    INIT['res-medir'] = function (el) {
+      var h = gameShell(el, 'res-medir', 'Juego · ¿Pasa el control?', 'Compará lo que marca el multímetro con el valor y la tolerancia de la resistencia.'), G;
+      function start() { G = { i: 0, ok: 0, err: 0 }; round(); }
+      function round() {
+        if (G.i >= TOT) { h.innerHTML = scoreHtml('medir', G.ok, TOT); h.querySelector('.res-again').onclick = start; sfx.win(); return; }
+        var r = randRes(Math.random() < .3), v = value(r.b), t = tolOf(r.b), inside = Math.random() < .55;
+        var dev = inside ? (Math.random() * 1.8 - .9) * t : (Math.random() < .5 ? -1 : 1) * t * (1.25 + Math.random() * 1.5);
+        var meas = v * (1 + dev / 100), lo = v * (1 - t / 100), hi = v * (1 + t / 100), really = meas >= lo && meas <= hi;
+        h.innerHTML = hud(G.i, TOT, G.ok, G.err) + '<div class="res-measure"><div class="res-big">' + resSvg(r.b) + '</div>' + meter(meas) + '</div>' +
+          '<p class="res-q">El multímetro marca <b>' + meterTxt(meas).replace('.', ',') + '</b>. ¿Esta resistencia está dentro de su tolerancia?</p>' +
+          '<div class="res-opts two"><button type="button" class="btn res-yn" data-y="1">Sí, está bien</button><button type="button" class="btn res-yn" data-y="0">No, está fuera de tolerancia</button></div><p class="res-fb" aria-live="polite"></p>';
+        h.querySelectorAll('.res-yn').forEach(function (bt) {
+          bt.onclick = function () {
+            var ok = (bt.dataset.y === '1') === really, fb = h.querySelector('.res-fb');
+            h.querySelectorAll('.res-yn').forEach(function (x) { x.disabled = true; if ((x.dataset.y === '1') === really) x.classList.add('ok'); });
+            var why = 'Vale ' + ohm(v) + ' ' + tolTxt(t) + ' → puede medir de <b>' + ohm(lo) + '</b> a <b>' + ohm(hi) + '</b>. Midió ' + meterTxt(meas).replace('.', ',') + ': ' + (really ? 'está adentro del rango.' : 'se pasa del rango, hay que cambiarla.');
+            if (ok) { G.ok++; fb.className = 'res-fb ok'; fb.innerHTML = '¡Correcto! ' + why; } else { G.err++; bt.classList.add('bad'); sfx.error(); fb.className = 'res-fb err'; fb.innerHTML = 'No. ' + why; }
+            fb.insertAdjacentHTML('afterend', '<button type="button" class="btn primary res-next">' + (G.i + 1 < TOT ? 'Siguiente →' : 'Ver resultado') + '</button>');
+            h.querySelector('.res-next').onclick = function () { G.i++; round(); };
+            h.querySelector('.res-hud').outerHTML = hud(G.i, TOT, G.ok, G.err);
+          };
+        });
+      }
+      start();
+    };
+    /* --- ley de Ohm --- */
+    INIT['res-ohm'] = function (el) {
+      el.innerHTML = '<div class="res-grid2"><section class="panel"><span class="label">Ley de Ohm</span><h3>V = I × R</h3>' +
+        '<svg viewBox="0 0 200 170" class="res-tri" role="img" aria-label="Triángulo de la ley de Ohm"><path d="M100 8 L192 162 H8 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/><path d="M42 104 H158 M100 104 V162" stroke="var(--accent)" stroke-width="3"/><text x="100" y="82" text-anchor="middle" font-size="34" font-weight="700" fill="currentColor">V</text><text x="62" y="146" text-anchor="middle" font-size="30" font-weight="700" fill="currentColor">I</text><text x="138" y="146" text-anchor="middle" font-size="30" font-weight="700" fill="currentColor">R</text></svg>' +
+        '<ul class="res-steps"><li><b>V</b> = tensión, en voltios (V).</li><li><b>I</b> = corriente, en amperes (A). 1 mA = 0,001 A.</li><li><b>R</b> = resistencia, en ohms (Ω).</li><li>Tapá con el dedo lo que querés calcular: V = I × R · I = V ÷ R · R = V ÷ I.</li></ul>' +
+        '<p class="res-note"><b>Ejemplo:</b> un LED en un puerto USB de 5 V. El LED usa 2 V y 20 mA, así que a la resistencia le quedan 3 V: R = 3 V ÷ 0,02 A = <b>150 Ω</b>.</p></section>' +
+        '<section class="panel"><span class="label">Calculadora</span><h3>Completá dos datos y calculá el tercero</h3><div class="res-form">' +
+        '<div class="field"><label for="oh-v">Tensión (V)</label><input id="oh-v" type="text" inputmode="decimal" placeholder="Ej.: 12"></div>' +
+        '<div class="field"><label for="oh-i">Corriente (mA)</label><input id="oh-i" type="text" inputmode="decimal" placeholder="Ej.: 20"></div>' +
+        '<div class="field"><label for="oh-r">Resistencia (Ω)</label><input id="oh-r" type="text" inputmode="text" placeholder="Ej.: 4k7"></div>' +
+        '<div class="btns"><button type="button" class="btn primary oh-go">Calcular</button><button type="button" class="btn oh-clr">Borrar</button></div></div><p class="res-msg oh-out" aria-live="polite"></p></section></div>';
+      function f(id) { var x = el.querySelector(id).value.trim(); return x === '' ? null : id === '#oh-r' ? parseVal(x) : parseFloat(x.replace(',', '.')); }
+      el.querySelector('.oh-go').onclick = function () {
+        var V = f('#oh-v'), I = f('#oh-i'), R = f('#oh-r'), out = el.querySelector('.oh-out'), filled = [V, I, R].filter(function (x) { return x != null; }).length;
+        if (filled !== 2 || [V, I, R].some(function (x) { return x != null && !(x > 0); })) { out.textContent = 'Completá exactamente dos datos con números mayores que cero.'; return; }
+        if (V == null) { V = I / 1000 * R; el.querySelector('#oh-v').value = num(V, 3); out.innerHTML = 'V = I × R = ' + num(I / 1000, 4) + ' A × ' + ohm(R) + ' = <b>' + num(V, 3) + ' V</b>'; }
+        else if (I == null) { I = V / R * 1000; el.querySelector('#oh-i').value = num(I, 3); out.innerHTML = 'I = V ÷ R = ' + num(V, 3) + ' V ÷ ' + ohm(R) + ' = <b>' + num(I, 3) + ' mA</b>'; }
+        else { R = V / (I / 1000); el.querySelector('#oh-r').value = num(R, 2); out.innerHTML = 'R = V ÷ I = ' + num(V, 3) + ' V ÷ ' + num(I / 1000, 4) + ' A = <b>' + ohm(R) + '</b>'; }
+        var P = V * I / 1000; out.innerHTML += '<br>Potencia: P = V × I = <b>' + num(P, 3) + ' W</b>' + (P > 0.25 ? ' (usá una resistencia de ' + (P > 1 ? 'más de 1 W' : P > 0.5 ? '1 W' : '1/2 W') + ')' : ' (alcanza una de 1/4 W)');
+      };
+      el.querySelector('.oh-clr').onclick = function () { ['#oh-v', '#oh-i', '#oh-r'].forEach(function (id) { el.querySelector(id).value = ''; }); el.querySelector('.oh-out').textContent = ''; };
+    };
+    go('res-intro');
+  })();
+
   /* ---------- secciones y pestañas ---------- */
   var tabs = document.querySelectorAll('.tab'), tabsNav = document.querySelector('.tabs');
   var mainBtns = document.querySelectorAll('.nav-main button');
   var lastIn = {};
   function groupOf(name) { var t = document.getElementById('tab-' + name); return t ? t.dataset.group : 'juego'; }
   function show(name) {
-    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'cableado', 'frontal', 'elegir', 'evaluaciones', 'integradora', 'reparacion', 'historia'].indexOf(name) < 0) name = 'niveles';
+    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'fuente-int', 'cableado', 'frontal', 'elegir', 'evaluaciones', 'integradora', 'reparacion', 'historia', 'resistencias'].indexOf(name) < 0) name = 'niveles';
     if (tabLocked && name !== 'niveles') name = 'niveles';
     var g = groupOf(name); lastIn[g] = name;
     tabs.forEach(function (t) {
