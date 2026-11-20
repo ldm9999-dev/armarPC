@@ -885,6 +885,8 @@ button.btn.primary:hover { filter: brightness(1.05); }
 .case.psuin { background: #9aa4ae; border-color: #59626d; }
 .case.wide { aspect-ratio: 16 / 10; }
 .fi-cfg { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: flex-start; margin-top: 8px; }
+@media (max-width: 560px) { .fi-cfg .seg span { padding: 7px 8px; font-size: 12.5px; } }
+.fi-cfg .seg { flex-wrap: wrap; }
 .fi-cfg .group { border: 0; padding: 0; margin: 0; min-width: 0; } .fi-cfg legend { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
 .fi-tiers { display: grid; grid-template-columns: repeat(6, minmax(76px, 1fr)); gap: 6px; }
 .fi-tier { position: relative; cursor: pointer; } .fi-tier input { position: absolute; opacity: 0; pointer-events: none; }
@@ -898,7 +900,7 @@ button.btn.primary:hover { filter: brightness(1.05); }
 .fi-sum-r ul { margin: 6px 0; padding-left: 18px; columns: 2 220px; font-size: 14px; }
 .fi-eff { display: grid; gap: 4px; margin: 8px 0; max-width: 420px; } .fi-eff div { display: grid; grid-template-columns: 96px minmax(0, 1fr) 44px; gap: 8px; align-items: center; font-size: 13px; }
 .fi-eff i { height: 10px; border-radius: 5px; background: linear-gradient(90deg, var(--ok) var(--v), var(--line) var(--v)); } .fi-eff b { font-family: var(--font-mono); }
-.fi-note { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.fi-note { margin: 4px 0 0; font-size: 13px; color: var(--muted); } .fi-cabnote { grid-column: 1 / -1; padding: 8px 10px; border-radius: 8px; background: var(--accent-soft); color: var(--ink); font-size: 14px; }
 .fi-intro { margin-bottom: 12px; } .fi-intro h2 { margin: 2px 0 6px; font: 700 20px var(--font-display); } .fi-intro p { margin: 0 0 6px; }
 .fi-warn { padding: 8px 10px; border-radius: 8px; background: rgba(194,65,45,.12); border-left: 4px solid var(--err); }
 .res-head { margin-bottom: 12px; } .res-head h2 { margin: 2px 0 6px; font: 700 22px var(--font-display); } .res-head p { margin: 0 0 10px; }
@@ -940,6 +942,28 @@ button.btn.primary:hover { filter: brightness(1.05); }
 @media (max-width: 560px) { .res-measure { grid-template-columns: minmax(0, 1fr); } .res-opts { grid-template-columns: minmax(0, 1fr); } .res-big-val { font-size: 28px; } }
 .res-end { text-align: center; padding: 10px 0; } .res-end .btns { justify-content: center; }
 .res-tri { width: 100%; max-width: 220px; display: block; margin: 0 auto; color: var(--ink); }
+.case.cpuin { background: #2c6a4e; border-color: #8a939c; border-radius: 8px; }
+.ci-eras { grid-template-columns: repeat(6, minmax(84px, 1fr)); } .ci-era span { padding: 8px 6px; } .ci-era b { font: 700 16px var(--font-display); } .ci-era small { font-size: 11px; line-height: 1.2; }
+@media (max-width: 640px) { .ci-eras { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ci-facts strong { display: block; font: 700 18px var(--font-display); } .ci-facts p { margin: 4px 0 8px; }
+.ci-facts dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px 14px; margin: 0; }
+.ci-facts dt { font: 600 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); } .ci-facts dd { margin: 0; font-weight: 600; }
+.ci-tabs { margin: 10px 0; }
+.ci-cycle { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 14px; align-items: center; }
+@media (max-width: 860px) { .ci-cycle { grid-template-columns: minmax(0, 1fr); } }
+.ci-diag { width: 100%; height: auto; } .ci-chip { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 4; }
+.ci-b rect { fill: var(--surface); stroke: var(--line); stroke-width: 2; transition: fill .25s, stroke .25s; } .ci-b.on rect { fill: var(--accent); stroke: var(--accent); }
+.ci-bt { font: 700 15px var(--font-display); fill: var(--ink); } .ci-bs { font: 600 10.5px var(--font-mono); fill: var(--muted); } .ci-b.on .ci-bt, .ci-b.on .ci-bs { fill: #fff; }
+.ci-ln { stroke: var(--muted); stroke-width: 3; fill: none; }
+.ci-step h3 { margin: 2px 0 6px; font: 700 19px var(--font-display); } .ci-step p { margin: 0 0 10px; line-height: 1.5; }
+.ci-hist { display: grid; gap: 6px; }
+.ci-row { display: grid; grid-template-columns: 52px minmax(0, 1fr) 110px; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.ci-y { font: 700 16px var(--font-mono); color: var(--accent); } .ci-m strong { display: block; } .ci-m > span { font-size: 13.5px; color: var(--muted); }
+.ci-bar { position: relative; height: 20px; margin-top: 4px; background: var(--bg); border-radius: 4px; overflow: hidden; } .ci-bar i { position: absolute; inset: 0 auto 0 0; background: var(--ok-soft); border-right: 3px solid var(--ok); }
+.ci-bar b { position: relative; padding-left: 6px; font: 600 12px var(--font-mono); line-height: 20px; }
+.ci-d { font: 12px var(--font-mono); color: var(--muted); text-align: right; }
+@media (max-width: 560px) { .ci-row { grid-template-columns: 44px minmax(0, 1fr); } .ci-d { grid-column: 2; text-align: left; } }
+.ci-lat td { white-space: normal; } .ci-lbar { width: 120px; max-width: 30vw; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; display: inline-block; margin-right: 8px; vertical-align: middle; } .ci-lbar i { display: block; height: 100%; background: var(--accent); }
 .howto { padding: 0; overflow: hidden; border: 2px solid var(--accent); }
 .howto.ack { border-width: 1px; border-color: var(--line); }
 .howto summary { display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; list-style: none; }
@@ -1162,6 +1186,7 @@ body.lb-on { overflow: hidden; }
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" data-group="practica" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" data-group="practica" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
     <button class="tab" role="tab" type="button" id="tab-fuente-int" data-tab="fuente-int" data-group="practica" aria-controls="panel-fuente-int">Fuente por dentro<small>de 80 PLUS a Titanium</small></button>
+    <button class="tab" role="tab" type="button" id="tab-cpu-int" data-tab="cpu-int" data-group="practica" aria-controls="panel-cpu-int">Procesador por dentro<small>de 1978 a hoy</small></button>
     <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" data-group="practica" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
     <button class="tab" role="tab" type="button" id="tab-elegir" data-tab="elegir" data-group="practica" aria-controls="panel-elegir">Elegí tu PC<small>paso a paso</small></button>
     <button class="tab" role="tab" type="button" id="tab-frontal" data-tab="frontal" data-group="practica" aria-controls="panel-frontal">Panel frontal<small>botones, luces y USB</small></button>
@@ -1338,11 +1363,34 @@ body.lb-on { overflow: hidden; }
         <fieldset class="group"><legend>Modo de juego</legend><div class="seg" id="fi-mode">
           <label><input type="radio" name="fi-mode" value="build" checked><span>1 · Componentes</span></label>
           <label><input type="radio" name="fi-mode" value="labels"><span>2 · Nombres</span></label>
+          <label><input type="radio" name="fi-mode" value="cables"><span>3 · Cables</span></label>
         </div></fieldset>
       </div>
       <div class="fi-sum" id="fi-sum" aria-live="polite"></div>
     </section>
     <div id="game-fuente-int"></div>
+  </section>
+
+  <section class="tabpanel" role="tabpanel" id="panel-cpu-int" aria-labelledby="tab-cpu-int" hidden>
+    <section class="panel fi-intro">
+      <span class="label">El procesador por dentro</span>
+      <h2>¿Qué hay adentro de un procesador?</h2>
+      <p>El procesador (CPU) es el “cerebro” de la PC: ejecuta las instrucciones de los programas, una tras otra, miles de millones de veces por segundo. Adentro hay un chip de silicio con millones de transistores organizados en partes, cada una con su trabajo.</p>
+      <div id="ci-info"></div>
+    </section>
+    <section class="panel fi-intro">
+      <span class="label">Juego</span>
+      <h2>Armá el procesador por dentro</h2>
+      <div class="fi-cfg">
+        <fieldset class="group"><legend>Época</legend><div class="fi-tiers ci-eras" id="ci-eras"></div></fieldset>
+        <fieldset class="group"><legend>Modo de juego</legend><div class="seg" id="ci-mode">
+          <label><input type="radio" name="ci-mode" value="build" checked><span>1 · Componentes</span></label>
+          <label><input type="radio" name="ci-mode" value="labels"><span>2 · Nombres</span></label>
+        </div></fieldset>
+      </div>
+      <div class="fi-sum ci-sum" id="ci-sum" aria-live="polite"></div>
+    </section>
+    <div id="game-cpu-int"></div>
   </section>
 
   <section class="tabpanel" role="tabpanel" id="panel-resistencias" aria-labelledby="tab-resistencias" hidden>
@@ -1802,8 +1850,8 @@ body.lb-on { overflow: hidden; }
         'Al final tocá <b>Verificar</b>. Si algo está mal, tocá el error y te lleva al paso para corregirlo.'] };
     if (key === 'fuente') return { t: 'Armá la fuente por dentro y nombrá sus partes', s: [
         'Elegí un componente de la <b>bandeja</b>: tocalo o arrastralo.',
-        'Llevalo a su lugar adentro de la fuente. Arriba está la parte de atrás (donde entra la corriente) y abajo, el frente con los conectores.',
-        'A la izquierda va el <b>lado primario</b> (alta tensión, 220 V) y a la derecha el <b>lado secundario</b> (12 V, 5 V y 3,3 V). El transformador está en el medio, separando los dos lados.',
+        'Llevalo a su lugar adentro de la fuente. A la izquierda está la parte de atrás (donde entra la corriente) y a la derecha, el frente con el panel de cables.',
+        'Del lado izquierdo de la placa va el <b>lado primario</b> (alta tensión, 220 V) y del derecho el <b>lado secundario</b> (12 V, 5 V y 3,3 V). El transformador está en el medio, separando los dos lados.',
         'Si va ahí, queda colocado y ves para qué sirve. Si no, suma un <b>error</b> y te da una pista.',
         'Cuando esté armada, elegí cada <b>nombre</b> de la lista y tocá el componente que corresponde.'],
       tip: 'Si te trabás, tocá “Mostrar nombres”. Importante: nunca abras una fuente real: el capacitor principal puede guardar cientos de voltios aunque esté desenchufada.' };
@@ -1830,7 +1878,17 @@ body.lb-on { overflow: hidden; }
         'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.',
         'Llevalo a la <b>parte de la placa</b> que corresponde, o tocá esa parte.',
         'Si es correcto, el nombre queda puesto. Si no, suma un <b>error</b>.'] };
-    if (key === 'fuente-armar') return { t: 'Poné los componentes de la fuente', s: htDef('fuente').s.slice(0, 4).concat(['Arriba podés elegir la certificación: de la 80 PLUS básica a la Titanium. Cambian algunos componentes y la forma de los cables.']), tip: htDef('fuente').tip };
+    if (key === 'cpu-armar' || key === 'cpu-nombres' || key === 'cpu') return { t: key === 'cpu-nombres' ? 'Poné los nombres del procesador' : 'Armá el procesador por dentro', s: (key === 'cpu-nombres' ? [
+        'El procesador ya está armado: cada parte está en su lugar.',
+        'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.',
+        'Llevalo a la parte del chip que corresponde, o tocala.'] : [
+        'Arriba elegí la <b>época</b>: del Intel 8086 de 1978 a los procesadores de hoy.',
+        'Elegí una parte de la <b>bandeja</b>: tocala o arrastrala.',
+        'Llevala a su lugar dentro del chip. Leé la pista de la ficha si no sabés dónde va.']).concat([
+        'Si va ahí, queda colocada y ves para qué sirve. Si no, suma un <b>error</b>.',
+        'Hay dos juegos: <b>1 · Componentes</b> (armar) y <b>2 · Nombres</b> (identificar cada parte).']),
+      tip: 'Para reconocer las partes: las cuadrículas parejas son memoria (caché o registros), los bloques desordenados son lógica (ALU, control) y los rojos son gráficos.' };
+    if (key === 'fuente-armar') return { t: 'Poné los componentes de la fuente', s: htDef('fuente').s.slice(0, 4).concat(['Arriba podés elegir la certificación: de la 80 PLUS básica a la Titanium. Cambian algunos componentes y la forma de los cables.', 'El juego tiene 3 partes: <b>1 · Componentes</b>, <b>2 · Nombres</b> y <b>3 · Cables</b> (conectar la fuente a la PC).']), tip: htDef('fuente').tip };
     if (key === 'fuente-nombres') return { t: 'Poné los nombres de la fuente', s: ['La fuente ya está armada, con todos sus componentes.', 'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.', 'Llevalo al componente que corresponde, o tocalo.', 'Si es correcto, el nombre queda puesto. Si no, suma un <b>error</b>.'] };
     if (key === 'placa' || key === 'placa-armar') return { t: key === 'placa' ? 'Armá la placa madre y nombrá sus partes' : 'Armá la placa madre', s: [
         'Elegí una pieza de la <b>bandeja</b>: tocala o arrastrala.',
@@ -1940,7 +1998,7 @@ body.lb-on { overflow: hidden; }
 
   function mountGame(host, cfg) {
     var P = cfg.parts, SL = cfg.slots;
-    var SLP = SL, SLL = cfg.caseClass === 'board' ? null : landscapeSlots(SL), LAND = false;
+    var SLP = SL, SLL = /\bboard\b/.test(cfg.caseClass || '') ? null : landscapeSlots(SL), LAND = false;
     function G(i) { return (LAND && SLL ? SLL : SLP)[i]; }
     htAttach(host, cfg.howto || 'armar');
     host.innerHTML =
@@ -2970,8 +3028,8 @@ body.lb-on { overflow: hidden; }
         '<p class="case-note">Arrastrá desde un conector hasta el conector donde va, o tocá uno y después el otro. Los conectores de la fuente están en su panel modular.</p></div>' +
       '<section class="info panel w-info" aria-live="polite"></section></div>';
 
-  WiringFactory = function (host, onComplete, variant) {
-    var ADV = variant === 'adv';
+  WiringFactory = function (host, onComplete, variant, opts) {
+    var ADV = variant === 'adv'; opts = opts || {};
     host.innerHTML = WIRE_HTML; htAttach(host, 'cables', ADV);
     function q(sel) { return host.querySelector(sel); }
     var NS = 'http://www.w3.org/2000/svg';
@@ -3053,7 +3111,7 @@ body.lb-on { overflow: hidden; }
       (ADV ? '<path d="M244 202 Q236 206 238 209" fill="none" stroke="#111" stroke-width="3"/>' : '');
     var PSU = '<rect class="f-metal-dark" x="24" y="562" width="300" height="150" rx="6"/>' + fan(108, 637, 58) +
       '<rect class="f-chip" x="196" y="570" width="122" height="112" rx="4" opacity=".6"/>' +
-      '<text class="t-psu" x="200" y="702">' + (ADV ? '1000 W' : '650 W') + '</text>';
+      '<text class="t-psu" x="200" y="702">' + (opts.watts ? opts.watts + ' W' : ADV ? '1000 W' : '650 W') + '</text>';
     var HDD = '<rect class="f-metal" x="378" y="520" width="150" height="122" rx="6"/>' +
       '<circle class="f-metal-dark" cx="453" cy="575" r="42" opacity=".5"/><circle class="f-metal" cx="453" cy="575" r="8"/>' +
       '<path class="f-chip" d="M500 630 L466 584 L472 580 L506 626 Z"/>' +
@@ -4127,7 +4185,7 @@ body.lb-on { overflow: hidden; }
           '<div class="mc-cta"><span>' + (n ? n + ' de ' + levelsFor(m).length + ' fases completas · ' : '') + cta + '</span><b>' + (n ? 'Continuar →' : 'Empezar →') + '</b></div></button>';
       }
       var TDESC = { 'muy-basica': 'Armá una PC simple: elegís marca, discos y fuente.', basica: 'PC completa con placa de video y WiFi.', gamer: 'Varias memorias, discos y placas de video.', placa: 'Armá placas madre base, intermedia y gamer.',
-        cableado: 'Conectá los cables de la fuente a cada pieza.', 'fuente-int': 'Armá una fuente por dentro y nombrá sus componentes.', elegir: 'Elegí cada pieza y verificá que sea compatible.', frontal: 'Botones, luces, USB y audio del gabinete.',
+        cableado: 'Conectá los cables de la fuente a cada pieza.', 'fuente-int': 'Armá una fuente por dentro, de 80 PLUS a Titanium.', 'cpu-int': 'Cómo funciona el procesador y sus partes, de 1978 a hoy.', elegir: 'Elegí cada pieza y verificá que sea compatible.', frontal: 'Botones, luces, USB y audio del gabinete.',
         evaluaciones: 'Las evaluaciones de cada fase, para practicar.', integradora: 'La evaluación final de cada modo.', reparacion: '10 niveles de fallas reales y cómo resolverlas.', historia: 'De la IBM PC de 1981 a hoy, con fotos reales.' };
       function tiles(group) {
         return '<div class="w-tiles">' + [].slice.call(document.querySelectorAll('.tab[data-group="' + group + '"]')).map(function (t) {
@@ -6482,13 +6540,13 @@ body.lb-on { overflow: hidden; }
         spec: '220 V CA · 50 Hz · interruptor I/O' },
       fuse: { name: 'Fusible', short: 'Fusible', vb: '0 0 80 32',
         body: '<rect x="4" y="8" width="72" height="16" rx="8" fill="rgba(220,235,245,.55)" stroke="#9aa6b2" stroke-width="1.5"/><rect x="4" y="7" width="14" height="18" rx="2" fill="#c3cad1" stroke="#7d8894"/><rect x="62" y="7" width="14" height="18" rx="2" fill="#c3cad1" stroke="#7d8894"/><path d="M18 16 C30 10, 40 22, 50 16 S 58 14, 62 16" stroke="#59626d" stroke-width="1.5" fill="none"/>',
-        hint: 'El fusible está atrás, al lado de la entrada de corriente.',
+        hint: 'El fusible está arriba, entre el filtro EMI y el disipador primario.',
         info: 'Es la primera protección. Si algo adentro hace cortocircuito, el hilo del fusible se derrite y corta la corriente, para evitar un incendio. Si un fusible se quemó, casi siempre hay otra pieza rota: no se arregla solo cambiándolo.',
         spec: 'Por ejemplo: T 8 A 250 V (de acción lenta)' },
       fan: { name: 'Ventilador', short: 'Ventilador', vb: '0 0 100 30',
         body: '<rect width="100" height="30" rx="4" fill="#22272d"/><circle cx="50" cy="15" r="13" fill="#14171b" stroke="#59626d"/>' + [0, 72, 144, 216, 288].map(function (a) { return '<path d="M50 15 q8 -10 12 -2 z" fill="#59636f" transform="rotate(' + a + ' 50 15)"/>'; }).join('') + '<circle cx="50" cy="15" r="4" fill="#59626d"/>' +
           '<path d="M10 6 v18 M16 6 v18 M22 6 v18 M78 6 v18 M84 6 v18 M90 6 v18" stroke="#59626d" stroke-width="2"/>',
-        hint: 'El ventilador va arriba a la derecha.',
+        hint: 'El ventilador está atrás: en el borde izquierdo, abajo.',
         info: 'Saca el calor de los disipadores. En las fuentes viejas iba atrás (80 mm); en las modernas va en la tapa (120 a 140 mm) y sopla sobre toda la placa. Muchas fuentes buenas lo frenan cuando hay poco consumo (modo semipasivo) para no hacer ruido.',
         spec: '80 a 140 mm · algunas con modo semipasivo' },
       emi: { name: 'Filtro EMI (de interferencias)', short: 'Filtro EMI', vb: '0 0 100 50',
@@ -6533,7 +6591,7 @@ body.lb-on { overflow: hidden; }
         spec: 'Rectificación del riel de 12 V' },
       caps: { name: 'Capacitores de salida', short: 'Capacitores salida', vb: '0 0 70 56',
         body: pcb(70, 56) + cyl(19, 18, 13, '#5b2a86') + cyl(51, 18, 13, '#5b2a86') + cyl(19, 42, 11, '#1f3f7a') + cyl(51, 42, 11, '#1f3f7a'),
-        hint: 'Los capacitores de salida están a la derecha de todo, arriba.',
+        hint: 'Los capacitores de salida están a la derecha del disipador secundario, arriba.',
         info: 'Alisan la tensión de salida para que llegue limpia a la PC, con muy poco “ripple” (ondulación). En las fuentes buenas son japoneses y de <b>105 °C</b>; también se usan capacitores sólidos (de polímero). Un capacitor hinchado es señal de que la fuente está fallando.',
         spec: '16 V · 105 °C · electrolíticos y de polímero' },
       outl: { name: 'Bobina de salida', short: 'Bobina de salida', vb: '0 0 80 64',
@@ -6574,21 +6632,36 @@ body.lb-on { overflow: hidden; }
     ];
     function ext(o, a) { var r = {}, k; for (k in o) r[k] = o[k]; for (k in a) r[k] = a[k]; return r; }
     function cablesBody(t) {
-      var W = 296, H = 36, o = '<rect width="' + W + '" height="' + H + '" rx="4" fill="#22272d"/>';
-      function sock(x, w, lab, rows) { var c = '<rect x="' + x + '" y="5" width="' + w + '" height="20" rx="2" fill="#0b0d10" stroke="#6d7782"/>', n = Math.floor((w - 2) / 6); for (var i = 0; i < n; i++) for (var r = 0; r < (rows || 2); r++) c += '<rect x="' + (x + 2 + i * 6) + '" y="' + (8 + r * 8) + '" width="4" height="5" fill="#59626d"/>'; return c + '<text x="' + (x + w / 2) + '" y="33" text-anchor="middle" font-size="6.5" fill="#cfd5db" font-family="var(--font-mono)">' + lab + '</text>'; }
-      function bundle(x, w, lab, cols) { var c = '<rect x="' + (x - 3) + '" y="4" width="' + (w + 6) + '" height="22" rx="10" fill="#0b0d10"/>'; for (var i = 0; i < cols.length; i++) c += '<circle cx="' + (x + 5 + i * (w - 10) / Math.max(1, cols.length - 1)) + '" cy="15" r="4" fill="' + cols[i] + '" stroke="#000" stroke-width=".6"/>'; return c + '<text x="' + (x + w / 2) + '" y="33" text-anchor="middle" font-size="6.5" fill="#cfd5db" font-family="var(--font-mono)">' + lab + '</text>'; }
+      var W = 64, H = 220, o = '<rect width="' + W + '" height="' + H + '" rx="5" fill="#22272d"/>';
+      function sock(y, h, lab, cols, rows) {
+        var c = '<rect x="8" y="' + y + '" width="48" height="' + h + '" rx="2.5" fill="#0b0d10" stroke="#8a939c" stroke-width="1.2"/>', pw = 44 / cols, ph = (h - 4) / rows;
+        for (var i = 0; i < cols; i++) for (var r = 0; r < rows; r++) c += '<rect x="' + (10 + i * pw + pw * .18) + '" y="' + (y + 2 + r * ph + ph * .18) + '" width="' + (pw * .64) + '" height="' + (ph * .64) + '" rx=".6" fill="#59626d"/>';
+        return c + '<text x="32" y="' + (y + h + 8) + '" text-anchor="middle" font-size="6.5" font-weight="700" fill="#e8edf2" font-family="var(--font-mono)">' + lab + '</text>';
+      }
+      function wires(y, h, lab, cols) {
+        var c = '<rect x="10" y="' + y + '" width="44" height="' + h + '" rx="8" fill="#0b0d10"/>';
+        for (var i = 0; i < cols.length; i++) c += '<rect x="' + (13 + (i % 5) * 8) + '" y="' + (y + 4 + Math.floor(i / 5) * ((h - 8) / Math.ceil(cols.length / 5))) + '" width="6" height="' + ((h - 8) / Math.ceil(cols.length / 5) - 2) + '" rx="3" fill="' + cols[i] + '"/>';
+        return c + '<text x="32" y="' + (y + h + 8) + '" text-anchor="middle" font-size="6.5" font-weight="700" fill="#e8edf2" font-family="var(--font-mono)">' + lab + '</text>';
+      }
       var Y = '#e8c040', R = '#d22b2b', B = '#141414', O = '#f07c1a', V = '#8a3fc7', G = '#8d939a';
-      if (t.cab === 'fixed') return o + bundle(16, 90, 'Cables fijos', [Y, Y, R, R, B, B, O, O, V, G]) + '<text x="205" y="16" text-anchor="middle" font-size="7" fill="#cfd5db" font-family="var(--font-mono)">No modular: todos los cables</text><text x="205" y="25" text-anchor="middle" font-size="7" fill="#cfd5db" font-family="var(--font-mono)">salen soldados a la placa</text>';
-      if (t.cab === 'semi') return o + bundle(10, 60, '24 pines + CPU (fijos)', [Y, R, B, O, V, G]) + sock(100, 44, 'PCIe') + sock(152, 44, 'PCIe') + sock(204, 38, 'SATA', 1) + sock(250, 38, 'SATA', 1);
-      return o + sock(8, 74, '24 pines (placa)') + sock(88, 38, 'CPU 1') + sock(132, 38, 'CPU 2') + sock(176, 38, 'PCIe') + (t.w >= 850 ? sock(220, 34, '12V-2x6') : sock(220, 34, 'PCIe')) + sock(260, 30, 'SATA', 1);
+      o += '<text x="32" y="10" text-anchor="middle" font-size="6" fill="#aeb6be" font-family="var(--font-mono)">' + (t.cab === 'fixed' ? 'NO MODULAR' : t.cab === 'semi' ? 'SEMIMODULAR' : 'FULL MODULAR') + '</text>';
+      if (t.cab === 'fixed') return o + wires(16, 60, '24 PINES', [Y, Y, R, R, B, B, O, O, V, G]) + wires(86, 26, 'CPU', [Y, Y, B, B]) + wires(122, 26, 'PCIe', [Y, Y, B, B]) + wires(158, 22, 'SATA', [Y, R, B, O]) + wires(190, 16, 'MOLEX', [Y, R, B]);
+      if (t.cab === 'semi') return o + wires(16, 50, '24 PINES', [Y, Y, R, R, B, B, O, O, V, G]) + wires(76, 24, 'CPU', [Y, Y, B, B]) + sock(112, 22, 'PCIe 1', 4, 2) + sock(146, 22, 'PCIe 2', 4, 2) + sock(180, 16, 'SATA', 5, 1);
+      return o + sock(16, 48, '24 PINES', 2, 12) + sock(74, 18, 'CPU 1', 4, 2) + sock(102, 18, 'CPU 2', 4, 2) + sock(130, 18, t.w >= 850 ? '12V-2x6' : 'PCIe 1', t.w >= 850 ? 6 : 4, 2) + sock(158, 18, 'PCIe 2', 4, 2) + sock(186, 14, 'SATA', 5, 1);
     }
+    var VBODY = {
+      inlet: '<rect width="40" height="100" rx="3" fill="#2b3036"/><path d="M8 8 h24 l3 5 v30 h-30 v-30z" fill="#16191d" stroke="#59626d"/><rect x="13" y="16" width="4" height="10" fill="#c3cad1"/><rect x="18" y="30" width="4" height="10" fill="#c3cad1"/><rect x="23" y="16" width="4" height="10" fill="#c3cad1"/><rect x="9" y="58" width="22" height="30" rx="2" fill="#16191d"/><rect x="12" y="61" width="16" height="24" rx="1" fill="#c93a3a"/><text x="20" y="72" text-anchor="middle" font-size="8" fill="#fff" font-family="var(--font-mono)">I</text><text x="20" y="82" text-anchor="middle" font-size="8" fill="#fff" font-family="var(--font-mono)">O</text>',
+      fan: '<rect width="30" height="100" rx="4" fill="#22272d"/><circle cx="15" cy="50" r="12" fill="#14171b" stroke="#59626d"/>' + [0, 72, 144, 216, 288].map(function (a) { return '<path d="M15 50 q7 -9 11 -2 z" fill="#59636f" transform="rotate(' + a + ' 15 50)"/>'; }).join('') + '<circle cx="15" cy="50" r="3.5" fill="#59626d"/><path d="M6 8 h18 M6 14 h18 M6 20 h18 M6 80 h18 M6 86 h18 M6 92 h18" stroke="#59626d" stroke-width="2"/>'
+    };
     function build(t) {
       var P = {}, k;
       for (k in BASE) P[k] = ext(BASE[k], { req: [] });
-      P.modular = ext(P.modular, { vb: '0 0 296 36', body: cablesBody(t),
+      P.inlet = ext(P.inlet, { vb: '0 0 40 100', body: VBODY.inlet, hint: 'La entrada de corriente está atrás: en el borde izquierdo, arriba.' });
+      P.fan = ext(P.fan, { vb: '0 0 30 100', body: VBODY.fan });
+      P.modular = ext(P.modular, { vb: '0 0 64 220', body: cablesBody(t),
         name: t.cab === 'fixed' ? 'Salida de cables fijos (no modular)' : t.cab === 'semi' ? 'Panel semimodular de cables' : 'Panel de conectores modulares',
         short: t.cab === 'fixed' ? 'Cables fijos' : t.cab === 'semi' ? 'Panel semimodular' : 'Panel modular',
-        hint: 'Los cables salen por el frente de la fuente: la franja ancha de abajo de todo.',
+        hint: 'Los cables salen por el frente de la fuente: el panel alto del borde derecho.',
         info: t.cab === 'fixed' ? 'En una fuente <b>no modular</b> todos los cables salen soldados a la placa, aunque no se usen: es más barata, pero los cables que sobran quedan sueltos en el gabinete.'
           : t.cab === 'semi' ? 'En una fuente <b>semimodular</b> los cables que siempre se usan (24 pines y CPU) vienen fijos, y los demás (PCIe, SATA) se enchufan solo si hacen falta.'
           : 'En una fuente <b>full modular</b> todos los cables se enchufan: 24 pines, CPU (EPS), PCIe' + (t.w >= 850 ? ' o 12V-2x6' : '') + ' y SATA. Solo se conectan los que se usan y el gabinete queda ordenado.',
@@ -6602,28 +6675,29 @@ body.lb-on { overflow: hidden; }
       P.fan = ext(P.fan, { info: t.fan + ' Saca el calor de los disipadores; en una fuente real va en la tapa y sopla sobre toda la placa.', spec: t.fan.split('.')[0] });
       P.bulk = ext(P.bulk, { spec: '~400 V · ' + (t.w >= 1000 ? '2 capacitores en paralelo en las reales' : '1 capacitor') + ' · 105 °C' });
       if (!t.dcdc) delete P.dcdc;
-      var LAY = [['inlet', 4, 1.5, 30, 7.5], ['fuse', 40, 3, 14, 4.5], ['fan', 120, 1.5, 36, 7.5],
-        ['emi', 4, 13, 34, 16], ['bridge', 42, 13, 16, 10], ['pfc', 4, 33, 26, 26], ['bulk', 34, 31, 22, 22], ['ctrl', 4, 62, 36, 12], ['hsprim', 62, 13, 6, 57],
-        ['trafo', 72, 15, 24, 24], ['standby', 72, 44, 18, 14], ['hssec', 100, 13, 6, 57], ['caps', 110, 13, 18, 15], ['caps', 132, 13, 18, 15], ['outl', 110, 32, 18, 15]];
-      if (t.dcdc) LAY.push(['dcdc', 132, 32, 24, 20]);
-      LAY.push(['modular', 6, 79, 148, 18]);
+      var LAY = [['inlet', 1.5, 6, 9, 36], ['fan', 1.5, 56, 9, 38], ['fuse', 46, 4, 14, 6],
+        ['emi', 15, 4, 28, 20], ['bridge', 46, 13, 15, 10], ['pfc', 15, 28, 25, 25], ['bulk', 43, 30, 19, 19], ['ctrl', 15, 60, 32, 14], ['hsprim', 65, 4, 5, 70],
+        ['trafo', 73, 6, 20, 20], ['standby', 73, 33, 17, 13], ['hssec', 97, 4, 5, 70], ['caps', 105, 4, 20, 14], ['caps', 105, 21, 20, 14], ['outl', 105, 38, 20, 15]];
+      if (t.dcdc) LAY.push(['dcdc', 104, 57, 22, 16]);
+      LAY.push(['modular', 133, 3, 25, 94]);
       var deco = '<svg class="board-deco" viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true">' +
-        '<rect x="0" y="0" width="160" height="11" fill="#7d8894"/><rect x="0" y="76" width="160" height="24" fill="#7d8894"/>' +
-        '<rect x="2" y="11" width="156" height="65" fill="#2c6a4e" stroke="#1d4a36" stroke-width=".5"/>' +
-        '<path class="s-trace" stroke-width=".3" d="M12 30 H40 M30 34 V60 M58 40 H62 M96 30 H100 M106 52 H110 M120 50 V70 M20 72 V74 H40 M110 60 H150 M70 62 H90 M140 56 V70"/>' +
-        '<path d="M84 12 V75" stroke="#f2f2ee" stroke-width=".45" stroke-dasharray="2 1.4" opacity=".85"/>' +
-        '<text x="46" y="58" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">PRIMARIO · alta tensión</text>' +
-        '<text x="132" y="62" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">LADO SECUNDARIO</text><text x="132" y="65.5" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">12 V · 5 V · 3,3 V</text>' +
-        '<text x="84" y="73.5" text-anchor="middle" font-size="1.8" fill="#f2f2ee" font-family="var(--font-mono)">aislación</text>' +
-        '<text x="80" y="10.3" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">ATRÁS · ' + t.w + ' W ' + t.name + '</text><text x="80" y="99" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">FRENTE · salida de cables hacia la PC</text>' +
-        [[5, 14], [155, 14], [5, 73], [155, 73]].map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="1.2" fill="#c9b27a"/>'; }).join('') + '</svg>';
+        '<rect x="0" y="0" width="12" height="100" fill="#7d8894"/><rect x="130" y="0" width="30" height="100" fill="#7d8894"/>' +
+        '<rect x="12" y="2" width="117" height="96" fill="#2c6a4e" stroke="#1d4a36" stroke-width=".5"/>' +
+        '<path class="s-trace" stroke-width=".3" d="M20 26 H40 M30 54 V60 M62 40 H65 M93 16 H97 M102 30 H105 M115 54 V57 M48 76 V84 H60 M70 80 H90 M110 76 V90 M102 46 H105 M126 40 H129 M126 20 H129"/>' +
+        '<path d="M83 3 V97" stroke="#f2f2ee" stroke-width=".45" stroke-dasharray="2 1.4" opacity=".85"/>' +
+        '<text x="40" y="86" text-anchor="middle" font-size="2.4" fill="#e8efe9" font-family="var(--font-mono)">LADO PRIMARIO</text><text x="40" y="89.5" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">alta tensión (220 V y 400 V)</text>' +
+        '<text x="110" y="86" text-anchor="middle" font-size="2.4" fill="#e8efe9" font-family="var(--font-mono)">LADO SECUNDARIO</text><text x="110" y="89.5" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">12 V · 5 V · 3,3 V</text>' +
+        '<text x="83" y="95" text-anchor="middle" font-size="1.8" fill="#f2f2ee" font-family="var(--font-mono)">aislación</text>' +
+        '<text x="6" y="50" text-anchor="middle" font-size="1.9" fill="#22272d" font-family="var(--font-mono)" transform="rotate(-90 6 50)">ATRÁS · 220 V</text>' +
+        '<text x="131.5" y="50" text-anchor="middle" font-size="1.6" fill="#22272d" font-family="var(--font-mono)" transform="rotate(-90 131.5 50)">FRENTE · cables a la PC</text>' +
+        [[15, 6], [126, 6], [15, 95], [126, 95]].map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="1.2" fill="#c9b27a"/>'; }).join('') + '</svg>';
       return { key: 'fuenteint', caseClass: 'board psuin wide', parts: P, deco: deco, htKey: 'fuente',
         slots: LAY.map(function (a) { return { type: a[0], x: a[1] / 1.6, y: a[2], w: a[3] / 1.6, h: a[4], z: 1 }; }),
         winMsg: '¡Fuente armada!',
-        caseNote: 'Fuente de ' + t.w + ' W ' + t.name + ' abierta, vista desde arriba. Arriba está la parte de atrás (entrada de 220 V) y abajo el frente, por donde salen los cables.',
+        caseNote: 'Fuente de ' + t.w + ' W ' + t.name + ' abierta, vista desde arriba. A la izquierda está la parte de atrás (entrada de 220 V y ventilador) y a la derecha el frente, por donde salen los cables.',
         start: 'Colocá cada componente adentro de la fuente.',
         lbl: { built: 'La fuente ya está armada.', done: 'Ya armaste la fuente.', on: 'en la fuente', of: 'de la fuente', tip: 'El lado izquierdo es el de alta tensión y el derecho el de baja tensión.',
-          win: '¡Fuente completa y con todos sus nombres!', title: '¡Fuente identificada!', more: 'Probá con otra certificación, desde la 80 PLUS básica hasta la Titanium.', buildTitle: '¡Fuente completa!', buildWin: '¡Fuente ' + t.name + ' armada! Ahora probá el modo “2 · Nombres”.', buildStart: 'Colocá cada componente en su lugar adentro de la fuente de ' + t.w + ' W ' + t.name + '.' } };
+          win: '¡Fuente completa y con todos sus nombres!', title: '¡Fuente identificada!', more: 'Ahora pasá al modo “3 · Cables” para conectar la fuente a la PC.', buildTitle: '¡Fuente completa!', buildWin: '¡Fuente ' + t.name + ' armada! Ahora probá el modo “2 · Nombres” y después “3 · Cables”.', buildStart: 'Colocá cada componente en su lugar adentro de la fuente de ' + t.w + ' W ' + t.name + '.' } };
     }
     var tier = TIERS[3], mode = 'build', game = null;
     var tiersEl = document.getElementById('fi-tiers'), sumEl = document.getElementById('fi-sum');
@@ -6637,12 +6711,201 @@ body.lb-on { overflow: hidden; }
     }
     function start() {
       if (game) game.destroy();
-      game = PlacaFactory(host, null, mode, function () { return build(tier); });
-      game.rebuild({});
+      if (mode === 'cables') {
+        game = WiringFactory(host, null, tier.w >= 850 ? 'adv' : undefined, { watts: tier.w });
+      } else {
+        game = PlacaFactory(host, null, mode, function () { return build(tier); });
+        game.rebuild({});
+      }
       summary();
+      if (mode === 'cables') sumEl.insertAdjacentHTML('beforeend', '<p class="fi-note fi-cabnote"><b>3 · Cables:</b> conectá cada cable de la fuente a su lugar en la PC: 24 pines a la placa madre, CPU (EPS) al procesador, PCIe a la placa de video y SATA al disco.' + (tier.w >= 850 ? ' Con una fuente de ' + tier.w + ' W hay dos cables de CPU y dos de PCIe.' : '') + (tier.cab === 'fixed' ? ' En una fuente no modular los cables ya salen de la fuente: en la PC solo se enchufa la otra punta.' : '') + '</p>');
     }
     tiersEl.addEventListener('change', function (e) { tier = TIERS[+e.target.value]; start(); });
     document.getElementById('fi-mode').addEventListener('change', function (e) { mode = e.target.value; start(); });
+    start();
+  })();
+
+  /* ---------- Procesador por dentro: cómo funciona, historia y juego ---------- */
+  (function () {
+    var host = document.getElementById('game-cpu-int');
+    if (!host || !PlacaFactory) return;
+    function rng(seed) { var x = seed || 7; return function () { x = (x * 16807) % 2147483647; return (x - 1) / 2147483646; }; }
+    function texture(kind, w, h, seed) {
+      var r = rng(seed), o = '';
+      if (kind === 'cache') { o += '<rect width="' + w + '" height="' + h + '" fill="#3a5a8c"/>'; for (var x = 4; x < w - 2; x += 6) o += '<rect x="' + x + '" y="3" width="4" height="' + (h - 6) + '" fill="#4f74ab"/>'; for (var y = 6; y < h - 2; y += 7) o += '<rect x="2" y="' + y + '" width="' + (w - 4) + '" height="1" fill="#2a4166"/>'; return o; }
+      if (kind === 'pads') { o += '<rect width="' + w + '" height="' + h + '" fill="#2b3036"/>'; for (var px = 3; px < w - 3; px += 7) o += '<rect x="' + px + '" y="' + (h * .25) + '" width="5" height="' + (h * .5) + '" fill="#d2a637"/>'; return o; }
+      var col = { logic: ['#6b4a8a', '#8a63ad', '#57386f'], alu: ['#3f7d4f', '#56a06a', '#2e5c3a'], fpu: ['#2f7f86', '#45a3ab', '#225e63'], ctrl: ['#8a5a2e', '#b07940', '#6a421f'], io: ['#7a6a2a', '#a08c3a', '#5a4e1e'], gpu: ['#8a2e3a', '#b0414f', '#6a222c'], core: ['#4a5568', '#64748b', '#334155'] }[kind] || ['#555', '#777', '#333'];
+      o += '<rect width="' + w + '" height="' + h + '" fill="' + col[0] + '"/>';
+      if (kind === 'gpu') { for (var gy = 4; gy < h - 6; gy += 12) for (var gx = 4; gx < w - 8; gx += 14) o += '<rect x="' + gx + '" y="' + gy + '" width="11" height="9" rx="1" fill="' + col[1] + '"/><rect x="' + (gx + 2) + '" y="' + (gy + 2) + '" width="7" height="2" fill="' + col[2] + '"/>'; return o; }
+      if (kind === 'core') { o += '<rect x="3" y="3" width="' + (w * .38) + '" height="' + (h - 6) + '" fill="#3a5a8c"/>'; for (var cy = 6; cy < h - 4; cy += 5) o += '<rect x="5" y="' + cy + '" width="' + (w * .38 - 4) + '" height="2" fill="#4f74ab"/>'; for (var k = 0; k < 26; k++) o += '<rect x="' + (w * .45 + r() * (w * .5)) + '" y="' + (3 + r() * (h - 10)) + '" width="' + (3 + r() * 8) + '" height="' + (2 + r() * 6) + '" fill="' + (k % 2 ? '#64748b' : '#7c8ba3') + '"/>'; return o; }
+      for (var i = 0; i < Math.round(w * h / 60); i++) o += '<rect x="' + (r() * (w - 6)) + '" y="' + (r() * (h - 5)) + '" width="' + (2 + r() * 7) + '" height="' + (1.5 + r() * 4) + '" fill="' + col[1 + (i % 2)] + '"/>';
+      return o;
+    }
+    function body(kind, w, h, seed, txt) {
+      return { vb: '0 0 ' + w + ' ' + h, body: '<rect width="' + w + '" height="' + h + '" rx="2" fill="#0f1218"/>' + '<g transform="translate(1.5 1.5)">' + texture(kind, w - 3, h - 3, seed) + '</g>' +
+        (txt ? '<text x="' + (w / 2) + '" y="' + (h / 2 + 3) + '" text-anchor="middle" font-size="' + Math.min(9, w / 7) + '" font-weight="700" fill="rgba(255,255,255,.85)" font-family="var(--font-mono)">' + txt + '</text>' : '') };
+    }
+    function part(key, kind, seed, txt, name, short, hint, info, spec, w, h) {
+      var b = body(kind, w || 100, h || 60, seed, txt);
+      return { name: name, short: short, vb: b.vb, body: b.body, hint: hint, info: info, spec: spec, req: [] };
+    }
+    var PADS = function (n) { return part('pads', 'pads', 3, '', 'Contactos (pads) de conexión', 'Contactos', 'Los contactos están en los bordes del chip, arriba y abajo.', 'Son los puntos donde se sueldan los hilos de oro que conectan el silicio con las patas del procesador. Por ahí entran y salen los datos, las direcciones y la energía.', n + ' patas en el encapsulado', 200, 12); };
+    var ERAS = [
+      { k: '8086', name: 'Intel 8086', y: 1978, tr: '29.000', clk: '5 a 10 MHz', nm: '3 µm (3000 nm)', cores: '1 núcleo · 16 bits', cache: 'sin caché', news: 'Primer procesador x86: la base de casi todas las PC hasta hoy. Ya separa la parte que busca instrucciones (BIU) de la que las ejecuta (EU).',
+        P: {
+          pads: PADS(40),
+          biu: part('biu', 'io', 11, 'BIU', 'Unidad de interfaz de bus (BIU)', 'Interfaz de bus', 'La interfaz de bus está arriba a la izquierda.', 'Se comunica con la memoria y los dispositivos: pide instrucciones y datos por el bus y los trae al procesador.', 'Bus de 16 bits de datos y 20 bits de direcciones (1 MB)'),
+          queue: part('queue', 'cache', 12, 'COLA', 'Cola de instrucciones (prefetch)', 'Cola prefetch', 'La cola de instrucciones está arriba, en el medio.', 'Mientras el procesador ejecuta una instrucción, la BIU ya va trayendo las siguientes y las guarda en esta cola de 6 bytes. Así no pierde tiempo esperando: es el antepasado de la caché.', '6 bytes'),
+          addr: part('addr', 'logic', 13, 'SEG', 'Registros de segmento y sumador de direcciones', 'Segmentos y direcciones', 'Los registros de segmento están debajo de la cola de instrucciones.', 'Calcula la dirección de memoria combinando un registro de segmento con un desplazamiento. Así un procesador de 16 bits llega a 1 MB de memoria.', 'CS · DS · SS · ES'),
+          regs: part('regs', 'cache', 14, 'AX BX CX DX', 'Registros generales', 'Registros', 'Los registros están arriba a la derecha.', 'Son cajitas de memoria ultrarrápida adentro del procesador. Guardan los números con los que se está trabajando ahora mismo (AX, BX, CX, DX y otros).', '8 registros de 16 bits'),
+          alu: part('alu', 'alu', 15, 'ALU', 'Unidad aritmético-lógica (ALU)', 'ALU', 'La ALU está a la derecha, debajo de los registros.', 'Hace las cuentas (sumar, restar, multiplicar) y las operaciones lógicas (comparar, Y, O, NO). Es la “calculadora” del procesador.', 'ALU de 16 bits'),
+          ctrl: part('ctrl', 'ctrl', 16, 'CONTROL', 'Unidad de control', 'Unidad de control', 'La unidad de control está abajo a la izquierda.', 'Es el “director de orquesta”: decodifica cada instrucción y le dice a cada parte qué hacer y cuándo, siguiendo el ritmo del reloj.', 'Decodificación y secuencia'),
+          ucode: part('ucode', 'cache', 17, 'µROM', 'ROM de microcódigo', 'Microcódigo', 'La ROM de microcódigo está abajo, al lado de la unidad de control.', 'Guarda los “pasitos” internos de cada instrucción complicada. La unidad de control los lee para ejecutar, por ejemplo, una multiplicación.', 'Memoria de solo lectura interna')
+        },
+        L: [['pads', 8, 2, 144, 7], ['biu', 8, 12, 54, 38], ['queue', 66, 12, 26, 20], ['addr', 66, 36, 26, 14], ['regs', 96, 12, 56, 28], ['alu', 96, 44, 56, 30], ['ctrl', 8, 54, 54, 34], ['ucode', 66, 54, 26, 34], ['pads', 8, 91, 144, 7]] },
+      { k: '486', name: 'Intel 80486', y: 1989, tr: '1,2 millones', clk: '25 a 100 MHz', nm: '1 µm (1000 nm)', cores: '1 núcleo · 32 bits', cache: '8 KB de caché L1', news: 'Primer x86 con caché y coprocesador matemático (FPU) dentro del mismo chip, y con línea de montaje (pipeline) de 5 etapas.',
+        P: {
+          pads: PADS(168),
+          cache: part('cache', 'cache', 21, 'L1 8 KB', 'Caché L1 (8 KB)', 'Caché L1', 'La caché es el bloque de cuadrícula regular, arriba a la izquierda.', 'Memoria muy rápida dentro del chip que guarda copias de lo que se usa seguido. Si el dato está acá, no hay que esperar a la RAM, que es mucho más lenta.', '8 KB · datos e instrucciones'),
+          alu: part('alu', 'alu', 22, 'ALU', 'Unidad de enteros (ALU y registros)', 'Unidad de enteros', 'La unidad de enteros está arriba, en el medio.', 'Hace las cuentas con números enteros y guarda los datos de trabajo en los registros (EAX, EBX…). En el 486 casi todas las instrucciones simples tardan un solo ciclo.', '32 bits'),
+          fpu: part('fpu', 'fpu', 23, 'FPU', 'Unidad de coma flotante (FPU)', 'FPU', 'La FPU está arriba a la derecha.', 'Hace cuentas con decimales (coma flotante), necesarias para gráficos, ingeniería y juegos 3D. Antes era un chip aparte (el coprocesador 387).', 'Compatible con el 80387'),
+          decode: part('decode', 'logic', 24, 'DECOD', 'Prefetch y decodificador', 'Decodificador', 'El decodificador está abajo, en el medio.', 'Trae las instrucciones por adelantado y las traduce en señales internas. Es una de las 5 etapas del pipeline (buscar, decodificar 1 y 2, ejecutar, escribir).', 'Pipeline de 5 etapas'),
+          ucode: part('ucode', 'ctrl', 25, 'CONTROL', 'Unidad de control y microcódigo', 'Control y microcódigo', 'La unidad de control está abajo a la derecha.', 'Coordina todo el procesador y guarda el microcódigo de las instrucciones complejas.', 'Microcódigo en ROM'),
+          mmu: part('mmu', 'logic', 26, 'MMU', 'Unidad de manejo de memoria (MMU)', 'MMU', 'La MMU está a la izquierda, debajo de la caché.', 'Traduce las direcciones que usan los programas en direcciones reales de la RAM (paginación). Permite la memoria virtual y que cada programa tenga su espacio protegido.', 'Segmentación y paginación'),
+          biu: part('biu', 'io', 27, 'BUS', 'Unidad de interfaz de bus', 'Interfaz de bus', 'La interfaz de bus está abajo a la izquierda.', 'Conecta el procesador con el resto de la placa: memoria, chipset y tarjetas.', 'Bus de 32 bits')
+        },
+        L: [['pads', 8, 2, 144, 7], ['cache', 8, 12, 50, 38], ['alu', 62, 12, 38, 38], ['fpu', 104, 12, 48, 38], ['mmu', 8, 54, 50, 16], ['biu', 8, 73, 50, 15], ['decode', 62, 54, 38, 34], ['ucode', 104, 54, 48, 34], ['pads', 8, 91, 144, 7]] },
+      { k: 'core2', name: 'Intel Core 2 Duo', y: 2006, tr: '291 millones', clk: '1,86 a 3 GHz', nm: '65 nm', cores: '2 núcleos', cache: '4 MB de caché L2 compartida', news: 'Dos núcleos completos en un solo chip: puede hacer dos tareas a la vez. La caché L2 grande la comparten los dos.',
+        P: {
+          core: part('core', 'core', 31, '', 'Núcleo (con su caché L1)', 'Núcleo', 'Los dos núcleos están a la izquierda, uno arriba del otro.', 'Cada núcleo es un procesador completo: busca, decodifica y ejecuta instrucciones, con su propia caché L1 (la parte azul). Con 2 núcleos, la PC puede hacer dos tareas a la vez.', '64 KB de L1 por núcleo · 64 bits', 100, 60),
+          l2: part('l2', 'cache', 32, 'L2 4 MB', 'Caché L2 compartida', 'Caché L2', 'La caché L2 es el bloque grande de la derecha.', 'Una caché grande que comparten los dos núcleos. Si un núcleo necesita un dato que usó el otro, lo encuentra acá sin ir a la RAM.', '4 MB · compartida'),
+          fsb: part('fsb', 'io', 33, 'FSB', 'Interfaz del bus del sistema (FSB)', 'Bus FSB', 'La interfaz del bus está abajo a la derecha.', 'Conecta el procesador con el chipset (puente norte), que a su vez tiene el controlador de memoria. Todavía la RAM no se conectaba directo al procesador.', 'FSB de 1066 MT/s'),
+          pll: part('pll', 'logic', 34, 'PLL', 'Generador de reloj (PLL)', 'Reloj PLL', 'El generador de reloj es el bloque chico, abajo en el medio.', 'Multiplica la frecuencia que llega de la placa para generar el reloj interno: cada “tic” marca un paso de trabajo. A 3 GHz son 3.000 millones de tics por segundo.', 'Multiplicador × FSB'),
+          pads: PADS(775)
+        },
+        L: [['pads', 8, 2, 144, 7], ['core', 8, 12, 66, 37], ['core', 8, 52, 66, 36], ['l2', 78, 12, 74, 56], ['pll', 78, 72, 20, 16], ['fsb', 102, 72, 50, 16], ['pads', 8, 91, 144, 7]] },
+      { k: 'i7', name: 'Intel Core i7 (2.ª generación)', y: 2011, tr: 'unos 1.000 millones', clk: '3,4 a 3,8 GHz', nm: '32 nm', cores: '4 núcleos · 8 hilos', cache: '8 MB de caché L3', news: 'Todo en un chip: núcleos, gráficos integrados, controlador de memoria y PCI Express. Desaparece el puente norte de la placa.',
+        P: {
+          gpu: part('gpu', 'gpu', 41, 'GPU', 'Gráficos integrados (GPU)', 'GPU integrada', 'Los gráficos integrados son el bloque rojo de la izquierda.', 'Una placa de video chica dentro del procesador: permite tener imagen sin una placa de video aparte. Usa parte de la RAM como memoria de video.', 'Intel HD Graphics 3000', 60, 100),
+          core: part('core', 'core', 42, '', 'Núcleo', 'Núcleo', 'Los 4 núcleos están en el medio, uno arriba del otro.', 'Cada núcleo ejecuta instrucciones por su cuenta. Con Hyper-Threading cada núcleo atiende 2 hilos, así que 4 núcleos = 8 hilos.', 'L1 64 KB + L2 256 KB por núcleo', 100, 50),
+          l3: part('l3', 'cache', 43, 'L3', 'Caché L3 compartida', 'Caché L3', 'La caché L3 es la columna de cuadrícula al lado de los núcleos.', 'Una caché grande que comparten todos los núcleos y la GPU, conectada por un <b>bus en anillo</b> que da vueltas por el chip.', '8 MB', 40, 100),
+          sa: part('sa', 'io', 44, 'PCIe', 'Agente del sistema y PCI Express', 'Agente del sistema', 'El agente del sistema está arriba a la derecha.', 'Maneja el tráfico entre los núcleos, la memoria y las placas: incluye las 16 líneas PCI Express para la placa de video.', '16 líneas PCIe 2.0'),
+          imc: part('imc', 'logic', 45, 'DDR3', 'Controlador de memoria (DDR3)', 'Controlador de memoria', 'El controlador de memoria está a la derecha, en el medio.', 'Habla directo con la RAM, sin pasar por el chipset: por eso la memoria responde mucho más rápido.', '2 canales DDR3'),
+          display: part('display', 'ctrl', 46, 'VIDEO', 'Motor de video y salida de pantalla', 'Motor de video', 'El motor de video está abajo a la derecha.', 'Codifica y decodifica videos (Quick Sync) y manda la imagen a las salidas de la placa madre (HDMI, DVI, VGA).', 'Quick Sync Video')
+        },
+        L: [['gpu', 6, 6, 36, 88], ['core', 46, 6, 40, 20], ['core', 46, 28, 40, 20], ['core', 46, 52, 40, 20], ['core', 46, 74, 40, 20], ['l3', 90, 6, 20, 88], ['sa', 114, 6, 40, 30], ['imc', 114, 40, 40, 28], ['display', 114, 72, 40, 22]] },
+      { k: 'ryzen', name: 'AMD Ryzen 9 9950X (chiplets)', y: 2024, tr: 'más de 8.000 millones en cada chiplet de núcleos', clk: 'hasta 5,7 GHz', nm: '4 nm (núcleos) y 6 nm (E/S)', cores: '16 núcleos · 32 hilos', cache: '64 MB de caché L3 + 16 MB de L2', news: 'Ya no es un solo chip: son varios <b>chiplets</b> unidos en el mismo encapsulado. Los núcleos se fabrican en el proceso más avanzado y la entrada/salida en uno más barato.',
+        P: {
+          ccd: part('ccd', 'core', 51, 'CCD', 'Chiplet de núcleos (CCD)', 'Chiplet CCD', 'Los chiplets de núcleos son los dos rectángulos de la izquierda.', 'Cada chiplet tiene <b>8 núcleos Zen 5</b> y 32 MB de caché L3 compartida. Uniendo dos chiplets se llega a 16 núcleos.', '8 núcleos + 32 MB L3 · 4 nm', 100, 60),
+          imc: part('imc', 'logic', 52, 'DDR5', 'Controlador de memoria DDR5', 'Controlador DDR5', 'El controlador de memoria está arriba a la izquierda del chiplet de E/S.', 'Maneja los 2 canales de memoria DDR5 de la placa madre.', '2 canales DDR5'),
+          pcie: part('pcie', 'io', 53, 'PCIe 5', 'Controlador PCI Express 5.0', 'PCIe 5.0', 'El controlador PCI Express está arriba a la derecha del chiplet de E/S.', 'Da las líneas PCI Express para la placa de video y los discos M.2 más rápidos.', '28 líneas PCIe 5.0'),
+          igpu: part('igpu', 'gpu', 54, 'GPU', 'Gráficos integrados', 'GPU integrada', 'La GPU integrada está abajo a la izquierda del chiplet de E/S.', 'Una GPU chica (2 unidades RDNA 2): alcanza para tener imagen, ver videos y trabajar, no para juegos exigentes.', '2 unidades RDNA 2'),
+          usb: part('usb', 'ctrl', 55, 'USB', 'Entrada/salida (USB y más)', 'E/S USB', 'La entrada/salida está a la derecha, en el medio del chiplet de E/S.', 'Controla puertos USB y otras conexiones directas del procesador.', 'USB 3.2 · USB 2.0'),
+          fabric: part('fabric', 'cache', 56, 'IF', 'Infinity Fabric (conexión entre chiplets)', 'Infinity Fabric', 'La Infinity Fabric está abajo a la derecha del chiplet de E/S.', 'Es la “autopista” que une los chiplets de núcleos con el chiplet de E/S dentro del encapsulado.', 'Enlaces de alta velocidad')
+        },
+        L: [['ccd', 6, 8, 54, 38], ['ccd', 6, 54, 54, 38], ['imc', 70, 16, 40, 32], ['pcie', 114, 16, 40, 32], ['igpu', 70, 52, 40, 32], ['usb', 114, 52, 40, 15], ['fabric', 114, 69, 40, 15]] },
+      { k: 'nucleo', name: 'Un núcleo moderno por dentro', y: 2024, tr: 'cientos de millones por núcleo', clk: '4 a 6 GHz', nm: '3 a 5 nm', cores: '1 núcleo (de los muchos que hay)', cache: 'L1 + L2 propias', news: 'Así se organiza adentro cada núcleo actual: busca muchas instrucciones a la vez, las reordena y las ejecuta en paralelo en varias unidades.',
+        P: {
+          fetch: part('fetch', 'logic', 61, 'FETCH', 'Búsqueda y predictor de saltos', 'Predictor de saltos', 'La búsqueda está arriba a la izquierda: es el primer paso.', 'Busca las próximas instrucciones y <b>adivina</b> hacia dónde va a seguir el programa cuando hay un “si… entonces”. Acierta más del 95 % de las veces y así no se frena.', 'Etapa 1 del pipeline'),
+          l1i: part('l1i', 'cache', 62, 'L1 I', 'Caché L1 de instrucciones', 'L1 instrucciones', 'La L1 de instrucciones está arriba, en el medio.', 'Guarda las instrucciones del programa que se van a ejecutar enseguida. Responde en 1 nanosegundo.', '32 KB'),
+          decode: part('decode', 'ctrl', 63, 'DECOD', 'Decodificadores', 'Decodificadores', 'Los decodificadores están arriba a la derecha.', 'Traducen cada instrucción x86 en microoperaciones simples. Un núcleo moderno decodifica 4 a 8 instrucciones por ciclo.', '4 a 8 por ciclo'),
+          sched: part('sched', 'logic', 64, 'REORD', 'Planificador y reordenamiento', 'Planificador', 'El planificador está en el medio a la izquierda.', 'Reordena las instrucciones para ejecutar primero las que ya tienen sus datos listos (ejecución fuera de orden) y después las devuelve al orden original.', 'Ejecución fuera de orden'),
+          alu: part('alu', 'alu', 65, 'ALU', 'Unidades de enteros (ALU)', 'ALU de enteros', 'Las ALU de enteros están en el medio.', 'Varias ALU trabajan al mismo tiempo: sumas, restas, comparaciones y saltos con números enteros.', '4 a 6 ALU'),
+          fpu: part('fpu', 'fpu', 66, 'AVX', 'Unidad vectorial y de coma flotante', 'Unidad vectorial', 'La unidad vectorial está en el medio a la derecha.', 'Hace muchas cuentas con decimales de una sola vez (instrucciones vectoriales AVX). Se usa en juegos, video, audio e inteligencia artificial.', 'AVX-512 / AVX2'),
+          lsu: part('lsu', 'logic', 67, 'LOAD', 'Unidad de carga y almacenamiento', 'Carga y almacenamiento', 'La unidad de carga está abajo a la izquierda.', 'Lleva los datos desde la caché a los registros (carga) y desde los registros a la caché (almacenamiento).', '3 cargas por ciclo'),
+          l1d: part('l1d', 'cache', 68, 'L1 D', 'Caché L1 de datos', 'L1 datos', 'La L1 de datos está abajo, en el medio.', 'Guarda los datos que se están usando. Es la caché más rápida y la más chica.', '48 KB'),
+          l2: part('l2', 'cache', 69, 'L2', 'Caché L2 del núcleo', 'Caché L2', 'La caché L2 está abajo a la derecha.', 'Más grande y un poco más lenta que la L1. Si el dato no está en L1, se busca acá; si tampoco está, en la L3 compartida y por último en la RAM.', '1 a 2 MB')
+        },
+        L: [['fetch', 6, 6, 46, 26], ['l1i', 56, 6, 46, 26], ['decode', 106, 6, 48, 26], ['sched', 6, 37, 46, 26], ['alu', 56, 37, 46, 26], ['fpu', 106, 37, 48, 26], ['lsu', 6, 68, 46, 26], ['l1d', 56, 68, 46, 26], ['l2', 106, 68, 48, 26]] }
+    ];
+    function deco(e) {
+      var o = '<svg class="board-deco" viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true"><rect width="160" height="100" fill="#2c6a4e"/>';
+      if (e.k === 'ryzen') o += '<rect x="4" y="6" width="58" height="42" rx="1.5" fill="#141821" stroke="#0b0d10"/><rect x="4" y="52" width="58" height="42" rx="1.5" fill="#141821" stroke="#0b0d10"/><rect x="66" y="12" width="92" height="76" rx="1.5" fill="#141821" stroke="#0b0d10"/>' +
+        '<path d="M62 27 H66 M62 73 H66" stroke="#d2a637" stroke-width="1.2"/><text x="112" y="10" text-anchor="middle" font-size="2.6" fill="#e8efe9" font-family="var(--font-mono)">Chiplet de entrada/salida (IOD) · 6 nm</text>';
+      else if (e.k === 'nucleo') o += '<rect x="3" y="3" width="154" height="94" rx="1.5" fill="#141821" stroke="#0b0d10"/><path d="M52 19 H56 M102 19 H106 M52 50 H56 M102 50 H106 M52 81 H56 M102 81 H106 M29 32 V37 M79 32 V37 M130 32 V37 M29 63 V68 M79 63 V68 M130 63 V68" stroke="#d2a637" stroke-width="1"/>';
+      else o += '<rect x="3" y="1" width="154" height="98" rx="1.5" fill="#141821" stroke="#0b0d10"/>';
+      return o + '</svg>';
+    }
+    function build(e, md) {
+      var PP = e.P;
+      if (md === 'labels') { PP = {}; Object.keys(e.P).forEach(function (k) { var o = {}, q; for (q in e.P[k]) o[q] = e.P[k][q]; o.body = o.body.replace(/<text[^>]*>[^<]*<\/text>/g, ''); PP[k] = o; }); }
+      return { key: 'cpuint', caseClass: 'board cpuin wide', parts: PP, deco: deco(e), htKey: 'cpu',
+        slots: e.L.map(function (a) { return { type: a[0], x: a[1] / 1.6, y: a[2], w: a[3] / 1.6, h: a[4], z: 1 }; }),
+        winMsg: '¡Procesador armado!',
+        caseNote: e.name + ' (' + e.y + ') por dentro: así se ve el chip de silicio ampliado miles de veces. Los colores son para distinguir cada parte.',
+        start: 'Colocá cada parte en su lugar dentro del chip.',
+        lbl: { built: 'El procesador ya está armado.', done: 'Ya armaste el procesador.', on: 'en el chip', of: 'del chip', tip: 'Las cuadrículas regulares son memoria (caché o registros); los bloques desordenados son lógica.',
+          win: '¡Procesador completo y con todos sus nombres!', title: '¡Procesador identificado!', more: 'Probá con otra época, del 8086 de 1978 a los chiplets de hoy.', buildTitle: '¡Procesador completo!', buildWin: (e.k === 'nucleo' ? '¡Núcleo armado!' : '¡' + e.name + ' armado!') + ' Ahora probá el modo “2 · Nombres”.', buildStart: 'Colocá cada parte ' + (e.k === 'nucleo' ? 'del núcleo' : 'del ' + e.name) + ' en su lugar dentro del chip.' } };
+    }
+    var era = ERAS[0], mode = 'build', game = null;
+    var erasEl = document.getElementById('ci-eras'), sumEl = document.getElementById('ci-sum');
+    erasEl.innerHTML = ERAS.map(function (e, i) { return '<label class="fi-tier ci-era"><input type="radio" name="ci-era" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span><b>' + (e.k === 'nucleo' ? 'Hoy' : e.y) + '</b><small>' + e.name.replace('Intel ', '').replace('AMD ', '').replace(' (chiplets)', '').replace(' (2.ª generación)', '') + '</small></span></label>'; }).join('');
+    function summary() {
+      var e = era;
+      sumEl.innerHTML = '<div class="ci-facts"><strong>' + e.name + ' · ' + e.y + '</strong><p>' + e.news + '</p><dl><div><dt>Transistores</dt><dd>' + e.tr + '</dd></div><div><dt>Velocidad</dt><dd>' + e.clk + '</dd></div><div><dt>Fabricación</dt><dd>' + e.nm + '</dd></div><div><dt>Núcleos</dt><dd>' + e.cores + '</dd></div><div><dt>Caché</dt><dd>' + e.cache + '</dd></div></dl></div>';
+    }
+    function start() { if (game) game.destroy(); game = PlacaFactory(host, null, mode, function () { return build(era, mode); }); game.rebuild({}); summary(); }
+    erasEl.addEventListener('change', function (ev) { era = ERAS[+ev.target.value]; start(); });
+    document.getElementById('ci-mode').addEventListener('change', function (ev) { mode = ev.target.value; start(); });
+    /* ---- explicaciones ---- */
+    var infoEl = document.getElementById('ci-info');
+    var STEPS = [
+      { t: 'El reloj marca el ritmo', d: 'Cada “tic” del reloj es un paso de trabajo. Un procesador de 4 GHz da <b>4.000 millones de tics por segundo</b>.', on: ['clk'] },
+      { t: '1 · Buscar la instrucción', d: 'La unidad de control pide la próxima instrucción del programa, por ejemplo <b>SUMAR R1 + R2</b>. Primero la busca en la <b>caché</b>; si no está, la trae de la <b>RAM</b>, que es mucho más lenta.', on: ['ram', 'cache', 'cu'] },
+      { t: '2 · Decodificar', d: 'El decodificador de la unidad de control traduce la instrucción: “hay que sumar lo que está en el registro R1 con lo que está en R2”.', on: ['cu'] },
+      { t: '3 · Ejecutar', d: 'La <b>ALU</b> toma los datos de los <b>registros</b> (R1 = 5 y R2 = 3) y hace la cuenta: 5 + 3 = 8.', on: ['reg', 'alu'] },
+      { t: '4 · Guardar el resultado', d: 'El resultado (8) se guarda en un registro y, si hace falta, vuelve a la caché y a la RAM. Después empieza otra vez con la instrucción siguiente.', on: ['alu', 'reg', 'cache'] },
+      { t: 'Hoy: todo en paralelo', d: 'Los procesadores actuales hacen los 4 pasos como una <b>línea de montaje</b> (pipeline): mientras ejecutan una instrucción ya están decodificando la siguiente y buscando otra. Además tienen varios <b>núcleos</b>, y cada uno ejecuta varias instrucciones por tic.', on: ['clk', 'ram', 'cache', 'cu', 'reg', 'alu'] }
+    ];
+    var step = 0;
+    function blk(id, x, y, w, h, lab, sub) { return '<g class="ci-b" data-b="' + id + '"><rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8"/><text x="' + (x + w / 2) + '" y="' + (y + h / 2 - (sub ? 2 : -5)) + '" text-anchor="middle" class="ci-bt">' + lab + '</text>' + (sub ? '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 15) + '" text-anchor="middle" class="ci-bs">' + sub + '</text>' : '') + '</g>'; }
+    function cycle() {
+      var S = STEPS[step];
+      return '<div class="ci-cycle"><svg viewBox="0 0 520 230" class="ci-diag" role="img" aria-label="Esquema del procesador: ' + S.t + '">' +
+        '<rect x="150" y="10" width="360" height="210" rx="14" class="ci-chip"/><text x="330" y="30" text-anchor="middle" class="ci-bs">PROCESADOR</text>' +
+        '<path d="M120 115 H170 M290 85 H330 M290 160 H330 M395 115 V140" class="ci-ln"/>' +
+        blk('ram', 10, 80, 110, 70, 'RAM', 'memoria principal') + blk('cache', 170, 80, 120, 70, 'Caché', 'L1 · L2 · L3') + blk('cu', 330, 45, 160, 60, 'Unidad de control', 'busca y decodifica') +
+        blk('reg', 325, 125, 84, 80, 'Registros', 'R1=5 R2=3') + blk('alu', 417, 125, 78, 80, 'ALU', step >= 3 ? '5 + 3 = 8' : 'calcula') + blk('clk', 170, 170, 120, 40, 'Reloj', '4 GHz') + '</svg>' +
+        '<div class="ci-step"><span class="label">Paso ' + (step + 1) + ' de ' + STEPS.length + '</span><h3>' + S.t + '</h3><p>' + S.d + '</p><div class="btns"><button type="button" class="btn ci-prev"' + (step ? '' : ' disabled') + '>← Anterior</button><button type="button" class="btn primary ci-next">' + (step < STEPS.length - 1 ? 'Siguiente →' : 'Volver a empezar') + '</button></div></div></div>';
+    }
+    function hiLite() { var S = STEPS[step]; infoEl.querySelectorAll('.ci-b').forEach(function (g) { g.classList.toggle('on', S.on.indexOf(g.dataset.b) >= 0); }); }
+    var HIST_CPU = [
+      ['1971', 'Intel 4004', 2300, '740 kHz', '10 µm', '1', 'El primer microprocesador: 4 bits, para una calculadora.'],
+      ['1978', 'Intel 8086', 29000, '5-10 MHz', '3 µm', '1', 'Nace la arquitectura x86. Su primo, el 8088, va en la IBM PC (1981).'],
+      ['1985', 'Intel 80386', 275000, '16-33 MHz', '1,5 µm', '1', 'Primer x86 de 32 bits, con memoria virtual.'],
+      ['1989', 'Intel 80486', 1200000, '25-100 MHz', '1 µm', '1', 'Caché L1 y FPU adentro del chip.'],
+      ['1993', 'Intel Pentium', 3100000, '60-200 MHz', '0,8 µm', '1', 'Dos líneas de ejecución: hasta 2 instrucciones por tic.'],
+      ['2000', 'Intel Pentium 4', 42000000, '1,3-3,8 GHz', '180 nm', '1', 'La carrera de los GHz.'],
+      ['2003', 'AMD Athlon 64', 105900000, '2 GHz', '130 nm', '1', 'Lleva el x86 a 64 bits y el controlador de memoria adentro.'],
+      ['2006', 'Intel Core 2 Duo', 291000000, '1,86-3 GHz', '65 nm', '2', 'Dos núcleos: la era multinúcleo.'],
+      ['2011', 'Intel Core i7-2600K', 1000000000, '3,4 GHz', '32 nm', '4', 'GPU, memoria y PCIe integrados.'],
+      ['2017', 'AMD Ryzen 7 1800X', 4800000000, '3,6 GHz', '14 nm', '8', 'Ocho núcleos para PC hogareñas.'],
+      ['2024', 'AMD Ryzen 9 9950X', 16600000000, 'hasta 5,7 GHz', '4 nm', '16', 'Chiplets: varios chips en un solo procesador.']
+    ];
+    function fmtN(n) { return n >= 1e9 ? (Math.round(n / 1e8) / 10).toString().replace('.', ',') + ' mil millones' : n >= 1e6 ? (Math.round(n / 1e5) / 10).toString().replace('.', ',') + ' millones' : n.toLocaleString('es-AR'); }
+    function histHtml() {
+      return '<p>En 50 años, la cantidad de transistores pasó de unos miles a <b>miles de millones</b>: se duplicó más o menos cada 2 años (la “ley de Moore”). Los transistores se achicaron de 10 micrones (más finos que un pelo) a unos pocos nanómetros (como unas decenas de átomos).</p>' +
+        '<div class="ci-hist">' + HIST_CPU.map(function (r) { var pct = (Math.log10(r[2]) - 3) / (Math.log10(2e10) - 3) * 100; return '<div class="ci-row"><span class="ci-y">' + r[0] + '</span><div class="ci-m"><strong>' + r[1] + '</strong><span>' + r[6] + '</span><div class="ci-bar"><i style="width:' + pct.toFixed(1) + '%"></i><b>' + (r[1].indexOf('9950X') >= 0 ? 'más de 16 mil millones' : fmtN(r[2])) + ' de transistores</b></div></div><span class="ci-d">' + r[3] + '<br>' + r[4] + '<br>' + r[5] + ' núcleo' + (r[5] === '1' ? '' : 's') + '</span></div>'; }).join('') + '</div>' +
+        '<p class="res-note">La barra usa una escala logarítmica: cada marca es 10 veces más que la anterior. Si fuera normal, el 4004 sería invisible al lado de un procesador de hoy.</p>';
+    }
+    function memHtml() {
+      return '<p>El procesador es tan rápido que la RAM no le da abasto. Por eso tiene memorias más chicas y rápidas cerca: la <b>caché</b>. Si lo que busca está en la caché, no espera.</p>' +
+        '<div class="res-tablewrap"><table class="res-table ci-lat"><thead><tr><th>Dónde está el dato</th><th>Tamaño típico</th><th>Tiempo de espera</th></tr></thead><tbody>' +
+        [['Registros', 'unos pocos bytes', 'menos de 0,3 ns', 2], ['Caché L1', '32-64 KB por núcleo', 'alrededor de 1 ns', 6], ['Caché L2', '1-2 MB por núcleo', 'unos 3-4 ns', 16], ['Caché L3', '16-96 MB compartida', 'unos 10-12 ns', 34], ['RAM (DDR5)', '16-64 GB', 'unos 70-90 ns', 100], ['SSD NVMe', '1-4 TB', 'unos 20.000-100.000 ns', 100]].map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td><div class="ci-lbar"><i style="width:' + r[3] + '%"></i></div>' + r[2] + '</td></tr>'; }).join('') + '</tbody></table></div>' +
+        '<p class="res-note">1 ns (nanosegundo) es una milmillonésima de segundo. Si un dato en L1 tardara 1 segundo en llegar, desde la RAM tardaría más de 1 minuto y desde el SSD, entre varias horas y un día.</p>' +
+        '<ul class="res-steps"><li><b>Núcleos:</b> procesadores completos dentro del chip. Más núcleos = más tareas al mismo tiempo.</li><li><b>Hilos:</b> con SMT o Hyper-Threading, cada núcleo atiende 2 tareas y aprovecha los momentos libres.</li><li><b>GHz:</b> cuántos tics da el reloj por segundo. Pero un núcleo nuevo hace mucho más trabajo por tic que uno viejo.</li><li><b>nm (nanómetros):</b> el tamaño de fabricación. Cuanto más chico, más transistores entran y menos energía gastan.</li></ul>';
+    }
+    var TABS = [['ciclo', 'Cómo funciona'], ['mem', 'Caché, núcleos y GHz'], ['hist', 'De los viejos a los nuevos']], tab = 'ciclo';
+    function renderInfo() {
+      infoEl.innerHTML = '<nav class="res-nav ci-tabs">' + TABS.map(function (t) { return '<button type="button" class="btn' + (t[0] === tab ? ' primary' : '') + '" data-ct="' + t[0] + '" aria-pressed="' + (t[0] === tab) + '">' + t[1] + '</button>'; }).join('') + '</nav><div class="ci-body">' + (tab === 'ciclo' ? cycle() : tab === 'mem' ? memHtml() : histHtml()) + '</div>';
+      if (tab === 'ciclo') hiLite();
+    }
+    infoEl.addEventListener('click', function (ev) {
+      var t = ev.target.closest('[data-ct]'); if (t) { tab = t.dataset.ct; renderInfo(); return; }
+      if (ev.target.closest('.ci-next')) { step = (step + 1) % STEPS.length; renderInfo(); return; }
+      if (ev.target.closest('.ci-prev')) { step = Math.max(0, step - 1); renderInfo(); }
+    });
+    renderInfo();
     start();
   })();
 
@@ -7000,7 +7263,7 @@ body.lb-on { overflow: hidden; }
   var lastIn = {};
   function groupOf(name) { var t = document.getElementById('tab-' + name); return t ? t.dataset.group : 'juego'; }
   function show(name) {
-    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'fuente-int', 'cableado', 'frontal', 'elegir', 'evaluaciones', 'integradora', 'reparacion', 'historia', 'resistencias'].indexOf(name) < 0) name = 'niveles';
+    if (['niveles', 'muy-basica', 'basica', 'gamer', 'placa', 'fuente-int', 'cpu-int', 'cableado', 'frontal', 'elegir', 'evaluaciones', 'integradora', 'reparacion', 'historia', 'resistencias'].indexOf(name) < 0) name = 'niveles';
     if (tabLocked && name !== 'niveles') name = 'niveles';
     var g = groupOf(name); lastIn[g] = name;
     tabs.forEach(function (t) {
