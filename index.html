@@ -883,6 +883,22 @@ button.btn.primary:hover { filter: brightness(1.05); }
 .evo-board.picking .et:not(.filled) .et-hit { stroke: var(--accent); stroke-dasharray: 6 4; fill: rgba(255,255,255,.04); }
 .et:hover .et-hit { fill: rgba(255,255,255,.08); }
 .case.psuin { background: #9aa4ae; border-color: #59626d; }
+.case.wide { aspect-ratio: 16 / 10; }
+.fi-cfg { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: flex-start; margin-top: 8px; }
+.fi-cfg .group { border: 0; padding: 0; margin: 0; min-width: 0; } .fi-cfg legend { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.fi-tiers { display: grid; grid-template-columns: repeat(6, minmax(76px, 1fr)); gap: 6px; }
+.fi-tier { position: relative; cursor: pointer; } .fi-tier input { position: absolute; opacity: 0; pointer-events: none; }
+.fi-tier span { display: grid; justify-items: center; gap: 2px; padding: 6px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: #222; text-align: center; }
+.fi-tier .logo80, .fi-tier svg { width: 44px; height: 54px; object-fit: contain; } .fi-tier b { font-size: 13px; } .fi-tier small { font: 11px var(--font-mono); color: #555; }
+.fi-tier input:checked + span { border: 2px solid var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); } .fi-tier input:focus-visible + span { outline: 2px solid var(--accent); }
+@media (max-width: 640px) { .fi-tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.fi-sum { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.fi-sum-l { padding: 6px; background: #fff; border-radius: 8px; } .fi-sum-l .logo80, .fi-sum-l svg { width: 64px; height: 80px; object-fit: contain; display: block; }
+.fi-sum-r strong { display: block; font: 700 18px var(--font-display); } .fi-sum-r > span { color: var(--muted); }
+.fi-sum-r ul { margin: 6px 0; padding-left: 18px; columns: 2 220px; font-size: 14px; }
+.fi-eff { display: grid; gap: 4px; margin: 8px 0; max-width: 420px; } .fi-eff div { display: grid; grid-template-columns: 96px minmax(0, 1fr) 44px; gap: 8px; align-items: center; font-size: 13px; }
+.fi-eff i { height: 10px; border-radius: 5px; background: linear-gradient(90deg, var(--ok) var(--v), var(--line) var(--v)); } .fi-eff b { font-family: var(--font-mono); }
+.fi-note { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
 .fi-intro { margin-bottom: 12px; } .fi-intro h2 { margin: 2px 0 6px; font: 700 20px var(--font-display); } .fi-intro p { margin: 0 0 6px; }
 .fi-warn { padding: 8px 10px; border-radius: 8px; background: rgba(194,65,45,.12); border-left: 4px solid var(--err); }
 .res-head { margin-bottom: 12px; } .res-head h2 { margin: 2px 0 6px; font: 700 22px var(--font-display); } .res-head p { margin: 0 0 10px; }
@@ -1145,7 +1161,7 @@ body.lb-on { overflow: hidden; }
     <button class="tab" role="tab" type="button" id="tab-basica" data-tab="basica" data-group="practica" aria-controls="panel-basica">PC básica<small>12 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-gamer" data-tab="gamer" data-group="practica" aria-controls="panel-gamer">PC gamer<small>23 piezas</small></button>
     <button class="tab" role="tab" type="button" id="tab-placa" data-tab="placa" data-group="practica" aria-controls="panel-placa">Placa madre<small>3 gamas</small></button>
-    <button class="tab" role="tab" type="button" id="tab-fuente-int" data-tab="fuente-int" data-group="practica" aria-controls="panel-fuente-int">Fuente por dentro<small>16 componentes</small></button>
+    <button class="tab" role="tab" type="button" id="tab-fuente-int" data-tab="fuente-int" data-group="practica" aria-controls="panel-fuente-int">Fuente por dentro<small>de 80 PLUS a Titanium</small></button>
     <button class="tab" role="tab" type="button" id="tab-cableado" data-tab="cableado" data-group="practica" aria-controls="panel-cableado">Cableado<small>5 cables</small></button>
     <button class="tab" role="tab" type="button" id="tab-elegir" data-tab="elegir" data-group="practica" aria-controls="panel-elegir">Elegí tu PC<small>paso a paso</small></button>
     <button class="tab" role="tab" type="button" id="tab-frontal" data-tab="frontal" data-group="practica" aria-controls="panel-frontal">Panel frontal<small>botones, luces y USB</small></button>
@@ -1315,8 +1331,16 @@ body.lb-on { overflow: hidden; }
     <section class="panel fi-intro">
       <span class="label">Fuente de alimentación por dentro</span>
       <h2>¿Qué hay adentro de una fuente?</h2>
-      <p>La fuente toma los 220 V de alterna del enchufe y los convierte en 12 V, 5 V y 3,3 V de continua, estables y limpios, para la PC. Primero armala colocando cada componente en su lugar; después ponele el nombre a cada uno.</p>
+      <p>La fuente toma los 220 V de alterna del enchufe y los convierte en 12 V, 5 V y 3,3 V de continua, estables y limpios, para la PC. Elegí una fuente certificada 80 PLUS, desde la más básica hasta la Titanium, y el modo de juego.</p>
       <p class="fi-warn"><b>Atención:</b> nunca abras una fuente real. Adentro hay capacitores que pueden guardar más de 300 V aunque esté desenchufada. Este juego es para conocerla sin riesgo.</p>
+      <div class="fi-cfg">
+        <fieldset class="group"><legend>Certificación</legend><div class="fi-tiers" id="fi-tiers"></div></fieldset>
+        <fieldset class="group"><legend>Modo de juego</legend><div class="seg" id="fi-mode">
+          <label><input type="radio" name="fi-mode" value="build" checked><span>1 · Componentes</span></label>
+          <label><input type="radio" name="fi-mode" value="labels"><span>2 · Nombres</span></label>
+        </div></fieldset>
+      </div>
+      <div class="fi-sum" id="fi-sum" aria-live="polite"></div>
     </section>
     <div id="game-fuente-int"></div>
   </section>
@@ -1806,8 +1830,8 @@ body.lb-on { overflow: hidden; }
         'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.',
         'Llevalo a la <b>parte de la placa</b> que corresponde, o tocá esa parte.',
         'Si es correcto, el nombre queda puesto. Si no, suma un <b>error</b>.'] };
-    if (key === 'fuente-armar') return { t: 'Armá la fuente por dentro', s: htDef('fuente').s.slice(0, 4), tip: htDef('fuente').tip };
-    if (key === 'fuente-nombres') return { t: 'Nombrá las partes de la fuente', s: ['La fuente ya está armada.', 'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.', 'Llevalo al componente que corresponde, o tocalo.', 'Si es correcto, el nombre queda puesto. Si no, suma un <b>error</b>.'] };
+    if (key === 'fuente-armar') return { t: 'Poné los componentes de la fuente', s: htDef('fuente').s.slice(0, 4).concat(['Arriba podés elegir la certificación: de la 80 PLUS básica a la Titanium. Cambian algunos componentes y la forma de los cables.']), tip: htDef('fuente').tip };
+    if (key === 'fuente-nombres') return { t: 'Poné los nombres de la fuente', s: ['La fuente ya está armada, con todos sus componentes.', 'Elegí un <b>nombre</b> de la lista, tocándolo o arrastrándolo.', 'Llevalo al componente que corresponde, o tocalo.', 'Si es correcto, el nombre queda puesto. Si no, suma un <b>error</b>.'] };
     if (key === 'placa' || key === 'placa-armar') return { t: key === 'placa' ? 'Armá la placa madre y nombrá sus partes' : 'Armá la placa madre', s: [
         'Elegí una pieza de la <b>bandeja</b>: tocala o arrastrala.',
         'Llevala a su lugar de la placa: el procesador en su <b>socket</b>, las memorias en sus <b>ranuras</b>, el disco M.2 en su ranura, y así.',
@@ -2129,7 +2153,7 @@ body.lb-on { overflow: hidden; }
         extra = '<p>Consumo total: <strong>' + consumption() + ' W</strong>. Fuente instalada: <strong>' + S.psu.watts + ' W</strong>' +
           (S.psu.watts === best ? ', la justa para esta PC.' : '. Con una de ' + best + ' W alcanzaba.') + '</p>';
       }
-      infoEl.innerHTML = '<span class="label">Resultado</span><h2>¡PC completa!</h2>' +
+      infoEl.innerHTML = '<span class="label">Resultado</span><h2>' + (cfg.winTitle || '¡PC completa!') + '</h2>' +
         '<p>La armaste en <strong>' + fmt(secs) + '</strong> con <strong>' + S.errors + '</strong> ' + (S.errors === 1 ? 'error' : 'errores') + '.</p>' + extra +
         '<p class="spec">' + (S.errors === 0 ? 'Armado perfecto: sin errores.' : 'Probá de nuevo para hacerlo sin errores.') + '</p>' +
         '<button class="btn js-again" type="button">Jugar de nuevo</button>';
@@ -2894,6 +2918,7 @@ body.lb-on { overflow: hidden; }
       CFG = (builder || buildCfg)(cf);
       if (mode === 'build') {
         CFG.winMsg = TX('buildWin', '¡Placa madre armada!');
+        CFG.winTitle = TX('buildTitle', '¡Placa madre completa!');
         CFG.start = TX('buildStart', 'Colocá cada parte en su lugar de la placa, incluido el procesador en su socket.');
         CFG.onWin = function (res) { if (onComplete) onComplete(res); };
         CFG.onReset = function () {};
@@ -5906,6 +5931,7 @@ body.lb-on { overflow: hidden; }
     var CERT_TABLE = [['80 PLUS', 'badge80', 80, 80, 80], ['Bronze', 'badgeB', 82, 85, 82], ['Silver', 'badgeS', 85, 88, 85], ['Gold', 'badgeG', 87, 90, 87], ['Platinum', 'badgeP', 90, 92, 89], ['Titanium', 'badgeT', 92, 94, 90]];
     var L80 = { badge80: '80_Plus_Standard.svg', badgeB: '80_Plus_Bronze.svg', badgeS: '80_Plus_Silver.svg', badgeG: '80_Plus_Gold.svg', badgeP: '80_Plus_Platinum.svg', badgeT: '80_Plus_Titanium.svg' };
     function logo80(k, label) { var f = L80[k]; return f && PHD[f] ? '<img class="logo80" src="' + PHD[f] + '" alt="Logo ' + label + '" loading="lazy" decoding="async">' : evoPart(k, label); }
+    window.logo80Html = logo80;
     function logoStrip() {
       var c = PHC['80_Plus_Gold.svg'];
       return '<figure class="logo-strip"><div>' + CERT_TABLE.map(function (r) { return '<span>' + logo80(r[1], '80 PLUS ' + r[0]) + '<b>' + r[0] + '</b></span>'; }).join('') + '</div>' +
@@ -6392,7 +6418,7 @@ body.lb-on { overflow: hidden; }
         var wP = Math.min(CW, H * .8), wL = Math.min(CW, H * 1.6);
         var land = !!caseEl.__setLand && !single && (wL * wL / 1.6) > (wP * wP * 1.25) * 1.05;
         if (caseEl.__setLand) caseEl.__setLand(land);
-        var ratio = caseEl.classList.contains('land') ? 1.6 : .8;
+        var ratio = caseEl.classList.contains('land') || caseEl.classList.contains('wide') ? 1.6 : .8;
         var base = view.fill ? CW : Math.min(CW, H * ratio);
         var W = Math.round(Math.max(240, base) * (view.zoom || 1));
         if (caseEl.style.width !== W + 'px') { caseEl.style.width = W + 'px'; caseEl.style.maxWidth = 'none'; }
@@ -6447,7 +6473,7 @@ body.lb-on { overflow: hidden; }
     }
     function pcb(w, h, c) { return '<rect width="' + w + '" height="' + h + '" rx="3" fill="' + (c || '#2f7a4a') + '" stroke="#174d2f" stroke-width="1.5"/>'; }
     function ic(x, y, w, h, t) { var o = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="1" fill="#16191d"/>'; for (var i = 0; i < 4; i++) o += '<rect x="' + (x + 2 + i * (w - 4) / 3 - 1) + '" y="' + (y - 2) + '" width="2" height="2" fill="#c3cad1"/><rect x="' + (x + 2 + i * (w - 4) / 3 - 1) + '" y="' + (y + h) + '" width="2" height="2" fill="#c3cad1"/>'; return o + (t ? '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 2.5) + '" text-anchor="middle" font-size="6" fill="#d0d5da" font-family="var(--font-mono)">' + t + '</text>' : ''); }
-    var P = {
+    var BASE = {
       inlet: { name: 'Entrada de corriente (C14) e interruptor', short: 'Entrada 220 V', vb: '0 0 100 40',
         body: '<rect width="100" height="40" rx="3" fill="#2b3036"/><path d="M10 8 h30 l4 6 v18 h-38 v-18z" fill="#16191d" stroke="#59626d"/><rect x="16" y="16" width="4" height="10" fill="#c3cad1"/><rect x="25" y="13" width="4" height="10" fill="#c3cad1"/><rect x="34" y="16" width="4" height="10" fill="#c3cad1"/>' +
           '<rect x="60" y="8" width="26" height="24" rx="2" fill="#16191d"/><rect x="63" y="11" width="20" height="18" rx="1" fill="#c93a3a"/><text x="73" y="24" text-anchor="middle" font-size="9" fill="#fff" font-family="var(--font-mono)">I O</text>',
@@ -6531,32 +6557,93 @@ body.lb-on { overflow: hidden; }
         info: 'Es el panel donde se enchufan los cables: 24 pines de la placa madre, CPU (EPS), PCIe o 12V-2x6 para la placa de video, SATA y Molex. En una fuente <b>modular</b> solo se conectan los cables que se usan, y el gabinete queda más ordenado.',
         spec: '24 pines · EPS · PCIe / 12V-2x6 · SATA' }
     };
-    Object.keys(P).forEach(function (k) { P[k].req = []; });
-    var LAY = [['inlet', 4, 1.5, 20, 8], ['fuse', 28, 2.5, 12, 5], ['fan', 64, 1.5, 32, 8],
-      ['emi', 4, 13, 24, 12], ['bridge', 31, 13, 14, 9], ['pfc', 4, 29, 22, 17.6], ['bulk', 29, 27, 18, 14.4], ['hsprim', 49, 13, 6, 40],
-      ['trafo', 58, 15, 17, 15], ['standby', 58, 36, 14, 10], ['hssec', 77, 13, 6, 40], ['caps', 85, 14, 11, 8.8], ['caps', 85, 26, 11, 8.8], ['outl', 85, 38, 12, 9.6],
-      ['ctrl', 5, 58, 26, 12], ['dcdc', 58, 58, 26, 13], ['modular', 6, 87, 88, 9]];
-    var deco = '<svg class="board-deco" viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true">' +
-      '<rect x="0" y="0" width="100" height="14" fill="#7d8894"/><rect x="0" y="107" width="100" height="18" fill="#7d8894"/>' +
-      '<rect x="2" y="14" width="96" height="93" fill="#2c6a4e" stroke="#1d4a36" stroke-width=".6"/>' +
-      '<path class="s-trace" stroke-width=".35" d="M10 30 H40 M30 36 V60 M58 34 H50 M74 34 H82 M90 58 V70 M20 72 V84 H40 M64 84 H80 M48 66 H60 M10 100 H90 M70 50 V70"/>' +
-      '<path d="M66.5 15 V106" stroke="#f2f2ee" stroke-width=".5" stroke-dasharray="2 1.5" opacity=".8"/>' +
-      '<text x="33" y="99" text-anchor="middle" font-size="1.9" fill="#e8efe9" font-family="var(--font-mono)">LADO PRIMARIO · alta tensión (220 V y 400 V)</text>' +
-      '<text x="82" y="96" text-anchor="middle" font-size="1.9" fill="#e8efe9" font-family="var(--font-mono)">LADO SECUNDARIO</text><text x="82" y="99" text-anchor="middle" font-size="1.9" fill="#e8efe9" font-family="var(--font-mono)">12 V · 5 V · 3,3 V</text>' +
-      '<text x="66.5" y="104" text-anchor="middle" font-size="1.6" fill="#f2f2ee" font-family="var(--font-mono)">aislación</text>' +
-      '<text x="50" y="12.5" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">ATRÁS (sale por el gabinete)</text><text x="50" y="123" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">FRENTE (cables hacia la PC)</text>' +
-      [[4, 17], [96, 17], [4, 104], [96, 104]].map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="1.4" fill="#c9b27a"/>'; }).join('') + '</svg>';
-    function cfg() {
-      return { key: 'fuenteint', caseClass: 'board psuin', parts: P, deco: deco, htKey: 'fuente',
-        slots: LAY.map(function (a) { return { type: a[0], x: a[1], y: a[2], w: a[3], h: a[4], z: 1 }; }),
-        winMsg: '¡Fuente armada! Ahora ponele el nombre a cada componente.',
-        caseNote: 'Fuente ATX abierta, vista desde arriba. Arriba está la parte de atrás (entrada de 220 V) y abajo el frente con los conectores.',
-        start: 'Paso 1 de 2: colocá cada componente adentro de la fuente. Después vas a ponerle el nombre a cada uno.',
-        lbl: { built: 'La fuente ya está armada.', done: 'Ya armaste la fuente.', on: 'en la fuente', of: 'de la fuente', tip: 'El lado izquierdo es el de alta tensión y el derecho el de baja tensión.',
-          win: '¡Fuente completa y con todos sus nombres!', title: '¡Fuente identificada!', more: 'Tocá “Reiniciar” para armarla otra vez.', buildWin: '¡Fuente armada!', buildStart: 'Colocá cada componente en su lugar adentro de la fuente.' } };
+
+    var TIERS = [
+      { k: 'std', b: 'badge80', name: '80 PLUS', w: 450, eff: [80, 80, 80], cab: 'fixed', sync: false, dcdc: false, dig: false, act: false,
+        fan: 'Ventilador de 120 mm con buje simple (sleeve). Gira siempre.', caps: 'electrolíticos comunes de 85 °C', use: 'una PC de oficina o de escuela' },
+      { k: 'bronze', b: 'badgeB', name: '80 PLUS Bronze', w: 550, eff: [82, 85, 82], cab: 'fixed', sync: false, dcdc: false, dig: false, act: false,
+        fan: 'Ventilador de 120 mm con buje hidráulico.', caps: 'electrolíticos de 105 °C en la salida', use: 'una PC hogareña o de estudio' },
+      { k: 'silver', b: 'badgeS', name: '80 PLUS Silver', w: 650, eff: [85, 88, 85], cab: 'semi', sync: true, dcdc: true, dig: false, act: false,
+        fan: 'Ventilador de 120 mm con buje hidráulico.', caps: 'electrolíticos de 105 °C', use: 'una PC con placa de video de gama media' },
+      { k: 'gold', b: 'badgeG', name: '80 PLUS Gold', w: 850, eff: [87, 90, 87], cab: 'full', sync: true, dcdc: true, dig: false, act: false,
+        fan: 'Ventilador de 135 mm de rodamiento fluido (FDB), con modo semipasivo.', caps: 'japoneses de 105 °C y de polímero', use: 'una PC gamer' },
+      { k: 'platinum', b: 'badgeP', name: '80 PLUS Platinum', w: 1000, eff: [90, 92, 89], cab: 'full', sync: true, dcdc: true, dig: true, act: false,
+        fan: 'Ventilador de 135 mm FDB con modo semipasivo: con poco consumo, no gira.', caps: 'japoneses de 105 °C y de polímero', use: 'una PC gamer potente o una estación de trabajo' },
+      { k: 'titanium', b: 'badgeT', name: '80 PLUS Titanium', w: 1600, eff: [92, 94, 90], cab: 'full', sync: true, dcdc: true, dig: true, act: true,
+        fan: 'Ventilador de 140 mm FDB con modo semipasivo.', caps: 'japoneses de 105 °C y de polímero de alta calidad', use: 'una PC con varias placas de video o un servidor' }
+    ];
+    function ext(o, a) { var r = {}, k; for (k in o) r[k] = o[k]; for (k in a) r[k] = a[k]; return r; }
+    function cablesBody(t) {
+      var W = 296, H = 36, o = '<rect width="' + W + '" height="' + H + '" rx="4" fill="#22272d"/>';
+      function sock(x, w, lab, rows) { var c = '<rect x="' + x + '" y="5" width="' + w + '" height="20" rx="2" fill="#0b0d10" stroke="#6d7782"/>', n = Math.floor((w - 2) / 6); for (var i = 0; i < n; i++) for (var r = 0; r < (rows || 2); r++) c += '<rect x="' + (x + 2 + i * 6) + '" y="' + (8 + r * 8) + '" width="4" height="5" fill="#59626d"/>'; return c + '<text x="' + (x + w / 2) + '" y="33" text-anchor="middle" font-size="6.5" fill="#cfd5db" font-family="var(--font-mono)">' + lab + '</text>'; }
+      function bundle(x, w, lab, cols) { var c = '<rect x="' + (x - 3) + '" y="4" width="' + (w + 6) + '" height="22" rx="10" fill="#0b0d10"/>'; for (var i = 0; i < cols.length; i++) c += '<circle cx="' + (x + 5 + i * (w - 10) / Math.max(1, cols.length - 1)) + '" cy="15" r="4" fill="' + cols[i] + '" stroke="#000" stroke-width=".6"/>'; return c + '<text x="' + (x + w / 2) + '" y="33" text-anchor="middle" font-size="6.5" fill="#cfd5db" font-family="var(--font-mono)">' + lab + '</text>'; }
+      var Y = '#e8c040', R = '#d22b2b', B = '#141414', O = '#f07c1a', V = '#8a3fc7', G = '#8d939a';
+      if (t.cab === 'fixed') return o + bundle(16, 90, 'Cables fijos', [Y, Y, R, R, B, B, O, O, V, G]) + '<text x="205" y="16" text-anchor="middle" font-size="7" fill="#cfd5db" font-family="var(--font-mono)">No modular: todos los cables</text><text x="205" y="25" text-anchor="middle" font-size="7" fill="#cfd5db" font-family="var(--font-mono)">salen soldados a la placa</text>';
+      if (t.cab === 'semi') return o + bundle(10, 60, '24 pines + CPU (fijos)', [Y, R, B, O, V, G]) + sock(100, 44, 'PCIe') + sock(152, 44, 'PCIe') + sock(204, 38, 'SATA', 1) + sock(250, 38, 'SATA', 1);
+      return o + sock(8, 74, '24 pines (placa)') + sock(88, 38, 'CPU 1') + sock(132, 38, 'CPU 2') + sock(176, 38, 'PCIe') + (t.w >= 850 ? sock(220, 34, '12V-2x6') : sock(220, 34, 'PCIe')) + sock(260, 30, 'SATA', 1);
     }
-    var game = PlacaFactory(host, null, undefined, cfg);
-    game.rebuild({});
+    function build(t) {
+      var P = {}, k;
+      for (k in BASE) P[k] = ext(BASE[k], { req: [] });
+      P.modular = ext(P.modular, { vb: '0 0 296 36', body: cablesBody(t),
+        name: t.cab === 'fixed' ? 'Salida de cables fijos (no modular)' : t.cab === 'semi' ? 'Panel semimodular de cables' : 'Panel de conectores modulares',
+        short: t.cab === 'fixed' ? 'Cables fijos' : t.cab === 'semi' ? 'Panel semimodular' : 'Panel modular',
+        hint: 'Los cables salen por el frente de la fuente: la franja ancha de abajo de todo.',
+        info: t.cab === 'fixed' ? 'En una fuente <b>no modular</b> todos los cables salen soldados a la placa, aunque no se usen: es más barata, pero los cables que sobran quedan sueltos en el gabinete.'
+          : t.cab === 'semi' ? 'En una fuente <b>semimodular</b> los cables que siempre se usan (24 pines y CPU) vienen fijos, y los demás (PCIe, SATA) se enchufan solo si hacen falta.'
+          : 'En una fuente <b>full modular</b> todos los cables se enchufan: 24 pines, CPU (EPS), PCIe' + (t.w >= 850 ? ' o 12V-2x6' : '') + ' y SATA. Solo se conectan los que se usan y el gabinete queda ordenado.',
+        spec: t.cab === 'fixed' ? 'No modular' : t.cab === 'semi' ? 'Semimodular' : 'Full modular' });
+      if (t.act) P.bridge = ext(P.bridge, { name: 'Puente rectificador activo (con MOSFET)', short: 'Puente activo', info: 'En lugar de 4 diodos usa <b>transistores MOSFET</b> que se prenden y apagan en el momento justo. Así pierde mucho menos energía en calor: es una de las claves para llegar a Titanium.', spec: 'Rectificación activa · menos pérdidas' });
+      P.hssec = ext(P.hssec, t.sync ? { info: 'Del lado de baja tensión la corriente se vuelve a rectificar con <b>MOSFET</b> (rectificación sincrónica), que se calientan mucho menos que los diodos: es típico desde 80 PLUS Silver o Gold.', spec: 'Rectificación sincrónica (MOSFET)' }
+        : { info: 'Del lado de baja tensión la corriente se vuelve a rectificar con <b>diodos Schottky</b>. Es una solución barata, pero los diodos pierden más energía en forma de calor.', spec: 'Rectificación con diodos Schottky' });
+      if (t.dig) P.ctrl = ext(P.ctrl, { name: 'Controlador digital (DSP) y protecciones', short: 'Control digital', info: 'Un pequeño procesador (DSP) controla la conmutación y ajusta todo miles de veces por segundo. Además vigila sobretensión (OVP), baja tensión (UVP), sobrecorriente (OCP), cortocircuito (SCP) y temperatura (OTP), y manda la señal <b>Power Good</b> (cable gris).', spec: 'Control digital · OVP · UVP · OCP · SCP · OTP' });
+      if (!t.dcdc) P.outl = ext(P.outl, { name: 'Bobina de regulación grupal', short: 'Bobina grupal', info: 'En las fuentes más simples, una sola bobina regula juntos los 12 V y los 5 V (<b>regulación grupal</b>). Funciona, pero si la PC consume mucho de 12 V y poco de 5 V, las tensiones se desequilibran un poco.', spec: 'Regulación grupal de 12 V y 5 V' });
+      P.caps = ext(P.caps, { spec: 'Capacitores ' + t.caps });
+      P.fan = ext(P.fan, { info: t.fan + ' Saca el calor de los disipadores; en una fuente real va en la tapa y sopla sobre toda la placa.', spec: t.fan.split('.')[0] });
+      P.bulk = ext(P.bulk, { spec: '~400 V · ' + (t.w >= 1000 ? '2 capacitores en paralelo en las reales' : '1 capacitor') + ' · 105 °C' });
+      if (!t.dcdc) delete P.dcdc;
+      var LAY = [['inlet', 4, 1.5, 30, 7.5], ['fuse', 40, 3, 14, 4.5], ['fan', 120, 1.5, 36, 7.5],
+        ['emi', 4, 13, 34, 16], ['bridge', 42, 13, 16, 10], ['pfc', 4, 33, 26, 26], ['bulk', 34, 31, 22, 22], ['ctrl', 4, 62, 36, 12], ['hsprim', 62, 13, 6, 57],
+        ['trafo', 72, 15, 24, 24], ['standby', 72, 44, 18, 14], ['hssec', 100, 13, 6, 57], ['caps', 110, 13, 18, 15], ['caps', 132, 13, 18, 15], ['outl', 110, 32, 18, 15]];
+      if (t.dcdc) LAY.push(['dcdc', 132, 32, 24, 20]);
+      LAY.push(['modular', 6, 79, 148, 18]);
+      var deco = '<svg class="board-deco" viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true">' +
+        '<rect x="0" y="0" width="160" height="11" fill="#7d8894"/><rect x="0" y="76" width="160" height="24" fill="#7d8894"/>' +
+        '<rect x="2" y="11" width="156" height="65" fill="#2c6a4e" stroke="#1d4a36" stroke-width=".5"/>' +
+        '<path class="s-trace" stroke-width=".3" d="M12 30 H40 M30 34 V60 M58 40 H62 M96 30 H100 M106 52 H110 M120 50 V70 M20 72 V74 H40 M110 60 H150 M70 62 H90 M140 56 V70"/>' +
+        '<path d="M84 12 V75" stroke="#f2f2ee" stroke-width=".45" stroke-dasharray="2 1.4" opacity=".85"/>' +
+        '<text x="46" y="58" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">PRIMARIO · alta tensión</text>' +
+        '<text x="132" y="62" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">LADO SECUNDARIO</text><text x="132" y="65.5" text-anchor="middle" font-size="2.2" fill="#e8efe9" font-family="var(--font-mono)">12 V · 5 V · 3,3 V</text>' +
+        '<text x="84" y="73.5" text-anchor="middle" font-size="1.8" fill="#f2f2ee" font-family="var(--font-mono)">aislación</text>' +
+        '<text x="80" y="10.3" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">ATRÁS · ' + t.w + ' W ' + t.name + '</text><text x="80" y="99" text-anchor="middle" font-size="1.8" fill="#22272d" font-family="var(--font-mono)">FRENTE · salida de cables hacia la PC</text>' +
+        [[5, 14], [155, 14], [5, 73], [155, 73]].map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="1.2" fill="#c9b27a"/>'; }).join('') + '</svg>';
+      return { key: 'fuenteint', caseClass: 'board psuin wide', parts: P, deco: deco, htKey: 'fuente',
+        slots: LAY.map(function (a) { return { type: a[0], x: a[1] / 1.6, y: a[2], w: a[3] / 1.6, h: a[4], z: 1 }; }),
+        winMsg: '¡Fuente armada!',
+        caseNote: 'Fuente de ' + t.w + ' W ' + t.name + ' abierta, vista desde arriba. Arriba está la parte de atrás (entrada de 220 V) y abajo el frente, por donde salen los cables.',
+        start: 'Colocá cada componente adentro de la fuente.',
+        lbl: { built: 'La fuente ya está armada.', done: 'Ya armaste la fuente.', on: 'en la fuente', of: 'de la fuente', tip: 'El lado izquierdo es el de alta tensión y el derecho el de baja tensión.',
+          win: '¡Fuente completa y con todos sus nombres!', title: '¡Fuente identificada!', more: 'Probá con otra certificación, desde la 80 PLUS básica hasta la Titanium.', buildTitle: '¡Fuente completa!', buildWin: '¡Fuente ' + t.name + ' armada! Ahora probá el modo “2 · Nombres”.', buildStart: 'Colocá cada componente en su lugar adentro de la fuente de ' + t.w + ' W ' + t.name + '.' } };
+    }
+    var tier = TIERS[3], mode = 'build', game = null;
+    var tiersEl = document.getElementById('fi-tiers'), sumEl = document.getElementById('fi-sum');
+    tiersEl.innerHTML = TIERS.map(function (t, i) { return '<label class="fi-tier"><input type="radio" name="fi-tier" value="' + i + '"' + (t === tier ? ' checked' : '') + '><span>' + (window.logo80Html ? window.logo80Html(t.b, t.name) : '') + '<b>' + t.name.replace('80 PLUS ', '') + '</b><small>' + t.w + ' W</small></span></label>'; }).join('');
+    function summary() {
+      var t = tier, pts = t.act ? [['10 %', 90], ['20 %', 92], ['50 %', 94], ['100 %', 90]] : [['20 %', t.eff[0]], ['50 %', t.eff[1]], ['100 %', t.eff[2]]];
+      sumEl.innerHTML = '<div class="fi-sum-l">' + (window.logo80Html ? window.logo80Html(t.b, t.name) : '') + '</div><div class="fi-sum-r"><strong>Fuente de ' + t.w + ' W · ' + t.name + '</strong><span>Para ' + t.use + '.</span>' +
+        '<div class="fi-eff">' + pts.map(function (p) { return '<div><span>' + p[0] + ' de carga</span><i style="--v:' + ((p[1] - 75) / 20 * 100) + '%"></i><b>' + p[1] + ' %</b></div>'; }).join('') + '</div>' +
+        '<ul><li>Cables: ' + (t.cab === 'fixed' ? 'no modular (fijos)' : t.cab === 'semi' ? 'semimodular' : 'full modular') + '</li><li>Rectificación del secundario: ' + (t.sync ? 'sincrónica (MOSFET)' : 'con diodos') + '</li><li>5 V y 3,3 V: ' + (t.dcdc ? 'módulos DC-DC' : 'regulación grupal') + '</li>' + (t.act ? '<li>Puente rectificador activo (sin diodos)</li>' : '') + (t.dig ? '<li>Control digital (DSP)</li>' : '') + '<li>Capacitores ' + t.caps + '</li></ul>' +
+        '<p class="fi-note">Eficiencia mínima con 115 V. El resto de la energía se pierde en calor: una fuente de ' + t.eff[1] + ' % que entrega 500 W toma ' + Math.round(500 / t.eff[1] * 100) + ' W del enchufe.</p></div>';
+    }
+    function start() {
+      if (game) game.destroy();
+      game = PlacaFactory(host, null, mode, function () { return build(tier); });
+      game.rebuild({});
+      summary();
+    }
+    tiersEl.addEventListener('change', function (e) { tier = TIERS[+e.target.value]; start(); });
+    document.getElementById('fi-mode').addEventListener('change', function (e) { mode = e.target.value; start(); });
+    start();
   })();
 
   /* ---------- Electrónica: resistencias ---------- */
